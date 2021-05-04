@@ -581,7 +581,7 @@ namespace SoftPrimes.Server.Data.Migrations
                     b.ToTable("Notifications");
                 });
 
-            modelBuilder.Entity("SoftPrimes.Shared.Domains.Tour", b =>
+            modelBuilder.Entity("SoftPrimes.Shared.Domains.TourAgent", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -848,7 +848,7 @@ namespace SoftPrimes.Server.Data.Migrations
                     b.Navigation("ToAgent");
                 });
 
-            modelBuilder.Entity("SoftPrimes.Shared.Domains.Tour", b =>
+            modelBuilder.Entity("SoftPrimes.Shared.Domains.TourAgent", b =>
                 {
                     b.HasOne("SoftPrimes.Shared.Domains.Agent", "Agent")
                         .WithMany()
@@ -865,7 +865,7 @@ namespace SoftPrimes.Server.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("SoftPrimes.Shared.Domains.Tour", "Tour")
+                    b.HasOne("SoftPrimes.Shared.Domains.TourAgent", "TourAgent")
                         .WithMany("CheckPoints")
                         .HasForeignKey("TourId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -873,7 +873,7 @@ namespace SoftPrimes.Server.Data.Migrations
 
                     b.Navigation("CheckPoint");
 
-                    b.Navigation("Tour");
+                    b.Navigation("TourAgent");
                 });
 
             modelBuilder.Entity("SoftPrimes.Shared.Domains.TourComment", b =>
@@ -884,7 +884,7 @@ namespace SoftPrimes.Server.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("SoftPrimes.Shared.Domains.Tour", "Tour")
+                    b.HasOne("SoftPrimes.Shared.Domains.TourAgent", "TourAgent")
                         .WithMany("Comments")
                         .HasForeignKey("TourId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -892,18 +892,18 @@ namespace SoftPrimes.Server.Data.Migrations
 
                     b.Navigation("Comment");
 
-                    b.Navigation("Tour");
+                    b.Navigation("TourAgent");
                 });
 
             modelBuilder.Entity("SoftPrimes.Shared.Domains.TourStateLog", b =>
                 {
-                    b.HasOne("SoftPrimes.Shared.Domains.Tour", "Tour")
+                    b.HasOne("SoftPrimes.Shared.Domains.TourAgent", "TourAgent")
                         .WithMany("TourStateLogs")
                         .HasForeignKey("TourId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Tour");
+                    b.Navigation("TourAgent");
                 });
 
             modelBuilder.Entity("SoftPrimes.Shared.Domains.Agent", b =>
@@ -911,7 +911,7 @@ namespace SoftPrimes.Server.Data.Migrations
                     b.Navigation("Agents");
                 });
 
-            modelBuilder.Entity("SoftPrimes.Shared.Domains.Tour", b =>
+            modelBuilder.Entity("SoftPrimes.Shared.Domains.TourAgent", b =>
                 {
                     b.Navigation("CheckPoints");
 

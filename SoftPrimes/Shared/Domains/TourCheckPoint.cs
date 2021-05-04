@@ -8,7 +8,7 @@ namespace SoftPrimes.Shared.Domains
     {
         public int Id { get; set; }
         public int TourId { get; set; }
-        public Tour Tour { get; set; }
+        public TourAgent Tour { get; set; }
         public int CheckPointId { get; set; }
         public CheckPoint CheckPoint { get; set; }
         public List<CheckPointTourComment> CheckPointTourComments { get; set; }

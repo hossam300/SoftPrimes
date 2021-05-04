@@ -7,7 +7,7 @@ namespace SoftPrimes.Shared.Domains
     {
         public int Id { get; set; }
         public int TourId { get; set; }
-        public Tour Tour { get; set; }
+        public TourAgent Tour { get; set; }
         public TourState TourState { get; set; }
         public string CreatedBy { get ; set ; }
         public DateTimeOffset? CreatedOn { get ; set ; }

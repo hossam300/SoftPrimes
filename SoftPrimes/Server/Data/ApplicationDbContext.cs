@@ -23,6 +23,7 @@ namespace SoftPrimes.Server.Data
         public virtual DbSet<Comment> Comments { get; set; }
         public virtual DbSet<Notification> Notifications { get; set; }
         public virtual DbSet<Tour> Tours { get; set; }
+        public virtual DbSet<TourAgent> TourAgents { get; set; }
         public virtual DbSet<TourCheckPoint> TourCheckPoints { get; set; }
         public virtual DbSet<TourComment> TourComments { get; set; }
         public virtual DbSet<TourStateLog> TourStateLogs { get; set; }

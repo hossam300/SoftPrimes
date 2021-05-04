@@ -11,10 +11,19 @@ using System.Threading.Tasks;
 
 namespace SoftPrimes.Service.Services
 {
+    
     public class CompanyService : BusinessService<Company, CompanyDTO>, ICompanyService
     {
+        private readonly IUnitOfWork _unitOfWork;
+        private IBaseRepository<Company> _repository;
         public CompanyService(IUnitOfWork unitOfWork, IMapper mapper) : base(unitOfWork, mapper)
         {
+            _unitOfWork = unitOfWork;
+            _repository = _unitOfWork.GetRepository<Company>();
         }
+        //private void CustomeMethod()
+        //{
+        //    var company=_repository.
+        //}
     }
 }
