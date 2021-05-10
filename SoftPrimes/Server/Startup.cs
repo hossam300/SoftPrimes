@@ -12,6 +12,10 @@ using SoftPrimes.Server.Data;
 using SoftPrimes.Shared.Domains;
 using System.Linq;
 using AutoMapper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+
 namespace SoftPrimes.Server
 {
     public class Startup
@@ -40,8 +44,20 @@ namespace SoftPrimes.Server
             services.AddIdentityServer()
                 .AddApiAuthorization<Agent, ApplicationDbContext>();
 
-            services.AddAuthentication()
-                .AddIdentityServerJwt();
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                  .AddJwtBearer(options =>
+                  {
+                      options.TokenValidationParameters = new TokenValidationParameters
+                      {
+                          ValidateIssuer = true,
+                          ValidateAudience = true,
+                          ValidateLifetime = true,
+                          ValidateIssuerSigningKey = true,
+                          ValidIssuer = Configuration["Jwt:Issuer"],
+                          ValidAudience = Configuration["Jwt:Issuer"],
+                          IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
+                      };
+                  });
             services.AddSwaggerGen();
             services.AddControllersWithViews();
             services.AddRazorPages();
