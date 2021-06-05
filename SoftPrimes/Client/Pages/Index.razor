@@ -5,3 +5,22 @@
 Welcome to your new app.
 
 <SurveyPrompt Title="How is Blazor working for you?" />
+@foreach (var item in homeTours)
+{
+<ul>
+    <li>@item.TourNameAr</li> -
+    <li>@item.TourNameEn</li>
+    <li>@item.Agent.FullNameAr</li> -
+    <li>@item.Agent.FullNameEn</li>
+    <li>@item.TourDate</li> -
+    <li>@item.TimeDuration</li>
+    <li>@item.EstimateDistance</li>
+</ul>
+}
+@code{
+    List<SoftPrimes.Shared.ViewModels.HomeTourDTO> homeTours = new List<SoftPrimes.Shared.ViewModels.HomeTourDTO>();
+    protected override async Task OnInitializedAsync()
+    {
+        homeTours = await Http.GetFromJsonAsync<List<HomeTourDTO>>("/api/Tours/GetTodayToursAsync?lat=30&&longs=30");
+    }
+}

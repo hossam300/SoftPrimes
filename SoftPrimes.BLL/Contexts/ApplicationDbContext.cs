@@ -1,14 +1,14 @@
-﻿using IdentityServer4.EntityFramework.Options;
-using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
+﻿using SoftPrimes.Shared.Domains;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
-using SoftPrimes.Shared.Domains;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using System.Text;
+using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
+using Microsoft.Extensions.Options;
+using IdentityServer4.EntityFramework.Options;
 
-namespace SoftPrimes.Server.Data
+namespace SoftPrimes.BLL.Contexts
 {
     public class ApplicationDbContext : ApiAuthorizationDbContext<Agent>
     {
@@ -28,8 +28,8 @@ namespace SoftPrimes.Server.Data
         public virtual DbSet<TourComment> TourComments { get; set; }
         public virtual DbSet<TourStateLog> TourStateLogs { get; set; }
         public virtual DbSet<AgentLocationLog> AgentLocationLogs { get; set; }
-        //public virtual DbSet<Attachment> Attachments { get; set; }
-        //public virtual DbSet<Attachment> Attachments { get; set; }
+        public virtual DbSet<AgentLoginLog> AgentLoginLogs { get; set; }
+        public virtual DbSet<Localization> Localizations { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

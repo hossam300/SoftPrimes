@@ -16,23 +16,10 @@ namespace SoftPrimes.Server.Controllers
     {
         private readonly ILocalizationService _LocalizationsService;
 
-        public LocalizationsController(ILocalizationService businessService) : base(businessService)
+        public LocalizationsController(ILocalizationService businessService, IHelperServices.ISessionServices sessionSevices) : base(businessService, sessionSevices)
         {
             this._LocalizationsService = businessService;
         }
-        [HttpGet("GetAllLocalizationsDTO")]
-        public IActionResult GetAllLocalizationsDTO()
-        {
-            var LocalizationsDTOs = _LocalizationsService.GetAllWithoutInclude().Select(x => new LocalizationDTO
-            {
-                Id = x.Id,
-                CreatedBy = x.CreatedBy,
-                CreatedOn = x.CreatedOn,
-                Key = x.Key,
-                ValueAr = x.ValueAr,
-                ValueEn = x.ValueEn
-            }).ToList();
-            return Ok(LocalizationsDTOs);
-        }
+        
     }
 }

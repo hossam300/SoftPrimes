@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using SoftPrimes.Service.IServices;
 using SoftPrimes.Shared.Domains;
@@ -15,24 +16,24 @@ namespace SoftPrimes.Server.Controllers
     public class ToursController : _BaseController<Tour, TourDTO>
     {
         private readonly ITourService _TourService;
-
-        public ToursController(ITourService businessService) : base(businessService)
+        private readonly UserManager<Agent> _userManager;
+        public ToursController(ITourService businessService, UserManager<Agent> userManager, IHelperServices.ISessionServices sessionSevices) : base(businessService, sessionSevices)
         {
             this._TourService = businessService;
+            _userManager = userManager;
         }
-        [HttpGet("GetAllTourDTO")]
-        public IActionResult GetAllTourDTO()
+        
+
+        [HttpGet("GetTodayTours")]
+        public async Task<List<HomeTourDTO>> GetTodayTours(float lat, float longs)
         {
-            var TourDTOs = _TourService.GetAllWithoutInclude().Select(x => new TourDTO
-            {
-                Id = x.Id,
-                CreatedBy = x.CreatedBy,
-                CreatedOn = x.CreatedOn,
-                TourNameAr = x.TourNameAr,
-                TourNameEn = x.TourNameEn,
-                TourType = x.TourType
-            }).ToList();
-            return Ok(TourDTOs);
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            return _TourService.GetTodayTours(lat, longs, "ed478006-b0d4-4349-805e-c6ad42638124");
+        }
+        [HttpGet("GetTourPoints")]
+        public List<TourCheckPointDTO> GetTourPoints(int tourId)
+        {
+            return _TourService.GetTourPoints(tourId);
         }
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,6 +12,18 @@ namespace SoftPrimes.Shared.ViewModels
     {
         public bool IsAuthenticated { get; set; }
     }
+    public class UserLoginModel
+    {
+        [Required]
+        [MaxLength(450)]
+        public string Username { get; set; }
+        [Required]
+        [MaxLength(450)]
+        public string Password { get; set; }
+        public string applicationType { get; set; } = "1";
+        public bool Continue { get; set; } = false;
+        public bool DisableSSO { get; set; }
+    }
     public class LoginModel
     {
 
@@ -19,8 +32,13 @@ namespace SoftPrimes.Shared.ViewModels
 
         [Required]
         public string Password { get; set; }
-
         public bool RememberMe { get; set; }
+        public string Lat { get; set; }
+        public string longs { get; set; }
+        public string MacId { get; set; }
+        public string MobileType { get; set; }
+        public string Network { get; set; }
+        public string SerailNumber { get; set; }
     }
     public class RegisterResult
     {
@@ -29,6 +47,20 @@ namespace SoftPrimes.Shared.ViewModels
     }
     public class RegisterModel
     {
+        [Required]
+        [Display(Name = "UserName")]
+        public string UserName { get; set; }
+        [Required]
+        [Display(Name = "FullNameAr")]
+        public string FullNameAr { get; set; }
+        [Required]
+        [Display(Name = "FullNameEn")]
+        public string FullNameEn { get; set; }
+        public int AgentType { get; set; }
+        public bool Active { get; set; }
+        public string SupervisorId { get; set; }
+        public int CompanyId { get; set; }
+        public byte[] Image { get; set; }
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]
@@ -44,6 +76,7 @@ namespace SoftPrimes.Shared.ViewModels
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+        public string Mobile { get; set; }
     }
     public class LoginResult
     {

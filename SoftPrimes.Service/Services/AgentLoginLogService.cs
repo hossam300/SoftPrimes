@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using SoftPrimes.BLL.BaseObjects.ReSoftPrimesitoriesInterfaces;
+using SoftPrimes.BLL.BaseObjects.RepositoriesInterfaces;
 using SoftPrimes.Service.IServices;
 using SoftPrimes.Shared.Domains;
 using SoftPrimes.Shared.ViewModels;
@@ -14,7 +14,7 @@ namespace SoftPrimes.Service.Services
     public class AgentLoginLogService : BusinessService<AgentLoginLog, AgentLoginLogDTO>, IAgentLoginLogService
     {
         private readonly IUnitOfWork _unitOfWork;
-        private IBaseRepository<AgentLoginLog> _repository;
+        private IRepository<AgentLoginLog> _repository;
         public AgentLoginLogService(IUnitOfWork unitOfWork, IMapper mapper) : base(unitOfWork, mapper)
         {
             _unitOfWork = unitOfWork;

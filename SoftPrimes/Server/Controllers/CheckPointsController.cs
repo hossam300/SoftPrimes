@@ -16,15 +16,10 @@ namespace SoftPrimes.Server.Controllers
     {
         private readonly ICheckPointService _CheckPointService;
 
-        public CheckPointsController(ICheckPointService businessService) : base(businessService)
+        public CheckPointsController(ICheckPointService businessService, IHelperServices.ISessionServices sessionSevices) : base(businessService, sessionSevices)
         {
             this._CheckPointService = businessService;
         }
-        [HttpGet("GetAllCheckPointDTO")]
-        public IActionResult GetAllCheckPointDTO()
-        {
-            var CheckPointDTOs = _CheckPointService.GetAllWithoutInclude().Select(x => new CheckPointDTO { Id = x.Id, CheckPointNameAr = x.CheckPointNameAr, CheckPointNameEn = x.CheckPointNameEn, Long = x.Long, Lat = x.Lat, QRCode = x.QRCode }).ToList();
-            return Ok(CheckPointDTOs);
-        }
+       
     }
 }

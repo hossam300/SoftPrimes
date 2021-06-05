@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using SoftPrimes.Server.Data;
+using SoftPrimes.BLL.Contexts;
 
-namespace SoftPrimes.Server.Data.Migrations
+namespace SoftPrimes.BLL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210605181753_AlterAgentAddPassword")]
+    partial class AlterAgentAddPassword
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -200,12 +202,10 @@ namespace SoftPrimes.Server.Data.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ProviderKey")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("nvarchar(max)");
@@ -242,12 +242,10 @@ namespace SoftPrimes.Server.Data.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("LoginProvider")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Name")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Value")
                         .HasColumnType("nvarchar(max)");
@@ -307,6 +305,9 @@ namespace SoftPrimes.Server.Data.Migrations
                     b.Property<string>("NormalizedUserName")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("Password")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");
@@ -376,6 +377,56 @@ namespace SoftPrimes.Server.Data.Migrations
                     b.ToTable("AgentLocationLogs");
                 });
 
+            modelBuilder.Entity("SoftPrimes.Shared.Domains.AgentLoginLog", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("AccessToken")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("AgentId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTimeOffset?>("CreatedOn")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("DeletedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTimeOffset?>("DeletedOn")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("MacId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MobileType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Network")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SerailNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTimeOffset?>("UpdatedOn")
+                        .HasColumnType("datetimeoffset");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AgentId");
+
+                    b.ToTable("AgentLoginLogs");
+                });
+
             modelBuilder.Entity("SoftPrimes.Shared.Domains.Attachment", b =>
                 {
                     b.Property<int>("Id")
@@ -440,11 +491,14 @@ namespace SoftPrimes.Server.Data.Migrations
                     b.Property<DateTimeOffset?>("DeletedOn")
                         .HasColumnType("datetimeoffset");
 
-                    b.Property<long>("Lat")
-                        .HasColumnType("bigint");
+                    b.Property<double>("Lat")
+                        .HasColumnType("float");
 
-                    b.Property<long>("Long")
-                        .HasColumnType("bigint");
+                    b.Property<string>("LocationText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("Long")
+                        .HasColumnType("float");
 
                     b.Property<byte[]>("QRCode")
                         .HasColumnType("varbinary(max)");
@@ -550,6 +604,45 @@ namespace SoftPrimes.Server.Data.Migrations
                     b.ToTable("Company");
                 });
 
+            modelBuilder.Entity("SoftPrimes.Shared.Domains.Localization", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTimeOffset?>("CreatedOn")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("DeletedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTimeOffset?>("DeletedOn")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("Key")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTimeOffset?>("UpdatedOn")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("ValueAr")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ValueEn")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Localizations");
+                });
+
             modelBuilder.Entity("SoftPrimes.Shared.Domains.Notification", b =>
                 {
                     b.Property<int>("Id")
@@ -653,6 +746,9 @@ namespace SoftPrimes.Server.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("TourState")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TourType")
                         .HasColumnType("int");
 
                     b.Property<string>("UpdatedBy")
@@ -836,6 +932,15 @@ namespace SoftPrimes.Server.Data.Migrations
                 });
 
             modelBuilder.Entity("SoftPrimes.Shared.Domains.AgentLocationLog", b =>
+                {
+                    b.HasOne("SoftPrimes.Shared.Domains.Agent", "Agent")
+                        .WithMany()
+                        .HasForeignKey("AgentId");
+
+                    b.Navigation("Agent");
+                });
+
+            modelBuilder.Entity("SoftPrimes.Shared.Domains.AgentLoginLog", b =>
                 {
                     b.HasOne("SoftPrimes.Shared.Domains.Agent", "Agent")
                         .WithMany()

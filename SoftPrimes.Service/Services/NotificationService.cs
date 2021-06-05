@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using SoftPrimes.BLL.BaseObjects.ReSoftPrimesitoriesInterfaces;
+using SoftPrimes.BLL.BaseObjects.RepositoriesInterfaces;
 using SoftPrimes.Service.IServices;
 using SoftPrimes.Shared.Domains;
 using SoftPrimes.Shared.ViewModels;
@@ -14,7 +14,7 @@ namespace SoftPrimes.Service.Services
     public class NotificationService : BusinessService<Notification, NotificationDTO>, INotificationService
     {
         private readonly IUnitOfWork _unitOfWork;
-        private IBaseRepository<Notification> _repository;
+        private IRepository<Notification> _repository;
         public NotificationService(IUnitOfWork unitOfWork, IMapper mapper) : base(unitOfWork, mapper)
         {
             _unitOfWork = unitOfWork;

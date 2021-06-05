@@ -9,8 +9,13 @@ using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore;
-using SoftPrimes.BLL.BaseObjects.ReSoftPrimesitoriesInterfaces;
+using SoftPrimes.BLL.BaseObjects.RepositoriesInterfaces;
 using System.ComponentModel.DataAnnotations;
+using System.Text;
+using IHelperServices;
+using SoftPrimes.BLL.Contexts;
+using Microsoft.AspNetCore.Http;
+using SoftPrimes.Shared.ViewModels;
 
 namespace SoftPrimes.BLL.BaseObjects
 {
@@ -18,26 +23,30 @@ namespace SoftPrimes.BLL.BaseObjects
     /// Represents the default implementation of the <see cref="IUnitOfWork"/> and <see cref="IUnitOfWork{TContext}"/> interface.
     /// </summary>
     /// <typeparam name="TContext">The type of the db context.</typeparam>
-    public class UnitOfWork<TContext> : IReSoftPrimesitoryFactory, IUnitOfWork<TContext>, IUnitOfWork where TContext : DbContext
+    public class UnitOfWork<TContext> : IRepositoryFactory, IUnitOfWork<ApplicationDbContext>, IUnitOfWork where TContext : DbContext
     {
-        private readonly TContext _context;
-        private bool disSoftPrimesed = false;
-        private Dictionary<Type, object> reSoftPrimesitories;
-
+        protected readonly ApplicationDbContext _context;
+        private bool disposed = false;
+        private Dictionary<Type, object> repositories;
+        private readonly ISessionServices _SessionServices;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        private ISession _session => _httpContextAccessor.HttpContext.Session;
         /// <summary>
         /// Initializes a new instance of the <see cref="UnitOfWork{TContext}"/> class.
         /// </summary>
         /// <param name="context">The context.</param>
-        public UnitOfWork(TContext context)
+        public UnitOfWork(ApplicationDbContext context,ISessionServices sessionServices, IHttpContextAccessor httpContextAccessor)
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
+            _SessionServices = sessionServices;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         /// <summary>
         /// Gets the db context.
         /// </summary>
         /// <returns>The instance of type <typeparamref name="TContext"/>.</returns>
-        public TContext DbContext => _context;
+        public ApplicationDbContext DbContext => _context;
 
         /// <summary>
         /// Changes the database name. This require the databases in the same machine. NOTE: This only work for MySQL right now.
@@ -71,22 +80,22 @@ namespace SoftPrimes.BLL.BaseObjects
         //}
 
         /// <summary>
-        /// Gets the specified reSoftPrimesitory for the <typeparamref name="TEntity"/>.
+        /// Gets the specified repository for the <typeparamref name="TEntity"/>.
         /// </summary>
-        /// <param name="hasCustomReSoftPrimesitory"><c>True</c> if providing custom reSoftPrimesitry</param>
+        /// <param name="hasCustomRepository"><c>True</c> if providing custom repositry</param>
         /// <typeparam name="TEntity">The type of the entity.</typeparam>
-        /// <returns>An instance of type inherited from <see cref="IReSoftPrimesitory{TEntity}"/> interface.</returns>
-        public IBaseRepository<TEntity> GetRepository<TEntity>(bool hasCustomReSoftPrimesitory = false) where TEntity : class
+        /// <returns>An instance of type inherited from <see cref="IRepository{TEntity}"/> interface.</returns>
+        public IRepository<TEntity> GetRepository<TEntity>(bool hasCustomRepository = false) where TEntity : class
         {
-            if (reSoftPrimesitories == null)
+            if (repositories == null)
             {
-                reSoftPrimesitories = new Dictionary<Type, object>();
+                repositories = new Dictionary<Type, object>();
             }
 
-            // what's the best way to support custom reSoftPrimesity?
-            if (hasCustomReSoftPrimesitory)
+            // what's the best way to support custom reposity?
+            if (hasCustomRepository)
             {
-                var customRepo = _context.GetService<IBaseRepository<TEntity>>();
+                var customRepo = _context.GetService<IRepository<TEntity>>();
                 if (customRepo != null)
                 {
                     return customRepo;
@@ -94,12 +103,12 @@ namespace SoftPrimes.BLL.BaseObjects
             }
 
             var type = typeof(TEntity);
-            if (!reSoftPrimesitories.ContainsKey(type))
+            if (!repositories.ContainsKey(type))
             {
-                reSoftPrimesitories[type] = new BaseRepository<TEntity>(_context);
+                repositories[type] = new BaseRepository<TEntity>(_context,_SessionServices, _httpContextAccessor);
             }
 
-            return (IBaseRepository<TEntity>)reSoftPrimesitories[type];
+            return (IRepository<TEntity>)repositories[type];
         }
 
       
@@ -121,7 +130,27 @@ namespace SoftPrimes.BLL.BaseObjects
             }
             return _context.SaveChanges();
         }
+        public bool IsExisted(CheckUniqueDTO checkUniqueDTO)
+        {
+            var Query = new StringBuilder("SELECT COUNT(*) FROM ");
+            Query.Append(checkUniqueDTO.TableName + " WHERE ");
+            for (int i = 0; i < checkUniqueDTO.Fields.Length; i++)
+            {
+                Query.Append(checkUniqueDTO.Fields[i] + " LIKE '" + checkUniqueDTO.Values[i] + "'");
+                if (checkUniqueDTO.Fields.Length - 1 != i)
+                    Query.Append(" AND ");
+            }
+            var FinalQuery = Query.ToString();
 
+            using (var command = _context.Database.GetDbConnection().CreateCommand())
+            {
+                command.CommandText = FinalQuery;
+                _context.Database.OpenConnection();
+                var result = command.ExecuteScalar();
+                _context.Database.CloseConnection();
+                return ((int)result) > 0;
+            }
+        }
         /// <summary>
         /// Asynchronously saves all changes made in this unit of work to the database.
         /// </summary>
@@ -174,25 +203,25 @@ namespace SoftPrimes.BLL.BaseObjects
         /// <summary>
         /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
         /// </summary>
-        /// <param name="disSoftPrimesing">The disSoftPrimesing.</param>
-        protected virtual void Dispose(bool disSoftPrimesing)
+        /// <param name="disposing">The disposing.</param>
+        protected virtual void Dispose(bool disposing)
         {
-            if (!disSoftPrimesed)
+            if (!disposed)
             {
-                if (disSoftPrimesing)
+                if (disposing)
                 {
-                    // clear reSoftPrimesitories
-                    if (reSoftPrimesitories != null)
+                    // clear repositories
+                    if (repositories != null)
                     {
-                        reSoftPrimesitories.Clear();
+                        repositories.Clear();
                     }
 
-                    // disSoftPrimese the db context.
+                    // dispose the db context.
                     _context.Dispose();
                 }
             }
 
-            disSoftPrimesed = true;
+            disposed = true;
         }
 
         public void TrackGraph(object rootEntity, Action<EntityEntryGraphNode> callback)

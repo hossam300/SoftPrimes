@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using SoftPrimes.BLL.BaseObjects.ReSoftPrimesitoriesInterfaces;
+using SoftPrimes.BLL.BaseObjects.RepositoriesInterfaces;
 using SoftPrimes.Service.IServices;
 using SoftPrimes.Shared.Domains;
 using SoftPrimes.Shared.ViewModels;
@@ -14,7 +14,7 @@ namespace SoftPrimes.Service.Services
     public class CheckPointTourCommentService : BusinessService<CheckPointTourComment, CheckPointTourCommentDTO>, ICheckPointTourCommentService
     {
         private readonly IUnitOfWork _unitOfWork;
-        private IBaseRepository<CheckPointTourComment> _repository;
+        private IRepository<CheckPointTourComment> _repository;
         public CheckPointTourCommentService(IUnitOfWork unitOfWork, IMapper mapper) : base(unitOfWork, mapper)
         {
             _unitOfWork = unitOfWork;

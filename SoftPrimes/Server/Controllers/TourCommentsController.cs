@@ -16,23 +16,10 @@ namespace SoftPrimes.Server.Controllers
     {
         private readonly ITourCommentService _TourCommentService;
 
-        public TourCommentsController(ITourCommentService businessService) : base(businessService)
+        public TourCommentsController(ITourCommentService businessService, IHelperServices.ISessionServices sessionSevices) : base(businessService, sessionSevices)
         {
             this._TourCommentService = businessService;
         }
-        [HttpGet("GetAllTourCommentDTO")]
-        public IActionResult GetAllTourCommentDTO()
-        {
-            var TourCommentDTOs = _TourCommentService.GetAllWithoutInclude().Select(x => new TourCommentDTO
-            {
-                Id = x.Id,
-                Comment = new CommentDTO { AttachmentId = x.Comment.AttachmentId, CreatedBy = x.Comment.CreatedBy, CreatedOn = x.Comment.CreatedOn, Id = x.CommentId, ReplayToComment = x.Comment.ReplayToComment, Text = x.Comment.Text },
-                CommentId = x.CommentId,
-                CreatedBy = x.CreatedBy,
-                CreatedOn = x.CreatedOn,
-                TourId = x.TourId
-            }).ToList();
-            return Ok(TourCommentDTOs);
-        }
+       
     }
 }

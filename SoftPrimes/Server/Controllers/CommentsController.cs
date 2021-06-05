@@ -16,24 +16,10 @@ namespace SoftPrimes.Server.Controllers
     {
         private readonly ICommentService _CommentService;
 
-        public CommentsController(ICommentService businessService) : base(businessService)
+        public CommentsController(ICommentService businessService, IHelperServices.ISessionServices sessionSevices) : base(businessService, sessionSevices)
         {
             this._CommentService = businessService;
         }
-        [HttpGet("GetAllCommentDTO")]
-        public IActionResult GetAllCommentDTO()
-        {
-            var CommentDTOs = _CommentService.GetAllWithoutInclude().Select(x => new CommentDTO
-            {
-                Id = x.Id,
-                AttachmentId = x.AttachmentId,
-                ReplayToComment = x.ReplayToComment,
-                Text = x.Text,
-                Attachment = new AttachmentDTO { AttachmentName = x.Attachment.AttachmentName, AttachmentType = x.Attachment.AttachmentType, AttachmentUrl = x.Attachment.AttachmentUrl, CreatedBy = x.Attachment.CreatedBy, CreatedOn = x.Attachment.CreatedOn, Id = x.Attachment.Id },
-                CreatedOn = x.CreatedOn,
-                CreatedBy = x.CreatedBy
-            }).ToList();
-            return Ok(CommentDTOs);
-        }
+       
     }
 }

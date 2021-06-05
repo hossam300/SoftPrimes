@@ -11,7 +11,7 @@ namespace SoftPrimes.Shared.Domains
     {
         public int Id { get; set; }
         public string AgentId { get; set; }
-        public Agent Agent { get; set; }
+        public virtual Agent Agent { get; set; }
         public double Lat { get; set; }
         public double Long { get; set; }
         public string CreatedBy { get; set; }

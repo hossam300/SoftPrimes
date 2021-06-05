@@ -1,4 +1,6 @@
-﻿using SoftPrimes.BLL.BaseObjects.ReSoftPrimesitoriesInterfaces;
+﻿using SoftPrimes.BLL.BaseObjects.RepositoriesInterfaces;
+using SoftPrimes.BLL.Contexts;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -24,12 +26,12 @@ namespace SoftPrimes.BLL.BaseObjects
         /// </remarks>
         public static IServiceCollection AddUnitOfWork<TContext>(this IServiceCollection services) where TContext : DbContext
         {
-            services.AddTransient<IReSoftPrimesitoryFactory, UnitOfWork<TContext>>();
+            services.AddTransient<IRepositoryFactory, UnitOfWork<ApplicationDbContext>>();
             // Following has a issue: IUnitOfWork cannot support multiple dbcontext/database, 
             // that means cannot call AddUnitOfWork<TContext> multiple times.
             // Solution: check IUnitOfWork whether or null
-            services.AddTransient<IUnitOfWork, UnitOfWork<TContext>>();
-            services.AddTransient<IUnitOfWork<TContext>, UnitOfWork<TContext>>();
+            services.AddTransient<IUnitOfWork, UnitOfWork<ApplicationDbContext>>();
+            services.AddTransient<IUnitOfWork<ApplicationDbContext>, UnitOfWork<ApplicationDbContext>>();
 
             return services;
         }
@@ -48,8 +50,8 @@ namespace SoftPrimes.BLL.BaseObjects
             where TContext1 : DbContext
             where TContext2 : DbContext
         {
-            services.AddScoped<IUnitOfWork<TContext1>, UnitOfWork<TContext1>>();
-            services.AddScoped<IUnitOfWork<TContext2>, UnitOfWork<TContext2>>();
+            services.AddScoped<IUnitOfWork<ApplicationDbContext>, UnitOfWork<ApplicationDbContext>>();
+            services.AddScoped<IUnitOfWork<ApplicationDbContext>, UnitOfWork<ApplicationDbContext>>();
 
             return services;
         }
@@ -70,9 +72,9 @@ namespace SoftPrimes.BLL.BaseObjects
             where TContext2 : DbContext
             where TContext3 : DbContext
         {
-            services.AddScoped<IUnitOfWork<TContext1>, UnitOfWork<TContext1>>();
-            services.AddScoped<IUnitOfWork<TContext2>, UnitOfWork<TContext2>>();
-            services.AddScoped<IUnitOfWork<TContext3>, UnitOfWork<TContext3>>();
+            services.AddScoped<IUnitOfWork<ApplicationDbContext>, UnitOfWork<ApplicationDbContext>>();
+            services.AddScoped<IUnitOfWork<ApplicationDbContext>, UnitOfWork<ApplicationDbContext>>();
+            services.AddScoped<IUnitOfWork<ApplicationDbContext>, UnitOfWork<ApplicationDbContext>>();
 
             return services;
         }
@@ -95,26 +97,26 @@ namespace SoftPrimes.BLL.BaseObjects
             where TContext3 : DbContext
             where TContext4 : DbContext
         {
-            services.AddScoped<IUnitOfWork<TContext1>, UnitOfWork<TContext1>>();
-            services.AddScoped<IUnitOfWork<TContext2>, UnitOfWork<TContext2>>();
-            services.AddScoped<IUnitOfWork<TContext3>, UnitOfWork<TContext3>>();
-            services.AddScoped<IUnitOfWork<TContext4>, UnitOfWork<TContext4>>();
+            services.AddScoped<IUnitOfWork<ApplicationDbContext>, UnitOfWork<ApplicationDbContext>>();
+            services.AddScoped<IUnitOfWork<ApplicationDbContext>, UnitOfWork<ApplicationDbContext>>();
+            services.AddScoped<IUnitOfWork<ApplicationDbContext>, UnitOfWork<ApplicationDbContext>>();
+            services.AddScoped<IUnitOfWork<ApplicationDbContext>, UnitOfWork<ApplicationDbContext>>();
 
             return services;
         }
 
         /// <summary>
-        /// Registers the custom reSoftPrimesitory as a service in the <see cref="IServiceCollection"/>.
+        /// Registers the custom repository as a service in the <see cref="IServiceCollection"/>.
         /// </summary>
         /// <typeparam name="TEntity">The type of the entity.</typeparam>
-        /// <typeparam name="TReSoftPrimesitory">The type of the custom reSoftPrimesitry.</typeparam>
+        /// <typeparam name="TRepository">The type of the custom repositry.</typeparam>
         /// <param name="services">The <see cref="IServiceCollection"/> to add services to.</param>
         /// <returns>The same service collection so that multiple calls can be chained.</returns>
-        public static IServiceCollection AddCustomReSoftPrimesitory<TEntity, TReSoftPrimesitory>(this IServiceCollection services)
+        public static IServiceCollection AddCustomRepository<TEntity, TRepository>(this IServiceCollection services)
             where TEntity : class
-            where TReSoftPrimesitory : class, IBaseRepository<TEntity>
+            where TRepository : class, IRepository<TEntity>
         {
-            services.AddScoped<IBaseRepository<TEntity>, TReSoftPrimesitory>();
+            services.AddScoped<IRepository<TEntity>, TRepository>();
 
             return services;
         }

@@ -16,7 +16,7 @@ namespace SoftPrimes.Shared.Domains
         public string Network { get; set; }
         public string SerailNumber { get; set; }
         public string AgentId { get; set; }
-        public Agent Agent { get; set; }
+        public virtual Agent Agent { get; set; }
 
         public string CreatedBy { get ; set ; }
         public DateTimeOffset? CreatedOn { get ; set ; }

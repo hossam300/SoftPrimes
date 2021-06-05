@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using SoftPrimes.BLL.BaseObjects.ReSoftPrimesitoriesInterfaces;
+using SoftPrimes.BLL.BaseObjects.RepositoriesInterfaces;
 using SoftPrimes.Service.IServices;
 using SoftPrimes.Shared.Domains;
 using SoftPrimes.Shared.ViewModels;
@@ -14,7 +14,7 @@ namespace SoftPrimes.Service.Services
     public class TourCommentService : BusinessService<TourComment, TourCommentDTO>, ITourCommentService
     {
         private readonly IUnitOfWork _unitOfWork;
-        private IBaseRepository<TourComment> _repository;
+        private IRepository<TourComment> _repository;
         public TourCommentService(IUnitOfWork unitOfWork, IMapper mapper) : base(unitOfWork, mapper)
         {
             _unitOfWork = unitOfWork;

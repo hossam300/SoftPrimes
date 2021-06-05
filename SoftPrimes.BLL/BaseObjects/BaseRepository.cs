@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Query;
 using SoftPrimes.BLL.BaseObjects.PagedList;
-using SoftPrimes.BLL.BaseObjects.ReSoftPrimesitoriesInterfaces;
+using SoftPrimes.BLL.BaseObjects.RepositoriesInterfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,26 +11,36 @@ using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.IO;
+
+using SoftPrimes.BLL.Contexts;
+using Microsoft.AspNetCore.Http;
+using IHelperServices;
+using SoftPrimes.Shared.ModelInterfaces;
 
 namespace SoftPrimes.BLL.BaseObjects
 {
     /// <summary>
-    /// Represents a default generic reSoftPrimesitory implements the <see cref="IReSoftPrimesitory{TEntity}"/> interface.
+    /// Represents a default generic repository implements the <see cref="IRepository{TEntity}"/> interface.
     /// </summary>
     /// <typeparam name="TEntity">The type of the entity.</typeparam>
-    public class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : class
+    public class BaseRepository<TEntity> : IRepository<TEntity> where TEntity : class
     {
-        public readonly DbContext _dbContext;
+        public readonly ApplicationDbContext _dbContext;
         protected readonly DbSet<TEntity> _dbSet;
-
+        private readonly ISessionServices _SessionServices;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        private ISession _session => _httpContextAccessor.HttpContext.Session;
         /// <summary>
-        /// Initializes a new instance of the <see cref="ReSoftPrimesitory{TEntity}"/> class.
+        /// Initializes a new instance of the <see cref="Repository{TEntity}"/> class.
         /// </summary>
         /// <param name="dbContext">The database context.</param>
-        public BaseRepository(DbContext dbContext)
+        public BaseRepository(ApplicationDbContext dbContext, ISessionServices sessionServices, IHttpContextAccessor httpContextAccessor)
         {
             _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
             _dbSet = _dbContext.Set<TEntity>();
+            _SessionServices = sessionServices;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         /// <summary>
@@ -53,19 +63,30 @@ namespace SoftPrimes.BLL.BaseObjects
         /// Gets all entities. This method is not recommended
         /// </summary>
         /// <returns>The <see cref="IQueryable{TEntity}"/>.</returns>
-        [Obsolete("This method is not recommended, please use GetPagedList or GetPagedListAsync methods")]
-        public IQueryable<TEntity> GetAll()
+        public virtual IQueryable<TEntity> GetAll(bool WithTracking = true)
         {
-            var query = _dbContext.Set<TEntity>().AsQueryable();
-            var navigations = _dbContext.Model.FindEntityType(typeof(TEntity))
-                .GetDerivedTypesInclusive()
-                .SelectMany(type => type.GetNavigations())
-                .Distinct();
-            foreach (var property in navigations)
-                query = query.Include(property.Name);
-            return query;
+            if (WithTracking)
+                return this._dbSet;
+            else
+                return this._dbSet.AsNoTracking();
         }
-
+        public virtual TEntity GetById(object Id, bool WithTracking = true)
+        {
+            if (WithTracking)
+                return this._dbSet.Find(Id);
+            else
+                return this._dbSet.Find(Id);
+        }
+        private void SetProperty(object obj, string property, object value)
+        {
+            try
+            {
+                var prop = obj.GetType().GetProperty(property, BindingFlags.Public | BindingFlags.Instance);
+                if (prop != null && prop.CanWrite)
+                    prop.SetValue(obj, value, null);
+            }
+            catch { } //property not exist or inserted value doesn't match the property type!
+        }
         public IQueryable<TEntity> GetAllWithoutInclude()
         {
             var query = _dbContext.Set<TEntity>().AsQueryable();
@@ -420,34 +441,34 @@ namespace SoftPrimes.BLL.BaseObjects
         /// </summary>
         /// <param name="keyValues">The values of the primary key for the entity to be found.</param>
         /// <returns>The found entity or null.</returns>
-        public virtual TEntity Find(params object[] keyValues)
-        {
-            var query = _dbContext.Set<TEntity>().AsQueryable();
-            var navigations = _dbContext.Model.FindEntityType(typeof(TEntity))
-                .GetDerivedTypesInclusive().SelectMany(type => type.GetNavigations()).Distinct();
-            foreach (var property in navigations)
-                query = query.Include(property.Name);
-            var Id = typeof(TEntity).GetProperties().FirstOrDefault(prop => prop.Name == "Id");
-            TEntity i = null;
-            foreach (var item in query)
-            {
-                var x = (int)Id.GetValue(item);
-                var y = (int)keyValues[0];
-                if (x == y)
-                {
-                    i = item;
-                    return i;
-                }
-            }
-            return i;
-        }
+        //public virtual TEntity Find(params object[] keyValues)
+        //{
+        //    var query = _dbContext.Set<TEntity>().AsQueryable();
+        //    var navigations = _dbContext.Model.FindEntityType(typeof(TEntity))
+        //        .GetDerivedTypesInclusive().SelectMany(type => type.GetNavigations()).Distinct();
+        //    foreach (var property in navigations)
+        //        query = query.Include(property.Name);
+        //    var Id = typeof(TEntity).GetProperties().FirstOrDefault(prop => prop.Name == "Id");
+        //    TEntity i = null;
+        //    foreach (var item in query)
+        //    {
+        //        var x = (int)Id.GetValue(item);
+        //        var y = (int)keyValues[0];
+        //        if (x == y)
+        //        {
+        //            i = item;
+        //            return i;
+        //        }
+        //    }
+        //    return i;
+        //}
 
         /// <summary>h
         /// Finds an entity with the given primary key values. If found, is attached to the context and returned. If no entity is found, then null is returned.
         /// </summary>
         /// <param name="keyValues">The values of the primary key for the entity to be found.</param>
         /// <returns>A <see cref="Task{TEntity}" /> that represents the asynchronous insert operation.</returns>
-        public virtual async Task<TEntity> FindAsync(params object[] keyValues) => await _dbSet.FindAsync(keyValues);
+       // public virtual async Task<TEntity> FindAsync(params object[] keyValues) => await _dbSet.FindAsync(keyValues);
 
         /// <summary>
         /// Finds an entity with the given primary key values. If found, is attached to the context and returned. If no entity is found, then null is returned.
@@ -462,38 +483,123 @@ namespace SoftPrimes.BLL.BaseObjects
         /// </summary>
         /// <param name="predicate"></param>
         /// <returns></returns>
-        public virtual int Count(Expression<Func<TEntity, bool>> predicate = null)
-        {
-            if (predicate == null)
-            {
-                return _dbSet.Count();
-            }
-            else
-            {
-                return _dbSet.Count(predicate);
-            }
-        }
+        //public virtual int Count(Expression<Func<TEntity, bool>> predicate = null)
+        //{
+        //    if (predicate == null)
+        //    {
+        //        return _dbSet.Count();
+        //    }
+        //    else
+        //    {
+        //        return _dbSet.Count(predicate);
+        //    }
+        //}
 
         /// <summary>
         /// Inserts a new entity synchronously.
         /// </summary>
         /// <param name="entity">The entity to insert.</param>
-        public virtual void Insert(TEntity entity)
+
+        /// <summary>
+        /// Bulk Insert and Ordinary Multiple Insert
+        /// </summary>
+        /// <param name="Entities"></param>
+        /// <returns></returns>
+        public virtual IEnumerable<TEntity> Insert(IEnumerable<TEntity> Entities)
         {
-            var entry = _dbSet.Add(entity);
+            #region BulkInsert
+            //try
+            //{
+            //    List<TDbEntity> entityList = new List<TDbEntity>();
+            //    foreach (var Entity in Entities)
+            //    {
+            //        if (typeof(IAuditableInsert).IsAssignableFrom(Entity.GetType()))
+            //        {
+            //            (Entity as IAuditableInsert).CreatedOn = DateTimeOffset.Now;
+            //            (Entity as IAuditableInsert).CreatedBy = this._SessionServices.UserId;
+            //        }
+            //        entityList.Add(Entity);
+            //    }
+            //    _Context.BulkInsert(entityList, new BulkConfig { PreserveInsertOrder = true, SetOutputIdentity = true, UseTempDB = false });
+            //    //_Context.BulkInsert(entityList, new BulkConfig { PreserveInsertOrder = true, SetOutputIdentity = true });
+            //    return entityList;
+            //}
+            //catch (Exception ex)
+            //{
+            //    throw ex;
+            //}
+            //return returnedData;
+            #endregion
+            try
+            {
+                //if (System.IO.File.Exists("e:\\logMasar4.txt"))
+                //{
+                //    using (StreamWriter sw = System.IO.File.AppendText("e:\\logMasar4.txt"))
+                //    {
+                //        sw.WriteLine(" start Log ");
+                //    }
+                //}
+                int RecordsInserted;
+                for (int i = 0; i < Entities.Count(); i++)
+                {
+                    //set CreatedOn, CreatedBy properties
+                    SetProperty(Entities.ElementAt(i), "CreatedOn", DateTimeOffset.Now);
+                    SetProperty(Entities.ElementAt(i), "CreatedBy", _SessionServices?.UserId);
+                   
+                    //add entity
+                    var ent = this._dbSet.Add(Entities.ElementAt(i));
+                    RecordsInserted = _dbContext.SaveChanges();
+                    _dbContext.Entry(Entities.ElementAt(i)).Reload();
+                }
+
+                //if (System.IO.File.Exists("e:\\logMasar4.txt"))
+                //{
+                //    using (StreamWriter sw = System.IO.File.AppendText("e:\\logMasar4.txt"))
+                //    {
+                //        sw.WriteLine("End log");
+                //    }
+                //}
+              //  _dbContext.Entry(Entities.First()).Reload();
+                return Entities;
+
+            }
+            catch (Exception ex)
+            {
+                if (System.IO.File.Exists("e:\\logMasar4.txt"))
+                {
+                    using (StreamWriter sw = System.IO.File.AppendText("e:\\logMasar4.txt"))
+                    {
+                        sw.WriteLine("Exception=" + ex.StackTrace != null ? ex.StackTrace : ex.Message);
+                    }
+                }
+                return Entities;
+            }
         }
 
         /// <summary>
-        /// Inserts a range of entities synchronously.
+        /// Single Insert
         /// </summary>
-        /// <param name="entities">The entities to insert.</param>
-        public virtual void Insert(params TEntity[] entities) => _dbSet.AddRange(entities);
+        /// <param name="Entities"></param>
+        /// <returns></returns>
+        public virtual TEntity Insert(TEntity Entity)
+        {
+            try
+            {
+                //set CreatedOn, CreatedBy properties
+                SetProperty(Entity, "CreatedOn", DateTimeOffset.Now);
+                SetProperty(Entity, "CreatedBy", _SessionServices?.UserId);
+                //add entity
+                int RecordsInserted;
+                this._dbSet.Add(Entity);
+                RecordsInserted = this._dbContext.SaveChanges();
+                return Entity;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
 
-        /// <summary>
-        /// Inserts a range of entities synchronously.
-        /// </summary>
-        /// <param name="entities">The entities to insert.</param>
-        public virtual void Insert(IEnumerable<TEntity> entities) => _dbSet.AddRange(entities);
 
         /// <summary>
         /// Inserts a new entity asynchronously.
@@ -528,11 +634,12 @@ namespace SoftPrimes.BLL.BaseObjects
         public virtual Task InsertAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = default(CancellationToken)) => _dbSet.AddRangeAsync(entities, cancellationToken);
         private object GetPrimaryKey(TEntity entry)
         {
+            //    var key = _dbContext.Model.FindEntityType(typeof(TEntity).Name).FindPrimaryKey().Properties.FirstOrDefault();
             var myObject = entry;
             var property =
                 myObject.GetType()
                     .GetProperties()
-                    .FirstOrDefault(prop => prop.Name == "Id");
+                    .FirstOrDefault(prop => prop.Name == typeof(TEntity).Name + "Id");
             return (int)property.GetValue(myObject, null);
         }
 
@@ -541,103 +648,38 @@ namespace SoftPrimes.BLL.BaseObjects
         /// </summary>
         /// <param name="entity">The entity.</param>
 
-        public virtual void Update(TEntity entity)
+        public virtual void Update(TEntity Entity)
         {
+            //var DbEntry = this._Context.Attach(_DbSet.Find(this.GetKey(Entity)));
+            if (typeof(IAuditableUpdate).IsAssignableFrom(Entity.GetType()))
+            {
+                (Entity as IAuditableUpdate).UpdatedOn = DateTimeOffset.Now;
+                (Entity as IAuditableUpdate).UpdatedBy = _SessionServices.UserId;
+            }
+            this._dbSet.Update(Entity);
+            try
+            {
+                this._dbContext.SaveChanges();
+            }
+            catch (Exception ex)
+            {
 
+                throw;
+            }
+        }
 
-            //var dbEntityEntry = _dbContext.Entry(entity);
-
-            //foreach (var property in dbEntityEntry.Properties)
-            //{
-            //    var original = dbEntityEntry.OriginalValues.GetValue<TEntity>(property.Metadata.Name);
-            //    var current = dbEntityEntry.CurrentValues.GetValue<TEntity>(property.Metadata.Name);
-
-            //    if (original != null && !original.Equals(current))
-            //        dbEntityEntry.Property(property.Metadata.Name).IsModified = true;
-            //}
-            //var entry = this._dbContext.Entry(entity);
-            //var key = this.GetPrimaryKey(entity);
-            //if (entry.State == EntityState.Detached)
-            //{
-            //    var currentEntry = this._dbSet.Find(key);
-            //    if (currentEntry != null)
-            //    {
-            //        var attachedEntry = this._dbContext.Entry(currentEntry);
-            //        attachedEntry.CurrentValues.SetValues(entity);
-            //    }
-            //    else
-            //    {
-            //        this._dbSet.Attach(entity);
-            //        entry.State = EntityState.Modified;
-            //    }
-            //}
-            //else
-            //{
-            //    this._dbSet.Attach(entity);
-            //    entry.State = EntityState.Modified;
-            //}
-
-            //var dbEntityEntry = _dbContext.Entry(entity);
-
-            //foreach (var property in dbEntityEntry.Properties)
-            //{
-            //    var original = dbEntityEntry.OriginalValues.GetValue<TEntity>(property.Metadata.Name);
-            //    var current = dbEntityEntry.CurrentValues.GetValue<TEntity>(property.Metadata.Name);
-
-            //    if (original != null && !original.Equals(current))
-            //        dbEntityEntry.Property(property.Metadata.Name).IsModified = true;
-            //}
-            //var entry = this._dbContext.Entry(entity);
-            //var key = this.GetPrimaryKey(entity);
-
-            //if (entry.State == EntityState.Detached)
-            //{
-            //    var currentEntry = this.Find(key);
-            //    if (currentEntry != null)
-            //    {
-            //        var attachedEntry = this._dbContext.Entry(currentEntry);
-            //        attachedEntry.CurrentValues.SetValues(entity);
-            //    }
-            //    else
-            //    {
-            //        this._dbSet.Attach(entity);
-            //        entry.State = EntityState.Modified;
-            //    }
-            //}
-            //else
-            //{
-            //    this._dbSet.Attach(entity);
-            //    entry.State = EntityState.Modified;
-            //}
-            //var key = this.GetPrimaryKey(entity);
-            //var entry = this._dbContext.Entry(entity);
-            //foreach (var property in entry.Properties)
-            //{
-            //    var original = entry.OriginalValues[property.Metadata.Name];
-            //    var current = entry.CurrentValues[property.Metadata.Name];
-            //    if (original != null && !original.Equals(current))
-            //        entry.Property(property.Metadata.Name).IsModified = true;
-            //}
-            //if (entry.State == EntityState.Detached)
-            //{
-            //    var currentEntry = this._dbSet.Find(key);
-            //    if (currentEntry != null)
-            //    {
-            //        var attachedEntry = this._dbContext.Entry(currentEntry);
-            //        attachedEntry.CurrentValues.SetValues(entity);
-            //    }
-            //    else
-            //    {
-            //        this._dbSet.Attach(entity);
-            //        entry.State = EntityState.Modified;
-            //    }
-            //}
-            //else
-            //{
-            //    this._dbSet.Attach(entity);
-            //    entry.State = EntityState.Modified;
-            //}
-            _dbSet.Update(entity);
+        public virtual void UpdateRange(IEnumerable<TEntity> Entites)
+        {
+            if (typeof(IAuditableUpdate).IsAssignableFrom(Entites.GetType()))
+            {
+                foreach (var Entity in Entites)
+                {
+                    (Entity as IAuditableUpdate).UpdatedOn = DateTimeOffset.Now;
+                    (Entity as IAuditableUpdate).UpdatedBy = this._SessionServices.UserId;
+                }
+            }
+            this._dbSet.UpdateRange(Entites);
+            this._dbContext.SaveChanges();
         }
 
         /// <summary>
@@ -667,6 +709,24 @@ namespace SoftPrimes.BLL.BaseObjects
         /// Deletes the specified entity.
         /// </summary>
         /// <param name="entity">The entity to delete.</param>
+        public virtual IEnumerable<object> Delete(IEnumerable<object> Ids)
+        {
+            for (int i = 0; i < Ids.Count(); i++)
+            {
+                var ToBeRemoved = this.GetById(Ids.ElementAt(i));
+                //if (typeof(IAuditableDelete).IsAssignableFrom(ToBeRemoved.GetType()))
+                //{
+                //    (ToBeRemoved as IAuditableDelete).DeletedOn = DateTime.Now;
+                //    (ToBeRemoved as IAuditableDelete).DeletedBy = this._SessionServices.UserId;
+                //}
+                //else
+                //{
+                    this._dbSet.Remove(ToBeRemoved);
+               // }
+            }
+            this._dbContext.SaveChanges();
+            return Ids;
+        }
         public virtual void Delete(TEntity entity) => _dbSet.Remove(entity);
 
         /// <summary>
@@ -718,5 +778,36 @@ namespace SoftPrimes.BLL.BaseObjects
             }
             return result.ToArray<object>();
         }
+        public virtual object[] GetKeyNames<T>(T entity)
+        {
+            return _dbContext.Model.FindEntityType(typeof(T)).FindPrimaryKey().Properties
+                .Select(x => x.Name).ToArray();
+        }
+
+        public virtual TEntity Find(params object[] Ids)
+        {
+            return this._dbContext.Find<TEntity>(Ids);
+        }
+
+        public virtual async Task<TEntity> FindAsync(params object[] Ids)
+        {
+            return await this._dbContext.FindAsync<TEntity>(Ids);
+        }
+
+        public virtual async Task<TEntity> FirstOrDefaultAsync(Expression<Func<TEntity, bool>> Predicate, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return await this._dbSet.FirstOrDefaultAsync(Predicate, cancellationToken);
+        }
+
+        public int Count(Expression<Func<TEntity, bool>> Predicate)
+        {
+            return this._dbSet.Count(Predicate);
+        }
+
+        public virtual IQueryable<TEntity> Search(Expression<Func<TEntity, bool>> predicate, int size)
+        {
+            return _dbSet.Where(predicate).Take(size);
+        }
+
     }
 }

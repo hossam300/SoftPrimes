@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SoftPrimes.BLL.BaseObjects.ReSoftPrimesitoriesInterfaces
+namespace SoftPrimes.BLL.BaseObjects.RepositoriesInterfaces
 {
     /// <summary>
     /// Defines the interface(s) for generic unit of work.
@@ -13,7 +13,7 @@ namespace SoftPrimes.BLL.BaseObjects.ReSoftPrimesitoriesInterfaces
     {
         /// <summary>
         /// Gets the db context.
-        ///  </summary>
+        /// </summary>
         /// <returns>The instance of type <typeparamref name="TContext"/>.</returns>
         TContext DbContext { get; }
 

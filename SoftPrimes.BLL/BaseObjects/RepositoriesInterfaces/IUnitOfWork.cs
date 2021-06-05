@@ -1,11 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
+using SoftPrimes.Shared.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SoftPrimes.BLL.BaseObjects.ReSoftPrimesitoriesInterfaces
+namespace SoftPrimes.BLL.BaseObjects.RepositoriesInterfaces
 {
     /// <summary>
     /// Defines the interface(s) for unit of work.
@@ -22,12 +23,12 @@ namespace SoftPrimes.BLL.BaseObjects.ReSoftPrimesitoriesInterfaces
         //void ChangeDatabase(string database);
 
         /// <summary>
-        /// Gets the specified reSoftPrimesitory for the <typeparamref name="TEntity"/>.
+        /// Gets the specified repository for the <typeparamref name="TEntity"/>.
         /// </summary>
-        /// <param name="hasCustomReSoftPrimesitory"><c>True</c> if providing custom reSoftPrimesitry</param>
+        /// <param name="hasCustomRepository"><c>True</c> if providing custom repositry</param>
         /// <typeparam name="TEntity">The type of the entity.</typeparam>
-        /// <returns>An instance of type inherited from <see cref="IReSoftPrimesitory{TEntity}"/> interface.</returns>
-        IBaseRepository<TEntity> GetRepository<TEntity>(bool hasCustomReSoftPrimesitory = false) where TEntity : class;
+        /// <returns>An instance of type inherited from <see cref="IRepository{TEntity}"/> interface.</returns>
+        IRepository<TEntity> GetRepository<TEntity>(bool hasCustomRepository = false) where TEntity : class;
 
         /// <summary>
         /// Saves all changes made in this context to the database.
@@ -50,5 +51,6 @@ namespace SoftPrimes.BLL.BaseObjects.ReSoftPrimesitoriesInterfaces
         /// <param name="rootEntity"> Root entity</param>
         /// <param name="callback">Delegate to convert Object's State properities to Entities entry state.</param>
         void TrackGraph(object rootEntity, Action<EntityEntryGraphNode> callback);
+        public bool IsExisted(CheckUniqueDTO checkUniqueDTO);
     }
 }

@@ -16,15 +16,9 @@ namespace SoftPrimes.Server.Controllers
     {
         private readonly IAgentLocationLogService _AgentLocationLogService;
 
-        public AgentLocationLogsController(IAgentLocationLogService businessService) : base(businessService)
+        public AgentLocationLogsController(IAgentLocationLogService businessService, IHelperServices.ISessionServices sessionSevices) : base(businessService, sessionSevices)
         {
             this._AgentLocationLogService = businessService;
-        }
-        [HttpGet("GetAllAgentLocationLogDTO")]
-        public IActionResult GetAllAgentLocationLogDTO()
-        {
-            var AgentLocationLogDTOs = _AgentLocationLogService.GetAllWithoutInclude().Select(x => new AgentLocationLogDTO { Id = x.Id, AgentId = x.AgentId, Lat = x.Lat, Long = x.Long }).ToList();
-            return Ok(AgentLocationLogDTOs);
         }
     }
 }

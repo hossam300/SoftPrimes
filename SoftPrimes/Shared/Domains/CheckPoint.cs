@@ -8,8 +8,9 @@ namespace SoftPrimes.Shared.Domains
         public int Id { get; set; }
         public string CheckPointNameAr { get; set; }
         public string CheckPointNameEn { get; set; }
-        public long Lat { get; set; }
-        public long Long { get; set; }
+        public double Lat { get; set; }
+        public double Long { get; set; }
+        public string LocationText { get; set; }
         public byte[] QRCode { get; set; }
         public string DeletedBy { get; set; }
         public DateTimeOffset? DeletedOn { get; set; }

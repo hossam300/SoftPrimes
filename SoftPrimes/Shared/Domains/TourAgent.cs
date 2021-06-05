@@ -11,16 +11,17 @@ namespace SoftPrimes.Shared.Domains
     {
         public int Id { get; set; }
         public int TourId { get; set; }
-        public Tour Tour { get; set; }
+        public virtual Tour Tour { get; set; }
+        public TourType TourType { get; set; }
         public DateTimeOffset TourDate { get; set; }
-        public List<TourCheckPoint> CheckPoints { get; set; }
+        public virtual List<TourCheckPoint> CheckPoints { get; set; }
         public string AgentId { get; set; }
-        public Agent Agent { get; set; }
+        public virtual Agent Agent { get; set; }
         public TourState TourState { get; set; }
         public double EstimatedDistance { get; set; }
         public DateTimeOffset? EstimatedEndDate { get; set; }
-        public List<TourStateLog> TourStateLogs { get; set; }
-        public List<TourComment> Comments { get; set; }
+        public virtual List<TourStateLog> TourStateLogs { get; set; }
+        public virtual List<TourComment> Comments { get; set; }
         public string DeletedBy { get; set; }
         public DateTimeOffset? DeletedOn { get; set; }
         public string CreatedBy { get; set; }

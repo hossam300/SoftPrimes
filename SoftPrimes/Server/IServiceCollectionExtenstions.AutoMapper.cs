@@ -1,13 +1,15 @@
 ﻿using AutoMapper;
-using AutoMapper.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyModel;
-using SoftPrimes.Service.IServices;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyModel;
+using System;
+using Microsoft.AspNetCore.Http;
+
+using AutoMapper.Configuration;
+using SoftPrimes.BLL.BaseObjects.RepositoriesInterfaces;
+using SoftPrimes.Service.IServices;
 
 namespace SoftPrimes.Server
 {
@@ -16,7 +18,8 @@ namespace SoftPrimes.Server
     /// </summary>
     public static partial class IServiceCollectionExtenstions
     {
-        private static void AddAutoMapperClasses(this IServiceCollection services, IEnumerable<Assembly> assembliesToScan)
+        private static IUnitOfWork _unitOfWork;
+        private static void AddAutoMapperClasses(this IServiceCollection services, IEnumerable<Assembly> assembliesToScan, IUnitOfWork unitOfWork)
         {
             assembliesToScan = assembliesToScan as Assembly[] ?? assembliesToScan.ToArray();
 
@@ -33,6 +36,11 @@ namespace SoftPrimes.Server
                 mapperConfigurationExpression.AddProfile(profile);
             }
             var config = new MapperConfiguration(mapperConfigurationExpression);
+            //var config= new MapperConfiguration(mc =>
+            //{
+            //    mc.ConstructServicesUsing(s => new UserValueResolver(_unitOfWork));
+            //  //  mc.ConstructServicesUsing(s => new AnotherNumberValueResolver());
+            //});
             //create maps based on generic business services
             var businessServices =
             allTypes
@@ -66,15 +74,15 @@ namespace SoftPrimes.Server
             config = new MapperConfiguration(mapperConfigurationExpression);
             services.AddSingleton(sp => config.CreateMapper());
         }
-        public static void AddAutoMapper(this IServiceCollection services)
+        public static void AddAutoMapper(this IServiceCollection services, IUnitOfWork unitOfWork)
         {
-            services.AddAutoMapper(DependencyContext.Default);
+            services.AddAutoMapper(DependencyContext.Default,unitOfWork);
         }
 
-        public static void AddAutoMapper(this IServiceCollection services, DependencyContext dependencyContext)
+        public static void AddAutoMapper(this IServiceCollection services, DependencyContext dependencyContext,IUnitOfWork unitOfWork)
         {
             services.AddAutoMapperClasses(dependencyContext.RuntimeLibraries
-                .SelectMany(lib => lib.GetDefaultAssemblyNames(dependencyContext).Select(Assembly.Load)));
+                .SelectMany(lib => lib.GetDefaultAssemblyNames(dependencyContext).Select(Assembly.Load)), unitOfWork);
         }
     }
 }

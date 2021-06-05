@@ -16,15 +16,10 @@ namespace SoftPrimes.Server.Controllers
     {
         private readonly ICompanyService _companyService;
 
-        public CompaniesController(ICompanyService businessService) : base(businessService)
+        public CompaniesController(ICompanyService businessService, IHelperServices.ISessionServices sessionSevices) : base(businessService, sessionSevices)
         {
             this._companyService = businessService;
         }
-        [HttpGet("GetAllCompanyDTO")]
-        public IActionResult GetAllCompanyDTO()
-        {
-            var CompanyDTOs = _companyService.GetAllWithoutInclude().Select(x => new CompanyDTO { Id = x.Id, CompanyNameAr = x.CompanyNameAr, CompanyNameEn = x.CompanyNameEn }).ToList();
-            return Ok(CompanyDTOs);
-        }
+      
     }
 }

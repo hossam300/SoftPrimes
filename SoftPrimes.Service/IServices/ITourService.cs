@@ -10,5 +10,7 @@ namespace SoftPrimes.Service.IServices
 {
     public interface ITourService : IBusinessService<Tour, TourDTO>
     {
+        List<HomeTourDTO> GetTodayTours(float lat, float longs,string AgentId);
+        List<TourCheckPointDTO> GetTourPoints(int tourId);
     }
 }

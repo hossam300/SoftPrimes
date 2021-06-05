@@ -8,10 +8,10 @@ namespace SoftPrimes.Shared.Domains
     {
         public int Id { get; set; }
         public int TourId { get; set; }
-        public TourAgent Tour { get; set; }
+        public virtual TourAgent Tour { get; set; }
         public int CheckPointId { get; set; }
-        public CheckPoint CheckPoint { get; set; }
-        public List<CheckPointTourComment> CheckPointTourComments { get; set; }
+        public virtual CheckPoint CheckPoint { get; set; }
+        public virtual List<CheckPointTourComment> CheckPointTourComments { get; set; }
         public TourCheckPointState TourCheckPointState { get; set; }
         public string DeletedBy { get; set; }
         public DateTimeOffset? DeletedOn { get; set; }

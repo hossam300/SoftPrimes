@@ -16,15 +16,10 @@ namespace SoftPrimes.Server.Controllers
     {
         private readonly IAttachmentService _AttachmentService;
 
-        public AttachmentsController(IAttachmentService businessService) : base(businessService)
+        public AttachmentsController(IAttachmentService businessService, IHelperServices.ISessionServices sessionSevices) : base(businessService, sessionSevices)
         {
             this._AttachmentService = businessService;
         }
-        [HttpGet("GetAllAttachmentDTO")]
-        public IActionResult GetAllAttachmentDTO()
-        {
-            var AttachmentDTOs = _AttachmentService.GetAllWithoutInclude().Select(x => new AttachmentDTO { Id = x.Id, AttachmentName = x.AttachmentName, AttachmentType = x.AttachmentType, AttachmentUrl = x.AttachmentUrl }).ToList();
-            return Ok(AttachmentDTOs);
-        }
+        
     }
 }

@@ -7,14 +7,15 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using SoftPrimes.Shared.Domains;
 
-namespace SoftPrimes.BLL.BaseObjects.ReSoftPrimesitoriesInterfaces
+namespace SoftPrimes.BLL.BaseObjects.RepositoriesInterfaces
 {
     /// <summary>
-    /// Defines the interfaces for generic reSoftPrimesitory.
+    /// Defines the interfaces for generic repository.
     /// </summary>
     /// <typeparam name="TEntity">The type of the entity.</typeparam>
-    public interface IBaseRepository<TEntity> where TEntity : class
+    public interface IRepository<TEntity> where TEntity : class
     {
         /// <summary>
         /// Changes the table name. This require the tables in the same database.
@@ -150,11 +151,7 @@ namespace SoftPrimes.BLL.BaseObjects.ReSoftPrimesitoriesInterfaces
         /// <param name="disableTracking"><c>true</c> to disable changing tracking; otherwise, <c>false</c>. Default to <c>true</c>.</param>
         /// <returns>An <see cref="IPagedList{TEntity}"/> that contains elements that satisfy the condition specified by <paramref name="predicate"/>.</returns>
         /// <remarks>Ex: This method defaults to a read-only, no-tracking query.</remarks>
-        Task<TResult> GetFirstOrDefaultAsync<TResult>(Expression<Func<TEntity, TResult>> selector,
-            Expression<Func<TEntity, bool>> predicate = null,
-            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-            Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null,
-            bool disableTracking = true);
+        Task<TEntity> FirstOrDefaultAsync(Expression<Func<TEntity, bool>> Predicate, CancellationToken cancellationToken = new CancellationToken());
 
         /// <summary>
         /// Gets the first or default entity based on a predicate, orderby delegate and include delegate. This method defaults to a read-only, no-tracking query.
@@ -165,10 +162,10 @@ namespace SoftPrimes.BLL.BaseObjects.ReSoftPrimesitoriesInterfaces
         /// <param name="disableTracking"><c>true</c> to disable changing tracking; otherwise, <c>false</c>. Default to <c>true</c>.</param>
         /// <returns>An <see cref="IPagedList{TEntity}"/> that contains elements that satisfy the condition specified by <paramref name="predicate"/>.</returns>
         /// <remarks>Ex: This method defaults to a read-only, no-tracking query. </remarks>
-        Task<TEntity> GetFirstOrDefaultAsync(Expression<Func<TEntity, bool>> predicate = null,
-            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-            Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null,
-            bool disableTracking = true);
+        //Task<TEntity> GetFirstOrDefaultAsync(Expression<Func<TEntity, bool>> predicate = null,
+        //    Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+        //    Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null,
+        //    bool disableTracking = true);
 
        
 
@@ -199,9 +196,11 @@ namespace SoftPrimes.BLL.BaseObjects.ReSoftPrimesitoriesInterfaces
         /// </summary>
         /// <returns>The <see cref="IQueryable{TEntity}"/>.</returns>
         //[Obsolete("This method is not recommended, please use GetPagedList or GetPagedListAsync methods")]
-        IQueryable<TEntity> GetAll();
+        IQueryable<TEntity> GetAll(bool WithTracking = true);
         IQueryable<TEntity> GetAllWithoutInclude();
+        TEntity GetById(object Id, bool WithTracking = true);
 
+        IQueryable<TEntity> Search(Expression<Func<TEntity, bool>> predicate, int size);
         /// <summary>
         /// Gets the count based on a predicate.
         /// </summary>
@@ -213,19 +212,22 @@ namespace SoftPrimes.BLL.BaseObjects.ReSoftPrimesitoriesInterfaces
         /// Inserts a new entity synchronously.
         /// </summary>
         /// <param name="entity">The entity to insert.</param>
-        void Insert(TEntity entity);
+        /// 
+        IEnumerable<TEntity> Insert(IEnumerable<TEntity> Entities);
+        TEntity Insert(TEntity Entity);
+       // void Insert(TEntity entity);
 
         /// <summary>
         /// Inserts a range of entities synchronously.
         /// </summary>
         /// <param name="entities">The entities to insert.</param>
-        void Insert(params TEntity[] entities);
+      //  void Insert(params TEntity[] entities);
 
         /// <summary>
         /// Inserts a range of entities synchronously.
         /// </summary>
         /// <param name="entities">The entities to insert.</param>
-        void Insert(IEnumerable<TEntity> entities);
+      //  void Insert(IEnumerable<TEntity> entities);
 
         /// <summary>
         /// Inserts a new entity asynchronously.
@@ -262,6 +264,8 @@ namespace SoftPrimes.BLL.BaseObjects.ReSoftPrimesitoriesInterfaces
         /// <param name="entities">The entities.</param>
         void Update(params TEntity[] entities);
 
+
+        void UpdateRange(IEnumerable<TEntity> Entites);
         /// <summary>
         /// Updates the specified entities.
         /// </summary>
@@ -278,7 +282,7 @@ namespace SoftPrimes.BLL.BaseObjects.ReSoftPrimesitoriesInterfaces
         /// Deletes the specified entity.
         /// </summary>
         /// <param name="entity">The entity to delete.</param>
-        void Delete(TEntity entity);
+      //  void Delete(TEntity entity);
 
         /// <summary>
         /// Deletes the specified entities.
@@ -290,6 +294,6 @@ namespace SoftPrimes.BLL.BaseObjects.ReSoftPrimesitoriesInterfaces
         /// Deletes the specified entities.
         /// </summary>
         /// <param name="entities">The entities.</param>
-        void Delete(IEnumerable<TEntity> entities);
+        IEnumerable<object> Delete(IEnumerable<object> Ids);
     }
 }

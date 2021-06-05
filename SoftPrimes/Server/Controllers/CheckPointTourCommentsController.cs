@@ -16,24 +16,10 @@ namespace SoftPrimes.Server.Controllers
     {
         private readonly ICheckPointTourCommentService _CheckPointTourCommentService;
 
-        public CheckPointTourCommentsController(ICheckPointTourCommentService businessService) : base(businessService)
+        public CheckPointTourCommentsController(ICheckPointTourCommentService businessService, IHelperServices.ISessionServices sessionSevices) : base(businessService, sessionSevices)
         {
             this._CheckPointTourCommentService = businessService;
         }
-        [HttpGet("GetAllCheckPointTourCommentDTO")]
-        public IActionResult GetAllCheckPointTourCommentDTO()
-        {
-            var CheckPointTourCommentDTOs = _CheckPointTourCommentService.GetAllWithoutInclude().Select(x => new CheckPointTourCommentDTO
-            {
-                Id = x.Id,
-                Comment = new CommentDTO { AttachmentId = x.Comment.AttachmentId, Id = x.CommentId, ReplayToComment = x.Comment.ReplayToComment, Text = x.Comment.Text },
-                CommentId = x.CommentId,
-                TourCheckPoint = new TourCheckPointDTO { CheckPointId = x.TourCheckPoint.CheckPointId, Id = x.TourCheckPointId, TourCheckPointState = x.TourCheckPoint.TourCheckPointState, TourId = x.TourCheckPoint.TourId },
-                TourCheckPointId = x.TourCheckPointId,
-                CreatedBy = x.CreatedBy,
-                CreatedOn = x.CreatedOn
-            }).ToList();
-            return Ok(CheckPointTourCommentDTOs);
-        }
+       
     }
 }

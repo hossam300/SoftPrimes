@@ -16,23 +16,10 @@ namespace SoftPrimes.Server.Controllers
     {
         private readonly ITourCheckPointService _TourCheckPointService;
 
-        public TourCheckPointsController(ITourCheckPointService businessService) : base(businessService)
+        public TourCheckPointsController(ITourCheckPointService businessService, IHelperServices.ISessionServices sessionSevices) : base(businessService, sessionSevices)
         {
             this._TourCheckPointService = businessService;
         }
-        [HttpGet("GetAllTourCheckPointDTO")]
-        public IActionResult GetAllTourCheckPointDTO()
-        {
-            var TourCheckPointDTOs = _TourCheckPointService.GetAllWithoutInclude().Select(x => new TourCheckPointDTO
-            {
-                Id = x.Id,
-                CheckPoint = new CheckPointDTO { CheckPointNameAr = x.CheckPoint.CheckPointNameAr, CheckPointNameEn = x.CheckPoint.CheckPointNameEn, Id = x.CheckPointId, Lat = x.CheckPoint.Lat, Long = x.CheckPoint.Long, QRCode = x.CheckPoint.QRCode },
-                CheckPointId = x.CheckPointId,
-                TourId = x.TourId,
-
-
-            }).ToList();
-            return Ok(TourCheckPointDTOs);
-        }
+       
     }
 }

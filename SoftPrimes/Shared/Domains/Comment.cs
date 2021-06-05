@@ -8,7 +8,7 @@ namespace SoftPrimes.Shared.Domains
         public int Id { get; set; }
         public string Text { get; set; }
         public int? AttachmentId { get; set; }
-        public Attachment Attachment { get; set; }
+        public virtual Attachment Attachment { get; set; }
         public int? ReplayToComment { get; set; }
         public string CreatedBy { get ; set ; }
         public DateTimeOffset? CreatedOn { get ; set ; }
