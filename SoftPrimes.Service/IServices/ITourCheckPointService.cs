@@ -10,5 +10,8 @@ namespace SoftPrimes.Service.IServices
 {
     public interface ITourCheckPointService : IBusinessService<TourCheckPoint, TourCheckPointDTO>
     {
+        bool ScanLocationQrCode(LocationQrCodeDTO locationQrCode);
+        CommentDTO AddCheckPointTourComment(CheckPointTourCommentDetailDTO checkPointTourComment,string Url);
+        bool ChangeTourCheckPointState(int tourCheckPointId,int State);
     }
 }

@@ -22,18 +22,34 @@ namespace SoftPrimes.Server.Controllers
             this._TourService = businessService;
             _userManager = userManager;
         }
-        
+
 
         [HttpGet("GetTodayTours")]
         public async Task<List<HomeTourDTO>> GetTodayTours(float lat, float longs)
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
-            return _TourService.GetTodayTours(lat, longs, "ed478006-b0d4-4349-805e-c6ad42638124");
+            return _TourService.GetTodayTours(lat, longs, user.Id);
+        }
+        [HttpGet("GetTourHistory")]
+        public async Task<List<HomeTourDTO>> GetTourHistory(float lat, float longs)
+        {
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            return _TourService.GetTourHistory(lat, longs, user.Id);
         }
         [HttpGet("GetTourPoints")]
         public List<TourCheckPointDTO> GetTourPoints(int tourId)
         {
             return _TourService.GetTourPoints(tourId);
+        }
+        [HttpGet("GetAdminComments")]
+        public List<TourCommentDTO> GetAdminComments(int tourId)
+        {
+            return _TourService.GetAdminComments(tourId);
+        }
+        [HttpGet("ChangeTourState")]
+        public bool ChangeTourState(int TourId, int State)
+        {
+            return _TourService.ChangeTourState(TourId, State);
         }
     }
 }

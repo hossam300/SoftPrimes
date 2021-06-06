@@ -21,7 +21,7 @@ namespace SoftPrimes.Server.Controllers
         {
             this._agentService = businessService;
         }
-        [HttpPost, Route("InsertNewUsers")]
+        [HttpPost, Route("InsertNewAgent")]
         [AllowAnonymous]
         public IEnumerable<object> InsertNewUsers([FromBody] IEnumerable<AgentDTO> entities)
         {

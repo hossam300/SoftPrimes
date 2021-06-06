@@ -15,5 +15,6 @@ namespace SoftPrimes.Shared.ViewModels
         public string AttachmentUrl { get; set; }
         public string CreatedBy { get; set; }
         public DateTimeOffset? CreatedOn { get; set; }
+    
     }
 }

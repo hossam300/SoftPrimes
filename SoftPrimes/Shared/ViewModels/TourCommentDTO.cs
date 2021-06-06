@@ -11,5 +11,6 @@ namespace SoftPrimes.Shared.ViewModels
         public CommentDTO Comment { get; set; }
         public string CreatedBy { get; set; }
         public DateTimeOffset? CreatedOn { get; set; }
+        public AgentDTO CreatedByUser { get; set; }
     }
 }
