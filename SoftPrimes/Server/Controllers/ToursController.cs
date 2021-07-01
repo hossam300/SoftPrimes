@@ -16,25 +16,24 @@ namespace SoftPrimes.Server.Controllers
     public class ToursController : _BaseController<Tour, TourDTO>
     {
         private readonly ITourService _TourService;
-        private readonly UserManager<Agent> _userManager;
+        //    private readonly UserManager<Agent> _userManager;
+        IHelperServices.ISessionServices _sessionSevices;
         public ToursController(ITourService businessService, UserManager<Agent> userManager, IHelperServices.ISessionServices sessionSevices) : base(businessService, sessionSevices)
         {
             this._TourService = businessService;
-            _userManager = userManager;
+               _sessionSevices = sessionSevices;
         }
 
 
         [HttpGet("GetTodayTours")]
-        public async Task<List<HomeTourDTO>> GetTodayTours(float lat, float longs)
+        public List<HomeTourDTO> GetTodayTours(float lat, float longs)
         {
-            var user = await _userManager.GetUserAsync(HttpContext.User);
-            return _TourService.GetTodayTours(lat, longs, user.Id);
+            return _TourService.GetTodayTours(lat, longs, _sessionSevices.UserId);
         }
         [HttpGet("GetTourHistory")]
-        public async Task<List<HomeTourDTO>> GetTourHistory(float lat, float longs)
+        public List<HomeTourDTO> GetTourHistory(float lat, float longs)
         {
-            var user = await _userManager.GetUserAsync(HttpContext.User);
-            return _TourService.GetTourHistory(lat, longs, user.Id);
+            return _TourService.GetTourHistory(lat, longs, _sessionSevices.UserId);
         }
         [HttpGet("GetTourPoints")]
         public List<TourCheckPointDTO> GetTourPoints(int tourId)

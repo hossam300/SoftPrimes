@@ -18,8 +18,7 @@ namespace SoftPrimes.Server
     /// </summary>
     public static partial class IServiceCollectionExtenstions
     {
-        private static IUnitOfWork _unitOfWork;
-        private static void AddAutoMapperClasses(this IServiceCollection services, IEnumerable<Assembly> assembliesToScan, IUnitOfWork unitOfWork)
+        private static void AddAutoMapperClasses(this IServiceCollection services, IEnumerable<Assembly> assembliesToScan)
         {
             assembliesToScan = assembliesToScan as Assembly[] ?? assembliesToScan.ToArray();
 
@@ -74,15 +73,15 @@ namespace SoftPrimes.Server
             config = new MapperConfiguration(mapperConfigurationExpression);
             services.AddSingleton(sp => config.CreateMapper());
         }
-        public static void AddAutoMapper(this IServiceCollection services, IUnitOfWork unitOfWork)
+        public static void AddAutoMapper(this IServiceCollection services)
         {
-            services.AddAutoMapper(DependencyContext.Default,unitOfWork);
+            services.AddAutoMapper(DependencyContext.Default);
         }
 
-        public static void AddAutoMapper(this IServiceCollection services, DependencyContext dependencyContext,IUnitOfWork unitOfWork)
+        public static void AddAutoMapper(this IServiceCollection services, DependencyContext dependencyContext)
         {
             services.AddAutoMapperClasses(dependencyContext.RuntimeLibraries
-                .SelectMany(lib => lib.GetDefaultAssemblyNames(dependencyContext).Select(Assembly.Load)), unitOfWork);
+                .SelectMany(lib => lib.GetDefaultAssemblyNames(dependencyContext).Select(Assembly.Load)));
         }
     }
 }

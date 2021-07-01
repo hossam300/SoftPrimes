@@ -32,6 +32,7 @@ using Microsoft.AspNetCore.SignalR;
 using HelperServices.Hubs;
 using SoftPrimes.BLL.Contexts;
 using SoftPrimes.Service.Services;
+using System.Collections.Generic;
 
 namespace SoftPrimes.Server
 {
@@ -44,19 +45,10 @@ namespace SoftPrimes.Server
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
-        // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
-        public void ConfigureServices(IServiceCollection services)
+         public void ConfigureServices(IServiceCollection services)
         {
             services.Configure<BearerTokensOptions>(options => Configuration.GetSection("BearerTokens").Bind(options));
             services.Configure<AppSettings>(options => Configuration.Bind(options));
-
-            //services.Configure<KestrelServerOptions>(options =>
-            //{
-            //    options.AllowSynchronousIO = true;
-            //});
-
-            // If using IIS:
             services.Configure<IISServerOptions>(options =>
             {
                 options.AutomaticAuthentication = true;
@@ -71,7 +63,7 @@ namespace SoftPrimes.Server
                 // You Can use fastest compression
                 options.Level = CompressionLevel.Optimal;
             });
-           // ApplicationDbContext.connectionString = Configuration.GetConnectionString("DefaultConnection");
+            // ApplicationDbContext.connectionString = Configuration.GetConnectionString("DefaultConnection");
             services.AddHttpContextAccessor();
             services.AddOptions();
             //services.Configure<IHelperServices.Models.AppSettings>(options => Configuration.Bind(options));
@@ -96,16 +88,39 @@ namespace SoftPrimes.Server
             });
             //var context = services.BuildServiceProvider()
             //         .GetService<MasarContext>();
-            UnitOfWork<ApplicationDbContext> _unitOfWork = services.BuildServiceProvider().GetService<UnitOfWork<ApplicationDbContext>>();
-            services.AddAutoMapper(_unitOfWork);
+          //  UnitOfWork<ApplicationDbContext> _unitOfWork = services.BuildServiceProvider().GetService<UnitOfWork<ApplicationDbContext>>();
+            services.AddAutoMapper();
 
             services.AddSwaggerGen(action =>
             {
 
                 action.MapType<FileContentResult>(() => new Microsoft.OpenApi.Models.OpenApiSchema { Type = "file" });
+                action.AddSecurityDefinition("Bearer",
+                 new Microsoft.OpenApi.Models.OpenApiSecurityScheme
+                 {
+                     Description = "JWT Authorization header using the Bearer scheme (Example: 'Bearer 12345abcdef')",
+                     Name = "Authorization",
+                     In = Microsoft.OpenApi.Models.ParameterLocation.Header,
+                     Type = Microsoft.OpenApi.Models.SecuritySchemeType.ApiKey,
+                     Scheme = "Bearer"
+                 });
+                action.AddSecurityRequirement(new Microsoft.OpenApi.Models.OpenApiSecurityRequirement
+                   {
+                      {
+                          new Microsoft.OpenApi.Models.OpenApiSecurityScheme
+                          {
+                              Reference = new Microsoft.OpenApi.Models.OpenApiReference
+                              {
+                                  Type = Microsoft.OpenApi.Models.ReferenceType.SecurityScheme,
+                                  Id = "Bearer"
+                              }
+                          },
+                          Array.Empty<string>()
+                      }
+                  });
                 action.MapType<object>(() => new Microsoft.OpenApi.Models.OpenApiSchema { Type = "any" });
                 action.MapType<JToken>(() => new Microsoft.OpenApi.Models.OpenApiSchema { Type = "any" });
-                action.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "Masar WebApi", Version = "v1" });
+                action.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "Soft Primes WebApi", Version = "v1" });
                 action.EnableAnnotations();
 
             });
@@ -211,7 +226,7 @@ namespace SoftPrimes.Server
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-             //   app.UseMigrationsEndPoint();
+                //   app.UseMigrationsEndPoint();
                 app.UseWebAssemblyDebugging();
             }
             else
@@ -268,7 +283,7 @@ namespace SoftPrimes.Server
 
             app.UseRouting();
 
-           
+
             app.UseAuthentication();
             app.UseAuthorization();
 

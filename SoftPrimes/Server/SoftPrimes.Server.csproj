@@ -5,6 +5,13 @@
 		<UserSecretsId>SoftPrimes.Server-0B2C64B4-E47C-4557-937F-AE2C54E22A95</UserSecretsId>
 	</PropertyGroup>
 
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+	  <PlatformTarget>AnyCPU</PlatformTarget>
+	  <Prefer32Bit>false</Prefer32Bit>
+	  <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+	  <Optimize>false</Optimize>
+	</PropertyGroup>
+
 	<ItemGroup>
 		<PackageReference Include="Geolocation" Version="1.2.1" />
 		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="5.0.4" />
