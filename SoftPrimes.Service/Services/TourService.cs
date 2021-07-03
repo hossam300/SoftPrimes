@@ -53,6 +53,7 @@ namespace SoftPrimes.Service.Services
                         TourNameAr = x.Tour.TourNameAr,
                         TourNameEn = x.Tour.TourNameEn,
                         TourType = x.TourType.ToString(),
+                        TourTypeId = (int)x.TourType,
                         CountOfLocations = x.CheckPoints.Count()
                     }).ToList();
         }
@@ -204,6 +205,7 @@ namespace SoftPrimes.Service.Services
                         TourNameAr = x.Tour.TourNameAr,
                         TourNameEn = x.Tour.TourNameEn,
                         TourType = x.TourType.ToString(),
+                        TourTypeId = (int)x.TourType,
                         CountOfLocations = x.CheckPoints.Count()
                     }).ToList();
         }

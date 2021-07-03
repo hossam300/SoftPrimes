@@ -12,6 +12,7 @@ namespace SoftPrimes.Shared.ViewModels
         public string TourNameAr { get; set; }
         public string TourNameEn { get; set; }
         public string TourType { get; set; }
+        public int TourTypeId { get; set; }
         public DateTime TourDate { get; set; }
         public float EstimateDistance { get; set; }
         public string LocationAr { get; set; }

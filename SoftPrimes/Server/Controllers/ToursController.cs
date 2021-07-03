@@ -18,7 +18,7 @@ namespace SoftPrimes.Server.Controllers
         private readonly ITourService _TourService;
         //    private readonly UserManager<Agent> _userManager;
         IHelperServices.ISessionServices _sessionSevices;
-        public ToursController(ITourService businessService, UserManager<Agent> userManager, IHelperServices.ISessionServices sessionSevices) : base(businessService, sessionSevices)
+        public ToursController(ITourService businessService, IHelperServices.ISessionServices sessionSevices) : base(businessService, sessionSevices)
         {
             this._TourService = businessService;
                _sessionSevices = sessionSevices;
