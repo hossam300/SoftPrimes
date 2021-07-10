@@ -63,65 +63,55 @@ namespace SoftPrimes.Service.Services
             return GeoCalculator.GetDistance(new Coordinate(Cuttentlat, Cuttentlongs), new Coordinate(DistanceLat, DistanceLong));
         }
 
-        public List<TourCheckPointDTO> GetTourPoints(int tourId)
+        public TourCheckpointDetailsDTO GetTourPoints(int tourId)
         {
-            return _unitOfWork.GetRepository<TourCheckPoint>().GetAll()
-                .Include(x => x.Tour).ThenInclude(x => x.CheckPoints).ThenInclude(x => x.CheckPoint)
-                .Include(x => x.CheckPoint)
-                .Include(x => x.CheckPointTourComments).ThenInclude(x => x.Comment)
+            return _unitOfWork.GetRepository<TourAgent>().GetAll()
+                .Include(x => x.Tour).Include(x => x.CheckPoints).ThenInclude(x => x.CheckPoint)
+               .Include(x => x.CheckPoints).ThenInclude(x => x.CheckPointTourComments).ThenInclude(x => x.Comment)
                 .ThenInclude(x => x.Attachment)
-                .Where(x => x.TourId == tourId).Select(x => new TourCheckPointDTO
+                .Where(x => x.TourId == tourId).Select(x => new TourCheckpointDetailsDTO
                 {
-                    CheckPoint = new CheckPointDTO
+                    Id = x.Id,
+                    TourNameAr = x.Tour.TourNameAr,
+                    TourNameEn = x.Tour.TourNameEn,
+                    TourDate = x.TourDate,
+                    TourState = x.TourState,
+                    AdminCommnets = x.Comments.Select(y =>
+                    new CommentDetailsDTO
                     {
-                        CheckPointNameAr = x.CheckPoint.CheckPointNameAr,
-                        CheckPointNameEn = x.CheckPoint.CheckPointNameEn,
-                        Lat = x.CheckPoint.Lat,
-                        Id = x.CheckPointId,
-                        Long = x.CheckPoint.Long,
-                        QRCode = x.CheckPoint.QRCode
-                    },
-                    CheckPointId = x.CheckPointId,
-                    CheckPointTourComments = x.CheckPointTourComments.Select(x => new CheckPointTourCommentDTO
+
+                        CommentByNameAr = _unitOfWork.GetRepository<Agent>(false).Find(y.CreatedBy).FullNameAr,
+                        CommentByNameEn = _unitOfWork.GetRepository<Agent>(false).Find(y.CreatedBy).FullNameEn,
+                        Id = y.Id,
+                        ProfileImage = _unitOfWork.GetRepository<Agent>(false).Find(y.CreatedBy).Image
+                    }).ToList(),
+                    CheckPoints = x.CheckPoints.Select(y => new CheckPointDetailsDTO
                     {
-                        Comment = new CommentDTO
+                        CheckPointNameAr = y.CheckPoint.CheckPointNameAr,
+                        CheckPointNameEn = y.CheckPoint.CheckPointNameEn,
+                        CheckPointState = y.TourCheckPointState,
+                        EndDate = x.EstimatedEndDate,
+                        EstimatedDistance = x.EstimatedDistance,
+                        Id = y.Id,
+                        LocationName = y.CheckPoint.LocationText,
+                        QRCode = y.CheckPoint.QRCode.ToString(),
+                        Comments = y.CheckPointTourComments.Select(z => new CommentDTO
                         {
                             Attachment = new AttachmentDTO
                             {
-                                AttachmentName = x.Comment.Attachment.AttachmentName,
-                                AttachmentType = x.Comment.Attachment.AttachmentType,
-                                AttachmentUrl = x.Comment.Attachment.AttachmentUrl,
-                                Id = x.Comment.Attachment.Id
+                                AttachmentName = z.Comment.Attachment.AttachmentName,
+                                AttachmentType = z.Comment.Attachment.AttachmentType,
+                                AttachmentUrl = z.Comment.Attachment.AttachmentUrl,
+                                Id = (int)z.Comment.AttachmentId,
                             },
-                            AttachmentId = x.Comment.AttachmentId,
-                            Id = x.CommentId,
-                            ReplayToComment = x.Comment.ReplayToComment,
-                            Text = x.Comment.Text
-                        }
-                    }).ToList(),
-                    Id = x.Id,
-                    TourCheckPointState = x.TourCheckPointState,
-                    TourId = x.TourId,
-                    Tour = new TourAgentDTO
-                    {
-                        CheckPoints = x.Tour.CheckPoints.Select(y => new TourCheckPointDTO
-                        {
-                            CheckPoint = new CheckPointDTO
-                            {
-                                CheckPointNameAr = y.CheckPoint.CheckPointNameAr,
-                                CheckPointNameEn = y.CheckPoint.CheckPointNameEn,
-                                Id = y.CheckPointId,
-                                Lat = y.CheckPoint.Lat,
-                                Long = y.CheckPoint.Long,
-                                QRCode = y.CheckPoint.QRCode
-                            },
-                            CheckPointId = y.CheckPointId,
-                            Id = y.Id,
-                            TourCheckPointState = y.TourCheckPointState,
-                            TourId = x.TourId
-                        }).ToList(),
-                    }
-                }).ToList();
+                            AttachmentId = z.Comment.AttachmentId,
+                            Id = z.CommentId,
+                            Text = z.Comment.Text,
+                            ReplayToComment = z.Comment.ReplayToComment
+                        }).ToList()
+
+                    }).ToList()
+                }).FirstOrDefault();
         }
 
         public List<TourCommentDTO> GetAdminComments(int tourId)

@@ -36,7 +36,7 @@ namespace SoftPrimes.Server.Controllers
             return _TourService.GetTourHistory(lat, longs, _sessionSevices.UserId);
         }
         [HttpGet("GetTourPoints")]
-        public List<TourCheckPointDTO> GetTourPoints(int tourId)
+        public TourCheckpointDetailsDTO GetTourPoints(int tourId)
         {
             return _TourService.GetTourPoints(tourId);
         }
