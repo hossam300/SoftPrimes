@@ -1,40 +1,37 @@
-using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Mvc.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.ResponseCompression;
+using Microsoft.AspNetCore.SignalR;
+using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using SoftPrimes.BLL.BaseObjects;
-using SoftPrimes.Shared.Domains;
-using System.Linq;
-using AutoMapper;
-using SoftPrimes.BLL.AuthenticationServices;
-using System.IO.Compression;
-using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json.Linq;
-using System;
-using Microsoft.AspNetCore.DataProtection;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Extensions.Localization;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
+using SoftPrimes.BLL.AuthenticationServices;
+using SoftPrimes.BLL.BaseObjects;
+using SoftPrimes.BLL.Contexts;
+using SoftPrimes.Service.IServices;
+using SoftPrimes.Service.Services;
+using SoftPrimes.Shared.Domains;
+using System.IO.Compression;
 using System.Text;
-using Microsoft.Extensions.Logging;
+using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Localization;
-using Microsoft.AspNetCore.Diagnostics;
-using Newtonsoft.Json;
-using SoftPrimes.Service.IServices;
-using Microsoft.AspNetCore.Mvc.Authorization;
-using Microsoft.AspNetCore.SignalR;
+using Microsoft.Extensions.Logging;
 using HelperServices.Hubs;
-using SoftPrimes.BLL.Contexts;
-using SoftPrimes.Service.Services;
-using System.Collections.Generic;
+using Microsoft.AspNetCore.Diagnostics;
 
-namespace SoftPrimes.Server
+namespace SoftPrimes.UI
 {
     public class Startup
     {
@@ -45,6 +42,7 @@ namespace SoftPrimes.Server
 
         public IConfiguration Configuration { get; }
 
+        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.Configure<BearerTokensOptions>(options => Configuration.GetSection("BearerTokens").Bind(options));
@@ -215,9 +213,12 @@ namespace SoftPrimes.Server
 
             // To use Username instead of ConnectionId in Communication 
             services.AddSingleton<IUserIdProvider, CustomUserIdProvider>();
-
             services.AddControllersWithViews();
-            services.AddRazorPages();
+            // In production, the Angular files will be served from this directory
+            services.AddSpaStaticFiles(configuration =>
+            {
+                configuration.RootPath = "ClientApp/dist";
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -226,8 +227,6 @@ namespace SoftPrimes.Server
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                //   app.UseMigrationsEndPoint();
-                app.UseWebAssemblyDebugging();
             }
             else
             {
@@ -235,6 +234,7 @@ namespace SoftPrimes.Server
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
             app.UseCors("AllowAllHeaders");
             app.UseExceptionHandler(appBuilder =>
             {
@@ -274,24 +274,31 @@ namespace SoftPrimes.Server
 
             });
             app.UseSwaggerUI(action => { action.SwaggerEndpoint("/swagger/v1/swagger.json", "Masar WebApi"); });
-            //   app.UseAuthentication();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseHttpsRedirection();
-            app.UseBlazorFrameworkFiles();
             app.UseStaticFiles();
-
             app.UseRouting();
-
-
             app.UseAuthentication();
             app.UseAuthorization();
-
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapRazorPages();
-                endpoints.MapControllers();
-                endpoints.MapFallbackToFile("index.html");
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller}/{action=Index}/{id?}");
+            });
+
+            app.UseSpa(spa =>
+            {
+                // To learn more about options for serving an Angular SPA from ASP.NET Core,
+                // see https://go.microsoft.com/fwlink/?linkid=864501
+
+                spa.Options.SourcePath = "ClientApp";
+
+                if (env.IsDevelopment())
+                {
+                    spa.UseAngularCliServer(npmScript: "start");
+                }
             });
         }
     }
