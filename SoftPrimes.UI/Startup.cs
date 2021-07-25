@@ -30,6 +30,12 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using HelperServices.Hubs;
 using Microsoft.AspNetCore.Diagnostics;
+using HelperServices;
+using NSwag.CodeGeneration.TypeScript;
+using NSwag;
+using System.IO;
+using System.Net.Http;
+using System.Net;
 
 namespace SoftPrimes.UI
 {
@@ -300,6 +306,53 @@ namespace SoftPrimes.UI
                     spa.UseAngularCliServer(npmScript: "start");
                 }
             });
+            if (env.IsDevelopment())
+            {
+                Task.Run(() =>
+                {
+                    using (var handler = new HttpClientHandler() { Credentials = CredentialCache.DefaultCredentials })
+                    {
+                        using (HttpClient httpClient = new HttpClient(handler))
+                        {
+                            string SourceDocumentAbsoluteUrl = Configuration["SwaggerToTypeScriptClientGeneratorSettings:SourceDocumentAbsoluteUrl"];
+                            string OutputDocumentRelativePath = Configuration["SwaggerToTypeScriptClientGeneratorSettings:OutputDocumentRelativePath"];
+                            using (Stream contentStream = httpClient.GetStreamAsync(SourceDocumentAbsoluteUrl).Result)
+                            using (StreamReader streamReader = new StreamReader(contentStream))
+                            {
+                                string json = streamReader.ReadToEnd();
+                                //NSwag.OpenApiDocument document = NSwag.OpenApiDocument.FromJsonAsync(json).Result;
+                                //NSwag.CodeGeneration.TypeScript.TypeScriptClientGeneratorSettings settings = new NSwag.CodeGeneration.TypeScript.TypeScriptClientGeneratorSettings
+                                var document = SwaggerDocument.FromJsonAsync(json).Result;
+                                var settings = new NSwag.CodeGeneration.TypeScript.SwaggerToTypeScriptClientGeneratorSettings
+                                {
+                                    OperationNameGenerator = new SwaggerClientOperationNameGenerator(),
+                                    ClassName = "SwaggerClient",
+                                    Template = TypeScriptTemplate.Angular,
+                                    RxJsVersion = 6.0M,
+                                    HttpClass = HttpClass.HttpClient,
+                                    InjectionTokenType = InjectionTokenType.InjectionToken,
+                                    BaseUrlTokenName = "API_BASE_URL",
+                                    WrapDtoExceptions = true,
+                                };
+
+                                //TypeScriptClientGenerator generator = new TypeScriptClientGenerator(document, settings);
+                                var generator = new SwaggerToTypeScriptClientGenerator(document, settings);
+                                string code = generator.GenerateFile();
+                                new FileInfo(OutputDocumentRelativePath).Directory.Create();
+                                try
+                                {
+                                    File.WriteAllText(OutputDocumentRelativePath, code);
+                                }
+                                catch (Exception ex)
+                                {
+                                    throw ex;
+                                }
+                            }
+                        }
+                    }
+                });
+
+            }
         }
     }
 }
