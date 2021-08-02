@@ -83,7 +83,8 @@ namespace SoftPrimes.Service.Services
                         CommentByNameAr = _unitOfWork.GetRepository<Agent>(false).Find(y.CreatedBy).FullNameAr,
                         CommentByNameEn = _unitOfWork.GetRepository<Agent>(false).Find(y.CreatedBy).FullNameEn,
                         Id = y.Id,
-                        ProfileImage = _unitOfWork.GetRepository<Agent>(false).Find(y.CreatedBy).Image
+                        ProfileImage = _unitOfWork.GetRepository<Agent>(false).Find(y.CreatedBy).Image,
+                        Text = y.Comment.Text
                     }).ToList(),
                     CheckPoints = x.CheckPoints.Select(y => new CheckPointDetailsDTO
                     {
@@ -104,6 +105,7 @@ namespace SoftPrimes.Service.Services
                                 AttachmentUrl = z.Comment.Attachment.AttachmentUrl,
                                 Id = (int)z.Comment.AttachmentId,
                             },
+                           
                             AttachmentId = z.Comment.AttachmentId,
                             Id = z.CommentId,
                             Text = z.Comment.Text,
