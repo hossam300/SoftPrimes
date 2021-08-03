@@ -19,6 +19,7 @@ namespace SoftPrimes.Service.IServices
         string GetCurrentUserId();
         string Decrypte(string name);
         AuthTicketDTO GetUserAuthTicket(string username, int? organizationId, int? roleId, bool? personal);
+        bool ResetPassword(string email);
         //Task<(bool Succeeded, string Error)> ChangePasswordAsync(User user, string currentPassword, string newPassword);
         //DataSourceResult<UserSummaryDTO> GetAllDelegatedEmployees(DataSourceRequestDelegation dataSourceRequest);
         //IEnumerable<Lookup> GetAllDelegated(DataSourceRequestForDelegated dataSourceRequest);

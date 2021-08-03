@@ -33,6 +33,7 @@ using HelperServices.Hubs;
 using SoftPrimes.BLL.Contexts;
 using SoftPrimes.Service.Services;
 using System.Collections.Generic;
+using IHelperServices.Models;
 
 namespace SoftPrimes.Server
 {

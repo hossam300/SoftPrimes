@@ -24,15 +24,16 @@ namespace SoftPrimes.UI.Controllers
         private readonly ISessionServices _SessionServices;
         //private readonly IAntiForgeryCookieService _antiforgery;
         private readonly IHttpContextAccessor _httpContextAccessor;
-
-     //   UserManager<Agent> _userManager;
-        public AccountController(IUsersService usersService, ITokenStoreService tokenStoreService, ISessionServices sessionServices, IHttpContextAccessor httpContextAccessor/*, UserManager<Agent> userManager*/)
+        private readonly IMailServices _mailServices;
+        //   UserManager<Agent> _userManager;
+        public AccountController(IUsersService usersService, ITokenStoreService tokenStoreService, ISessionServices sessionServices, IHttpContextAccessor httpContextAccessor, IMailServices mailServices/*, UserManager<Agent> userManager*/)
         {
             _usersService = usersService;
             _tokenStoreService = tokenStoreService;
             _SessionServices = sessionServices;
             _httpContextAccessor = httpContextAccessor;
-         //   _userManager = userManager;
+            _mailServices = mailServices;
+            //   _userManager = userManager;
         }
         [AllowAnonymous]
         //[IgnoreAntiforgeryToken]
@@ -50,14 +51,14 @@ namespace SoftPrimes.UI.Controllers
 
             //SET ApplicationType SESSION
             _SessionServices.ApplicationType = loginUser.applicationType;
-           
+
             _User = await _usersService.FindUserPasswordAsync(loginUser.Username, loginUser.Password, false);
-           
+
             if (_User == null)
             {
                 return Ok(new AccessToken { access_token = null, refresh_token = null, is_ldap_auth = lsLdapAuth, IsAdmin = false, IsTemp = false });
             }
-          //  var pass =await _userManager.CheckPasswordAsync(_User, loginUser.Password);
+            //  var pass =await _userManager.CheckPasswordAsync(_User, loginUser.Password);
             //if (!pass)
             //{
             //    return Ok(new AccessToken { access_token = null, refresh_token = null, is_ldap_auth = lsLdapAuth, IsAdmin = false, IsTemp = false });
@@ -79,11 +80,10 @@ namespace SoftPrimes.UI.Controllers
         public IActionResult GetUserAuthTicket(int? CommitteeId, int? roleId, bool? personal = false)
         {
             ClaimsIdentity claimsIdentity = User.Identity as ClaimsIdentity;
-            string Username = _usersService.Decrypte(claimsIdentity.Name);
+            string Username = claimsIdentity.Name;
             AuthTicketDTO AuthTicket = this._usersService.GetUserAuthTicket(Username, CommitteeId, roleId, personal);
             return Ok(AuthTicket != null ? AuthTicket : null);
         }
-      
         [AllowAnonymous]
         [HttpGet("[action]")]
         [ProducesResponseType(200, Type = typeof(bool))]
@@ -98,6 +98,37 @@ namespace SoftPrimes.UI.Controllers
             string[] ExecptParm = new string[] { };
             _SessionServices.ClearSessionsExcept(ExecptParm);
             return true;
+        }
+        [AllowAnonymous]
+        [HttpGet("[action]")]
+        [ProducesResponseType(200, Type = typeof(bool))]
+        public bool ContactUs(MessageDTO message)
+        {
+            try
+            {
+                _mailServices.SendNotificationEmail(message.Email, "ContactUs", message.Message, true, null, null, null);
+                return true;
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
+
+        }
+        [Authorize]
+        [HttpGet("[action]")]
+        [ProducesResponseType(200, Type = typeof(AgentDTO))]
+        public AgentDTO GetUserProfile(string userId)
+        {
+            return _usersService.GetDetails(userId);
+        }
+        [AllowAnonymous]
+        [HttpGet("[action]")]
+        public bool ResetPassword(string Email)
+        {
+            Email = Email.Replace("%40", "@");
+            return _usersService.ResetPassword(Email);
         }
     }
 }

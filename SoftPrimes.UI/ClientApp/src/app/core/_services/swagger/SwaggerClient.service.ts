@@ -200,6 +200,172 @@ export class SwaggerClient {
     }
 
     /**
+     * @param body (optional) 
+     * @return Success
+     */
+    apiAccountContactUsGet(body: MessageDTO): Observable<boolean> {
+        let url_ = this.baseUrl + "/api/Account/ContactUs";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processApiAccountContactUsGet(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processApiAccountContactUsGet(<any>response_);
+                } catch (e) {
+                    return <Observable<boolean>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<boolean>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processApiAccountContactUsGet(response: HttpResponseBase): Observable<boolean> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 !== undefined ? resultData200 : <any>null;
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<boolean>(<any>null);
+    }
+
+    /**
+     * @param userId (optional) 
+     * @return Success
+     */
+    apiAccountGetUserProfileGet(userId: string): Observable<AgentDTO> {
+        let url_ = this.baseUrl + "/api/Account/GetUserProfile?";
+        if (userId !== undefined)
+            url_ += "userId=" + encodeURIComponent("" + userId) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processApiAccountGetUserProfileGet(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processApiAccountGetUserProfileGet(<any>response_);
+                } catch (e) {
+                    return <Observable<AgentDTO>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<AgentDTO>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processApiAccountGetUserProfileGet(response: HttpResponseBase): Observable<AgentDTO> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? AgentDTO.fromJS(resultData200) : new AgentDTO();
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<AgentDTO>(<any>null);
+    }
+
+    /**
+     * @param email (optional) 
+     * @return Success
+     */
+    apiAccountResetPasswordGet(email: string): Observable<boolean> {
+        let url_ = this.baseUrl + "/api/Account/ResetPassword?";
+        if (email !== undefined)
+            url_ += "Email=" + encodeURIComponent("" + email) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processApiAccountResetPasswordGet(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processApiAccountResetPasswordGet(<any>response_);
+                } catch (e) {
+                    return <Observable<boolean>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<boolean>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processApiAccountResetPasswordGet(response: HttpResponseBase): Observable<boolean> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 !== undefined ? resultData200 : <any>null;
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<boolean>(<any>null);
+    }
+
+    /**
      * @param take (optional) 
      * @param skip (optional) 
      * @param sort (optional) 
@@ -7635,6 +7801,224 @@ export interface IAuthTicketDTO {
     userId?: string;
 }
 
+export class MessageDTO implements IMessageDTO {
+    id?: number;
+    fullName?: string;
+    mobile?: string;
+    email?: string;
+    message?: string;
+
+    constructor(data?: IMessageDTO) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.id = data["id"];
+            this.fullName = data["fullName"];
+            this.mobile = data["mobile"];
+            this.email = data["email"];
+            this.message = data["message"];
+        }
+    }
+
+    static fromJS(data: any): MessageDTO {
+        data = typeof data === 'object' ? data : {};
+        let result = new MessageDTO();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["fullName"] = this.fullName;
+        data["mobile"] = this.mobile;
+        data["email"] = this.email;
+        data["message"] = this.message;
+        return data; 
+    }
+}
+
+export interface IMessageDTO {
+    id?: number;
+    fullName?: string;
+    mobile?: string;
+    email?: string;
+    message?: string;
+}
+
+export enum AgentType {
+    _1 = 1, 
+    _2 = 2, 
+    _3 = 3, 
+}
+
+export class CompanyDTO implements ICompanyDTO {
+    id?: number;
+    companyNameAr?: string;
+    companyNameEn?: string;
+    companyEmail?: string;
+    companyImageUrl?: string;
+    phone?: string;
+    vaildFrom?: Date;
+    vaildTo?: Date;
+
+    constructor(data?: ICompanyDTO) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.id = data["id"];
+            this.companyNameAr = data["companyNameAr"];
+            this.companyNameEn = data["companyNameEn"];
+            this.companyEmail = data["companyEmail"];
+            this.companyImageUrl = data["companyImageUrl"];
+            this.phone = data["phone"];
+            this.vaildFrom = data["vaildFrom"] ? new Date(data["vaildFrom"].toString()) : <any>undefined;
+            this.vaildTo = data["vaildTo"] ? new Date(data["vaildTo"].toString()) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): CompanyDTO {
+        data = typeof data === 'object' ? data : {};
+        let result = new CompanyDTO();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["companyNameAr"] = this.companyNameAr;
+        data["companyNameEn"] = this.companyNameEn;
+        data["companyEmail"] = this.companyEmail;
+        data["companyImageUrl"] = this.companyImageUrl;
+        data["phone"] = this.phone;
+        data["vaildFrom"] = this.vaildFrom ? this.vaildFrom.toISOString() : <any>undefined;
+        data["vaildTo"] = this.vaildTo ? this.vaildTo.toISOString() : <any>undefined;
+        return data; 
+    }
+}
+
+export interface ICompanyDTO {
+    id?: number;
+    companyNameAr?: string;
+    companyNameEn?: string;
+    companyEmail?: string;
+    companyImageUrl?: string;
+    phone?: string;
+    vaildFrom?: Date;
+    vaildTo?: Date;
+}
+
+export class AgentDTO implements IAgentDTO {
+    id?: string;
+    userName?: string;
+    password?: string;
+    email?: string;
+    fullNameAr?: string;
+    fullNameEn?: string;
+    image?: string;
+    agentType?: AgentType;
+    active?: boolean;
+    supervisorId?: string;
+    supervisor?: AgentDTO;
+    agents?: AgentDTO[];
+    companyId?: number;
+    company?: CompanyDTO;
+
+    constructor(data?: IAgentDTO) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.id = data["id"];
+            this.userName = data["userName"];
+            this.password = data["password"];
+            this.email = data["email"];
+            this.fullNameAr = data["fullNameAr"];
+            this.fullNameEn = data["fullNameEn"];
+            this.image = data["image"];
+            this.agentType = data["agentType"];
+            this.active = data["active"];
+            this.supervisorId = data["supervisorId"];
+            this.supervisor = data["supervisor"] ? AgentDTO.fromJS(data["supervisor"]) : <any>undefined;
+            if (data["agents"] && data["agents"].constructor === Array) {
+                this.agents = [];
+                for (let item of data["agents"])
+                    this.agents.push(AgentDTO.fromJS(item));
+            }
+            this.companyId = data["companyId"];
+            this.company = data["company"] ? CompanyDTO.fromJS(data["company"]) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): AgentDTO {
+        data = typeof data === 'object' ? data : {};
+        let result = new AgentDTO();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["userName"] = this.userName;
+        data["password"] = this.password;
+        data["email"] = this.email;
+        data["fullNameAr"] = this.fullNameAr;
+        data["fullNameEn"] = this.fullNameEn;
+        data["image"] = this.image;
+        data["agentType"] = this.agentType;
+        data["active"] = this.active;
+        data["supervisorId"] = this.supervisorId;
+        data["supervisor"] = this.supervisor ? this.supervisor.toJSON() : <any>undefined;
+        if (this.agents && this.agents.constructor === Array) {
+            data["agents"] = [];
+            for (let item of this.agents)
+                data["agents"].push(item.toJSON());
+        }
+        data["companyId"] = this.companyId;
+        data["company"] = this.company ? this.company.toJSON() : <any>undefined;
+        return data; 
+    }
+}
+
+export interface IAgentDTO {
+    id?: string;
+    userName?: string;
+    password?: string;
+    email?: string;
+    fullNameAr?: string;
+    fullNameEn?: string;
+    image?: string;
+    agentType?: AgentType;
+    active?: boolean;
+    supervisorId?: string;
+    supervisor?: AgentDTO;
+    agents?: AgentDTO[];
+    companyId?: number;
+    company?: CompanyDTO;
+}
+
 export class Sort implements ISort {
     field?: string;
     dir?: string;
@@ -7905,172 +8289,6 @@ export interface ICheckUniqueDTO {
     tableName?: string;
     fields?: string[];
     values?: string[];
-}
-
-export enum AgentType {
-    _1 = 1, 
-    _2 = 2, 
-    _3 = 3, 
-}
-
-export class CompanyDTO implements ICompanyDTO {
-    id?: number;
-    companyNameAr?: string;
-    companyNameEn?: string;
-    companyEmail?: string;
-    companyImageUrl?: string;
-    phone?: string;
-    vaildFrom?: Date;
-    vaildTo?: Date;
-
-    constructor(data?: ICompanyDTO) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(data?: any) {
-        if (data) {
-            this.id = data["id"];
-            this.companyNameAr = data["companyNameAr"];
-            this.companyNameEn = data["companyNameEn"];
-            this.companyEmail = data["companyEmail"];
-            this.companyImageUrl = data["companyImageUrl"];
-            this.phone = data["phone"];
-            this.vaildFrom = data["vaildFrom"] ? new Date(data["vaildFrom"].toString()) : <any>undefined;
-            this.vaildTo = data["vaildTo"] ? new Date(data["vaildTo"].toString()) : <any>undefined;
-        }
-    }
-
-    static fromJS(data: any): CompanyDTO {
-        data = typeof data === 'object' ? data : {};
-        let result = new CompanyDTO();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        data["companyNameAr"] = this.companyNameAr;
-        data["companyNameEn"] = this.companyNameEn;
-        data["companyEmail"] = this.companyEmail;
-        data["companyImageUrl"] = this.companyImageUrl;
-        data["phone"] = this.phone;
-        data["vaildFrom"] = this.vaildFrom ? this.vaildFrom.toISOString() : <any>undefined;
-        data["vaildTo"] = this.vaildTo ? this.vaildTo.toISOString() : <any>undefined;
-        return data; 
-    }
-}
-
-export interface ICompanyDTO {
-    id?: number;
-    companyNameAr?: string;
-    companyNameEn?: string;
-    companyEmail?: string;
-    companyImageUrl?: string;
-    phone?: string;
-    vaildFrom?: Date;
-    vaildTo?: Date;
-}
-
-export class AgentDTO implements IAgentDTO {
-    id?: string;
-    userName?: string;
-    password?: string;
-    email?: string;
-    fullNameAr?: string;
-    fullNameEn?: string;
-    image?: string;
-    agentType?: AgentType;
-    active?: boolean;
-    supervisorId?: string;
-    supervisor?: AgentDTO;
-    agents?: AgentDTO[];
-    companyId?: number;
-    company?: CompanyDTO;
-
-    constructor(data?: IAgentDTO) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(data?: any) {
-        if (data) {
-            this.id = data["id"];
-            this.userName = data["userName"];
-            this.password = data["password"];
-            this.email = data["email"];
-            this.fullNameAr = data["fullNameAr"];
-            this.fullNameEn = data["fullNameEn"];
-            this.image = data["image"];
-            this.agentType = data["agentType"];
-            this.active = data["active"];
-            this.supervisorId = data["supervisorId"];
-            this.supervisor = data["supervisor"] ? AgentDTO.fromJS(data["supervisor"]) : <any>undefined;
-            if (data["agents"] && data["agents"].constructor === Array) {
-                this.agents = [];
-                for (let item of data["agents"])
-                    this.agents.push(AgentDTO.fromJS(item));
-            }
-            this.companyId = data["companyId"];
-            this.company = data["company"] ? CompanyDTO.fromJS(data["company"]) : <any>undefined;
-        }
-    }
-
-    static fromJS(data: any): AgentDTO {
-        data = typeof data === 'object' ? data : {};
-        let result = new AgentDTO();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        data["userName"] = this.userName;
-        data["password"] = this.password;
-        data["email"] = this.email;
-        data["fullNameAr"] = this.fullNameAr;
-        data["fullNameEn"] = this.fullNameEn;
-        data["image"] = this.image;
-        data["agentType"] = this.agentType;
-        data["active"] = this.active;
-        data["supervisorId"] = this.supervisorId;
-        data["supervisor"] = this.supervisor ? this.supervisor.toJSON() : <any>undefined;
-        if (this.agents && this.agents.constructor === Array) {
-            data["agents"] = [];
-            for (let item of this.agents)
-                data["agents"].push(item.toJSON());
-        }
-        data["companyId"] = this.companyId;
-        data["company"] = this.company ? this.company.toJSON() : <any>undefined;
-        return data; 
-    }
-}
-
-export interface IAgentDTO {
-    id?: string;
-    userName?: string;
-    password?: string;
-    email?: string;
-    fullNameAr?: string;
-    fullNameEn?: string;
-    image?: string;
-    agentType?: AgentType;
-    active?: boolean;
-    supervisorId?: string;
-    supervisor?: AgentDTO;
-    agents?: AgentDTO[];
-    companyId?: number;
-    company?: CompanyDTO;
 }
 
 export class AgentLoginLogDTO implements IAgentLoginLogDTO {
@@ -9728,6 +9946,7 @@ export class CommentDetailsDTO implements ICommentDetailsDTO {
     id?: number;
     commentByNameAr?: string;
     commentByNameEn?: string;
+    text?: string;
     profileImage?: string;
 
     constructor(data?: ICommentDetailsDTO) {
@@ -9744,6 +9963,7 @@ export class CommentDetailsDTO implements ICommentDetailsDTO {
             this.id = data["id"];
             this.commentByNameAr = data["commentByNameAr"];
             this.commentByNameEn = data["commentByNameEn"];
+            this.text = data["text"];
             this.profileImage = data["profileImage"];
         }
     }
@@ -9760,6 +9980,7 @@ export class CommentDetailsDTO implements ICommentDetailsDTO {
         data["id"] = this.id;
         data["commentByNameAr"] = this.commentByNameAr;
         data["commentByNameEn"] = this.commentByNameEn;
+        data["text"] = this.text;
         data["profileImage"] = this.profileImage;
         return data; 
     }
@@ -9769,6 +9990,7 @@ export interface ICommentDetailsDTO {
     id?: number;
     commentByNameAr?: string;
     commentByNameEn?: string;
+    text?: string;
     profileImage?: string;
 }
 

@@ -2,6 +2,7 @@
 using AutoMapper.QueryableExtensions;
 using HelperServices.LinqHelpers;
 using IHelperServices;
+using IHelperServices.Models;
 using LinqHelper;
 using Microsoft.Extensions.Options;
 using SoftPrimes.BLL.BaseObjects;

@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using IHelperServices;
+using IHelperServices.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
@@ -9,7 +11,9 @@ using SoftPrimes.Shared.Domains;
 using SoftPrimes.Shared.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net.Mail;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,12 +29,13 @@ namespace SoftPrimes.Service.Services
         private readonly IDataProtectService _dataProtectService;
         private readonly IHelperServices.ISessionServices _sessionServices;
         private readonly IOptionsSnapshot<BearerTokensOptions> _configuration;
-        public UsersService(IUnitOfWork unitOfWork, IMapper mapper, ISecurityService securityService, IHttpContextAccessor contextAccessor, IHelperServices.ISessionServices sessionServices, IOptions<AppSettings> appSettings, IDataProtectService dataProtectService, IOptionsSnapshot<BearerTokensOptions> configuration)
+        private readonly IMailServices _mailServices;
+        public UsersService(IUnitOfWork unitOfWork, IMapper mapper, ISecurityService securityService, IHttpContextAccessor contextAccessor, IHelperServices.ISessionServices sessionServices, IOptions<AppSettings> appSettings, IDataProtectService dataProtectService, IOptionsSnapshot<BearerTokensOptions> configuration, IMailServices mailServices)
              : base(unitOfWork, mapper, securityService, sessionServices, appSettings)
         {
             _uow = unitOfWork;
             _users = _uow.GetRepository<Agent>();
-
+            _mailServices = mailServices;
             _securityService = securityService;
             _contextAccessor = contextAccessor;
             _sessionServices = sessionServices;
@@ -103,20 +108,9 @@ namespace SoftPrimes.Service.Services
             }
             catch (Exception ex)
             {
-                //if (System.IO.File.Exists("C:\\testemail.txt"))
-                //{
-                //    using (StreamWriter sw = System.IO.File.AppendText("C:\\testemail.txt"))
-                //    {
-                //        sw.WriteLine("function= GetUserAuthTicket");
-                //        sw.WriteLine("userName= " + userName);
-                //        sw.WriteLine("Mes=" + ex.Message);
-                //        sw.WriteLine("Stack Trace=" + ex.StackTrace);
-                //    }
-                //}
                 return null;
             }
         }
-
         public override IEnumerable<AgentDTO> Insert(IEnumerable<AgentDTO> entities)
         {
             string pass = "";
@@ -129,8 +123,71 @@ namespace SoftPrimes.Service.Services
             }
             return _Mapper.Map(users, typeof(IEnumerable<Agent>), typeof(IEnumerable<AgentDTO>)) as IEnumerable<AgentDTO>;
         }
+        private string CreatePassword(int length)
+        {
 
+            var upperCase = new char[] { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z' };
+            var lowerCase = new char[] { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z' };
+            var numbers = new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
+            var rnd = new Random();
 
+            var total = upperCase
+                .Concat(lowerCase)
+                .Concat(numbers)
+                .ToArray();
+
+            var chars = Enumerable
+                .Repeat<int>(0, length)
+                .Select(i => total[rnd.Next(total.Length)])
+                .ToArray();
+
+            var result = new string(chars);
+            return result;
+        }
+        public bool ResetPassword(string Email)
+        {
+            var user = _UnitOfWork.GetRepository<Agent>().GetAll().FirstOrDefault(c => c.Email.ToUpper() == Email.ToUpper());
+            if (user != null)
+            {
+                var Message = "";
+                var mailSubject = "";
+                string newPassword = "";
+
+                newPassword = CreatePassword(8);
+                user.Password = _securityService.GetSha256Hash(newPassword);
+                _uow.SaveChangesAsync();
+                getMailResetPasswordMessage(ref Message, ref mailSubject, newPassword);
+                _mailServices.SendNotificationEmail(Email, "ContactUs", Message, true, null, null, null);
+                return true;
+            }
+            return false;
+        }
+        private void getMailResetPasswordMessage(ref string mailMessage, ref string mailSubject, string Password)
+        {
+            try
+            {
+                mailSubject = "Reset Password";
+                string messageBody = "تم تعديل كلمة المرور ";
+                string CreateDate = DateTime.Now.ToString();
+                string lblThanks = "كلمة المرور";
+
+                mailMessage = $@"<h2 style='margin-top: 57px;font-size: 17px;'>{mailSubject}</h2>
+                                        <div>
+                                           <h3>{messageBody}</h3>
+                                        </div>
+                                    </div>         
+                                    <h2 style='margin-top: 57px;font-size: 17px;'>{lblThanks}</h2>
+                                        <div>
+                                           <h3>{Password}</h3>
+                                        </div>
+                                     </div>";
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
 
     }
 }

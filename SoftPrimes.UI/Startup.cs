@@ -36,6 +36,8 @@ using NSwag;
 using System.IO;
 using System.Net.Http;
 using System.Net;
+using IHelperServices;
+using IHelperServices.Models;
 
 namespace SoftPrimes.UI
 {
@@ -206,6 +208,7 @@ namespace SoftPrimes.UI
             services.AddBusinessServices();
             services.AddScoped<ITokenStoreService, TokenStoreService>();
             services.AddScoped<IDataProtectService, DataProtectService>();
+            services.AddScoped<IMailServices, MailServices>();
             services.AddControllers()
                 //if Swagger comment next line
                 .AddMvcOptions(options => options.Filters.Add(new AuthorizeFilter()))

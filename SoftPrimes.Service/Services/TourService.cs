@@ -96,21 +96,20 @@ namespace SoftPrimes.Service.Services
                         Id = y.Id,
                         LocationName = y.CheckPoint.LocationText,
                         QRCode = y.CheckPoint.QRCode.ToString(),
-                        Comments = y.CheckPointTourComments.Select(z => new CommentDTO
+                        Comments = y.CheckPointTourComments.Count > 0 ? y.CheckPointTourComments.Select(z => new CommentDTO
                         {
-                            Attachment = new AttachmentDTO
+                            Attachment = z.Comment != null ? (z.Comment.Attachment != null) ? new AttachmentDTO
                             {
                                 AttachmentName = z.Comment.Attachment.AttachmentName,
                                 AttachmentType = z.Comment.Attachment.AttachmentType,
                                 AttachmentUrl = z.Comment.Attachment.AttachmentUrl,
                                 Id = (int)z.Comment.AttachmentId,
-                            },
-                           
-                            AttachmentId = z.Comment.AttachmentId,
+                            } : null : null,
+                            AttachmentId = z.Comment != null ? z.Comment.AttachmentId : null,
                             Id = z.CommentId,
-                            Text = z.Comment.Text,
-                            ReplayToComment = z.Comment.ReplayToComment
-                        }).ToList()
+                            Text = z.Comment != null ? z.Comment.Text : null,
+                            ReplayToComment = z.Comment != null ? z.Comment.ReplayToComment : null
+                        }).ToList() : new List<CommentDTO>()
 
                     }).ToList()
                 }).FirstOrDefault();
@@ -118,20 +117,27 @@ namespace SoftPrimes.Service.Services
 
         public List<TourCommentDTO> GetAdminComments(int tourId)
         {
-            return _unitOfWork.GetRepository<TourComment>().GetAll().Where(x => x.TourId == tourId).Select(x => new TourCommentDTO
+            var comments = _unitOfWork.GetRepository<TourComment>().GetAll().Include(x => x.Comment)
+                .Where(x => x.TourId == tourId);
+            return comments.Select(x => new TourCommentDTO
             {
                 Comment = new CommentDTO
                 {
-                    Attachment = new AttachmentDTO
+                    Attachment = x.Comment != null ? (x.Comment.Attachment != null) ? new AttachmentDTO
                     {
                         AttachmentName = x.Comment.Attachment.AttachmentName,
                         AttachmentType = x.Comment.Attachment.AttachmentType,
                         AttachmentUrl = x.Comment.Attachment.AttachmentUrl,
                         Id = (int)x.Comment.AttachmentId,
-
-                    }
+                    } : null : null,
+                    ReplayToComment = x.Comment.ReplayToComment,
+                    Id = x.CommentId,
+                    Text = x.Comment.Text
                 },
                 CommentId = x.CommentId,
+                CreatedBy=x.CreatedBy,
+                CreatedOn=x.CreatedOn,
+                Id=x.Id,
                 TourId = x.TourId,
                 CreatedByUser = _unitOfWork.GetRepository<Agent>(false).GetAll(false).Select(y => new AgentDTO
                 {
