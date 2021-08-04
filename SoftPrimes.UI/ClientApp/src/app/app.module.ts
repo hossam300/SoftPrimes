@@ -1,12 +1,13 @@
-import { TaskManagementModule } from './task-management/task-management.module';
 import { BrowserModule, Title } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { InjectionToken, NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { AppRoutingModule } from './app-routing.module';
 import { ToastrModule } from 'ngx-toastr';
 import { TranslateModule } from '@ngx-translate/core';
+import { AppRoutingModule } from './app-routing.module';
+import { SharedModule } from './shared/shared.module';
+import { TaskManagementModule } from './task-management/task-management.module';
 
 import { AppComponent } from './app.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -42,7 +43,8 @@ export const DEV_MODE = new InjectionToken<boolean>('DEV_MODE');
       maxOpened: 5
     }),
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    SharedModule
   ],
   providers: [
     SwaggerClient,

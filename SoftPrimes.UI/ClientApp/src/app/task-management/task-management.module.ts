@@ -1,3 +1,4 @@
+import { SharedModule } from './../shared/shared.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -11,7 +12,8 @@ import { TaskManagementWrapperComponent } from './task-management-wrapper/task-m
   declarations: [TasksListComponent, NewTaskComponent, TaskManagementWrapperComponent],
   imports: [
     CommonModule,
-    TaskManagementRoutingModule
+    TaskManagementRoutingModule,
+    SharedModule
   ]
 })
 export class TaskManagementModule { }
