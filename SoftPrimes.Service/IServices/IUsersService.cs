@@ -20,6 +20,10 @@ namespace SoftPrimes.Service.IServices
         string Decrypte(string name);
         AuthTicketDTO GetUserAuthTicket(string username, int? organizationId, int? roleId, bool? personal);
         bool ResetPassword(string email);
+        string ModifyProfileImages();
+        AgentDTO AddUserImage(string decryptedUserId, byte[] profileImage);
+        IEnumerable<AgentDTO> InsertNewUsers(IEnumerable<AgentDTO> entities);
+        IEnumerable<AgentDTO> UpdateUsers(IEnumerable<AgentDTO> entities);
         //Task<(bool Succeeded, string Error)> ChangePasswordAsync(User user, string currentPassword, string newPassword);
         //DataSourceResult<UserSummaryDTO> GetAllDelegatedEmployees(DataSourceRequestDelegation dataSourceRequest);
         //IEnumerable<Lookup> GetAllDelegated(DataSourceRequestForDelegated dataSourceRequest);

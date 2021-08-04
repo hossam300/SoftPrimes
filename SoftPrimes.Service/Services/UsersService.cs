@@ -2,6 +2,7 @@
 using IHelperServices;
 using IHelperServices.Models;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using SoftPrimes.BLL.AuthenticationServices;
@@ -11,6 +12,7 @@ using SoftPrimes.Shared.Domains;
 using SoftPrimes.Shared.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net.Mail;
@@ -187,6 +189,104 @@ namespace SoftPrimes.Service.Services
             {
                 throw ex;
             }
+        }
+        public string ModifyProfileImages()
+        {
+            var users = _users.GetAll().Select(x => new
+            {
+                userId = x.Id,
+                ProfileImage = x.Image,
+            }).ToList();
+            foreach (var item in users)
+            {
+                try
+                {
+                    if (item.ProfileImage != null)
+                    {
+                        this.AddUserImage(item.userId, item.ProfileImage);
+                    }
+                }
+                catch (Exception)
+                {
+
+
+                }
+
+            }
+            return "Profile Images Updated ";
+        }
+        public AgentDTO AddUserImage(string userId, byte[] ProfileImage)
+        {
+
+            MemoryStream ms = new MemoryStream(ProfileImage);
+            Image newImage = GetReducedImage(100, 100, ms);
+            byte[] ProfileImageThumbnail = ImageToByteArray(newImage);
+            AgentDTO userDetailsDTO = new AgentDTO();
+            Agent currentUser = _uow.GetRepository<Agent>().GetById(userId);
+            currentUser.Id = userId;
+            currentUser.Image = ProfileImageThumbnail;
+            _UnitOfWork.GetRepository<Agent>().Update(currentUser);
+            return _Mapper.Map(currentUser, userDetailsDTO);
+        }
+        public byte[] ImageToByteArray(System.Drawing.Image imageIn)
+        {
+            MemoryStream ms = new MemoryStream();
+            if (imageIn != null)
+            {
+                imageIn.Save(ms, System.Drawing.Imaging.ImageFormat.Gif);
+            }
+            return ms.ToArray();
+        }
+        public Image GetReducedImage(int width, int height, Stream resourceImage)
+        {
+            try
+            {
+                Image image = Image.FromStream(resourceImage);
+                Image thumb = image.GetThumbnailImage(width, height, () => false, IntPtr.Zero);
+
+                return thumb;
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+        }
+
+        public IEnumerable<AgentDTO> InsertNewUsers(IEnumerable<AgentDTO> entities)
+        {
+            string pass = "";
+            foreach (AgentDTO entity in entities)
+            {
+                pass = entity.Password;
+                string PasswordHash = _securityService.GetSha256Hash(entity.Password);
+                if (string.IsNullOrEmpty(entity.Password))
+                {
+                    return null;
+                }
+                entity.Password = PasswordHash;
+            }
+            List<Agent> users = new List<Agent>();
+            foreach (AgentDTO user in entities)
+            {
+                Agent New_user = _Mapper.Map(user, typeof(AgentDTO), typeof(Agent)) as Agent;
+                Agent mm = _users.Insert(New_user);
+                users.Add(mm);
+
+            }
+            return users.Select(u => new AgentDTO { Id = u.Id.ToString(), UserName = u.UserName }).ToList();
+        }
+
+        public IEnumerable<AgentDTO> UpdateUsers(IEnumerable<AgentDTO> Entities)
+        {
+            foreach (var Entity in Entities)
+            {
+                var OldEntity = this._UnitOfWork.GetRepository<Agent>().GetById(Entity.Id);
+                byte[] profileImage = OldEntity.Image;
+                Agent MappedEntity = _Mapper.Map(Entity, OldEntity, typeof(AgentDTO), typeof(Agent)) as Agent;
+                MappedEntity.Image = profileImage;
+                this._UnitOfWork.GetRepository<Agent>().Update(MappedEntity as Agent);
+            }
+            return Entities.Select(e => new AgentDTO { UserName = e.UserName });
         }
 
     }

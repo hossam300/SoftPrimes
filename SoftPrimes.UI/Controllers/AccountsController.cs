@@ -130,5 +130,41 @@ namespace SoftPrimes.UI.Controllers
             Email = Email.Replace("%40", "@");
             return _usersService.ResetPassword(Email);
         }
+        [HttpPost, Route("InsertNewUsers")]
+        public IEnumerable<AgentDTO> InsertNewUsers([FromBody] IEnumerable<AgentDTO> entities)
+        {
+            return _usersService.InsertNewUsers(entities);
+        }
+
+        [HttpPut, Route("UpdateUsers")]
+        public IEnumerable<AgentDTO> UpdateUsers([FromBody] IEnumerable<AgentDTO> entities)
+        {
+            return this._usersService.UpdateUsers(entities);
+        }
+
+        [HttpGet("ModifyProfileImages")]
+        [AllowAnonymous]
+        public string ModifyProfileImages() { return _usersService.ModifyProfileImages(); }
+
+        [HttpPost("AddUserImage")]
+        public object AddUserImage(string userId)
+        {
+            string DecryptedUserId = userId ;
+
+            if (!Request.ContentType.StartsWith("multipart"))
+            {
+                throw new System.Exception("Invalid multipart request");
+            }
+            Microsoft.AspNetCore.Http.IFormFile file = Request.Form.Files[0];
+            byte[] BinaryContent = null;
+            using (System.IO.BinaryReader binaryReader = new System.IO.BinaryReader(file.OpenReadStream()))
+            {
+                BinaryContent = binaryReader.ReadBytes((int)file.Length);
+            }
+            byte[] ProfileImage = BinaryContent;
+            string ProfileImageMimeType = file.ContentType;
+            var user = _usersService.AddUserImage(DecryptedUserId, ProfileImage);
+            return new { UserId = user.Id, ProfileImage = user.Image };
+        }
     }
 }
