@@ -1,0 +1,11 @@
+.card {
+  margin-bottom: 130px;
+}
+
+.card-footer {
+  margin-top: 79px;
+}
+
+.card-footer .btn {
+  width: 190px;
+}
