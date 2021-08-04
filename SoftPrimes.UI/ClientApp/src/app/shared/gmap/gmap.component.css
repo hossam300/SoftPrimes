@@ -1,0 +1,16 @@
+.gmap-overlay {
+  height: 46px;
+  top: auto;
+  margin: 0 20px 20px 20px;
+  z-index: 5;
+  text-align: right;
+  opacity: 50%;
+}
+
+.gmap-overlay span {
+  color: #fff;
+  z-index: 6;
+  margin-right: 54px;
+  font-size: 13px;
+  cursor: pointer;
+}
