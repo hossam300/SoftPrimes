@@ -4,6 +4,7 @@
 body {
   background-color: #F5F6FA;
   color: #333;
+  font-family: "Source Sans Pro", Verdana, Geneva, Tahoma, sans-serif;
 }
 
 img {
@@ -23,6 +24,32 @@ input.form-control::placeholder {
   font-size: 14px;
 }
 
+/* buttons */
+.btn {
+  text-transform: none !important;
+}
+
+/* breadcrumb */
+.breadcrumb-item:not(.active) {
+  text-decoration: underline;
+}
+
+.breadcrumb-item+.breadcrumb-item::before {
+  content: " " !important;
+}
+
+.breadcrumb-item.active,
+.breadcrumb-item a {
+  color: #666666;
+}
+
+/* forms */
+label.required:after {
+  content: "*";
+  color: #EE2948;
+  padding-left: 4px;
+}
+
 
 
 /* utilities */
@@ -37,17 +64,29 @@ input.form-control::placeholder {
 }
 
 .rounded-left {
-  border-radius: 6px 0px 0px 6px;
+  border-radius: 6px 0px 0px 6px !important;
 }
 
 .rounded-right {
-  border-radius: 0px 6px 6px 0px;
+  border-radius: 0px 6px 6px 0px !important;
+}
+
+.rounded-bottom {
+  border-radius: 0px 0px 6px 6px !important;
 }
 
 .shadow {
-  box-shadow: 0px 3px 14px #0000000F;
+  box-shadow: 0px 3px 14px #0000000F !important;
 }
 
 .text-14 {
   font-size: 14px !important;
+}
+
+.dashed-border-bottom {
+  border-bottom: 1px dashed #CCCCCC;
+}
+
+.dashed-border-top {
+  border-top: 1px dashed #CCCCCC;
 }
