@@ -20,6 +20,7 @@ namespace SoftPrimes.Shared.Domains
         public virtual List<Agent> Agents { get; set; }
         public int CompanyId { get; set; }
         public virtual Company Company { get; set; }
+        public bool TempPassword { get; set; } = false;
     }
     public enum AgentType
     {

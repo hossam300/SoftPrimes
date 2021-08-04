@@ -157,6 +157,7 @@ namespace SoftPrimes.Service.Services
 
                 newPassword = CreatePassword(8);
                 user.Password = _securityService.GetSha256Hash(newPassword);
+                user.TempPassword = true;
                 _uow.SaveChangesAsync();
                 getMailResetPasswordMessage(ref Message, ref mailSubject, newPassword);
                 _mailServices.SendNotificationEmail(Email, "ContactUs", Message, true, null, null, null);
@@ -288,6 +289,50 @@ namespace SoftPrimes.Service.Services
             }
             return Entities.Select(e => new AgentDTO { UserName = e.UserName });
         }
+        public async Task<bool> ChangeTempPassword(string userName, string newPassword)
+        {
+            try
+            {
+                var user = this.GetByUserName(userName);
+                await this.ChangePasswordForAdminAsync(user.Id, newPassword);
+                return true;
+            }
+            catch (Exception)
+            {
 
+                return false;
+            }
+
+        }
+        public AgentDTO GetByUserName(string Username)
+        {
+            var User = _users.GetAll(false).FirstOrDefault(x => x.UserName.ToUpper() == Username.ToUpper());
+
+            if (!string.IsNullOrEmpty(Username))
+            {
+                if (User != null)
+                {
+                    string UserId = User.Id;
+                    if (UserId != null)
+                    {
+                        AgentDTO user = GetDetails(UserId);
+                        return user;
+                    }
+                }
+            }
+            return null;
+        }
+        public async Task<(bool Succeeded, string Error)> ChangePasswordForAdminAsync(string userId, string newPassword)
+        {
+            Agent user = await FindUserAsync(userId);
+            if (user.Id != null)
+            {
+                user.Password = _securityService.GetSha256Hash(newPassword);
+                user.TempPassword = false;
+                await _uow.SaveChangesAsync();
+                return (true, string.Empty);
+            }
+            return (false, "User Not Avaliable.");
+        }
     }
 }

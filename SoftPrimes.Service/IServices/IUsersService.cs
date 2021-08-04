@@ -24,6 +24,7 @@ namespace SoftPrimes.Service.IServices
         AgentDTO AddUserImage(string decryptedUserId, byte[] profileImage);
         IEnumerable<AgentDTO> InsertNewUsers(IEnumerable<AgentDTO> entities);
         IEnumerable<AgentDTO> UpdateUsers(IEnumerable<AgentDTO> entities);
+        Task<bool> ChangeTempPassword(string userName, string newPassword);
         //Task<(bool Succeeded, string Error)> ChangePasswordAsync(User user, string currentPassword, string newPassword);
         //DataSourceResult<UserSummaryDTO> GetAllDelegatedEmployees(DataSourceRequestDelegation dataSourceRequest);
         //IEnumerable<Lookup> GetAllDelegated(DataSourceRequestForDelegated dataSourceRequest);

@@ -149,7 +149,7 @@ namespace SoftPrimes.UI.Controllers
         [HttpPost("AddUserImage")]
         public object AddUserImage(string userId)
         {
-            string DecryptedUserId = userId ;
+            string DecryptedUserId = userId;
 
             if (!Request.ContentType.StartsWith("multipart"))
             {
@@ -165,6 +165,12 @@ namespace SoftPrimes.UI.Controllers
             string ProfileImageMimeType = file.ContentType;
             var user = _usersService.AddUserImage(DecryptedUserId, ProfileImage);
             return new { UserId = user.Id, ProfileImage = user.Image };
+        }
+        [AllowAnonymous]
+        [HttpGet("[action]")]
+        public async Task<bool> ChangeTempPassword(string userName, string newPassword)
+        {
+            return await _usersService.ChangeTempPassword(userName, newPassword);
         }
     }
 }

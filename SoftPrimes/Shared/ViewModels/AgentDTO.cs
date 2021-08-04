@@ -14,6 +14,7 @@ namespace SoftPrimes.Shared.ViewModels
         public byte[] Image { get; set; }
         public AgentType AgentType { get; set; }
         public bool Active { get; set; }
+        public bool TempPassword { get; set; } = false;
         public string SupervisorId { get; set; }
         public AgentDTO Supervisor { get; set; }
         public List<AgentDTO> Agents { get; set; }
