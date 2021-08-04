@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SwaggerClient, UserLoginModel } from 'src/app/core/_services/swagger/SwaggerClient.service';
 import { AuthService } from 'src/app/core/_services/auth.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -12,18 +13,24 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   isAdmin = false;
+  existingUser;
+  returnUrl: string;
 
   dataError = false;
   error = 'An error occurred';
   request = false;
 
   constructor(
+    private router: Router,
+    private route: ActivatedRoute,
     private formBuilder: FormBuilder,
     private auth: AuthService,
     private swagger: SwaggerClient) {}
 
   ngOnInit() {
+    this.isAdmin = localStorage.getItem('isAdmin') ? JSON.parse(localStorage.getItem('isAdmin')) : false;
     this.initForms();
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
   }
 
   initForms() {
@@ -72,6 +79,18 @@ export class LoginComponent implements OnInit {
     this.swagger
       .apiAccountGetUserAuthTicketGet(undefined, undefined, undefined)
       .subscribe((value) => {
+        if (value) {
+          localStorage.setItem('existing-user', JSON.stringify({
+            'username': this.loginForm.controls.username.value,
+            'nameEn': value.fullNameEn,
+            'nameAr': value.fullNameAr,
+            'email': value.email
+            // 'image': value.userImage
+          }));
+          this.existingUser = JSON.parse(localStorage.getItem('existing-user'));
+          this.auth.setUser(value);
+          this.router.navigate([this.returnUrl]);
+        }
         console.log(value, 'user get');
         // this.layoutService.toggleIsLoadingBlockUI(false);
       });

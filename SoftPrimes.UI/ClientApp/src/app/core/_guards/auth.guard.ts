@@ -22,74 +22,54 @@ export class AuthGuard implements CanActivate, CanActivateChild {
     private toastr: ToastrService,
     private translate: TranslateService,
     private layoutService: LayoutService) {
-    // this.auth.currentUser.subscribe(user => {
-    //   this.user = user;
-    //   if (this.allowedPermissionCode && user && user.permissions.indexOf(this.allowedPermissionCode) === -1) {
-    //     this.translate.get('PermissionTaken').subscribe(x => this.toastr.error(this.allowedPermissionCode,x));
-    //     // this.toastr.error(this.allowedPermissionCode, 'Permission Taken');
-    //     this.router.navigate(['/']);
-    //   }
-    // });
+    this.auth.currentUser.subscribe(user => {
+      this.user = user;
+      // && user.permissions.indexOf(this.allowedPermissionCode) === -1
+      if (this.allowedPermissionCode && user) {
+        this.translate.get('PermissionTaken').subscribe(x => this.toastr.error(this.allowedPermissionCode,x));
+        // this.toastr.error(this.allowedPermissionCode, 'Permission Taken');
+        this.router.navigate(['/']);
+      }
+    });
   }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    // if (this.user && this.authService.isAuthUserLoggedIn()) {
-    //   return true;
-    // } else {
-    //   // not logged in so redirect to login page with the return url and return false
-    //   this.tempUrl = this.route.snapshot.queryParams['IsTemp'];
-    //   this.ssokey = this.route.snapshot.queryParams['ssokey'];
-    //   if (this.ssokey) this.router.navigate(['/login'], { queryParams: { ssokey: this.ssokey } });
-    //   else if (this.tempUrl) this.router.navigate(['/login'], { queryParams: { tempUrl: true } });
-    //   else this.router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
-    //   return false;
-    // }
-    return true;
+    if (this.user && this.authService.isAuthUserLoggedIn()) {
+      return true;
+    } else {
+      // not logged in so redirect to login page with the return url and return false
+      this.router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
+      return false;
+    }
   }
 
   canActivateChild(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    return true;
-    // const returnUrl = state.url;
-    // if (returnUrl.includes('dashboard')) {
-    //   document.body.classList.add('dashboard-page');
-    //   if (window.outerWidth > 767) this.layoutService.setSidebarStatus(true);
-    // } else {
-    //   document.body.classList.remove('dashboard-page');
-    //   this.layoutService.setSidebarStatus(false);
-    // }
-    // if (returnUrl.includes('/vip')) {
-    //   document.body.classList.add('vip-page');
-    // } else {
-    //   document.body.classList.remove('vip-page');
-    // }
-    // if (!this.authService.isAuthUserLoggedIn()) {
-    //   this.tempUrl = this.route.snapshot.queryParams['IsTemp'];
-    //   this.ssokey = this.route.snapshot.queryParams['ssokey'];
-    //   if (this.ssokey) this.router.navigate(['/login'], { queryParams: { ssokey: this.ssokey } });
-    //   else if (this.tempUrl) this.router.navigate(['/login'], { queryParams: { tempUrl: true } });
-    //   else this.router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
-    //   return false;
-    // }
-    // if (route.data.permissionCode) {
-    //   //get permissionCode array and convert to uppercase ...
-    //   const permissionCode = route.data.permissionCode.map(function(x: string){ return x.toUpperCase() });
-    //   let allow = false;
-    //   if (this.user && this.user.permissions.some((perCode) => permissionCode.indexOf(perCode.toUpperCase()) > -1)) {
-    //     this.allowedPermissionCode = permissionCode;
-    //     this.firstURL = false;
-    //     allow = true;
-    //   } else {
-    //     this.translate.get('ActionNotAllowed').subscribe(x => this.toastr.error(permissionCode,x))
-    //     // this.toastr.error(permissionCode, 'Action Not Allowed');
-    //     // TODO: navigation history
-    //     if (this.firstURL) {
-    //       this.router.navigate(['/']);
-    //     }
-    //   }
-    //   return allow;
-    // } else {
-    //   this.allowedPermissionCode = null;
-    //   return true;
-    // }
+    const returnUrl = state.url;
+    if (!this.authService.isAuthUserLoggedIn()) {
+      this.router.navigate(['/login'], { queryParams: { returnUrl } });
+      return false;
+    }
+    if (route.data.permissionCode) {
+      // get permissionCode array and convert to uppercase ...
+      const permissionCode = route.data.permissionCode.map(function(x: string) { return x.toUpperCase(); });
+      let allow = false;
+      // && this.user.permissions.some((perCode) => permissionCode.indexOf(perCode.toUpperCase()) > -1)
+      if (this.user) {
+        this.allowedPermissionCode = permissionCode;
+        this.firstURL = false;
+        allow = true;
+      } else {
+        this.translate.get('ActionNotAllowed').subscribe(x => this.toastr.error(permissionCode,x))
+        // this.toastr.error(permissionCode, 'Action Not Allowed');
+        // TODO: navigation history
+        if (this.firstURL) {
+          this.router.navigate(['/']);
+        }
+      }
+      return allow;
+    } else {
+      this.allowedPermissionCode = null;
+      return true;
+    }
   }
 }
