@@ -52,44 +52,29 @@ export class AuthService {
     const _user = localStorage.getItem('user');
     const _isEmployee = localStorage.getItem('isEmployee');
     if (_user) {
-      this.setUser(JSON.parse(_user), _isEmployee === 'true');
+      this.setUser(JSON.parse(_user));
     }
     this.localization.isArabic$.subscribe(value => {
       this.isArabic = value;
     });
   }
 
-  setUser(user: AuthTicketDTO, isEmployee = false, fromTemp = true) {
-    if (fromTemp) {
-      if (this.user.value !== null && !this.router.url.includes('/vip')) {
-        this.router.navigate(['/']);
-      }
-    }
+  setUser(user: AuthTicketDTO) {
 
     this.user.next(user);
     if (user) {
-      this.isEmployee.next(isEmployee);
-      if (!isEmployee) {
-        document.body.classList.remove('employee');
-        this.translate.get('On').subscribe(translateValue => {
+      document.body.classList.remove('employee');
+      this.translate.get('On').subscribe(translateValue => {
 
-          if (this.isArabic) {
-            this.toastr.info(`${user.fullNameAr} ${translateValue}`, this.accountSwitched);
-          } else {
-            this.toastr.info(`${user.fullNameEn} ${translateValue}`, this.accountSwitched);
-          }
-        });
-      } else {
-        document.body.classList.add('employee');
-      }
+        if (this.isArabic) {
+          this.toastr.info(`${user.fullNameAr} ${translateValue}`, this.accountSwitched);
+        } else {
+          this.toastr.info(`${user.fullNameEn} ${translateValue}`, this.accountSwitched);
+        }
+      });
       localStorage.setItem('user', JSON.stringify(user));
-      localStorage.setItem('isEmployee', isEmployee.toString());
       this.store.loggedUser$.next(user); // share user in all system - if changed the user or if changed the organization
     }
-  }
-
-  setEmployeeStatus(bool: boolean) {
-    this.isEmployee.next(bool);
   }
 
   login(credentials: UserLoginModel, culture: string): Observable<{}> {
