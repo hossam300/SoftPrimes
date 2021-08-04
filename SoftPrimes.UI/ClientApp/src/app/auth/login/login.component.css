@@ -1,0 +1,14 @@
+.login-logo {
+  position: absolute;
+  top: 26px;
+  left: 32px;
+}
+
+.login-copyright {
+  position: absolute;
+  left: 15px;
+  bottom: 19px;
+  color: #fff;
+  font-size: 14px;
+  margin: 0;
+}
