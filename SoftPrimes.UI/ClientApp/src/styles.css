@@ -1,6 +1,16 @@
 /* You can add global styles to this file, and also import other style files */
 
 /* Provide sufficient contrast against white background */
+body {
+  background-color: #F5F6FA;
+  color: #333;
+  font-family: "Source Sans Pro", Verdana, Geneva, Tahoma, sans-serif;
+}
+
+img {
+  max-width: 100%;
+}
+
 a {
   color: #0366d6;
 }
@@ -9,8 +19,74 @@ code {
   color: #e01a76;
 }
 
-.btn-primary {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+input.form-control::placeholder {
+  color: #CCCCCC;
+  font-size: 14px;
+}
+
+/* buttons */
+.btn {
+  text-transform: none !important;
+}
+
+/* breadcrumb */
+.breadcrumb-item:not(.active) {
+  text-decoration: underline;
+}
+
+.breadcrumb-item+.breadcrumb-item::before {
+  content: " " !important;
+}
+
+.breadcrumb-item.active,
+.breadcrumb-item a {
+  color: #666666;
+}
+
+/* forms */
+label.required:after {
+  content: "*";
+  color: #EE2948;
+  padding-left: 4px;
+}
+
+
+
+/* utilities */
+.overlay {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background-color: #000;
+  opacity: 34%;
+}
+
+.rounded-left {
+  border-radius: 6px 0px 0px 6px !important;
+}
+
+.rounded-right {
+  border-radius: 0px 6px 6px 0px !important;
+}
+
+.rounded-bottom {
+  border-radius: 0px 0px 6px 6px !important;
+}
+
+.shadow {
+  box-shadow: 0px 3px 14px #0000000F !important;
+}
+
+.text-14 {
+  font-size: 14px !important;
+}
+
+.dashed-border-bottom {
+  border-bottom: 1px dashed #CCCCCC;
+}
+
+.dashed-border-top {
+  border-top: 1px dashed #CCCCCC;
 }

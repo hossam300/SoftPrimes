@@ -1,0 +1,95 @@
+<app-breadcrumb></app-breadcrumb>
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h1 class="h5">
+    Create new task
+  </h1>
+</div>
+<div class="card shadow">
+  <div class="card-body">
+    <form>
+      <p class="dashed-border-bottom mb-4 pb-4">
+        Please find the below information
+      </p>
+      <div class="row form-group">
+        <label for="taskType" class="required col-2 col-form-label col-form-label-sm">Task type</label>
+        <div class="col-7 d-flex">
+          <div class="form-check form-check-inline mr-5">
+            <input name="taskype" class="form-check-input" id="tour" required checked="" type="radio">
+            <label class="form-check-label" for="tour">Tour</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input name="taskype" class="form-check-input" id="monitoring" required type="radio">
+            <label class="form-check-label" for="monitoring">Monitoring</label>
+          </div>
+        </div>
+      </div>
+      <div class="row form-group">
+        <label for="templates" class="required col-2 col-form-label col-form-label-sm">Templates</label>
+        <div class="col-7 d-flex">
+          <select class="custom-select" id="templates">
+            <option selected disabled value="">Choose template...</option>
+            <option>...</option>
+          </select>
+        </div>
+      </div>
+      <div class="row form-group">
+        <label for="tourName" class="required col-2 col-form-label col-form-label-sm">Tour name</label>
+        <div class="col-7 d-flex">
+          <input type="text" class="form-control" name="tourName"
+          id="tourName" placeholder="tour name">
+        </div>
+      </div>
+      <div class="row form-group">
+        <label for="tourDate" class="required col-2 col-form-label col-form-label-sm">Tour date</label>
+        <div class="col-7 d-flex">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text bg-transparent text-14"><em class="fa fa-calendar-o"></em></span>
+            </div>
+            <input type="text" class="form-control datepicker" name="tourDate" autocomplete="off"
+            id="tourDate" placeholder="MM/DD/YYYY">
+          </div>
+        </div>
+      </div>
+      <div class="row form-group">
+        <label for="location" class="required col-2 col-form-label col-form-label-sm">Point location</label>
+        <div class="col-7 d-flex">
+          <div class="input-group">
+            <input class="form-control" placeholder="location" id="location" type="text">
+            <div class="input-group-append">
+              <span class="input-group-text bg-transparent text-primary text-14"><em class="ni ni-send"></em></span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row form-group">
+        <label for="tourAgent" class="required col-2 col-form-label col-form-label-sm">Tour agent</label>
+        <div class="col-7 d-flex">
+          <div class="input-group">
+            <input class="form-control" placeholder="choose Agent" type="text" id="tourAgent">
+            <div class="input-group-append">
+              <span class="input-group-text bg-transparent text-primary text-14"><em class="fa fa-search"></em></span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row form-group">
+        <label for="captureLocation" class="required col-2 col-form-label col-form-label-sm">Capture location</label>
+        <div class="col-7 d-flex">
+          <div class="input-group">
+            <select class="custom-select" id="captureLocation">
+              <option selected disabled value="">Choose timelapse...</option>
+              <option>...</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </form>
+
+    <div class="bg-transparent card-footer dashed-border-top px-0 pt-4 pb-1">
+      <button class="btn btn-primary shadow">
+        Assign
+      </button>
+    </div>
+  </div>
+</div>

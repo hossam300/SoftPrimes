@@ -37,7 +37,7 @@ var $tagsinput = $('.tagsinput');
   if (isWindows) {
     // if we are on windows OS we activate the perfectScrollbar function
 
-    $('.wrapper .login-page, .register-page, .card').perfectScrollbar();
+    //$('.wrapper .login-page, .register-page, .card').perfectScrollbar();
 
 
     if ($('.tab-content .table-responsive').length != 0) {
@@ -94,6 +94,8 @@ $(document).ready(function() {
 
   // Activate the image for the navbar-collapse
   ArgonKit.initNavbarImage();
+
+  ArgonKit.initDatePicker();
 
   $navbar = $('.navbar[color-on-scroll]');
   scroll_distance = $navbar.attr('color-on-scroll') || 500;
@@ -242,9 +244,11 @@ ArgonKit = {
     }
   },
 
-  initDatePicker: function() {
+  initDatePicker: function () {
     if ($datepicker.length != 0) {
       $datepicker.datetimepicker({
+        autoclose: true,
+        todayHighlight: true,
         icons: {
           time: "tim-icons icon-watch-time",
           date: "tim-icons icon-calendar-60",

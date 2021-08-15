@@ -1,0 +1,48 @@
+<div class="row mb-5 mt-4 shadow">
+  <div class="col-6 d-none d-md-block px-0 position-relative">
+    <img src="./../../../assets/img/Login_image.png" class="img-responsive" alt="login image" />
+    <div class="overlay rounded-left"></div>
+    <img src="./../../../assets/img/logo.svg" class="login-logo" alt="logo" />
+    <p class="login-copyright">Copyright SoftPrimes.</p>
+  </div>
+  <div class="col-12 col-md-6 px-0 bg-white rounded-right">
+    <div class="row h-100">
+      <div class="col-1"></div>
+      <div class="col-9 d-flex flex-column justify-content-center">
+        <div class="row">
+          <div class="col-12 px-0 d-flex flex-column align-items-center">
+            <h1 class="h5">
+              Administrator Account
+            </h1>
+            <p>
+              Please fill the below information to to register with us.
+            </p>
+          </div>
+        </div>
+        <div class="row mt-4 pt-2">
+        <form class="w-100" [formGroup]="loginForm">
+            <div class="col-12 px-0">
+              <div class="form-group mb-4">
+                <label>User name</label>
+                <input type="text" formControlName="username" class="form-control" placeholder="Enter your company mail">
+              </div>
+            </div>
+            <div class="col-12 px-0">
+              <div class="form-group">
+                <label>Password</label>
+                <input type="password" formControlName="password" class="form-control" placeholder="Enter your password" />
+              </div>
+            </div>
+            <button class="btn btn-primary btn-lg w-100 mt-5" type="submit"
+            (click)="onSubmit()">Login</button>
+            <p class="mb-0 mt-3 text-center text-14">
+              Request team password ?
+              <a class="d-inline text-underline" href="#">Send</a>
+            </p>
+          </form>
+        </div>
+      </div>
+      <div class="col-2"></div>
+    </div>
+  </div>
+</div>
