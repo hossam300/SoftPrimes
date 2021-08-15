@@ -4,6 +4,14 @@ a.navbar-brand {
   word-break: break-all;
 }
 
+.dropdown-menu {
+  width: 233px;
+  background: #FFFFFF 0% 0% no-repeat padding-box;
+  box-shadow: 0px 0px 6px #00000029;
+  border-radius: 6px;
+  border: none;
+}
+
 html {
   font-size: 14px;
 }

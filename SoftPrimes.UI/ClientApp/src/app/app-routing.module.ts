@@ -13,6 +13,9 @@ const routes: Routes = [
   { path: 'task-management',
   loadChildren: './task-management/task-management.module#TaskManagementModule',
   data: {'breadcrumb': ['taskManagment']} },
+  { path: 'settings',
+  loadChildren: './settings/settings.module#SettingsModule',
+  data: {'breadcrumb': ['settings']} },
 ];
 
 @NgModule({

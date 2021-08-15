@@ -8,14 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavMenuComponent implements OnInit {
   isExpanded = false;
-  isLoggedIn: boolean;
+  isLoggedIn;
 
   constructor(
     private auth: AuthService
   ){}
 
   ngOnInit() {
-    this.isLoggedIn = this.auth.isAuthUserLoggedIn();
+    this.isLoggedIn = this.auth.currentUser;
     console.log(this.isLoggedIn, 'user logged in');
 
   }
