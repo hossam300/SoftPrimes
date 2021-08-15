@@ -30,25 +30,37 @@ namespace SoftPrimes.UI.Controllers
             return _TourCheckPointService.ScanLocationQrCode(locationQrCode);
         }
         [HttpGet("CompleteTourCheckPoint")]
-        public bool CompleteTourCheckPoint(int TourCheckPointId,int State)
+        public bool CompleteTourCheckPoint(int TourCheckPointId, int State)
         {
-            return _TourCheckPointService.ChangeTourCheckPointState(TourCheckPointId,State);
+            return _TourCheckPointService.ChangeTourCheckPointState(TourCheckPointId, State);
         }
         [HttpPost("AddCheckPointTourComment")]
         public CommentDTO AddCheckPointTourComment(CheckPointTourCommentDetailDTO checkPointTourComment)
         {
-            if (!Request.ContentType.StartsWith("multipart"))
-            {
-                throw new System.Exception("Invalid multipart request");
-            }
+            //if (!Request.ContentType.StartsWith("multipart"))
+            //{
+            //    throw new System.Exception("Invalid multipart request");
+            //}
             string path = "";
             if (checkPointTourComment.File.Length > 0)
             {
                 path = _appEnvironment.WebRootPath + "\\Files\\" + Guid.NewGuid() + "_" + checkPointTourComment.Text;
             }
-
-            System.IO.File.WriteAllBytes(path, checkPointTourComment.File);
-            return _TourCheckPointService.AddCheckPointTourComment(checkPointTourComment, path);
+            var ext = "";
+            switch ((AttachmentType)checkPointTourComment.AttachmentType)
+            {
+                case AttachmentType.Image:
+                    ext = ".png";
+                    break;
+                case AttachmentType.Voice:
+                    ext = ".mp3";
+                    break;
+                case AttachmentType.Video:
+                    ext = ".mp4";
+                    break;
+            }
+            System.IO.File.WriteAllBytes(path + ext, checkPointTourComment.File );
+            return _TourCheckPointService.AddCheckPointTourComment(checkPointTourComment, path + ext);
         }
     }
 }

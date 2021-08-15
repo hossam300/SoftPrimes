@@ -27,7 +27,7 @@ namespace SoftPrimes.Service.Services
         {
             Comment comment = new Comment
             {
-                Attachment = Url != "" ? new Attachment() : new Attachment
+                Attachment = Url == "" ? new Attachment() : new Attachment
                 {
                     AttachmentName = checkPointTourComment.Text,
                     AttachmentType = (AttachmentType)checkPointTourComment.AttachmentType,
@@ -64,7 +64,7 @@ namespace SoftPrimes.Service.Services
 
         public bool ScanLocationQrCode(LocationQrCodeDTO locationQrCode)
         {
-            var TourCheckPoint = _repository.GetAll().Where(x => x.Id == locationQrCode.CheckPointId && x.CheckPoint.QRCode == locationQrCode.QRCode).FirstOrDefault();
+            var TourCheckPoint = _repository.GetAll().Where(x => x.Id == locationQrCode.CheckPointId || x.CheckPoint.QRCode == locationQrCode.QRCode).FirstOrDefault();
             if (TourCheckPoint == null)
             {
                 return false;

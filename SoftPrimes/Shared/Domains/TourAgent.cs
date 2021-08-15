@@ -14,6 +14,7 @@ namespace SoftPrimes.Shared.Domains
         public virtual Tour Tour { get; set; }
         public TourType TourType { get; set; }
         public DateTimeOffset TourDate { get; set; }
+        public bool IsTemplate { get; set; }
         public virtual List<TourCheckPoint> CheckPoints { get; set; }
         public string AgentId { get; set; }
         public virtual Agent Agent { get; set; }

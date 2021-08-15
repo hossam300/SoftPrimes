@@ -137,10 +137,10 @@ namespace EMailIntegration
                 if (!string.IsNullOrEmpty(CC_Email))
                     mailMessage.CC.Add(CC_Email);
 
-                if (htmlEnabled)
-                {
-                    mailMessage.AlternateViews.Add(htmlView);
-                }
+                //if (htmlEnabled)
+                //{
+                //    mailMessage.AlternateViews.Add(htmlView);
+                //}
                 if (!String.IsNullOrEmpty(Body))
                 {
                     mailMessage.Body = Body;

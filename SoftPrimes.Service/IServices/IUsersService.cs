@@ -18,7 +18,7 @@ namespace SoftPrimes.Service.IServices
         //  UserDetailsDTO GetIndividualUserDetails(string username, bool IsEncrypt);
         string GetCurrentUserId();
         string Decrypte(string name);
-        AuthTicketDTO GetUserAuthTicket(string username, int? organizationId, int? roleId, bool? personal);
+        AuthTicketDTO GetUserAuthTicket(string userName);
         bool ResetPassword(string email);
         string ModifyProfileImages();
         AgentDTO AddUserImage(string decryptedUserId, byte[] profileImage);

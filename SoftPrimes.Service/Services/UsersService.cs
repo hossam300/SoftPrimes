@@ -52,8 +52,8 @@ namespace SoftPrimes.Service.Services
 
         public async Task<Agent> FindUserPasswordAsync(string username, string password, bool isHashedPassword)
         {
-
-            Agent result = await _users.FirstOrDefaultAsync(x => x.UserName == username);
+            string passwordHash = _securityService.GetSha256Hash(password);
+            Agent result = await _users.FirstOrDefaultAsync(x => x.UserName == username && x.Password == passwordHash);
             return result;
 
         }
@@ -85,7 +85,7 @@ namespace SoftPrimes.Service.Services
         {
             return _dataProtectService.Encrypt(EncrypteString);
         }
-        public AuthTicketDTO GetUserAuthTicket(string userName, int? organizationId = null, int? roleId = null, bool? personal = false)
+        public AuthTicketDTO GetUserAuthTicket(string userName)
         {
             try
             {
@@ -102,7 +102,7 @@ namespace SoftPrimes.Service.Services
                         UserName = AuthUser.UserName,
                         UserId = AuthUser.Id.ToString(),
                         FullName = AuthUser.FullNameAr,
-
+                        
                     };
                     return Result;
                 }
@@ -148,7 +148,7 @@ namespace SoftPrimes.Service.Services
         }
         public bool ResetPassword(string Email)
         {
-            var user = _UnitOfWork.GetRepository<Agent>().GetAll().FirstOrDefault(c => c.Email.ToUpper() == Email.ToUpper());
+            var user = _uow.GetRepository<Agent>().GetAll().FirstOrDefault(c => c.Email.ToUpper() == Email.ToUpper());
             if (user != null)
             {
                 var Message = "";
@@ -160,7 +160,7 @@ namespace SoftPrimes.Service.Services
                 user.TempPassword = true;
                 _uow.SaveChangesAsync();
                 getMailResetPasswordMessage(ref Message, ref mailSubject, newPassword);
-                _mailServices.SendNotificationEmail(Email, "ContactUs", Message, true, null, null, null);
+                _mailServices.SendNotificationEmail(Email, "Reset Password", Message, true, null, null, null);
                 return true;
             }
             return false;

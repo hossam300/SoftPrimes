@@ -70,18 +70,18 @@ namespace SoftPrimes.UI.Controllers
                 _User,
                 applicationType,
                 refreshTokenSource: null);
-            return Ok(new AccessToken { access_token = accessToken, refresh_token = refreshToken, is_mobile = true, is_ldap_auth = lsLdapAuth, is_factor_auth = false });
+            return Ok(new AccessToken { access_token = accessToken, refresh_token = refreshToken, IsTemp = _User.TempPassword, is_mobile = true, is_ldap_auth = lsLdapAuth, is_factor_auth = false });
             //}
         }
 
         [HttpGet("[action]")]
         [ProducesResponseType(200, Type = typeof(AuthTicketDTO))]
         [Authorize]
-        public IActionResult GetUserAuthTicket(int? CommitteeId, int? roleId, bool? personal = false)
+        public IActionResult GetUserAuthTicket()
         {
             ClaimsIdentity claimsIdentity = User.Identity as ClaimsIdentity;
             string Username = claimsIdentity.Name;
-            AuthTicketDTO AuthTicket = this._usersService.GetUserAuthTicket(Username, CommitteeId, roleId, personal);
+            AuthTicketDTO AuthTicket = this._usersService.GetUserAuthTicket(Username);
             return Ok(AuthTicket != null ? AuthTicket : null);
         }
         [AllowAnonymous]
@@ -100,13 +100,13 @@ namespace SoftPrimes.UI.Controllers
             return true;
         }
         [AllowAnonymous]
-        [HttpGet("[action]")]
+        [HttpPost("[action]")]
         [ProducesResponseType(200, Type = typeof(bool))]
         public bool ContactUs(MessageDTO message)
         {
             try
             {
-                _mailServices.SendNotificationEmail(message.Email, "ContactUs", message.Message, true, null, null, null);
+                _mailServices.SendNotificationEmail(message.Email, "ContactUs", message.Message, false, null, null, null);
                 return true;
             }
             catch (Exception)
