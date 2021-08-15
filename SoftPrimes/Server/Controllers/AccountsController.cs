@@ -76,11 +76,11 @@ namespace SoftPrimes.Server.Controllers
         [HttpGet("[action]")]
         [ProducesResponseType(200, Type = typeof(AuthTicketDTO))]
         [Authorize]
-        public IActionResult GetUserAuthTicket(int? CommitteeId, int? roleId, bool? personal = false)
+        public IActionResult GetUserAuthTicket()
         {
             ClaimsIdentity claimsIdentity = User.Identity as ClaimsIdentity;
             string Username = _usersService.Decrypte(claimsIdentity.Name);
-            AuthTicketDTO AuthTicket = this._usersService.GetUserAuthTicket(Username, CommitteeId, roleId, personal);
+            AuthTicketDTO AuthTicket = this._usersService.GetUserAuthTicket(Username);
             return Ok(AuthTicket != null ? AuthTicket : null);
         }
       
