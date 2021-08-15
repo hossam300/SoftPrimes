@@ -1,3 +1,4 @@
+import { FormsModule } from '@angular/forms';
 import { SharedModule } from './../shared/shared.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -13,7 +14,8 @@ import { TaskManagementWrapperComponent } from './task-management-wrapper/task-m
   imports: [
     CommonModule,
     TaskManagementRoutingModule,
-    SharedModule
+    SharedModule,
+    FormsModule
   ]
 })
 export class TaskManagementModule { }

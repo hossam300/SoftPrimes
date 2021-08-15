@@ -14,3 +14,112 @@
   font-size: 13px;
   cursor: pointer;
 }
+
+agm-map {
+  height: 460px;
+}
+
+.full-screen agm-map {
+  height: 100%;
+}
+
+.map-agent-avatar {
+  width: 38px;
+  height: 38px;
+}
+
+.map-agent-details {
+  display: none;
+  width: 250px;
+  background-color: #fff;
+  position: absolute;
+  left: 19px;
+  top: 0;
+  z-index: -1;
+  padding: 10px 10px 14px 10px;
+  font-size: 11px;
+  border-radius: 6px;
+  flex-direction: column;
+}
+
+.map-agent-details strong {
+  font-size: 14px;
+  padding: 0px 26px;
+  padding-right: 0px;
+}
+
+.agent-avatar .avatar-content {
+  z-index: 100 !important;
+  border: 4px solid #fff;
+}
+
+.map-agent-details.show-details {
+  display: flex;
+  height: 215px;
+}
+
+.map-agent-details.show-label {
+  display: flex;
+  height: 38px;
+  overflow: hidden;
+}
+
+.map-agent-details .steps {
+  font-size: 11px;
+  padding: 0px;
+}
+
+.step {
+  display: flex;
+  position: relative;
+  align-items: baseline;
+  overflow: hidden;
+}
+.step:after {
+  content: "";
+  position: absolute;
+  left: 8px;
+  top: 24px;
+  height: 0;
+  width: 0px;
+  border-left: 2px dotted #ccc;
+}
+.step.current:after {
+  border-color: #4BCC1D;
+}
+.state-wrapper .state {
+  color: #666;
+  font-size: 12px;
+  font-weight: 600;
+  margin: 0;
+}
+.state-wrapper .state.current {
+  padding-left: 26px;
+  color: #4BCC1D;
+}
+.step .title {
+  color: #4BCC1D;
+  font-size: 12px;
+  font-weight: 600;
+}
+.step .text {
+  /* color: rgba(255, 255, 255, 0.7); */
+  font-size: 11px;
+  margin: 0 0 8px;
+}
+.step:not(:last-child):after {
+  height: 70%;
+}
+
+.distance {
+  flex-shrink: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 10px;
+  font-weight: 600;
+  margin-right: 8px;
+}
+.distance.current {
+  color: #4BCC1D;
+}

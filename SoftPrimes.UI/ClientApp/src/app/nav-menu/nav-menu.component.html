@@ -34,7 +34,7 @@
               >Task management</a
             >
           </li>
-          <li class="nav-item" [routerLinkActive]="['link-active']">
+          <li class="nav-item" [routerLinkActive]="['link-active']" *ngIf="!isLoggedIn">
             <a class="nav-link text-dark" [routerLink]="['/login']"
               >Login</a
             >

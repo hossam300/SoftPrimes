@@ -67,9 +67,9 @@ export class AuthService {
       this.translate.get('On').subscribe(translateValue => {
 
         if (this.isArabic) {
-          this.toastr.info(`${user.fullNameAr} ${translateValue}`, this.accountSwitched);
+          // this.toastr.info(`${user.fullNameAr} ${translateValue}`, this.accountSwitched);
         } else {
-          this.toastr.info(`${user.fullNameEn} ${translateValue}`, this.accountSwitched);
+          // this.toastr.info(`${user.fullNameEn} ${translateValue}`, this.accountSwitched);
         }
       });
       localStorage.setItem('user', JSON.stringify(user));
@@ -138,9 +138,6 @@ export class AuthService {
           this.tokenStoreService.deleteAuthTokens();
           this.refreshTokenService.unscheduleRefreshToken(true);
           this.authStatusSource.next(false);
-          // remove annotation cardentials
-          sessionStorage.removeItem('_ap');
-          localStorage.removeItem('pageSize'); // remove pageSize on logout
         }))
       .subscribe();
   }
@@ -168,20 +165,5 @@ export class AuthService {
 
   private updateStatusOnPageRefresh(): void {
     this.authStatusSource.next(this.isAuthUserLoggedIn());
-  }
-
-  updateUserLockState(userName): void {
-    let userState = 0;  // 1 lock;  2 Notify user;
-    let changeUserState = false;
-    // send notificatuion by mail
-    if (this.numberOfWrongLoginRitries === this.numberOfWrongRitriesToSendNotifcation) {
-      userState = 2;
-      changeUserState = true;
-    }
-    // lock user
-    if (this.numberOfWrongLoginRitries === this.numberOfWrongRitriesToLockAccount) {
-      userState = 1;
-      changeUserState = true;
-    }
   }
 }

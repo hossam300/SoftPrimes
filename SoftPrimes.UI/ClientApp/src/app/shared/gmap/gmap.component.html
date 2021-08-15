@@ -1,6 +1,64 @@
 <div class="card shadow border-0 mb-4">
   <div class="card-body position-relative">
-    <img #elm src="https://miro.medium.com/max/1838/1*FbzQStUzSsLChBJE9108hg.png" alt="map"/>
+    <div #elm id="gmap">
+
+      <agm-map [latitude]="lat" [longitude]="lng" [zoom]="zoom" (mapClick)="mapClicked($event)"
+        [disableDefaultUI]="false" [zoomControl]="false">
+
+        <agm-overlay *ngFor="let m of markers; let i = index" (markerClick)="clickedMarker(m.label, i)"
+          [latitude]="m.lat" [longitude]="m.lng" (dragEnd)="markerDragEnd(m, $event)">
+          <div class="map-agent-avatar">
+            <ngx-avatar class="agent-avatar" name="m.label" size="38" [round]="true" [initialsSize]="2"
+              (click)="showDetails(details)" (mouseenter)="toggleLabel(details)" (mouseleave)="toggleLabel(details)">
+            </ngx-avatar>
+            <div class="map-agent-details bg-white" id="agent-details" #details>
+              <strong>
+                {{m.label}}
+              </strong>
+              <div class="d-flex flex-column mt-3">
+                <div class="steps" id="steps">
+                  <div class="state-wrapper">
+                    <p class="state current">Current Point</p>
+                  </div>
+                  <div class="step current">
+                    <div class="distance current">0km</div>
+                    <div class="info">
+                      <p class="text">
+                        <span class="fa fa-map-marker mr-1"></span>
+                        <span>65454 Street, New Cairo first point 34km. Change</span>
+                      </p>
+                      <div class="state-wrapper">
+                        <p class="state">Next</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="step">
+                    <div class="distance">5km</div>
+                    <div class="info">
+                      <p class="text">
+                        <span class="fa fa-map-marker mr-1"></span>
+                        <span>65454 Street, New Cairo first point 34km. Change</span>
+                      </p>
+                    </div>
+                  </div>
+                  <div class="step">
+                    <div class="distance">20km</div>
+                    <div class="info">
+                      <p class="text">
+                        <span class="fa fa-map-marker mr-1"></span>
+                        <span>65454 Street, New Cairo first point 34km. Change</span>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </agm-overlay>
+
+      </agm-map>
+    </div>
     <div class="overlay gmap-overlay rounded-bottom d-flex flex-row-reverse align-items-center">
       <span (click)="openInFullscreen(elm)">
         View full map

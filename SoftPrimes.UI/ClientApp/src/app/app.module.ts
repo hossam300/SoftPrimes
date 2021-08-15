@@ -20,6 +20,7 @@ import { EnvServiceFactory } from './core/_services/env.service.provider';
 import { environment } from 'src/environments/environment';
 import { AuthGuard } from './core/_guards/auth.guard';
 import { AuthService } from './core/_services/auth.service';
+import { TaskManagementService } from './core/_services/task-management.service';
 export const DEV_MODE = new InjectionToken<boolean>('DEV_MODE');
 
 @NgModule({
@@ -63,6 +64,7 @@ export const DEV_MODE = new InjectionToken<boolean>('DEV_MODE');
     Title,
     AuthGuard,
     AuthService,
+    TaskManagementService
   ],
   bootstrap: [AppComponent]
 })
