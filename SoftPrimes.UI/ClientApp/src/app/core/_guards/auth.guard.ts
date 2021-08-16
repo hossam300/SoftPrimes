@@ -26,7 +26,7 @@ export class AuthGuard implements CanActivate, CanActivateChild {
       this.user = user;
       // && user.permissions.indexOf(this.allowedPermissionCode) === -1
       if (this.allowedPermissionCode && user) {
-        this.translate.get('PermissionTaken').subscribe(x => this.toastr.error(this.allowedPermissionCode,x));
+        this.translate.get('PermissionTaken').subscribe(x => this.toastr.error(this.allowedPermissionCode, x));
         // this.toastr.error(this.allowedPermissionCode, 'Permission Taken');
         this.router.navigate(['/']);
       }

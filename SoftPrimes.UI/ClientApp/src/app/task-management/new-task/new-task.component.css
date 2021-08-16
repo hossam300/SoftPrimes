@@ -9,3 +9,36 @@
 .card-footer .btn {
   width: 190px;
 }
+
+.ni-bullet-list-67 {
+  border-width: 2px !important;
+  font-size: 20px;
+  align-self: center;
+  cursor: pointer;
+}
+
+.modal {
+  overflow: hidden;
+}
+
+.modal-title .text-secondary {
+  font-size: 12px;
+}
+
+.modal-title-icon {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  padding-left: 2px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  color: #fff;
+  font-size: 20px;
+}
+
+.modal-body {
+  height: 370px;
+  max-height: 370px;
+  overflow: auto;
+}

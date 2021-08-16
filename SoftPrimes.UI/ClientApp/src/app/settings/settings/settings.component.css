@@ -1,0 +1,17 @@
+.list-group-item {
+  padding: 24px;
+}
+
+.list-group-item:first-of-type {
+  border-radius: 12px 12px 0px 0px;
+}
+
+.list-group-item:last-of-type {
+  border-radius: 0px 0px 12px 12px;
+}
+
+.list-group-item:hover {
+  background-color: #007bff;
+  color: #fff;
+  transition: all 0.3s ease-in-out;
+}

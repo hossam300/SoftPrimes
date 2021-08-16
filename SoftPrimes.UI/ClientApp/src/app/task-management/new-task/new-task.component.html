@@ -14,11 +14,13 @@
         <label for="taskType" class="required col-2 col-form-label col-form-label-sm">Task type</label>
         <div class="col-7 d-flex">
           <div class="form-check form-check-inline mr-5">
-            <input name="taskype" class="form-check-input" id="tour" required checked="" type="radio">
+            <input name="taskype" class="form-check-input" [(ngModel)]="tourType"
+            id="tour" required checked="" type="radio" value="1">
             <label class="form-check-label" for="tour">Tour</label>
           </div>
           <div class="form-check form-check-inline">
-            <input name="taskype" class="form-check-input" id="monitoring" required type="radio">
+            <input name="taskype" class="form-check-input" [(ngModel)]="tourType"
+            id="monitoring" required type="radio" value="2">
             <label class="form-check-label" for="monitoring">Monitoring</label>
           </div>
         </div>
@@ -31,13 +33,18 @@
             <option>...</option>
           </select>
         </div>
+        <span class="ni ni-bullet-list-67 text-primary border border-primary"
+        data-toggle="modal" data-target="#templatesModal"></span>
       </div>
       <div class="row form-group">
         <label for="tourName" class="required col-2 col-form-label col-form-label-sm">Tour name</label>
         <div class="col-7 d-flex">
-          <input type="text" class="form-control" name="tourName"
-          id="tourName" placeholder="tour name">
+          <input type="text" class="form-control" name="tourName" [(ngModel)]="tourName"
+          id="tourName" maxlength="50" placeholder="tour name">
         </div>
+        <span class="align-self-center text-14">
+          <span>{{50 - tourName.length}}</span> digit
+        </span>
       </div>
       <div class="row form-group">
         <label for="tourDate" class="required col-2 col-form-label col-form-label-sm">Tour date</label>
@@ -46,7 +53,8 @@
             <div class="input-group-prepend">
               <span class="input-group-text bg-transparent text-14"><em class="fa fa-calendar-o"></em></span>
             </div>
-            <input type="text" class="form-control datepicker" name="tourDate" autocomplete="off"
+            <input ngbDatepicker #d="ngbDatepicker" type="text" class="form-control" [(ngModel)]="tourDate"
+            name="tourDate" autocomplete="off" (click)="d.toggle()"
             id="tourDate" placeholder="MM/DD/YYYY">
           </div>
         </div>
@@ -55,18 +63,22 @@
         <label for="location" class="required col-2 col-form-label col-form-label-sm">Point location</label>
         <div class="col-7 d-flex">
           <div class="input-group">
-            <input class="form-control" placeholder="location" id="location" type="text">
+            <input class="form-control" placeholder="location" [(ngModel)]="pointLocationId"
+            id="location" type="text" name="location">
             <div class="input-group-append">
               <span class="input-group-text bg-transparent text-primary text-14"><em class="ni ni-send"></em></span>
             </div>
           </div>
         </div>
+        <span class="fa fa-plus-circle text-primary align-self-center text-20"
+        data-toggle="modal" data-target="#locationModal"></span>
       </div>
       <div class="row form-group">
         <label for="tourAgent" class="required col-2 col-form-label col-form-label-sm">Tour agent</label>
         <div class="col-7 d-flex">
           <div class="input-group">
-            <input class="form-control" placeholder="choose Agent" type="text" id="tourAgent">
+            <input class="form-control" placeholder="choose Agent" [(ngModel)]="agentId"
+            type="text" id="tourAgent" name="tourAgent">
             <div class="input-group-append">
               <span class="input-group-text bg-transparent text-primary text-14"><em class="fa fa-search"></em></span>
             </div>
@@ -77,7 +89,8 @@
         <label for="captureLocation" class="required col-2 col-form-label col-form-label-sm">Capture location</label>
         <div class="col-7 d-flex">
           <div class="input-group">
-            <select class="custom-select" id="captureLocation">
+            <select class="custom-select" id="captureLocation"
+            name="captureLocation" [(ngModel)]="captureLocation">
               <option selected disabled value="">Choose timelapse...</option>
               <option>...</option>
             </select>
@@ -87,9 +100,88 @@
     </form>
 
     <div class="bg-transparent card-footer dashed-border-top px-0 pt-4 pb-1">
-      <button class="btn btn-primary shadow">
+      <button class="btn btn-primary shadow" (click)="assignTask()">
         Assign
       </button>
+    </div>
+  </div>
+</div>
+
+<!-- Modals -->
+<div class="modal fade" id="templatesModal" tabindex="-1" role="dialog" aria-labelledby="templatesModalTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title h6 d-flex" id="templatesModalTitle">
+          <span class="modal-title-icon bg-primary">
+            <span class="fa fa-pencil-square-o"></span>
+          </span>
+          <span class="px-3 d-flex flex-column">
+            You can choose from the below templates
+            <span class="text-secondary">
+              The below templates can help you to save time.
+            </span>
+          </span>
+        </h5>
+      </div>
+      <div class="modal-body">
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-light" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary">Choose</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="locationModal" tabindex="-1" role="dialog" aria-labelledby="locationModalTitle" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title h6 d-flex" id="locationModalTitle">
+          <span class="px-3 d-flex flex-column">
+            Please select the location point on the below map
+          </span>
+        </h5>
+      </div>
+      <div class="modal-body">
+
+      </div>
+      <div class="modal-footer">
+        <div class="d-flex justify-content-between w-100">
+          <div class="d-flex">
+            <div class="input-group mr-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text bg-transparent text-14">
+                  <em class="fa fa-clock-o mr-1"></em> Start
+                </span>
+              </div>
+              <select class="border-left-0 custom-select shadow-none pl-0"
+              name="startTime" id="startTime" [(ngModel)]="startTime">
+                <option selected disabled value="">Choose start time</option>
+                <option>03.00 PM</option>
+              </select>
+            </div>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text bg-transparent text-14">
+                  <em class="fa fa-clock-o mr-1"></em> End
+                </span>
+              </div>
+              <select class="border-left-0 custom-select shadow-none pl-0"
+              name="endTime" id="endTime" [(ngModel)]="endTime">
+                <option selected disabled value="">Choose end time</option>
+                <option>03.30 PM</option>
+              </select>
+            </div>
+          </div>
+          <div>
+            <button type="button" class="btn btn-light" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-primary">Choose</button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

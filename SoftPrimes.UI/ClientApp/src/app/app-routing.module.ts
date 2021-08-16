@@ -10,7 +10,13 @@ import { LoginComponent } from './auth/login/login.component';
 const routes: Routes = [
   { path: '', component: DashboardComponent, canActivate: [AuthGuard], pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
-  { path: 'task-management', loadChildren: './task-management/task-management.module#TaskManagementModule' },
+  { path: 'task-management',
+  loadChildren: './task-management/task-management.module#TaskManagementModule',
+  data: {'breadcrumb': ['taskManagment']} },
+  { path: 'settings',
+  loadChildren: './settings/settings.module#SettingsModule',
+  data: {'breadcrumb': ['settings']} },
+  { path: '**', redirectTo: '', pathMatch: 'full' },
 ];
 
 @NgModule({

@@ -80,14 +80,14 @@ export class LoginComponent implements OnInit {
       .apiAccountGetUserAuthTicketGet()
       .subscribe((value) => {
         if (value) {
-          localStorage.setItem('existing-user', JSON.stringify({
-            'username': this.loginForm.controls.username.value,
-            'nameEn': value.fullNameEn,
-            'nameAr': value.fullNameAr,
-            'email': value.email
-            // 'image': value.userImage
-          }));
-          this.existingUser = JSON.parse(localStorage.getItem('existing-user'));
+          // localStorage.setItem('existing-user', JSON.stringify({
+          //   'username': this.loginForm.controls.username.value,
+          //   'nameEn': value.fullNameEn,
+          //   'nameAr': value.fullNameAr,
+          //   'email': value.email
+          //   // 'image': value.userImage
+          // }));
+          // this.existingUser = JSON.parse(localStorage.getItem('existing-user'));
           this.auth.setUser(value);
           this.router.navigate([this.returnUrl]);
         }
