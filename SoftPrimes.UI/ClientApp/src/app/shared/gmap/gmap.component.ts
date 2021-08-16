@@ -68,13 +68,14 @@ export class GmapComponent {
       element.classList.add('full-screen');
       if (element.requestFullscreen) {
         element.requestFullscreen();
-      } else if (element.mozRequestFullScreen) {
-        element.mozRequestFullScreen();
-      } else if (element.webkitRequestFullscreen) {
-        // element.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
-      } else if (element.msRequestFullscreen) {
-        element.msRequestFullscreen();
       }
+      // else if (element.mozRequestFullScreen) {
+      //   element.mozRequestFullScreen();
+      // } else if (element.webkitRequestFullscreen) {
+      //   // element.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
+      // } else if (element.msRequestFullscreen) {
+      //   element.msRequestFullscreen();
+      // }
     }
   }
 
