@@ -16,6 +16,7 @@ const routes: Routes = [
   { path: 'settings',
   loadChildren: './settings/settings.module#SettingsModule',
   data: {'breadcrumb': ['settings']} },
+  { path: '**', redirectTo: '', pathMatch: 'full' },
 ];
 
 @NgModule({

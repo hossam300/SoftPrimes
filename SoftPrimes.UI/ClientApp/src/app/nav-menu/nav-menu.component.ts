@@ -12,7 +12,7 @@ export class NavMenuComponent implements OnInit {
 
   constructor(
     private auth: AuthService
-  ){}
+  ) {}
 
   ngOnInit() {
     this.isLoggedIn = this.auth.currentUser;

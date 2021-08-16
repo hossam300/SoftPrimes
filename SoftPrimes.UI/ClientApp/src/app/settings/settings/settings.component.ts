@@ -12,15 +12,4 @@ export class SettingsComponent implements OnInit {
   ngOnInit() {
   }
 
-  toggleActiveClass(event: MouseEvent) {
-    console.log(event);
-    console.log(event.target);
-    const target: any = event.target;
-    if (target.classList.contains('active')) {
-      target.classList.remove('active');
-    } else {
-      target.classList.add('active');
-    }
-  }
-
 }
