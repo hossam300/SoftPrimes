@@ -11,23 +11,29 @@
       <div class="navbar-collapse collapse d-sm-inline-flex justify-content-end" [ngClass]="{ show: isExpanded }">
         <ul class="navbar-nav flex-grow">
           <li class="nav-item" [routerLinkActive]="['link-active']" [routerLinkActiveOptions]="{ exact: true }">
-            <a class="nav-link text-dark" [routerLink]="['/']">Home</a>
+            <a class="nav-link text-dark" [routerLink]="['/']">
+              <span class="fa fa-home mr-1"></span>
+              Home
+            </a>
           </li>
           <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" [routerLink]="['/task-management']">Task management</a>
+            <a class="nav-link text-dark" [routerLink]="['/task-management']">
+              <span class="fa fa-tasks mr-1"></span>
+              Task management
+            </a>
           </li>
           <li class="nav-item" [routerLinkActive]="['link-active']" *ngIf="!(isLoggedIn|async)">
             <a class="nav-link text-dark" [routerLink]="['/login']">Login</a>
           </li>
-          <li class="nav-item dropdown d-flex align-items-center">
+          <li class="nav-item dropdown d-flex align-items-center" *ngIf="!!(isLoggedIn|async)">
             <a class="nav-link pr-0 py-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
               aria-expanded="false">
               <div class="media align-items-center">
                 <div class="media-body d-none d-lg-block">
-                  <span class="mb-0">Mohamed Eid</span>
+                  <span class="mb-0 text-dark">Mohamed Eid</span>
                 </div>
-                <span class="avatar avatar-sm mx-2 rounded-circle">
-                  <ngx-avatar class="border-0" name="Mohamed Eid" size="32"
+                <span class="mx-2 rounded-circle">
+                  <ngx-avatar class="border-0" src="" name="Mohamed Eid" size="32"
                     [round]="true" [initialsSize]="2">
                   </ngx-avatar>
                 </span>
@@ -52,7 +58,7 @@
                 <span class="px-2">Settings</span>
               </a>
               <hr class="text-center my-0" style="width:80%"/>
-              <a class="dropdown-item">
+              <a class="dropdown-item cursor-pointer">
                 <em class="fa fa-sign-out"></em>
                 <span class="px-2">Logout</span>
               </a>

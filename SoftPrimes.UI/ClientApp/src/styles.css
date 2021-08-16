@@ -51,7 +51,9 @@ label.required:after {
   padding-left: 4px;
 }
 
-
+.avatar {
+  background-color: #fff !important;
+}
 
 /* utilities */
 .overlay {
@@ -74,6 +76,10 @@ label.required:after {
 
 .rounded-bottom {
   border-radius: 0px 0px 6px 6px !important;
+}
+
+.rounded-top {
+  border-radius: 6px 6px 0px 0px !important;
 }
 
 .rounded-6 {
