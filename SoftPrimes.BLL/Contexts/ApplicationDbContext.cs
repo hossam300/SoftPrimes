@@ -17,7 +17,12 @@ namespace SoftPrimes.BLL.Contexts
             IOptions<OperationalStoreOptions> operationalStoreOptions) : base(options, operationalStoreOptions)
         {
         }
+        public virtual DbSet<AgentRole> AgentRoles { get; set; }
+        public virtual DbSet<Role> AppRoles { get; set; }
+        public virtual DbSet<RolePermission> RolePermissions { get; set; }
+        
         public virtual DbSet<Attachment> Attachments { get; set; }
+        public virtual DbSet<Permission> Permissions { get; set; }
         public virtual DbSet<CheckPoint> CheckPoints { get; set; }
         public virtual DbSet<CheckPointTourComment> CheckPointTourComments { get; set; }
         public virtual DbSet<Comment> Comments { get; set; }

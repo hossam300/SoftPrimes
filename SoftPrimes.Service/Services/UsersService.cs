@@ -102,7 +102,34 @@ namespace SoftPrimes.Service.Services
                         UserName = AuthUser.UserName,
                         UserId = AuthUser.Id.ToString(),
                         FullName = AuthUser.FullNameAr,
-                        
+                        BirthDate = AuthUser.BirthDate,
+                        CompanyId = AuthUser.CompanyId,
+                        JobTitle = AuthUser.JobTitle,
+                        Mobile = AuthUser.Mobile,
+                        SupervisorId = AuthUser.SupervisorId,
+                        AgentRoles = AuthUser.AgentRoles.Select(x => new AgentRoleDTO
+                        {
+                            AgentId = x.AgentId,
+                            Id = x.Id,
+                            RoleId = x.RoleId,
+                            Role = new RoleDTO
+                            {
+                                Id = x.Role.Id,
+                                RoleNameAr = x.Role.RoleNameAr,
+                                RoleNameEn = x.Role.RoleNameEn,
+                                RolePermissions = x.Role.Permissions.Select(y => new RolePermissionDTO
+                                {
+                                    Id = y.Id,
+                                    Permission = new PermissionDTO
+                                    {
+                                        PermissionNameAr = y.Permission.PermissionNameAr,
+                                        PermissionNameEn = y.Permission.PermissionNameEn
+                                    },
+                                    PermissionId = y.PermissionId,
+                                    RoleId = y.RoleId
+                                }).ToList()
+                            }
+                        }).ToList()
                     };
                     return Result;
                 }

@@ -12,6 +12,9 @@ namespace SoftPrimes.Shared.Domains
         public string Password { get; set; }
         public string FullNameAr { get; set; }
         public string FullNameEn { get; set; }
+        public string JobTitle { get; set; }
+        public string Mobile { get; set; }
+        public DateTime BirthDate { get; set; }
         public byte[] Image { get; set; }
         public AgentType AgentType { get; set; }
         public bool Active { get; set; }
@@ -21,6 +24,7 @@ namespace SoftPrimes.Shared.Domains
         public int CompanyId { get; set; }
         public virtual Company Company { get; set; }
         public bool TempPassword { get; set; } = false;
+        public virtual List<AgentRole> AgentRoles { get; set; }
     }
     public enum AgentType
     {

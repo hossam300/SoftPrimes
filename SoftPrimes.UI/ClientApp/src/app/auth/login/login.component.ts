@@ -77,7 +77,7 @@ export class LoginComponent implements OnInit {
 
   getUserAuthData() {
     this.swagger
-      .apiAccountGetUserAuthTicketGet(undefined, undefined, undefined)
+      .apiAccountGetUserAuthTicketGet()
       .subscribe((value) => {
         if (value) {
           localStorage.setItem('existing-user', JSON.stringify({

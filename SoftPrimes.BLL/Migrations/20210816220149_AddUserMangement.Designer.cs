@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SoftPrimes.BLL.Contexts;
 
 namespace SoftPrimes.BLL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210816220149_AddUserMangement")]
+    partial class AddUserMangement
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -720,7 +722,12 @@ namespace SoftPrimes.BLL.Migrations
                     b.Property<string>("PermissionNameEn")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("RoleId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("RoleId");
 
                     b.ToTable("Permissions");
                 });
@@ -741,28 +748,6 @@ namespace SoftPrimes.BLL.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("AppRoles");
-                });
-
-            modelBuilder.Entity("SoftPrimes.Shared.Domains.RolePermission", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("PermissionId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("RoleId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PermissionId");
-
-                    b.HasIndex("RoleId");
-
-                    b.ToTable("RolePermissions");
                 });
 
             modelBuilder.Entity("SoftPrimes.Shared.Domains.Tour", b =>
@@ -1097,23 +1082,11 @@ namespace SoftPrimes.BLL.Migrations
                     b.Navigation("ToAgent");
                 });
 
-            modelBuilder.Entity("SoftPrimes.Shared.Domains.RolePermission", b =>
+            modelBuilder.Entity("SoftPrimes.Shared.Domains.Permission", b =>
                 {
-                    b.HasOne("SoftPrimes.Shared.Domains.Permission", "Permission")
-                        .WithMany()
-                        .HasForeignKey("PermissionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("SoftPrimes.Shared.Domains.Role", "Role")
+                    b.HasOne("SoftPrimes.Shared.Domains.Role", null)
                         .WithMany("Permissions")
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Permission");
-
-                    b.Navigation("Role");
+                        .HasForeignKey("RoleId");
                 });
 
             modelBuilder.Entity("SoftPrimes.Shared.Domains.TourAgent", b =>

@@ -1,4 +1,5 @@
 ﻿using SoftPrimes.Shared.Domains;
+using System;
 using System.Collections.Generic;
 
 namespace SoftPrimes.Shared.ViewModels
@@ -9,6 +10,9 @@ namespace SoftPrimes.Shared.ViewModels
         public string UserName { get; set; }
         public string Password { get; set; }
         public string Email { get; set; }
+        public string JobTitle { get; set; }
+        public string Mobile { get; set; }
+        public DateTime BirthDate { get; set; }
         public string FullNameAr { get; set; }
         public string FullNameEn { get; set; }
         public byte[] Image { get; set; }
@@ -20,5 +24,6 @@ namespace SoftPrimes.Shared.ViewModels
         public List<AgentDTO> Agents { get; set; }
         public int CompanyId { get; set; }
         public CompanyDTO Company { get; set; }
+        public virtual List<AgentRoleDTO> AgentRoles { get; set; }
     }
 }
