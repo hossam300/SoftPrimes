@@ -11,5 +11,6 @@ namespace SoftPrimes.Shared.ViewModels
         public int Id { get; set; }
         public string PermissionNameAr { get; set; }
         public string PermissionNameEn { get; set; }
+        public string PermissionKey { get; set; }
     }
 }

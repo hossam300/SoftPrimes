@@ -123,7 +123,9 @@ namespace SoftPrimes.Service.Services
                                     Permission = new PermissionDTO
                                     {
                                         PermissionNameAr = y.Permission.PermissionNameAr,
-                                        PermissionNameEn = y.Permission.PermissionNameEn
+                                        PermissionNameEn = y.Permission.PermissionNameEn,
+                                        Id = y.PermissionId,
+                                        PermissionKey = y.Permission.PermissionKey
                                     },
                                     PermissionId = y.PermissionId,
                                     RoleId = y.RoleId
