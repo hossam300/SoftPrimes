@@ -135,9 +135,9 @@ namespace SoftPrimes.Service.Services
                     Text = x.Comment.Text
                 },
                 CommentId = x.CommentId,
-                CreatedBy=x.CreatedBy,
-                CreatedOn=x.CreatedOn,
-                Id=x.Id,
+                CreatedBy = x.CreatedBy,
+                CreatedOn = x.CreatedOn,
+                Id = x.Id,
                 TourId = x.TourId,
                 CreatedByUser = _unitOfWork.GetRepository<Agent>(false).GetAll(false).Select(y => new AgentDTO
                 {
@@ -206,6 +206,35 @@ namespace SoftPrimes.Service.Services
                         TourTypeId = (int)x.TourType,
                         CountOfLocations = x.CheckPoints.Count()
                     }).ToList();
+        }
+
+        public List<TourTemplateDTO> GetTemplates()
+        {
+            return _unitOfWork.GetRepository<TourAgent>().GetAll().Where(x => x.IsTemplate).Select(x => new TourTemplateDTO
+            {
+                Id = x.TourId,
+                TourNameAr = x.Tour.TourNameAr,
+                TourNameEn = x.Tour.TourNameEn,
+                CheckPoints = x.CheckPoints.Select(y => new TourCheckPointDTO
+                {
+                    CheckPoint = new CheckPointDTO
+                    {
+                        CheckPointNameAr = y.CheckPoint.CheckPointNameAr,
+                        CheckPointNameEn = y.CheckPoint.CheckPointNameEn,
+                        Id = y.CheckPointId,
+                        Lat = y.CheckPoint.Lat,
+                        LocationText = y.CheckPoint.LocationText,
+                        Long = y.CheckPoint.Long,
+                        QRCode = y.CheckPoint.QRCode
+                    },
+                    CheckPointId = y.CheckPointId,
+                    EndDate = y.EndDate,
+                    StartDate = y.StartDate,
+                    Id = y.Id,
+                    TourId = y.TourId
+                }).ToList()
+
+            }).ToList();
         }
 
         //private void CustomeMethod()

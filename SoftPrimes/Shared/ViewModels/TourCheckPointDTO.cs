@@ -1,4 +1,5 @@
 ﻿using SoftPrimes.Shared.Domains;
+using System;
 using System.Collections.Generic;
 
 namespace SoftPrimes.Shared.ViewModels
@@ -12,5 +13,8 @@ namespace SoftPrimes.Shared.ViewModels
         public CheckPointDTO CheckPoint { get; set; }
         public List<CheckPointTourCommentDTO> CheckPointTourComments { get; set; }
         public TourCheckPointState TourCheckPointState { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
+
     }
 }

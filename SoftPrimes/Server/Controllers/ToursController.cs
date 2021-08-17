@@ -21,10 +21,8 @@ namespace SoftPrimes.Server.Controllers
         public ToursController(ITourService businessService, IHelperServices.ISessionServices sessionSevices) : base(businessService, sessionSevices)
         {
             this._TourService = businessService;
-               _sessionSevices = sessionSevices;
+            _sessionSevices = sessionSevices;
         }
-
-
         [HttpGet("GetTodayTours")]
         public List<HomeTourDTO> GetTodayTours(float lat, float longs)
         {
@@ -49,6 +47,11 @@ namespace SoftPrimes.Server.Controllers
         public bool ChangeTourState(int TourId, int State)
         {
             return _TourService.ChangeTourState(TourId, State);
+        }
+        [HttpGet("GetTemplates")]
+        public List<TourTemplateDTO> GetTemplate()
+        {
+            return _TourService.GetTemplates();
         }
     }
 }

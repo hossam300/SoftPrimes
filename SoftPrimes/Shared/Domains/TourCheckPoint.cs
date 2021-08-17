@@ -13,6 +13,8 @@ namespace SoftPrimes.Shared.Domains
         public virtual CheckPoint CheckPoint { get; set; }
         public virtual List<CheckPointTourComment> CheckPointTourComments { get; set; }
         public TourCheckPointState TourCheckPointState { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
         public string DeletedBy { get; set; }
         public DateTimeOffset? DeletedOn { get; set; }
         public string CreatedBy { get; set; }
