@@ -13,8 +13,29 @@ const routes: Routes = [{
   canActivate: [AuthGuard], canActivateChild: [AuthGuard],
   children: [
     { path: '', component: SettingsComponent, data: {'breadcrumb': ['settings']} },
-    { path: 'permissions', component: PermissionsListComponent, data: {'breadcrumb': ['settings', 'permissions']} },
-    { path: 'new-permission', component: PermissionsComponent, data: {'breadcrumb': ['settings', 'newPermission']} },
+    { path: 'permissions', component: SettingsWrapperComponent,
+      children: [
+        {
+          path: '',
+          component: PermissionsListComponent,
+          data: {
+            permissionCode: ['ViewPermissions'],
+            'breadcrumb': ['settings', 'permissions']
+          }
+        },
+        { path: 'add', component: PermissionsComponent,
+          data: {'breadcrumb': ['settings', 'permissions', 'addPermission']}
+        },
+        {
+          path: 'edit/:permissionId',
+          component: PermissionsComponent,
+          data: {
+            'permissionCode': ['EditPermissions'],
+            'breadcrumb': ['settings', 'permissions', 'editPermission']
+          }
+        },
+      ]
+    },
     { path: '**', redirectTo: 'settings', pathMatch: 'full' },
   ]
 }];

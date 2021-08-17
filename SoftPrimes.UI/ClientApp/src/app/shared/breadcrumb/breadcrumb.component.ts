@@ -29,10 +29,10 @@ export class BreadcrumbComponent implements OnInit {
 
   buildBreadcrumb() {
     const newBreadcrumb = this.route.routeConfig.data['breadcrumb'];
-    const mappedBreadcrumbs = newBreadcrumb.map(x => {
+    const mappedBreadcrumbs = newBreadcrumb.map((x, i) => {
       return {
         label: x,
-        url: '../'
+        url: '../'.repeat(newBreadcrumb.length - (i + 1))
       };
     });
     this.breadcrumbs = [...this.breadcrumbs, ...mappedBreadcrumbs];
