@@ -20,5 +20,18 @@ namespace SoftPrimes.Service.Services
             _unitOfWork = unitOfWork;
             _repository = _unitOfWork.GetRepository<Role>();
         }
+        public override IEnumerable<RoleDTO> Update(IEnumerable<RoleDTO> Entities)
+        {
+            foreach (var role in Entities)
+            {
+                var RolePermission = _unitOfWork.GetRepository<RolePermission>().GetAll().Where(x => x.RoleId == role.Id).ToList();
+                if (RolePermission.Count() != 0)
+                {
+                    _unitOfWork.GetRepository<RolePermission>().Delete(RolePermission);
+                    _unitOfWork.SaveChanges();
+                }
+            }
+            return base.Update(Entities);
+        }
     }
 }
