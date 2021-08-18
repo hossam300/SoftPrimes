@@ -29,16 +29,35 @@ export class BreadcrumbComponent implements OnInit {
 
   buildBreadcrumb() {
     const newBreadcrumb = this.route.routeConfig.data['breadcrumb'];
-    const mappedBreadcrumbs = newBreadcrumb.map(x => {
+    console.log(newBreadcrumb, 'breadcrumbs from routing');
+    const mappedBreadcrumbs = newBreadcrumb.map((x, i) => {
       return {
-        label: x,
-        url: '../'
+        label: this.generateLabel(x),
+        url: this.generateUrl(newBreadcrumb, i)
       };
     });
     this.breadcrumbs = [...this.breadcrumbs, ...mappedBreadcrumbs];
-    console.log(this.route.routeConfig, 'routeConfig');
-    console.log(this.breadcrumbs);
+    console.log(this.breadcrumbs, 'final bread crumbs');
+  }
 
+  generateLabel(string: string) {
+    if (string.includes('-')) {
+      const arr = string.split('-');
+      const lastWord = arr[arr.length - 1].charAt(0).toUpperCase() + arr[arr.length - 1].slice(1);
+      arr[arr.length - 1] = lastWord;
+      return arr.join('');
+    }
+    return string;
+  }
+
+  generateUrl(arr, index) {
+    let url = '';
+    for (let i = 0; i < arr.length; i++) {
+        if (i <= index) {
+            url += '/' + arr[i];
+        }
+    }
+    return url;
   }
 
 }

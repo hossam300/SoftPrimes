@@ -1,4 +1,6 @@
+import { Subject } from 'rxjs/internal/Subject';
 import { Component, OnInit } from '@angular/core';
+import { SettingsCrudsService } from '../settings-cruds.service';
 
 @Component({
   selector: 'app-permissions-list',
@@ -7,22 +9,34 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PermissionsListComponent implements OnInit {
   permissionsList: any[];
-  columns: string[];
+  options: any;
+  take = 10; // pageSize
+  skip = 0;
+  controller = '';
+  count: number;
 
-  constructor() { }
-
-  ngOnInit() {
-    this.initTableColumns();
+  constructor(private settingsCrud: SettingsCrudsService) {
+    this.options = {
+      controller: 'Permissions',
+      columns: [
+        { name: 'PermissionNameAr', field: 'permissionNameAr', searchable: true, operator: 'contains' },
+        { name: 'PermissionNameEn', field: 'permissionNameEn', searchable: true, operator: 'contains' },
+        { name: 'PermissionNameKey', field: 'permissionKey', searchable: true, operator: 'contains' },
+        { name: '', field: '' },
+      ]
+    };
+    this.controller = this.options.controller;
   }
 
-  initTableColumns() {
-    this.columns = [
-      'agentName',
-      'permissionKey',
-      'creationDate',
-      'comment',
-      ''
-    ];
+  ngOnInit() {
+    this.getPermissionsList(this.controller, this.take, this.skip);
+  }
+
+  getPermissionsList(controller, take, skip) {
+    this.settingsCrud.getAll(controller, take, skip).subscribe(result => {
+      this.permissionsList = result.data;
+      this.count = result.count;
+    });
   }
 
 }

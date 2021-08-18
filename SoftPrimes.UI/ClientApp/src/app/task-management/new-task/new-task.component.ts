@@ -16,6 +16,7 @@ export class NewTaskComponent implements OnInit {
   endTime: string;
   agentId: number;
   captureLocation: string;
+  saveTemplate: false;
 
   constructor() { }
 

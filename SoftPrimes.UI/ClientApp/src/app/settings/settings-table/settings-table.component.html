@@ -1,26 +1,21 @@
 <table class="table bg-white mb-5">
   <thead>
     <tr>
-      <th scope="col" *ngFor="let column of columns">{{column}}</th>
+      <th scope="col" *ngFor="let column of options.columns">{{column.name}}</th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let row of data">
-      <td>{{row?.agent.fullNameAr}}</td>
-      <td>{{row?.tour.tourType}}</td>
-      <td>{{row?.tourDate | date:'medium'}}</td>
-      <td>{{row?.tourState}}</td>
-      <td>None</td>
-      <td>No</td>
-      <td class="td-actions text-right">
-        <div class="dropdown">
+      <td *ngFor="let col of options.columns" [class.td-actions.text-right]="!col.field">
+        <span *ngIf="col.field">{{row[col.field]}}</span>
+        <div class="dropdown" *ngIf="!col.field">
           <button class="btn btn-primary btn-block" type="button" id="multiDropdownMenu" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false">
             <span class="fa fa-ellipsis-v"></span>
           </button>
           <div class="dropdown-menu" aria-labelledby="multiDropdownMenu">
-            <a class="dropdown-item" (click)="editTour(row?.id)">Edit</a>
-            <a class="dropdown-item text-danger" (click)="deleteTour(row?.id)">Delete</a>
+            <a class="dropdown-item" (click)="editRecord(row?.id)">Edit</a>
+            <a class="dropdown-item text-danger" (click)="deleteRecord(row?.id)">Delete</a>
           </div>
         </div>
       </td>

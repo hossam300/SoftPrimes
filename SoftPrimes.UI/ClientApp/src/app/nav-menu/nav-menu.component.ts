@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { AuthService } from 'src/app/core/_services/auth.service';
 import { Component, OnInit } from '@angular/core';
 
@@ -11,13 +12,14 @@ export class NavMenuComponent implements OnInit {
   isLoggedIn;
 
   constructor(
+    private router: Router,
     private auth: AuthService
   ) {}
 
   ngOnInit() {
-    this.isLoggedIn = this.auth.currentUser;
-    console.log(this.isLoggedIn, 'user logged in');
-
+    this.router.events.subscribe(val => {
+      this.isLoggedIn = this.auth.isAuthUserLoggedIn();
+    });
   }
 
   collapse() {
@@ -26,5 +28,9 @@ export class NavMenuComponent implements OnInit {
 
   toggle() {
     this.isExpanded = !this.isExpanded;
+  }
+
+  logout() {
+    this.auth.logout();
   }
 }

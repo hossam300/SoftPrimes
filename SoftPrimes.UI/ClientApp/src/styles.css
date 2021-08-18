@@ -44,6 +44,21 @@ input.form-control::placeholder {
   color: #666666;
 }
 
+/* dropdown */
+.dropdown-item {
+  cursor: pointer;
+}
+
+/* tables */
+.table thead th {
+  border-top: none;
+  border-bottom: 0.7px dashed #ccc;
+}
+
+.table td, .table th {
+  border-top: 0.7px dashed #ccc;
+}
+
 /* forms */
 label.required:after {
   content: "*";

@@ -1,3 +1,4 @@
+import { SettingsCrudsService } from './settings/settings-cruds.service';
 import { BrowserModule, Title } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { InjectionToken, NgModule } from '@angular/core';
@@ -64,7 +65,8 @@ export const DEV_MODE = new InjectionToken<boolean>('DEV_MODE');
     Title,
     AuthGuard,
     AuthService,
-    TaskManagementService
+    TaskManagementService,
+    SettingsCrudsService
   ],
   bootstrap: [AppComponent]
 })

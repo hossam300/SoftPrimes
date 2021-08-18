@@ -7,7 +7,7 @@ import { RouterModule } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AgmCoreModule } from '@agm/core';
 import { AvatarModule } from 'ngx-avatar';
-import { AgmOverlays } from "agm-overlays"
+import { AgmOverlays } from 'agm-overlays';
 
 
 @NgModule({

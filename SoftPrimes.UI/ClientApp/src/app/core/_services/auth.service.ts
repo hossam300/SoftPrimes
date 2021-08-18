@@ -63,7 +63,6 @@ export class AuthService {
 
     this.user.next(user);
     if (user) {
-      document.body.classList.remove('employee');
       this.translate.get('On').subscribe(translateValue => {
 
         if (this.isArabic) {
@@ -127,19 +126,12 @@ export class AuthService {
       );
   }
 
-  logout(): void {
-    const refreshToken = encodeURIComponent(this.tokenStoreService.getRawAuthToken(AuthTokenType.RefreshToken));
-    this.swagger.apiAccountLogoutGet(refreshToken)
-      .pipe(
-        map(response => response || {}),
-        catchError((error: HttpErrorResponse) => throwError(error)),
-        finalize(() => {
-          this.setUser(null);
-          this.tokenStoreService.deleteAuthTokens();
-          this.refreshTokenService.unscheduleRefreshToken(true);
-          this.authStatusSource.next(false);
-        }))
-      .subscribe();
+  logout() {
+    this.setUser(null);
+    this.tokenStoreService.deleteAuthTokens();
+    this.refreshTokenService.unscheduleRefreshToken(true);
+    this.authStatusSource.next(false);
+    this.router.navigate(['/login']);
   }
 
   isAuthUserLoggedIn(): boolean {
