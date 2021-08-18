@@ -24,14 +24,14 @@ const routes: Routes = [{
           }
         },
         { path: 'add', component: PermissionsComponent,
-          data: {'breadcrumb': ['settings', 'permissions', 'addPermission']}
+          data: {'breadcrumb': ['settings', 'permissions', 'add']}
         },
         {
           path: 'edit/:permissionId',
           component: PermissionsComponent,
           data: {
             'permissionCode': ['EditPermissions'],
-            'breadcrumb': ['settings', 'permissions', 'editPermission']
+            'breadcrumb': ['settings', 'permissions', 'edit']
           }
         },
       ]
