@@ -10,13 +10,16 @@ import { TourAgentDTO } from 'src/app/core/_services/swagger/SwaggerClient.servi
 export class TasksListComponent implements OnInit {
   toursList: TourAgentDTO[];
   columns: string[];
+  take = 10; // pageSize
+  skip = 0;
+  count: number;
 
   constructor(
     private taskManagementService: TaskManagementService
   ) { }
 
   ngOnInit() {
-    this.getAll();
+    this.getAll(this.take, this.skip);
     this.initTableColumns();
   }
 
@@ -32,10 +35,11 @@ export class TasksListComponent implements OnInit {
     ];
   }
 
-  getAll() {
-    this.taskManagementService.getAllTourAgents(10, 0).subscribe(result => {
+  getAll(take, skip) {
+    this.taskManagementService.getAllTourAgents(take, skip).subscribe(result => {
       console.log(result, 'tourAgents');
       this.toursList = result.data;
+      this.count = result.count;
     });
   }
 
