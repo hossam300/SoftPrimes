@@ -1,5 +1,5 @@
 import { SettingsCrudsService } from './../settings-cruds.service';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, OnChanges } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -7,20 +7,19 @@ import { Router, ActivatedRoute } from '@angular/router';
   templateUrl: './settings-table.component.html',
   styleUrls: ['./settings-table.component.css']
 })
-export class SettingsTableComponent implements OnInit {
+export class SettingsTableComponent {
   @Input() data: any[];
   @Input() options: any;
+  @Input() pageSize = 5;
+  @Input() count;
+  @Output() skip = new EventEmitter<number>();
   currentPage = 1;
-  pageSize = 5;
 
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private settingsCrud: SettingsCrudsService
   ) { }
-
-  ngOnInit() {
-  }
 
   editRecord(id) {
     this.router.navigate(['edit/' + id], {relativeTo: this.activatedRoute});
@@ -32,6 +31,11 @@ export class SettingsTableComponent implements OnInit {
         this.data = this.data.filter(record => record.id !== id);
       }
     });
+  }
+
+  emitPagination() {
+    const skipVal = (this.currentPage - 1) * this.pageSize;
+    this.skip.emit(skipVal);
   }
 
 }

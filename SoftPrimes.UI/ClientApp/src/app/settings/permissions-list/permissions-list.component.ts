@@ -10,6 +10,10 @@ import { SettingsCrudsService } from '../settings-cruds.service';
 export class PermissionsListComponent implements OnInit {
   permissionsList: any[];
   options: any;
+  take = 10; // pageSize
+  skip = 0;
+  controller = '';
+  count: number;
 
   constructor(private settingsCrud: SettingsCrudsService) {
     this.options = {
@@ -21,12 +25,17 @@ export class PermissionsListComponent implements OnInit {
         { name: '', field: '' },
       ]
     };
+    this.controller = this.options.controller;
   }
 
   ngOnInit() {
-    const permissionController = this.options.controller;
-    this.settingsCrud.getAll(permissionController, 10, 0).subscribe(result => {
+    this.getPermissionsList(this.controller, this.take, this.skip);
+  }
+
+  getPermissionsList(controller, take, skip) {
+    this.settingsCrud.getAll(controller, take, skip).subscribe(result => {
       this.permissionsList = result.data;
+      this.count = result.count;
     });
   }
 

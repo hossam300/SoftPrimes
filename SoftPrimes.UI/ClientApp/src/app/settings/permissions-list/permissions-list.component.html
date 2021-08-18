@@ -7,4 +7,5 @@
     Create new permission
   </a>
 </div>
-<app-settings-table [data]="permissionsList" [options]="options"></app-settings-table>
+<app-settings-table [data]="permissionsList" [options]="options"[pageSize]="take"
+[count]="count" (skip)="getPermissionsList(controller, take, $event || skip)"></app-settings-table>
