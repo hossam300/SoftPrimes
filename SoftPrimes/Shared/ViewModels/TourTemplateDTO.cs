@@ -13,5 +13,6 @@ namespace SoftPrimes.Shared.ViewModels
         public string TourNameAr { get; set; }
         public string TourNameEn { get; set; }
         public virtual List<TourCheckPointDTO> CheckPoints { get; set; }
+        public bool Active { get; set; }
     }
 }

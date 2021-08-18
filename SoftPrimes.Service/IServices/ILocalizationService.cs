@@ -10,5 +10,7 @@ namespace SoftPrimes.Service.IServices
 {
     public interface ILocalizationService : IBusinessService<Localization, LocalizationDTO>
     {
+        DateTime GetLastLocalizationUpdateTime();
+        string GetJson(string culture);
     }
 }

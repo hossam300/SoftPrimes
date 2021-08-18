@@ -24,6 +24,6 @@ namespace SoftPrimes.Service.IServices
         IEnumerable<AgentDTO> InsertNewUsers(IEnumerable<AgentDTO> entities);
         AgentDTO UpdateUser(AgentDetailsDTO entitie);
         Task<bool> ChangeTempPassword(string userName, string newPassword);
-       
+        void InsertLoginLog(AgentLoginLog agentLoginLog);
     }
 }

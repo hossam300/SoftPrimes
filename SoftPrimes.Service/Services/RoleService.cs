@@ -33,5 +33,22 @@ namespace SoftPrimes.Service.Services
             }
             return base.Update(Entities);
         }
+        public override IEnumerable<RoleDTO> Insert(IEnumerable<RoleDTO> entities)
+        {
+            foreach (var item in entities)
+            {
+                var role = new Role
+                {
+                    RoleNameAr = item.RoleNameAr,
+                    RoleNameEn = item.RoleNameEn,
+                    Permissions = item.Permissions.Select(x => new RolePermission
+                    {
+                        PermissionId = x.PermissionId
+                    }).ToList()
+                };
+                _unitOfWork.GetRepository<Role>().Insert(role);
+            }
+            return entities;
+        }
     }
 }

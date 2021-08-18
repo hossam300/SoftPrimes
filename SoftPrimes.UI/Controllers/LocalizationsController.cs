@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SoftPrimes.Service.IServices;
 using SoftPrimes.Shared.Domains;
@@ -20,6 +21,22 @@ namespace SoftPrimes.UI.Controllers
         {
             this._LocalizationsService = businessService;
         }
-        
+        [HttpGet]
+        [Route("json/{culture}")]
+        [AllowAnonymous]
+        public string Json(string culture)
+        {
+            //CultureInfo.CurrentCulture = string.IsNullOrEmpty(culture) ? CultureInfo.CurrentCulture : new CultureInfo(culture);
+            //var json = _ILocalizationServices.GetJson();
+            //return new FileContentResult(Encoding.UTF8.GetBytes(json), "application/json");
+            return this._LocalizationsService.GetJson(culture);
+        }
+        [HttpGet]
+        [Route("GetLastUpDateTime")]
+        [AllowAnonymous]
+        public DateTime GetLastUpDateTime()
+        {
+            return this._LocalizationsService.GetLastLocalizationUpdateTime();
+        }
     }
 }

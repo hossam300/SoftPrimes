@@ -215,6 +215,7 @@ namespace SoftPrimes.Service.Services
                 Id = x.TourId,
                 TourNameAr = x.Tour.TourNameAr,
                 TourNameEn = x.Tour.TourNameEn,
+                Active = x.Tour.Active,
                 CheckPoints = x.CheckPoints.Select(y => new TourCheckPointDTO
                 {
                     CheckPoint = new CheckPointDTO
@@ -252,6 +253,18 @@ namespace SoftPrimes.Service.Services
             {
                 template = _repository.Insert(new Tour { TourNameEn = tour.TourName });
             }
+            List<TourComment> tourComments = new List<TourComment>();
+            if (tour.AdminComment != "" || tour.AdminComment != null)
+            {
+                tourComments.Add(new TourComment
+                {
+                    Comment = new Comment
+                    {
+                        Text = tour.AdminComment
+                    },
+                    TourId = template.Id,
+                });
+            }
             TourAgent tourAgent = _unitOfWork.GetRepository<TourAgent>().Insert(new TourAgent
             {
                 AgentId = tour.AgentId,
@@ -266,9 +279,25 @@ namespace SoftPrimes.Service.Services
                     EndDate = x.EndDate,
                     StartDate = x.StartDate
                 }).ToList(),
+                Comments = tourComments
             });
             tour.Id = tourAgent.Id;
             return tour;
+        }
+
+        public bool ActiveDisActiveTemplate(int tourId, bool state)
+        {
+            try
+            {
+                var tour = _repository.GetById(tourId);
+                tour.Active = state;
+                _repository.Update(tour);
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
 
         //private void CustomeMethod()

@@ -420,7 +420,7 @@ export class SwaggerClient {
      * @param body (optional) 
      * @return Success
      */
-    apiAccountUpdateUsersPut(body: AgentDTO[]): Observable<AgentDTO[]> {
+    apiAccountUpdateUsersPut(body: AgentDetailsDTO): Observable<AgentDTO> {
         let url_ = this.baseUrl + "/api/Account/UpdateUsers";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -443,14 +443,14 @@ export class SwaggerClient {
                 try {
                     return this.processApiAccountUpdateUsersPut(<any>response_);
                 } catch (e) {
-                    return <Observable<AgentDTO[]>><any>_observableThrow(e);
+                    return <Observable<AgentDTO>><any>_observableThrow(e);
                 }
             } else
-                return <Observable<AgentDTO[]>><any>_observableThrow(response_);
+                return <Observable<AgentDTO>><any>_observableThrow(response_);
         }));
     }
 
-    protected processApiAccountUpdateUsersPut(response: HttpResponseBase): Observable<AgentDTO[]> {
+    protected processApiAccountUpdateUsersPut(response: HttpResponseBase): Observable<AgentDTO> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -461,11 +461,7 @@ export class SwaggerClient {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            if (resultData200 && resultData200.constructor === Array) {
-                result200 = [];
-                for (let item of resultData200)
-                    result200.push(AgentDTO.fromJS(item));
-            }
+            result200 = resultData200 ? AgentDTO.fromJS(resultData200) : new AgentDTO();
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -473,59 +469,7 @@ export class SwaggerClient {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<AgentDTO[]>(<any>null);
-    }
-
-    /**
-     * @return Success
-     */
-    apiAccountModifyProfileImagesGet(): Observable<string> {
-        let url_ = this.baseUrl + "/api/Account/ModifyProfileImages";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Content-Type": "application/json", 
-                "Accept": "application/json"
-            })
-        };
-
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processApiAccountModifyProfileImagesGet(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processApiAccountModifyProfileImagesGet(<any>response_);
-                } catch (e) {
-                    return <Observable<string>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<string>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processApiAccountModifyProfileImagesGet(response: HttpResponseBase): Observable<string> {
-        const status = response.status;
-        const responseBlob = 
-            response instanceof HttpResponse ? response.body : 
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = resultData200 !== undefined ? resultData200 : <any>null;
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<string>(<any>null);
+        return _observableOf<AgentDTO>(<any>null);
     }
 
     /**
@@ -5111,6 +5055,113 @@ export class SwaggerClient {
     }
 
     /**
+     * @return Success
+     */
+    apiLocalizationsJsonGet(culture: string): Observable<string> {
+        let url_ = this.baseUrl + "/api/Localizations/json/{culture}";
+        if (culture === undefined || culture === null)
+            throw new Error("The parameter 'culture' must be defined.");
+        url_ = url_.replace("{culture}", encodeURIComponent("" + culture)); 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processApiLocalizationsJsonGet(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processApiLocalizationsJsonGet(<any>response_);
+                } catch (e) {
+                    return <Observable<string>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<string>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processApiLocalizationsJsonGet(response: HttpResponseBase): Observable<string> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 !== undefined ? resultData200 : <any>null;
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<string>(<any>null);
+    }
+
+    /**
+     * @return Success
+     */
+    apiLocalizationsGetLastUpDateTimeGet(): Observable<Date> {
+        let url_ = this.baseUrl + "/api/Localizations/GetLastUpDateTime";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processApiLocalizationsGetLastUpDateTimeGet(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processApiLocalizationsGetLastUpDateTimeGet(<any>response_);
+                } catch (e) {
+                    return <Observable<Date>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<Date>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processApiLocalizationsGetLastUpDateTimeGet(response: HttpResponseBase): Observable<Date> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? new Date(resultData200.toString()) : <any>null;
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<Date>(<any>null);
+    }
+
+    /**
      * @param take (optional) 
      * @param skip (optional) 
      * @param sort (optional) 
@@ -8909,6 +8960,64 @@ export class SwaggerClient {
     }
 
     /**
+     * @param tourId (optional) 
+     * @param state (optional) 
+     * @return Success
+     */
+    apiToursActiveDisActiveTemplateGet(tourId: number, state: boolean): Observable<boolean> {
+        let url_ = this.baseUrl + "/api/Tours/ActiveDisActiveTemplate?";
+        if (tourId !== undefined)
+            url_ += "tourId=" + encodeURIComponent("" + tourId) + "&"; 
+        if (state !== undefined)
+            url_ += "state=" + encodeURIComponent("" + state) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processApiToursActiveDisActiveTemplateGet(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processApiToursActiveDisActiveTemplateGet(<any>response_);
+                } catch (e) {
+                    return <Observable<boolean>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<boolean>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processApiToursActiveDisActiveTemplateGet(response: HttpResponseBase): Observable<boolean> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 !== undefined ? resultData200 : <any>null;
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<boolean>(<any>null);
+    }
+
+    /**
      * @param take (optional) 
      * @param skip (optional) 
      * @param sort (optional) 
@@ -9807,7 +9916,7 @@ export class RoleDTO implements IRoleDTO {
     id?: number;
     roleNameAr?: string;
     roleNameEn?: string;
-    rolePermissions?: RolePermissionDTO[];
+    permissions?: RolePermissionDTO[];
 
     constructor(data?: IRoleDTO) {
         if (data) {
@@ -9823,10 +9932,10 @@ export class RoleDTO implements IRoleDTO {
             this.id = data["id"];
             this.roleNameAr = data["roleNameAr"];
             this.roleNameEn = data["roleNameEn"];
-            if (data["rolePermissions"] && data["rolePermissions"].constructor === Array) {
-                this.rolePermissions = [];
-                for (let item of data["rolePermissions"])
-                    this.rolePermissions.push(RolePermissionDTO.fromJS(item));
+            if (data["permissions"] && data["permissions"].constructor === Array) {
+                this.permissions = [];
+                for (let item of data["permissions"])
+                    this.permissions.push(RolePermissionDTO.fromJS(item));
             }
         }
     }
@@ -9843,10 +9952,10 @@ export class RoleDTO implements IRoleDTO {
         data["id"] = this.id;
         data["roleNameAr"] = this.roleNameAr;
         data["roleNameEn"] = this.roleNameEn;
-        if (this.rolePermissions && this.rolePermissions.constructor === Array) {
-            data["rolePermissions"] = [];
-            for (let item of this.rolePermissions)
-                data["rolePermissions"].push(item.toJSON());
+        if (this.permissions && this.permissions.constructor === Array) {
+            data["permissions"] = [];
+            for (let item of this.permissions)
+                data["permissions"].push(item.toJSON());
         }
         return data; 
     }
@@ -9856,7 +9965,7 @@ export interface IRoleDTO {
     id?: number;
     roleNameAr?: string;
     roleNameEn?: string;
-    rolePermissions?: RolePermissionDTO[];
+    permissions?: RolePermissionDTO[];
 }
 
 export class AgentRoleDTO implements IAgentRoleDTO {
@@ -9916,6 +10025,8 @@ export class AuthTicketDTO implements IAuthTicketDTO {
     email?: string;
     fullName?: string;
     fullNameAr?: string;
+    image?: string;
+    lastLoginDate?: Date;
     fullNameEn?: string;
     userId?: string;
     jobTitle?: string;
@@ -9940,6 +10051,8 @@ export class AuthTicketDTO implements IAuthTicketDTO {
             this.email = data["email"];
             this.fullName = data["fullName"];
             this.fullNameAr = data["fullNameAr"];
+            this.image = data["image"];
+            this.lastLoginDate = data["lastLoginDate"] ? new Date(data["lastLoginDate"].toString()) : <any>undefined;
             this.fullNameEn = data["fullNameEn"];
             this.userId = data["userId"];
             this.jobTitle = data["jobTitle"];
@@ -9968,6 +10081,8 @@ export class AuthTicketDTO implements IAuthTicketDTO {
         data["email"] = this.email;
         data["fullName"] = this.fullName;
         data["fullNameAr"] = this.fullNameAr;
+        data["image"] = this.image;
+        data["lastLoginDate"] = this.lastLoginDate ? this.lastLoginDate.toISOString() : <any>undefined;
         data["fullNameEn"] = this.fullNameEn;
         data["userId"] = this.userId;
         data["jobTitle"] = this.jobTitle;
@@ -9989,6 +10104,8 @@ export interface IAuthTicketDTO {
     email?: string;
     fullName?: string;
     fullNameAr?: string;
+    image?: string;
+    lastLoginDate?: Date;
     fullNameEn?: string;
     userId?: string;
     jobTitle?: string;
@@ -10049,6 +10166,66 @@ export interface IMessageDTO {
     mobile?: string;
     email?: string;
     message?: string;
+}
+
+export class AgentDetailsDTO implements IAgentDetailsDTO {
+    id?: string;
+    email?: string;
+    jobTitle?: string;
+    mobile?: string;
+    birthDate?: Date;
+    fullNameAr?: string;
+    fullNameEn?: string;
+
+    constructor(data?: IAgentDetailsDTO) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.id = data["id"];
+            this.email = data["email"];
+            this.jobTitle = data["jobTitle"];
+            this.mobile = data["mobile"];
+            this.birthDate = data["birthDate"] ? new Date(data["birthDate"].toString()) : <any>undefined;
+            this.fullNameAr = data["fullNameAr"];
+            this.fullNameEn = data["fullNameEn"];
+        }
+    }
+
+    static fromJS(data: any): AgentDetailsDTO {
+        data = typeof data === 'object' ? data : {};
+        let result = new AgentDetailsDTO();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["email"] = this.email;
+        data["jobTitle"] = this.jobTitle;
+        data["mobile"] = this.mobile;
+        data["birthDate"] = this.birthDate ? this.birthDate.toISOString() : <any>undefined;
+        data["fullNameAr"] = this.fullNameAr;
+        data["fullNameEn"] = this.fullNameEn;
+        return data; 
+    }
+}
+
+export interface IAgentDetailsDTO {
+    id?: string;
+    email?: string;
+    jobTitle?: string;
+    mobile?: string;
+    birthDate?: Date;
+    fullNameAr?: string;
+    fullNameEn?: string;
 }
 
 export class Sort implements ISort {
@@ -12359,6 +12536,7 @@ export class TourTemplateDTO implements ITourTemplateDTO {
     tourNameAr?: string;
     tourNameEn?: string;
     checkPoints?: TourCheckPointDTO[];
+    active?: boolean;
 
     constructor(data?: ITourTemplateDTO) {
         if (data) {
@@ -12379,6 +12557,7 @@ export class TourTemplateDTO implements ITourTemplateDTO {
                 for (let item of data["checkPoints"])
                     this.checkPoints.push(TourCheckPointDTO.fromJS(item));
             }
+            this.active = data["active"];
         }
     }
 
@@ -12399,6 +12578,7 @@ export class TourTemplateDTO implements ITourTemplateDTO {
             for (let item of this.checkPoints)
                 data["checkPoints"].push(item.toJSON());
         }
+        data["active"] = this.active;
         return data; 
     }
 }
@@ -12408,6 +12588,7 @@ export interface ITourTemplateDTO {
     tourNameAr?: string;
     tourNameEn?: string;
     checkPoints?: TourCheckPointDTO[];
+    active?: boolean;
 }
 
 export class PointLocationDTO implements IPointLocationDTO {
@@ -12468,6 +12649,7 @@ export class TourCreateDTO implements ITourCreateDTO {
     agentId?: string;
     captureLocation?: number;
     isTemplate?: boolean;
+    adminComment?: string;
 
     constructor(data?: ITourCreateDTO) {
         if (data) {
@@ -12493,6 +12675,7 @@ export class TourCreateDTO implements ITourCreateDTO {
             this.agentId = data["agentId"];
             this.captureLocation = data["captureLocation"];
             this.isTemplate = data["isTemplate"];
+            this.adminComment = data["adminComment"];
         }
     }
 
@@ -12518,6 +12701,7 @@ export class TourCreateDTO implements ITourCreateDTO {
         data["agentId"] = this.agentId;
         data["captureLocation"] = this.captureLocation;
         data["isTemplate"] = this.isTemplate;
+        data["adminComment"] = this.adminComment;
         return data; 
     }
 }
@@ -12532,6 +12716,7 @@ export interface ITourCreateDTO {
     agentId?: string;
     captureLocation?: number;
     isTemplate?: boolean;
+    adminComment?: string;
 }
 
 export class TourDTODataSourceResult implements ITourDTODataSourceResult {

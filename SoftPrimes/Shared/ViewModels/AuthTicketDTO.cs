@@ -13,6 +13,8 @@ namespace SoftPrimes.Shared.ViewModels
         public string Email { get; set; }
         public string FullName { get; set; }
         public string FullNameAr { get; set; }
+        public byte[] Image { get; set; }
+        public DateTimeOffset? LastLoginDate { get; set; }
         public string FullNameEn { get; set; }
         public string UserId { get; set; }
         public string JobTitle { get; set; }

@@ -108,6 +108,8 @@ namespace SoftPrimes.Service.Services
                         JobTitle = AuthUser.JobTitle,
                         Mobile = AuthUser.Mobile,
                         SupervisorId = AuthUser.SupervisorId,
+                        Image = AuthUser.Image,
+                        LastLoginDate = AuthUser.AgentLoginLogs.LastOrDefault().CreatedOn,
                         AgentRoles = AuthUser.AgentRoles.Select(x => new AgentRoleDTO
                         {
                             AgentId = x.AgentId,
@@ -118,7 +120,7 @@ namespace SoftPrimes.Service.Services
                                 Id = x.Role.Id,
                                 RoleNameAr = x.Role.RoleNameAr,
                                 RoleNameEn = x.Role.RoleNameEn,
-                                RolePermissions = x.Role.Permissions.Select(y => new RolePermissionDTO
+                                Permissions = x.Role.Permissions.Select(y => new RolePermissionDTO
                                 {
                                     Id = y.Id,
                                     Permission = new PermissionDTO
@@ -340,6 +342,11 @@ namespace SoftPrimes.Service.Services
                 return (true, string.Empty);
             }
             return (false, "User Not Avaliable.");
+        }
+
+        public void InsertLoginLog(AgentLoginLog agentLoginLog)
+        {
+            _uow.GetRepository<AgentLoginLog>().Insert(agentLoginLog);
         }
     }
 }

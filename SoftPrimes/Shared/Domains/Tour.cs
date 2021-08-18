@@ -14,5 +14,6 @@ namespace SoftPrimes.Shared.Domains
         public DateTimeOffset? UpdatedOn { get; set; }
         public string DeletedBy { get; set; }
         public DateTimeOffset? DeletedOn { get; set; }
+        public bool Active { get; set; }
     }
 }

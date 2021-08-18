@@ -17,5 +17,6 @@ namespace SoftPrimes.Service.IServices
         List<HomeTourDTO> GetTourHistory(float lat, float longs, string id);
         List<TourTemplateDTO> GetTemplates();
         TourCreateDTO InsertTour(TourCreateDTO tour);
+        bool ActiveDisActiveTemplate(int tourId, bool state);
     }
 }

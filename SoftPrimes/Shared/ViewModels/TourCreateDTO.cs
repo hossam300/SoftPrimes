@@ -18,5 +18,6 @@ namespace SoftPrimes.Shared.ViewModels
         public string AgentId { get; set; }
         public int CaptureLocation { get; set; }
         public bool IsTemplate { get; set; }
+        public string AdminComment { get; set; }
     }
 }

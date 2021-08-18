@@ -70,6 +70,13 @@ namespace SoftPrimes.UI.Controllers
                 _User,
                 applicationType,
                 refreshTokenSource: null);
+            AgentLoginLog agentLoginLog = new AgentLoginLog()
+            {
+                AccessToken = accessToken,
+                AgentId = _User.Id,
+                CreatedOn = DateTime.Now
+            };
+            _usersService.InsertLoginLog(agentLoginLog);
             return Ok(new AccessToken { access_token = accessToken, refresh_token = refreshToken, IsTemp = _User.TempPassword, is_mobile = true, is_ldap_auth = lsLdapAuth, is_factor_auth = false });
             //}
         }

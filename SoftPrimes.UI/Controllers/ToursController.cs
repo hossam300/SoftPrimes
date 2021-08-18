@@ -60,5 +60,10 @@ namespace SoftPrimes.UI.Controllers
         {
             return _TourService.InsertTour(tour);
         }
+        [HttpGet("ActiveDisActiveTemplate")]
+        public bool ActiveDisActiveTemplate(int tourId,bool state)
+        {
+            return _TourService.ActiveDisActiveTemplate(tourId, state);
+        }
     }
 }
