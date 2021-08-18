@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using IdentityModel;
 using IHelperServices;
 using IHelperServices.Models;
 using Microsoft.AspNetCore.Http;
@@ -53,7 +54,7 @@ namespace SoftPrimes.Service.Services
         public async Task<Agent> FindUserPasswordAsync(string username, string password, bool isHashedPassword)
         {
             string passwordHash = _securityService.GetSha256Hash(password);
-            Agent result = await _users.FirstOrDefaultAsync(x => x.UserName == username && x.Password == passwordHash);
+            Agent result = await _users.FirstOrDefaultAsync(x => (x.UserName == username || x.Email == username) && x.Password == passwordHash);
             return result;
 
         }
@@ -149,6 +150,7 @@ namespace SoftPrimes.Service.Services
             foreach (AgentDTO user in entities)
             {
                 Agent New_user = _Mapper.Map(user, typeof(AgentDTO), typeof(Agent)) as Agent;
+                New_user.Password = _securityService.GetSha256Hash(user.Password);
                 Agent mm = _users.Insert(New_user);
                 users.Add(mm);
             }
@@ -220,31 +222,7 @@ namespace SoftPrimes.Service.Services
                 throw ex;
             }
         }
-        public string ModifyProfileImages()
-        {
-            var users = _users.GetAll().Select(x => new
-            {
-                userId = x.Id,
-                ProfileImage = x.Image,
-            }).ToList();
-            foreach (var item in users)
-            {
-                try
-                {
-                    if (item.ProfileImage != null)
-                    {
-                        this.AddUserImage(item.userId, item.ProfileImage);
-                    }
-                }
-                catch (Exception)
-                {
 
-
-                }
-
-            }
-            return "Profile Images Updated ";
-        }
         public AgentDTO AddUserImage(string userId, byte[] ProfileImage)
         {
 
@@ -306,17 +284,17 @@ namespace SoftPrimes.Service.Services
             return users.Select(u => new AgentDTO { Id = u.Id.ToString(), UserName = u.UserName }).ToList();
         }
 
-        public IEnumerable<AgentDTO> UpdateUsers(IEnumerable<AgentDTO> Entities)
+        public AgentDTO UpdateUser(AgentDetailsDTO oldAgent)
         {
-            foreach (var Entity in Entities)
-            {
-                var OldEntity = this._UnitOfWork.GetRepository<Agent>().GetById(Entity.Id);
-                byte[] profileImage = OldEntity.Image;
-                Agent MappedEntity = _Mapper.Map(Entity, OldEntity, typeof(AgentDTO), typeof(Agent)) as Agent;
-                MappedEntity.Image = profileImage;
-                this._UnitOfWork.GetRepository<Agent>().Update(MappedEntity as Agent);
-            }
-            return Entities.Select(e => new AgentDTO { UserName = e.UserName });
+            var OldEntity = this._UnitOfWork.GetRepository<Agent>().GetById(oldAgent.Id);
+            OldEntity.Email = oldAgent.Email;
+            OldEntity.BirthDate = oldAgent.BirthDate;
+            OldEntity.FullNameAr = oldAgent.FullNameAr;
+            OldEntity.FullNameEn = oldAgent.FullNameEn;
+            OldEntity.JobTitle = oldAgent.JobTitle;
+            OldEntity.Mobile = oldAgent.Mobile;
+            this._UnitOfWork.GetRepository<Agent>().Update(OldEntity);
+            return _Mapper.Map(OldEntity, typeof(Agent), typeof(AgentDTO)) as AgentDTO;
         }
         public async Task<bool> ChangeTempPassword(string userName, string newPassword)
         {

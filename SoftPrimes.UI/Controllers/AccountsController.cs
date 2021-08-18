@@ -137,15 +137,10 @@ namespace SoftPrimes.UI.Controllers
         }
 
         [HttpPut, Route("UpdateUsers")]
-        public IEnumerable<AgentDTO> UpdateUsers([FromBody] IEnumerable<AgentDTO> entities)
+        public AgentDTO UpdateUser([FromBody] AgentDetailsDTO entity)
         {
-            return this._usersService.UpdateUsers(entities);
+            return this._usersService.UpdateUser(entity);
         }
-
-        [HttpGet("ModifyProfileImages")]
-        [AllowAnonymous]
-        public string ModifyProfileImages() { return _usersService.ModifyProfileImages(); }
-
         [HttpPost("AddUserImage")]
         public object AddUserImage(string userId)
         {
