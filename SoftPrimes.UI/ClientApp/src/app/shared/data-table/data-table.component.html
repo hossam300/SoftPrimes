@@ -5,7 +5,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let row of data | slice: (currentPage-1) * pageSize : currentPage * pageSize"">
+    <tr *ngFor="let row of data | slice: (currentPage-1) * pageSize : currentPage * pageSize">
       <td>{{row?.agent.fullNameAr}}</td>
       <td>{{row?.tour.tourType}}</td>
       <td>{{row?.tourDate | date:'medium'}}</td>
@@ -28,7 +28,7 @@
   </tbody>
 </table>
 
-<div class="d-flex justify-content-center">
+<div class="d-flex justify-content-center mb-5">
   <ngb-pagination [collectionSize]="data?.length" [(page)]="currentPage"
   [pageSize]="pageSize" [boundaryLinks]="true"></ngb-pagination>
 </div>
