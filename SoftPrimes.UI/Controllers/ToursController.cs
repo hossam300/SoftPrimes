@@ -21,7 +21,7 @@ namespace SoftPrimes.UI.Controllers
         public ToursController(ITourService businessService, IHelperServices.ISessionServices sessionSevices) : base(businessService, sessionSevices)
         {
             this._TourService = businessService;
-               _sessionSevices = sessionSevices;
+            _sessionSevices = sessionSevices;
         }
 
 
@@ -49,6 +49,16 @@ namespace SoftPrimes.UI.Controllers
         public bool ChangeTourState(int TourId, int State)
         {
             return _TourService.ChangeTourState(TourId, State);
+        }
+        [HttpGet("GetTemplates")]
+        public List<TourTemplateDTO> GetTemplates()
+        {
+            return _TourService.GetTemplates();
+        }
+        [HttpPost("InsertTour")]
+        public TourCreateDTO InsertTour(TourCreateDTO tour)
+        {
+            return _TourService.InsertTour(tour);
         }
     }
 }

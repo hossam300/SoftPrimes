@@ -237,6 +237,40 @@ namespace SoftPrimes.Service.Services
             }).ToList();
         }
 
+        public TourCreateDTO InsertTour(TourCreateDTO tour)
+        {
+            var template = new Tour();
+            if (tour.TourId != 0)
+            {
+                template = _repository.GetAll().FirstOrDefault(c => c.Id == tour.TourId);
+                if (template.TourNameEn != tour.TourName)
+                {
+                    template = _repository.Insert(new Tour { TourNameEn = tour.TourName });
+                }
+            }
+            else
+            {
+                template = _repository.Insert(new Tour { TourNameEn = tour.TourName });
+            }
+            TourAgent tourAgent = _unitOfWork.GetRepository<TourAgent>().Insert(new TourAgent
+            {
+                AgentId = tour.AgentId,
+                IsTemplate = tour.IsTemplate,
+                TourId = template.Id,
+                TourDate = tour.TourDate,
+                TourState = TourState.New,
+                TourType = tour.TourType,
+                CheckPoints = tour.PointLocations.Select(x => new TourCheckPoint
+                {
+                    CheckPointId = x.CheckPointId,
+                    EndDate = x.EndDate,
+                    StartDate = x.StartDate
+                }).ToList(),
+            });
+            tour.Id = tourAgent.Id;
+            return tour;
+        }
+
         //private void CustomeMethod()
         //{
         //    var Tour=_repository.

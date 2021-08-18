@@ -811,7 +811,7 @@ export class SwaggerClient {
      * @param id (optional) 
      * @return Success
      */
-    apiAgentLocationLogsGetByIdGet(id: string): Observable<AgentLocationLogDTO> {
+    apiAgentLocationLogsGetByIdGet(id: number): Observable<AgentLocationLogDTO> {
         let url_ = this.baseUrl + "/api/AgentLocationLogs/GetById?";
         if (id !== undefined)
             url_ += "id=" + encodeURIComponent("" + id) + "&"; 
@@ -1271,7 +1271,7 @@ export class SwaggerClient {
      * @param id (optional) 
      * @return Success
      */
-    apiAgentLoginLogsGetByIdGet(id: string): Observable<AgentLoginLogDTO> {
+    apiAgentLoginLogsGetByIdGet(id: number): Observable<AgentLoginLogDTO> {
         let url_ = this.baseUrl + "/api/AgentLoginLogs/GetById?";
         if (id !== undefined)
             url_ += "id=" + encodeURIComponent("" + id) + "&"; 
@@ -1731,7 +1731,7 @@ export class SwaggerClient {
      * @param id (optional) 
      * @return Success
      */
-    apiAgentRolesGetByIdGet(id: string): Observable<AgentRoleDTO> {
+    apiAgentRolesGetByIdGet(id: number): Observable<AgentRoleDTO> {
         let url_ = this.baseUrl + "/api/AgentRoles/GetById?";
         if (id !== undefined)
             url_ += "id=" + encodeURIComponent("" + id) + "&"; 
@@ -2524,7 +2524,7 @@ export class SwaggerClient {
      * @param id (optional) 
      * @return Success
      */
-    apiAgentsGetByIdGet(id: string): Observable<AgentDTO> {
+    apiAgentsGetByIdGet(id: number): Observable<AgentDTO> {
         let url_ = this.baseUrl + "/api/Agents/GetById?";
         if (id !== undefined)
             url_ += "id=" + encodeURIComponent("" + id) + "&"; 
@@ -2984,7 +2984,7 @@ export class SwaggerClient {
      * @param id (optional) 
      * @return Success
      */
-    apiAttachmentsGetByIdGet(id: string): Observable<AttachmentDTO> {
+    apiAttachmentsGetByIdGet(id: number): Observable<AttachmentDTO> {
         let url_ = this.baseUrl + "/api/Attachments/GetById?";
         if (id !== undefined)
             url_ += "id=" + encodeURIComponent("" + id) + "&"; 
@@ -3444,7 +3444,7 @@ export class SwaggerClient {
      * @param id (optional) 
      * @return Success
      */
-    apiCheckPointsGetByIdGet(id: string): Observable<CheckPointDTO> {
+    apiCheckPointsGetByIdGet(id: number): Observable<CheckPointDTO> {
         let url_ = this.baseUrl + "/api/CheckPoints/GetById?";
         if (id !== undefined)
             url_ += "id=" + encodeURIComponent("" + id) + "&"; 
@@ -3904,7 +3904,7 @@ export class SwaggerClient {
      * @param id (optional) 
      * @return Success
      */
-    apiCheckPointTourCommentsGetByIdGet(id: string): Observable<CheckPointTourCommentDTO> {
+    apiCheckPointTourCommentsGetByIdGet(id: number): Observable<CheckPointTourCommentDTO> {
         let url_ = this.baseUrl + "/api/CheckPointTourComments/GetById?";
         if (id !== undefined)
             url_ += "id=" + encodeURIComponent("" + id) + "&"; 
@@ -4364,7 +4364,7 @@ export class SwaggerClient {
      * @param id (optional) 
      * @return Success
      */
-    apiCommentsGetByIdGet(id: string): Observable<CommentDTO> {
+    apiCommentsGetByIdGet(id: number): Observable<CommentDTO> {
         let url_ = this.baseUrl + "/api/Comments/GetById?";
         if (id !== undefined)
             url_ += "id=" + encodeURIComponent("" + id) + "&"; 
@@ -4824,7 +4824,7 @@ export class SwaggerClient {
      * @param id (optional) 
      * @return Success
      */
-    apiCompaniesGetByIdGet(id: string): Observable<CompanyDTO> {
+    apiCompaniesGetByIdGet(id: number): Observable<CompanyDTO> {
         let url_ = this.baseUrl + "/api/Companies/GetById?";
         if (id !== undefined)
             url_ += "id=" + encodeURIComponent("" + id) + "&"; 
@@ -5284,7 +5284,7 @@ export class SwaggerClient {
      * @param id (optional) 
      * @return Success
      */
-    apiLocalizationsGetByIdGet(id: string): Observable<LocalizationDTO> {
+    apiLocalizationsGetByIdGet(id: number): Observable<LocalizationDTO> {
         let url_ = this.baseUrl + "/api/Localizations/GetById?";
         if (id !== undefined)
             url_ += "id=" + encodeURIComponent("" + id) + "&"; 
@@ -5744,7 +5744,7 @@ export class SwaggerClient {
      * @param id (optional) 
      * @return Success
      */
-    apiNotificationsGetByIdGet(id: string): Observable<NotificationDTO> {
+    apiNotificationsGetByIdGet(id: number): Observable<NotificationDTO> {
         let url_ = this.baseUrl + "/api/Notifications/GetById?";
         if (id !== undefined)
             url_ += "id=" + encodeURIComponent("" + id) + "&"; 
@@ -6204,7 +6204,7 @@ export class SwaggerClient {
      * @param id (optional) 
      * @return Success
      */
-    apiPermissionsGetByIdGet(id: string): Observable<PermissionDTO> {
+    apiPermissionsGetByIdGet(id: number): Observable<PermissionDTO> {
         let url_ = this.baseUrl + "/api/Permissions/GetById?";
         if (id !== undefined)
             url_ += "id=" + encodeURIComponent("" + id) + "&"; 
@@ -6664,7 +6664,7 @@ export class SwaggerClient {
      * @param id (optional) 
      * @return Success
      */
-    apiRolesGetByIdGet(id: string): Observable<RoleDTO> {
+    apiRolesGetByIdGet(id: number): Observable<RoleDTO> {
         let url_ = this.baseUrl + "/api/Roles/GetById?";
         if (id !== undefined)
             url_ += "id=" + encodeURIComponent("" + id) + "&"; 
@@ -7124,7 +7124,7 @@ export class SwaggerClient {
      * @param id (optional) 
      * @return Success
      */
-    apiTourAgentsGetByIdGet(id: string): Observable<TourAgentDTO> {
+    apiTourAgentsGetByIdGet(id: number): Observable<TourAgentDTO> {
         let url_ = this.baseUrl + "/api/TourAgents/GetById?";
         if (id !== undefined)
             url_ += "id=" + encodeURIComponent("" + id) + "&"; 
@@ -7754,7 +7754,7 @@ export class SwaggerClient {
      * @param id (optional) 
      * @return Success
      */
-    apiTourCheckPointsGetByIdGet(id: string): Observable<TourCheckPointDTO> {
+    apiTourCheckPointsGetByIdGet(id: number): Observable<TourCheckPointDTO> {
         let url_ = this.baseUrl + "/api/TourCheckPoints/GetById?";
         if (id !== undefined)
             url_ += "id=" + encodeURIComponent("" + id) + "&"; 
@@ -8214,7 +8214,7 @@ export class SwaggerClient {
      * @param id (optional) 
      * @return Success
      */
-    apiTourCommentsGetByIdGet(id: string): Observable<TourCommentDTO> {
+    apiTourCommentsGetByIdGet(id: number): Observable<TourCommentDTO> {
         let url_ = this.baseUrl + "/api/TourComments/GetById?";
         if (id !== undefined)
             url_ += "id=" + encodeURIComponent("" + id) + "&"; 
@@ -8797,6 +8797,118 @@ export class SwaggerClient {
     }
 
     /**
+     * @return Success
+     */
+    apiToursGetTemplatesGet(): Observable<TourTemplateDTO[]> {
+        let url_ = this.baseUrl + "/api/Tours/GetTemplates";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processApiToursGetTemplatesGet(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processApiToursGetTemplatesGet(<any>response_);
+                } catch (e) {
+                    return <Observable<TourTemplateDTO[]>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<TourTemplateDTO[]>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processApiToursGetTemplatesGet(response: HttpResponseBase): Observable<TourTemplateDTO[]> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (resultData200 && resultData200.constructor === Array) {
+                result200 = [];
+                for (let item of resultData200)
+                    result200.push(TourTemplateDTO.fromJS(item));
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<TourTemplateDTO[]>(<any>null);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    apiToursInsertTourPost(body: TourCreateDTO): Observable<TourCreateDTO> {
+        let url_ = this.baseUrl + "/api/Tours/InsertTour";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processApiToursInsertTourPost(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processApiToursInsertTourPost(<any>response_);
+                } catch (e) {
+                    return <Observable<TourCreateDTO>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<TourCreateDTO>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processApiToursInsertTourPost(response: HttpResponseBase): Observable<TourCreateDTO> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? TourCreateDTO.fromJS(resultData200) : new TourCreateDTO();
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<TourCreateDTO>(<any>null);
+    }
+
+    /**
      * @param take (optional) 
      * @param skip (optional) 
      * @param sort (optional) 
@@ -8970,7 +9082,7 @@ export class SwaggerClient {
      * @param id (optional) 
      * @return Success
      */
-    apiToursGetByIdGet(id: string): Observable<TourDTO> {
+    apiToursGetByIdGet(id: number): Observable<TourDTO> {
         let url_ = this.baseUrl + "/api/Tours/GetById?";
         if (id !== undefined)
             url_ += "id=" + encodeURIComponent("" + id) + "&"; 
@@ -9751,7 +9863,7 @@ export class AgentRoleDTO implements IAgentRoleDTO {
     id?: number;
     agentId?: string;
     agent?: AgentDTO;
-    roleId?: string;
+    roleId?: number;
     role?: RoleDTO;
 
     constructor(data?: IAgentRoleDTO) {
@@ -9795,7 +9907,7 @@ export interface IAgentRoleDTO {
     id?: number;
     agentId?: string;
     agent?: AgentDTO;
-    roleId?: string;
+    roleId?: number;
     role?: RoleDTO;
 }
 
@@ -12240,6 +12352,186 @@ export interface ITourCheckpointDetailsDTO {
     tourState?: TourState;
     adminCommnets?: CommentDetailsDTO[];
     checkPoints?: CheckPointDetailsDTO[];
+}
+
+export class TourTemplateDTO implements ITourTemplateDTO {
+    id?: number;
+    tourNameAr?: string;
+    tourNameEn?: string;
+    checkPoints?: TourCheckPointDTO[];
+
+    constructor(data?: ITourTemplateDTO) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.id = data["id"];
+            this.tourNameAr = data["tourNameAr"];
+            this.tourNameEn = data["tourNameEn"];
+            if (data["checkPoints"] && data["checkPoints"].constructor === Array) {
+                this.checkPoints = [];
+                for (let item of data["checkPoints"])
+                    this.checkPoints.push(TourCheckPointDTO.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): TourTemplateDTO {
+        data = typeof data === 'object' ? data : {};
+        let result = new TourTemplateDTO();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["tourNameAr"] = this.tourNameAr;
+        data["tourNameEn"] = this.tourNameEn;
+        if (this.checkPoints && this.checkPoints.constructor === Array) {
+            data["checkPoints"] = [];
+            for (let item of this.checkPoints)
+                data["checkPoints"].push(item.toJSON());
+        }
+        return data; 
+    }
+}
+
+export interface ITourTemplateDTO {
+    id?: number;
+    tourNameAr?: string;
+    tourNameEn?: string;
+    checkPoints?: TourCheckPointDTO[];
+}
+
+export class PointLocationDTO implements IPointLocationDTO {
+    id?: number;
+    checkPointId?: number;
+    startDate?: Date;
+    endDate?: Date;
+
+    constructor(data?: IPointLocationDTO) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.id = data["id"];
+            this.checkPointId = data["checkPointId"];
+            this.startDate = data["startDate"] ? new Date(data["startDate"].toString()) : <any>undefined;
+            this.endDate = data["endDate"] ? new Date(data["endDate"].toString()) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): PointLocationDTO {
+        data = typeof data === 'object' ? data : {};
+        let result = new PointLocationDTO();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["checkPointId"] = this.checkPointId;
+        data["startDate"] = this.startDate ? this.startDate.toISOString() : <any>undefined;
+        data["endDate"] = this.endDate ? this.endDate.toISOString() : <any>undefined;
+        return data; 
+    }
+}
+
+export interface IPointLocationDTO {
+    id?: number;
+    checkPointId?: number;
+    startDate?: Date;
+    endDate?: Date;
+}
+
+export class TourCreateDTO implements ITourCreateDTO {
+    id?: number;
+    tourType?: TourType;
+    tourId?: number;
+    tourName?: string;
+    tourDate?: Date;
+    pointLocations?: PointLocationDTO[];
+    agentId?: string;
+    captureLocation?: number;
+    isTemplate?: boolean;
+
+    constructor(data?: ITourCreateDTO) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.id = data["id"];
+            this.tourType = data["tourType"];
+            this.tourId = data["tourId"];
+            this.tourName = data["tourName"];
+            this.tourDate = data["tourDate"] ? new Date(data["tourDate"].toString()) : <any>undefined;
+            if (data["pointLocations"] && data["pointLocations"].constructor === Array) {
+                this.pointLocations = [];
+                for (let item of data["pointLocations"])
+                    this.pointLocations.push(PointLocationDTO.fromJS(item));
+            }
+            this.agentId = data["agentId"];
+            this.captureLocation = data["captureLocation"];
+            this.isTemplate = data["isTemplate"];
+        }
+    }
+
+    static fromJS(data: any): TourCreateDTO {
+        data = typeof data === 'object' ? data : {};
+        let result = new TourCreateDTO();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["tourType"] = this.tourType;
+        data["tourId"] = this.tourId;
+        data["tourName"] = this.tourName;
+        data["tourDate"] = this.tourDate ? this.tourDate.toISOString() : <any>undefined;
+        if (this.pointLocations && this.pointLocations.constructor === Array) {
+            data["pointLocations"] = [];
+            for (let item of this.pointLocations)
+                data["pointLocations"].push(item.toJSON());
+        }
+        data["agentId"] = this.agentId;
+        data["captureLocation"] = this.captureLocation;
+        data["isTemplate"] = this.isTemplate;
+        return data; 
+    }
+}
+
+export interface ITourCreateDTO {
+    id?: number;
+    tourType?: TourType;
+    tourId?: number;
+    tourName?: string;
+    tourDate?: Date;
+    pointLocations?: PointLocationDTO[];
+    agentId?: string;
+    captureLocation?: number;
+    isTemplate?: boolean;
 }
 
 export class TourDTODataSourceResult implements ITourDTODataSourceResult {

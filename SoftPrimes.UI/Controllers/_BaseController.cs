@@ -57,7 +57,7 @@ namespace SoftPrimes.UI.Controllers
             return this._BusinessService.GetAll<TDetailsDTO>(dataSourceRequest, false);
         }
         [HttpGet("GetById")]
-        public virtual TDetailsDTO Get(object id)
+        public virtual TDetailsDTO Get(int id)
         {
             return _BusinessService.GetDetails(id, true);
         }
