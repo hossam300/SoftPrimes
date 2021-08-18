@@ -30,10 +30,12 @@
               aria-expanded="false">
               <div class="media align-items-center">
                 <div class="media-body d-none d-lg-block">
-                  <span class="mb-0 text-dark">Mohamed Eid</span>
+                  <span class="mb-0 text-dark text-capitalize">
+                    {{(user | async).fullName}}
+                  </span>
                 </div>
                 <span class="mx-2 rounded-circle">
-                  <ngx-avatar class="border-0" src="" name="Mohamed Eid" size="32"
+                  <ngx-avatar class="border-0" src="" [name]="(user | async).fullName" size="32"
                     [round]="true" [initialsSize]="2">
                   </ngx-avatar>
                 </span>
@@ -42,7 +44,9 @@
             </a>
             <div class="dropdown-menu dropdown-menu-right">
               <div class="dropdown-header noti-title">
-                <h6 class="text-overflow m-0 text-primary">Mohamed Eid</h6>
+                <h6 class="text-overflow m-0 text-primary text-capitalize">
+                  {{(user | async).fullName}}
+                </h6>
                 <span class="text-gray text-10 text-lowercase">
                   Last date login
                   <span>24 Oct</span>

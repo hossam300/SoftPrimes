@@ -10,6 +10,7 @@ import { Component, OnInit } from '@angular/core';
 export class NavMenuComponent implements OnInit {
   isExpanded = false;
   isLoggedIn;
+  user: any;
 
   constructor(
     private router: Router,
@@ -17,6 +18,7 @@ export class NavMenuComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.user = this.auth.currentUser;
     this.router.events.subscribe(val => {
       this.isLoggedIn = this.auth.isAuthUserLoggedIn();
     });
