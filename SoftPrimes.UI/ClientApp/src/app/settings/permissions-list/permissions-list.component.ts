@@ -18,6 +18,7 @@ export class PermissionsListComponent implements OnInit {
         { name: 'PermissionNameAr', field: 'permissionNameAr', searchable: true, operator: 'contains' },
         { name: 'PermissionNameEn', field: 'permissionNameEn', searchable: true, operator: 'contains' },
         { name: 'PermissionNameKey', field: 'permissionKey', searchable: true, operator: 'contains' },
+        { name: '', field: '' },
       ]
     };
   }
