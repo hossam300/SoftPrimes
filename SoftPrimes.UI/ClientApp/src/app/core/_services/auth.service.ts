@@ -127,17 +127,11 @@ export class AuthService {
   }
 
   logout() {
-    const refreshToken = encodeURIComponent(this.tokenStoreService.getRawAuthToken(AuthTokenType.RefreshToken));
-    return this.swagger.apiAccountLogoutGet(refreshToken)
-      .pipe(
-        map(response => response || {}),
-        catchError((error: HttpErrorResponse) => throwError(error)),
-        finalize(() => {
-          this.setUser(null);
-          this.tokenStoreService.deleteAuthTokens();
-          this.refreshTokenService.unscheduleRefreshToken(true);
-          this.authStatusSource.next(false);
-        }));
+    this.setUser(null);
+    this.tokenStoreService.deleteAuthTokens();
+    this.refreshTokenService.unscheduleRefreshToken(true);
+    this.authStatusSource.next(false);
+    this.router.navigate(['/login']);
   }
 
   isAuthUserLoggedIn(): boolean {
