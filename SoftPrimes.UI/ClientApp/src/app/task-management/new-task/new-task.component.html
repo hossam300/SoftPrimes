@@ -97,6 +97,15 @@
           </div>
         </div>
       </div>
+      <div class="row form-group">
+        <label for="taskType" class="required col-2 col-form-label col-form-label-sm">Save as template</label>
+        <div class="col-7 d-flex">
+          <div class="form-check form-check-inline mr-5">
+            <input name="saveTemplate" class="form-check-input" [(ngModel)]="saveTemplate"
+              type="checkbox">
+          </div>
+        </div>
+      </div>
     </form>
 
     <div class="bg-transparent card-footer dashed-border-top px-0 pt-4 pb-1">
