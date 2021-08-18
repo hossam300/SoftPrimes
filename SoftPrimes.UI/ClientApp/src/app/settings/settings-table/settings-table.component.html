@@ -5,12 +5,10 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let row of data">
-      <td *ngFor="let col of options.columns">
-        {{row[col.field]}}
-      </td>
-      <td class="td-actions text-right">
-        <div class="dropdown">
+    <tr *ngFor="let row of data | slice: (currentPage-1) * pageSize : currentPage * pageSize">
+      <td *ngFor="let col of options.columns" [class.td-actions.text-right]="!col.field">
+        <span *ngIf="col.field">{{row[col.field]}}</span>
+        <div class="dropdown" *ngIf="!col.field">
           <button class="btn btn-primary btn-block" type="button" id="multiDropdownMenu" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false">
             <span class="fa fa-ellipsis-v"></span>
@@ -24,3 +22,8 @@
     </tr>
   </tbody>
 </table>
+
+<div class="d-flex justify-content-center">
+  <ngb-pagination [collectionSize]="data?.length" [(page)]="currentPage"
+  [pageSize]="pageSize" [boundaryLinks]="true"></ngb-pagination>
+</div>

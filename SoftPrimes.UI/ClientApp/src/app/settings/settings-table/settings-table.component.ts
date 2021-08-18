@@ -10,6 +10,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 export class SettingsTableComponent implements OnInit {
   @Input() data: any[];
   @Input() options: any;
+  currentPage = 1;
+  pageSize = 5;
 
   constructor(
     private router: Router,

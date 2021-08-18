@@ -10,6 +10,8 @@ import { Component, Input, OnInit } from '@angular/core';
 export class DataTableComponent implements OnInit {
   @Input() data: any[];
   @Input() columns: string[];
+  currentPage = 1;
+  pageSize = 5;
 
   constructor(
     private taskManagementService: TaskManagementService
