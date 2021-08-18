@@ -49,6 +49,11 @@ input.form-control::placeholder {
   cursor: pointer;
 }
 
+/* .dropdown .btn-primary {
+  background-color: #EBF4FF;
+  border-color: #EBF4FF;
+} */
+
 /* tables */
 .table thead th {
   border-top: none;

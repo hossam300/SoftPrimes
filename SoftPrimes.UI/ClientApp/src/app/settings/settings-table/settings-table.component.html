@@ -9,7 +9,7 @@
       <td *ngFor="let col of options.columns" [class.td-actions.text-right]="!col.field">
         <span *ngIf="col.field">{{row[col.field]}}</span>
         <div class="dropdown" *ngIf="!col.field">
-          <button class="btn btn-primary btn-block" type="button" id="multiDropdownMenu" data-toggle="dropdown"
+          <button class="btn btn-primary btn-block btn-sm" type="button" id="multiDropdownMenu" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false">
             <span class="fa fa-ellipsis-v"></span>
           </button>
