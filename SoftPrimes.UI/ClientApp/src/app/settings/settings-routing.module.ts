@@ -1,3 +1,5 @@
+import { LocalizationComponent } from './localization/localization.component';
+import { LocalizationListComponent } from './localization-list/localization-list.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
@@ -32,6 +34,29 @@ const routes: Routes = [{
           data: {
             'permissionCode': ['EditPermissions'],
             'breadcrumb': ['settings', 'permissions', 'edit']
+          }
+        },
+      ]
+    },
+    { path: 'localization', component: SettingsWrapperComponent,
+      children: [
+        {
+          path: '',
+          component: LocalizationListComponent,
+          data: {
+            permissionCode: ['ViewLocalization'],
+            'breadcrumb': ['settings', 'localization']
+          }
+        },
+        { path: 'add', component: LocalizationComponent,
+          data: {'breadcrumb': ['settings', 'localization', 'add']}
+        },
+        {
+          path: 'edit/:localizationId',
+          component: LocalizationComponent,
+          data: {
+            'permissionCode': ['EditLocalization'],
+            'breadcrumb': ['settings', 'localization', 'edit']
           }
         },
       ]
