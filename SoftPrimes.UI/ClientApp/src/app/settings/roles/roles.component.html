@@ -1,0 +1,51 @@
+<app-breadcrumb></app-breadcrumb>
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h1 class="h5">
+    Create new roles
+  </h1>
+</div>
+<div class="card shadow">
+  <div class="card-body">
+      <p class="dashed-border-bottom mb-4 pb-4">
+        Please find the below information
+      </p>
+      <div class="row form-group">
+        <label for="valueAr" class="col-2 col-form-label col-form-label-sm">roles name Ar</label>
+        <div class="col-7 d-flex">
+          <div class="input-group">
+            <input class="form-control" placeholder="roles name Ar" [(ngModel)]="roles.valueAr" type="text"
+              name="valueAr">
+          </div>
+        </div>
+      </div>
+      <div class="row form-group">
+        <label for="valueEn" class="col-2 col-form-label col-form-label-sm">roles name En</label>
+        <div class="col-7 d-flex">
+          <div class="input-group">
+            <input class="form-control" placeholder="roles name En" [(ngModel)]="roles.valueEn" type="text"
+              name="valueEn">
+          </div>
+        </div>
+      </div>
+      <div class="row form-group">
+        <label for="key" class="required col-2 col-form-label col-form-label-sm">permissions</label>
+        <div class="col-7 d-flex">
+          <div class="input-group">
+            <ng-select class="w-100" [items]="permissions" bindLabel="permissionNameEn"
+              bindValue="id" [multiple]="true" [(ngModel)]="permissionIds"
+              (change)="selectPermission($event)" placeholder="choose permissions">
+            </ng-select>
+          </div>
+        </div>
+      </div>
+
+    <div class="bg-transparent card-footer dashed-border-top px-0 pt-4 pb-1">
+      <button class="btn btn-primary shadow" [disabled]="!roles.key" *ngIf="createMode" (click)="insertRoles()">
+        Create
+      </button>
+      <button class="btn btn-primary shadow" *ngIf="!createMode" (click)="updateRoles()">
+        Update
+      </button>
+    </div>
+  </div>
+</div>

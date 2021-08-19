@@ -1,3 +1,6 @@
+import { AgentsListComponent } from './agents-list/agents-list.component';
+import { RolesComponent } from './roles/roles.component';
+import { RolesListComponent } from './roles-list/roles-list.component';
 import { LocalizationComponent } from './localization/localization.component';
 import { LocalizationListComponent } from './localization-list/localization-list.component';
 import { NgModule } from '@angular/core';
@@ -9,6 +12,8 @@ import { SettingsComponent } from './settings/settings.component';
 import { SettingsWrapperComponent } from './settings-wrapper/settings-wrapper.component';
 import { PermissionsListComponent } from './permissions-list/permissions-list.component';
 import { PermissionsComponent } from './permissions/permissions.component';
+import { AgentsComponent } from './agents/agents.component';
+import { TemplatesListComponent } from './templates-list/templates-list.component';
 
 const routes: Routes = [{
   path: '', component: SettingsWrapperComponent,
@@ -59,6 +64,64 @@ const routes: Routes = [{
             'breadcrumb': ['settings', 'localization', 'edit']
           }
         },
+      ]
+    },
+    { path: 'roles', component: SettingsWrapperComponent,
+      children: [
+        {
+          path: '',
+          component: RolesListComponent,
+          data: {
+            permissionCode: ['ViewRoles'],
+            'breadcrumb': ['settings', 'roles']
+          }
+        },
+        { path: 'add', component: RolesComponent,
+          data: {'breadcrumb': ['settings', 'roles', 'add']}
+        },
+        {
+          path: 'edit/:rolesId',
+          component: RolesComponent,
+          data: {
+            'permissionCode': ['EditRoles'],
+            'breadcrumb': ['settings', 'roles', 'edit']
+          }
+        },
+      ]
+    },
+    { path: 'agents', component: SettingsWrapperComponent,
+      children: [
+        {
+          path: '',
+          component: AgentsListComponent,
+          data: {
+            permissionCode: ['ViewAgents'],
+            'breadcrumb': ['settings', 'agents']
+          }
+        },
+        { path: 'add', component: AgentsComponent,
+          data: {'breadcrumb': ['settings', 'agents', 'add']}
+        },
+        {
+          path: 'edit/:agentsId',
+          component: AgentsComponent,
+          data: {
+            'permissionCode': ['EditAgents'],
+            'breadcrumb': ['settings', 'agents', 'edit']
+          }
+        },
+      ]
+    },
+    { path: 'templates', component: SettingsWrapperComponent,
+      children: [
+        {
+          path: '',
+          component: TemplatesListComponent,
+          data: {
+            permissionCode: ['ViewTemplates'],
+            'breadcrumb': ['settings', 'templates']
+          }
+        }
       ]
     },
     { path: '**', redirectTo: 'settings', pathMatch: 'full' },

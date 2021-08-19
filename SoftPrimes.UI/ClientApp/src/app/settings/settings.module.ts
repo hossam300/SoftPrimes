@@ -12,10 +12,15 @@ import { PermissionsListComponent } from './permissions-list/permissions-list.co
 import { SettingsTableComponent } from './settings-table/settings-table.component';
 import { LocalizationComponent } from './localization/localization.component';
 import { LocalizationListComponent } from './localization-list/localization-list.component';
+import { RolesComponent } from './roles/roles.component';
+import { RolesListComponent } from './roles-list/roles-list.component';
+import { AgentsComponent } from './agents/agents.component';
+import { AgentsListComponent } from './agents-list/agents-list.component';
+import { TemplatesListComponent } from './templates-list/templates-list.component';
 
 
 @NgModule({
-  declarations: [SettingsComponent, PermissionsComponent, SettingsWrapperComponent, PermissionsListComponent, SettingsTableComponent, LocalizationComponent, LocalizationListComponent],
+  declarations: [SettingsComponent, PermissionsComponent, SettingsWrapperComponent, PermissionsListComponent, SettingsTableComponent, LocalizationComponent, LocalizationListComponent, RolesComponent, RolesListComponent, AgentsComponent, AgentsListComponent, TemplatesListComponent],
   imports: [
     CommonModule,
     SettingsRoutingModule,
