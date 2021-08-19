@@ -49,9 +49,9 @@ namespace SoftPrimes.Server.Controllers
             return _TourService.ChangeTourState(TourId, State);
         }
         [HttpGet("GetTemplates")]
-        public List<TourTemplateDTO> GetTemplate()
+        public List<TourTemplateDTO> GetTemplate(string searchText)
         {
-            return _TourService.GetTemplates();
+            return _TourService.GetTemplates(searchText);
         }
     }
 }
