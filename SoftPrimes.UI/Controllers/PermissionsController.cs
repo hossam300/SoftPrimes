@@ -20,9 +20,9 @@ namespace SoftPrimes.UI.Controllers
         {
             this._PermissionService = businessService;
         }
-        public List<PermissionDTO> GetPermissionLookups(string searchText)
+        public List<PermissionDTO> GetPermissionLookups(string searchText, int take = 20)
         {
-            return _PermissionService.GetPermissionLookups(searchText);
+            return _PermissionService.GetPermissionLookups(searchText, take);
         }
     }
 }

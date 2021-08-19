@@ -15,7 +15,7 @@ namespace SoftPrimes.Service.IServices
         List<TourCommentDTO> GetAdminComments(int tourId);
         bool ChangeTourState(int tourId, int state);
         List<HomeTourDTO> GetTourHistory(float lat, float longs, string id);
-        List<TourTemplateDTO> GetTemplates(string searchText);
+        List<TourTemplateDTO> GetTemplates(string searchText,int take);
         TourCreateDTO InsertTour(TourCreateDTO tour);
         bool ActiveDisActiveTemplate(int tourId, bool state);
     }

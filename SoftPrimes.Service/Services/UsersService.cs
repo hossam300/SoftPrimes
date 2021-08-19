@@ -347,7 +347,7 @@ namespace SoftPrimes.Service.Services
         {
             _uow.GetRepository<AgentLoginLog>().Insert(agentLoginLog);
         }
-        public List<AgentDTO> GetAgentLookups(string searchText)
+        public List<AgentDTO> GetAgentLookups(string searchText,int take)
         {
             if (searchText == "" || string.IsNullOrEmpty(searchText) || searchText == null)
             {
@@ -366,7 +366,7 @@ namespace SoftPrimes.Service.Services
                     UserName = x.UserName,
                     Active = x.Active,
                     SupervisorId = x.SupervisorId
-                }).ToList();
+                }).Take(take).ToList();
             }
             else
             {
@@ -386,7 +386,7 @@ namespace SoftPrimes.Service.Services
                         UserName = x.UserName,
                         Active = x.Active,
                         SupervisorId = x.SupervisorId
-                    }).ToList();
+                    }).Take(take).ToList();
             }
         }
     }

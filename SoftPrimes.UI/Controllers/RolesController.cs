@@ -21,9 +21,9 @@ namespace SoftPrimes.UI.Controllers
         {
             this._RoleService = businessService;
         }
-        public List<RoleDTO> GetRoleLookups(string searchText)
-{
-            return _RoleService.GetRoleLookups(searchText);
+        public List<RoleDTO> GetRoleLookups(string searchText, int take = 20)
+        {
+            return _RoleService.GetRoleLookups(searchText,take);
         }
     }
 }

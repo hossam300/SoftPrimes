@@ -208,7 +208,7 @@ namespace SoftPrimes.Service.Services
                     }).ToList();
         }
 
-        public List<TourTemplateDTO> GetTemplates(string searchText)
+        public List<TourTemplateDTO> GetTemplates(string searchText, int take)
         {
             if (searchText == "" || string.IsNullOrEmpty(searchText) || searchText == null)
             {
@@ -237,7 +237,7 @@ namespace SoftPrimes.Service.Services
                         TourId = y.TourId
                     }).ToList()
 
-                }).ToList();
+                }).Take(take).ToList();
             }
             else
             {
@@ -267,7 +267,7 @@ namespace SoftPrimes.Service.Services
                             TourId = y.TourId
                         }).ToList()
 
-                    }).ToList();
+                    }).Take(take).ToList();
             }
         }
 

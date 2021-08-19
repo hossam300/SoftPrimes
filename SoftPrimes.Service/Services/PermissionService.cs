@@ -21,7 +21,7 @@ namespace SoftPrimes.Service.Services
             _repository = _unitOfWork.GetRepository<Permission>();
         }
 
-        public List<PermissionDTO> GetPermissionLookups(string searchText)
+        public List<PermissionDTO> GetPermissionLookups(string searchText,int take)
         {
             if (searchText == "" || string.IsNullOrEmpty(searchText) || searchText == null)
             {
@@ -31,7 +31,7 @@ namespace SoftPrimes.Service.Services
                     PermissionKey = x.PermissionKey,
                     PermissionNameAr = x.PermissionNameAr,
                     PermissionNameEn = x.PermissionNameEn
-                }).ToList();
+                }).Take(take).ToList();
             }
             else
             {
@@ -42,7 +42,7 @@ namespace SoftPrimes.Service.Services
                         PermissionKey = x.PermissionKey,
                         PermissionNameAr = x.PermissionNameAr,
                         PermissionNameEn = x.PermissionNameEn
-                    }).ToList();
+                    }).Take(take).ToList();
             }
         }
     }

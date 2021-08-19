@@ -51,7 +51,7 @@ namespace SoftPrimes.Service.Services
             return entities;
         }
 
-        public List<RoleDTO> GetRoleLookups(string searchText)
+        public List<RoleDTO> GetRoleLookups(string searchText, int take)
         {
             if (searchText == "" || string.IsNullOrEmpty(searchText) || searchText == null)
             {
@@ -60,7 +60,7 @@ namespace SoftPrimes.Service.Services
                     Id = x.Id,
                     RoleNameAr = x.RoleNameAr,
                     RoleNameEn = x.RoleNameEn
-                }).ToList();
+                }).Take(take).ToList();
             }
             else
             {
@@ -70,7 +70,7 @@ namespace SoftPrimes.Service.Services
                         Id = x.Id,
                         RoleNameAr = x.RoleNameAr,
                         RoleNameEn = x.RoleNameEn
-                    }).ToList();
+                    }).Take(take).ToList();
             }
         }
     }

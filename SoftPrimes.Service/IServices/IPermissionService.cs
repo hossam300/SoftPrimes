@@ -10,6 +10,6 @@ namespace SoftPrimes.Service.IServices
 {
     public interface IPermissionService : IBusinessService<Permission, PermissionDTO>
     {
-        List<PermissionDTO> GetPermissionLookups(string searchText);
+        List<PermissionDTO> GetPermissionLookups(string searchText,int take);
     }
 }
