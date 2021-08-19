@@ -175,6 +175,7 @@ namespace SoftPrimes.UI.Controllers
         {
             return await _usersService.ChangeTempPassword(userName, newPassword);
         }
+        [HttpGet("[action]")]
         public List<AgentDTO> GetAgentLookups(string searchText,int take=20)
         {
             return _usersService.GetAgentLookups(searchText,take);
