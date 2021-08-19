@@ -29,7 +29,6 @@ export class BreadcrumbComponent implements OnInit {
 
   buildBreadcrumb() {
     const newBreadcrumb = this.route.routeConfig.data['breadcrumb'];
-    console.log(newBreadcrumb, 'breadcrumbs from routing');
     const mappedBreadcrumbs = newBreadcrumb.map((x, i) => {
       return {
         label: this.generateLabel(x),
@@ -37,7 +36,6 @@ export class BreadcrumbComponent implements OnInit {
       };
     });
     this.breadcrumbs = [...this.breadcrumbs, ...mappedBreadcrumbs];
-    console.log(this.breadcrumbs, 'final bread crumbs');
   }
 
   generateLabel(string: string) {

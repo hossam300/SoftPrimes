@@ -31,8 +31,9 @@
         <label for="key" class="required col-2 col-form-label col-form-label-sm">permissions</label>
         <div class="col-7 d-flex">
           <div class="input-group">
-            <ng-select class="w-100" [items]="permissions" bindLabel="permissionNameEn"
+            <ng-select class="w-100" [items]="permissions$ | async" bindLabel="permissionNameEn"
               bindValue="id" [multiple]="true" [(ngModel)]="permissionIds"
+              [loading]="permissionsLoading" [typeahead]="permissionsInput$"
               (change)="selectPermission($event)" placeholder="choose permissions">
             </ng-select>
           </div>
