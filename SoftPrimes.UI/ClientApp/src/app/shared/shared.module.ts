@@ -8,6 +8,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AgmCoreModule } from '@agm/core';
 import { AvatarModule } from 'ngx-avatar';
 import { AgmOverlays } from 'agm-overlays';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 
 @NgModule({
@@ -23,8 +24,18 @@ import { AgmOverlays } from 'agm-overlays';
       apiKey: 'AIzaSyBQ0sLTl03ZtdTMW5iUnP7kHXMCldTR2kM'
       // apiKey: 'AIzaSyAFRKYD119NSdHb39E4nkA3iXjoKtB0oks'
     }),
-    AvatarModule
+    AvatarModule,
+    NgSelectModule
   ],
-  exports: [BreadcrumbComponent, GmapComponent, DataTableComponent, NgbModule, AgmCoreModule, AgmOverlays, AvatarModule]
+  exports: [
+    BreadcrumbComponent,
+    GmapComponent,
+    DataTableComponent,
+    NgbModule,
+    AgmCoreModule,
+    AgmOverlays,
+    AvatarModule,
+    NgSelectModule
+  ]
 })
 export class SharedModule { }
