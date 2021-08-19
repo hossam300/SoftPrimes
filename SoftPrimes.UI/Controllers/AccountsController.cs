@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using SoftPrimes.Service.IServices;
+using SoftPrimes.Service.Services;
 using SoftPrimes.Shared.Domains;
 using SoftPrimes.Shared.ViewModels;
 using System;
@@ -173,6 +174,10 @@ namespace SoftPrimes.UI.Controllers
         public async Task<bool> ChangeTempPassword(string userName, string newPassword)
         {
             return await _usersService.ChangeTempPassword(userName, newPassword);
+        }
+        public List<AgentDTO> GetAgentLookups(string searchText)
+        {
+            return _usersService.GetAgentLookups(searchText);
         }
     }
 }

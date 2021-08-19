@@ -343,10 +343,51 @@ namespace SoftPrimes.Service.Services
             }
             return (false, "User Not Avaliable.");
         }
-
         public void InsertLoginLog(AgentLoginLog agentLoginLog)
         {
             _uow.GetRepository<AgentLoginLog>().Insert(agentLoginLog);
+        }
+        public List<AgentDTO> GetAgentLookups(string searchText)
+        {
+            if (searchText == "" || string.IsNullOrEmpty(searchText) || searchText == null)
+            {
+                return _users.GetAll().Select(x => new AgentDTO
+                {
+                    Id = x.Id,
+                    AgentType = x.AgentType,
+                    FullNameAr = x.FullNameAr,
+                    BirthDate = x.BirthDate,
+                    CompanyId = x.CompanyId,
+                    Email = x.Email,
+                    Image = x.Image,
+                    JobTitle = x.JobTitle,
+                    FullNameEn = x.FullNameEn,
+                    Mobile = x.Mobile,
+                    UserName = x.UserName,
+                    Active = x.Active,
+                    SupervisorId = x.SupervisorId
+                }).ToList();
+            }
+            else
+            {
+                return _users.GetAll().Where(x => x.UserName.Contains(searchText) || x.FullNameAr.Contains(searchText) || x.FullNameEn.Contains(searchText))
+                    .Select(x => new AgentDTO
+                    {
+                        Id = x.Id,
+                        AgentType = x.AgentType,
+                        FullNameAr = x.FullNameAr,
+                        BirthDate = x.BirthDate,
+                        CompanyId = x.CompanyId,
+                        Email = x.Email,
+                        Image = x.Image,
+                        JobTitle = x.JobTitle,
+                        FullNameEn = x.FullNameEn,
+                        Mobile = x.Mobile,
+                        UserName = x.UserName,
+                        Active = x.Active,
+                        SupervisorId = x.SupervisorId
+                    }).ToList();
+            }
         }
     }
 }

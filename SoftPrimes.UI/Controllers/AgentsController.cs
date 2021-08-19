@@ -41,7 +41,7 @@ namespace SoftPrimes.UI.Controllers
         [HttpPost("AddUserImage")]
         public object AddUserImage(string userId)
         {
-            
+
             if (!Request.ContentType.StartsWith("multipart"))
             {
                 throw new System.Exception("Invalid multipart request");
@@ -55,7 +55,7 @@ namespace SoftPrimes.UI.Controllers
             byte[] ProfileImage = BinaryContent;
             string ProfileImageMimeType = file.ContentType;
             var user = _agentService.AddUserImage(userId, ProfileImage);
-            return new { UserId = user.Id, ProfileImage = user.Image};
+            return new { UserId = user.Id, ProfileImage = user.Image };
         }
         [AllowAnonymous]
         [HttpGet]
@@ -91,5 +91,6 @@ namespace SoftPrimes.UI.Controllers
             }
             return NotFound();
         }
+       
     }
 }

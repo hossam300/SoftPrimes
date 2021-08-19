@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SoftPrimes.Service.IServices;
+using SoftPrimes.Service.Services;
 using SoftPrimes.Shared.Domains;
 using SoftPrimes.Shared.ViewModels;
 using System;
@@ -19,6 +20,10 @@ namespace SoftPrimes.UI.Controllers
         public RolesController(IRoleService businessService, IHelperServices.ISessionServices sessionSevices) : base(businessService, sessionSevices)
         {
             this._RoleService = businessService;
+        }
+        public List<RoleDTO> GetRoleLookups(string searchText)
+{
+            return _RoleService.GetRoleLookups(searchText);
         }
     }
 }

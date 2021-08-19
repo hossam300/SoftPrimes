@@ -50,5 +50,28 @@ namespace SoftPrimes.Service.Services
             }
             return entities;
         }
+
+        public List<RoleDTO> GetRoleLookups(string searchText)
+        {
+            if (searchText == "" || string.IsNullOrEmpty(searchText) || searchText == null)
+            {
+                return _repository.GetAll().Select(x => new RoleDTO
+                {
+                    Id = x.Id,
+                    RoleNameAr = x.RoleNameAr,
+                    RoleNameEn = x.RoleNameEn
+                }).ToList();
+            }
+            else
+            {
+                return _repository.GetAll().Where(x => x.RoleNameAr.Contains(searchText) || x.RoleNameEn.Contains(searchText))
+                    .Select(x => new RoleDTO
+                    {
+                        Id = x.Id,
+                        RoleNameAr = x.RoleNameAr,
+                        RoleNameEn = x.RoleNameEn
+                    }).ToList();
+            }
+        }
     }
 }

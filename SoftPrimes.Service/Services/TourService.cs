@@ -208,34 +208,67 @@ namespace SoftPrimes.Service.Services
                     }).ToList();
         }
 
-        public List<TourTemplateDTO> GetTemplates()
+        public List<TourTemplateDTO> GetTemplates(string searchText)
         {
-            return _unitOfWork.GetRepository<TourAgent>().GetAll().Where(x => x.IsTemplate).Select(x => new TourTemplateDTO
+            if (searchText == "" || string.IsNullOrEmpty(searchText) || searchText == null)
             {
-                Id = x.TourId,
-                TourNameAr = x.Tour.TourNameAr,
-                TourNameEn = x.Tour.TourNameEn,
-                Active = x.Tour.Active,
-                CheckPoints = x.CheckPoints.Select(y => new TourCheckPointDTO
+                return _unitOfWork.GetRepository<TourAgent>().GetAll().Where(x => x.IsTemplate).Select(x => new TourTemplateDTO
                 {
-                    CheckPoint = new CheckPointDTO
+                    Id = x.TourId,
+                    TourNameAr = x.Tour.TourNameAr,
+                    TourNameEn = x.Tour.TourNameEn,
+                    Active = x.Tour.Active,
+                    CheckPoints = x.CheckPoints.Select(y => new TourCheckPointDTO
                     {
-                        CheckPointNameAr = y.CheckPoint.CheckPointNameAr,
-                        CheckPointNameEn = y.CheckPoint.CheckPointNameEn,
-                        Id = y.CheckPointId,
-                        Lat = y.CheckPoint.Lat,
-                        LocationText = y.CheckPoint.LocationText,
-                        Long = y.CheckPoint.Long,
-                        QRCode = y.CheckPoint.QRCode
-                    },
-                    CheckPointId = y.CheckPointId,
-                    EndDate = y.EndDate,
-                    StartDate = y.StartDate,
-                    Id = y.Id,
-                    TourId = y.TourId
-                }).ToList()
+                        CheckPoint = new CheckPointDTO
+                        {
+                            CheckPointNameAr = y.CheckPoint.CheckPointNameAr,
+                            CheckPointNameEn = y.CheckPoint.CheckPointNameEn,
+                            Id = y.CheckPointId,
+                            Lat = y.CheckPoint.Lat,
+                            LocationText = y.CheckPoint.LocationText,
+                            Long = y.CheckPoint.Long,
+                            QRCode = y.CheckPoint.QRCode
+                        },
+                        CheckPointId = y.CheckPointId,
+                        EndDate = y.EndDate,
+                        StartDate = y.StartDate,
+                        Id = y.Id,
+                        TourId = y.TourId
+                    }).ToList()
 
-            }).ToList();
+                }).ToList();
+            }
+            else
+            {
+                return _unitOfWork.GetRepository<TourAgent>().GetAll()
+                    .Where(x => x.IsTemplate && (x.Tour.TourNameAr.Contains(searchText) || x.Tour.TourNameEn.Contains(searchText))).Select(x => new TourTemplateDTO
+                    {
+                        Id = x.TourId,
+                        TourNameAr = x.Tour.TourNameAr,
+                        TourNameEn = x.Tour.TourNameEn,
+                        Active = x.Tour.Active,
+                        CheckPoints = x.CheckPoints.Select(y => new TourCheckPointDTO
+                        {
+                            CheckPoint = new CheckPointDTO
+                            {
+                                CheckPointNameAr = y.CheckPoint.CheckPointNameAr,
+                                CheckPointNameEn = y.CheckPoint.CheckPointNameEn,
+                                Id = y.CheckPointId,
+                                Lat = y.CheckPoint.Lat,
+                                LocationText = y.CheckPoint.LocationText,
+                                Long = y.CheckPoint.Long,
+                                QRCode = y.CheckPoint.QRCode
+                            },
+                            CheckPointId = y.CheckPointId,
+                            EndDate = y.EndDate,
+                            StartDate = y.StartDate,
+                            Id = y.Id,
+                            TourId = y.TourId
+                        }).ToList()
+
+                    }).ToList();
+            }
         }
 
         public TourCreateDTO InsertTour(TourCreateDTO tour)

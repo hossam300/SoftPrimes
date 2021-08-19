@@ -10,5 +10,6 @@ namespace SoftPrimes.Service.IServices
 {
     public interface IRoleService : IBusinessService<Role, RoleDTO>
     {
+        List<RoleDTO> GetRoleLookups(string searchText);
     }
 }
