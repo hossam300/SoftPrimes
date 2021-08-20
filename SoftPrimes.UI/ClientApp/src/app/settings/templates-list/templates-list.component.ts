@@ -28,13 +28,12 @@ export class TemplatesListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getTemplatesList(this.controller, this.take, this.skip);
+    this.getTemplatesList(undefined, this.take);
   }
 
-  getTemplatesList(controller, take, skip) {
-    this.settingsCrud.getAll(controller, take, skip).subscribe(result => {
-      this.templatesList = result.data;
-      this.count = result.count;
+  getTemplatesList(searchTxt?, take?) {
+    this.settingsCrud.getTemplatesLookup(searchTxt, take).subscribe(result => {
+      this.templatesList = result;
     });
   }
 
