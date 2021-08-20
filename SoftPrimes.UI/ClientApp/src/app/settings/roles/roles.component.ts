@@ -15,7 +15,7 @@ export class RolesComponent implements OnInit {
   routerSubscription: Subscription;
   createMode: boolean;
   controller = 'Roles';
-  permissionIds;
+  permissionIds = [];
   permissions$: Observable<PermissionDTO[]>;
   permissionsInput$ = new Subject<string>();
   permissionsLoading = false;
@@ -78,6 +78,11 @@ export class RolesComponent implements OnInit {
 
   selectPermission(event) {
     console.log(event, 'permissions changed');
+    const permissionArr = this.permissionIds.map(id => {
+      return {
+        permissionId: id
+      };
+    });
     console.log(this.permissionIds, 'permissions arr');
   }
 
