@@ -582,6 +582,68 @@ export class SwaggerClient {
     }
 
     /**
+     * @param searchText (optional) 
+     * @param take (optional) 
+     * @return Success
+     */
+    apiAccountGetAgentLookupsGet(searchText: string, take: number): Observable<AgentDTO[]> {
+        let url_ = this.baseUrl + "/api/Account/GetAgentLookups?";
+        if (searchText !== undefined)
+            url_ += "searchText=" + encodeURIComponent("" + searchText) + "&"; 
+        if (take !== undefined)
+            url_ += "take=" + encodeURIComponent("" + take) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processApiAccountGetAgentLookupsGet(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processApiAccountGetAgentLookupsGet(<any>response_);
+                } catch (e) {
+                    return <Observable<AgentDTO[]>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<AgentDTO[]>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processApiAccountGetAgentLookupsGet(response: HttpResponseBase): Observable<AgentDTO[]> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (resultData200 && resultData200.constructor === Array) {
+                result200 = [];
+                for (let item of resultData200)
+                    result200.push(AgentDTO.fromJS(item));
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<AgentDTO[]>(<any>null);
+    }
+
+    /**
      * @param take (optional) 
      * @param skip (optional) 
      * @param sort (optional) 
@@ -6082,6 +6144,68 @@ export class SwaggerClient {
     }
 
     /**
+     * @param searchText (optional) 
+     * @param take (optional) 
+     * @return Success
+     */
+    apiPermissionsGetPermissionLookupsGet(searchText: string, take: number): Observable<PermissionDTO[]> {
+        let url_ = this.baseUrl + "/api/Permissions/GetPermissionLookups?";
+        if (searchText !== undefined)
+            url_ += "searchText=" + encodeURIComponent("" + searchText) + "&"; 
+        if (take !== undefined)
+            url_ += "take=" + encodeURIComponent("" + take) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processApiPermissionsGetPermissionLookupsGet(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processApiPermissionsGetPermissionLookupsGet(<any>response_);
+                } catch (e) {
+                    return <Observable<PermissionDTO[]>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<PermissionDTO[]>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processApiPermissionsGetPermissionLookupsGet(response: HttpResponseBase): Observable<PermissionDTO[]> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (resultData200 && resultData200.constructor === Array) {
+                result200 = [];
+                for (let item of resultData200)
+                    result200.push(PermissionDTO.fromJS(item));
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<PermissionDTO[]>(<any>null);
+    }
+
+    /**
      * @param take (optional) 
      * @param skip (optional) 
      * @param sort (optional) 
@@ -6539,6 +6663,68 @@ export class SwaggerClient {
             }));
         }
         return _observableOf<boolean>(<any>null);
+    }
+
+    /**
+     * @param searchText (optional) 
+     * @param take (optional) 
+     * @return Success
+     */
+    apiRolesGetRoleLookupsGet(searchText: string, take: number): Observable<RoleDTO[]> {
+        let url_ = this.baseUrl + "/api/Roles/GetRoleLookups?";
+        if (searchText !== undefined)
+            url_ += "searchText=" + encodeURIComponent("" + searchText) + "&"; 
+        if (take !== undefined)
+            url_ += "take=" + encodeURIComponent("" + take) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processApiRolesGetRoleLookupsGet(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processApiRolesGetRoleLookupsGet(<any>response_);
+                } catch (e) {
+                    return <Observable<RoleDTO[]>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<RoleDTO[]>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processApiRolesGetRoleLookupsGet(response: HttpResponseBase): Observable<RoleDTO[]> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (resultData200 && resultData200.constructor === Array) {
+                result200 = [];
+                for (let item of resultData200)
+                    result200.push(RoleDTO.fromJS(item));
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<RoleDTO[]>(<any>null);
     }
 
     /**
@@ -8848,10 +9034,16 @@ export class SwaggerClient {
     }
 
     /**
+     * @param searchText (optional) 
+     * @param take (optional) 
      * @return Success
      */
-    apiToursGetTemplatesGet(): Observable<TourTemplateDTO[]> {
-        let url_ = this.baseUrl + "/api/Tours/GetTemplates";
+    apiToursGetTemplatesGet(searchText: string, take: number): Observable<TourTemplateDTO[]> {
+        let url_ = this.baseUrl + "/api/Tours/GetTemplates?";
+        if (searchText !== undefined)
+            url_ += "searchText=" + encodeURIComponent("" + searchText) + "&"; 
+        if (take !== undefined)
+            url_ += "take=" + encodeURIComponent("" + take) + "&"; 
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {
