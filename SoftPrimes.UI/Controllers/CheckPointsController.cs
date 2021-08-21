@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SoftPrimes.Service.IServices;
+using SoftPrimes.Service.Services;
 using SoftPrimes.Shared.Domains;
 using SoftPrimes.Shared.ViewModels;
 using System;
@@ -20,6 +21,10 @@ namespace SoftPrimes.UI.Controllers
         {
             this._CheckPointService = businessService;
         }
-       
+        [HttpGet("GetCheckPointLookups")]
+        public List<CheckPointDTO> GetCheckPointLookups(string searchText, int take = 20)
+{
+            return _CheckPointService.GetCheckPointLookups(searchText, take);
+        }
     }
 }

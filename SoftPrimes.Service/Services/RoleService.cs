@@ -30,8 +30,10 @@ namespace SoftPrimes.Service.Services
                     _unitOfWork.GetRepository<RolePermission>().Delete(RolePermission);
                     _unitOfWork.SaveChanges();
                 }
+
             }
-            return base.Update(Entities);
+            var newrole = base.Update(Entities);
+            return newrole;
         }
         public override IEnumerable<RoleDTO> Insert(IEnumerable<RoleDTO> entities)
         {
@@ -43,7 +45,7 @@ namespace SoftPrimes.Service.Services
                     RoleNameEn = item.RoleNameEn,
                     Permissions = item.Permissions.Select(x => new RolePermission
                     {
-                        PermissionId = x.PermissionId
+                        PermissionId = x
                     }).ToList()
                 };
                 _unitOfWork.GetRepository<Role>().Insert(role);

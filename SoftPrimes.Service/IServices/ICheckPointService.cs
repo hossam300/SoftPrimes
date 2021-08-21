@@ -10,5 +10,6 @@ namespace SoftPrimes.Service.IServices
 {
     public interface ICheckPointService : IBusinessService<CheckPoint, CheckPointDTO>
     {
+        List<CheckPointDTO> GetCheckPointLookups(string searchText, int take);
     }
 }
