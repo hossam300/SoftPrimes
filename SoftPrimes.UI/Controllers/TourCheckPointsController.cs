@@ -35,32 +35,30 @@ namespace SoftPrimes.UI.Controllers
             return _TourCheckPointService.ChangeTourCheckPointState(TourCheckPointId, State);
         }
         [HttpPost("AddCheckPointTourComment")]
-        public CommentDTO AddCheckPointTourComment(CheckPointTourCommentDetailDTO checkPointTourComment)
+        public CommentDTO AddCheckPointTourComment()
         {
-            //if (!Request.ContentType.StartsWith("multipart"))
-            //{
-            //    throw new System.Exception("Invalid multipart request");
-            //}
+            CheckPointTourCommentDetailDTO checkPointTourComment = new CheckPointTourCommentDetailDTO();
             string path = "";
-            if (checkPointTourComment.File.Length > 0)
+            var xx = Request.Form;
+            var CheckPointId = Request.Form["CheckPointId"].ToString();
+            var Text = Request.Form["Text"].ToString();
+            var TourId = Request.Form["TourId"].ToString();
+            var AttachmentType = Request.Form["AttachmentType"].ToString();
+            var files = Request.Form.Files;
+            foreach (var file in files)
             {
-                path = _appEnvironment.WebRootPath + "\\Files\\" + Guid.NewGuid() + "_" + checkPointTourComment.Text;
+                using (var binaryReader = new System.IO.BinaryReader(file.OpenReadStream()))
+                {
+                    checkPointTourComment.File = binaryReader.ReadBytes((int)file.Length);
+                    path = _appEnvironment.WebRootPath + "\\Files\\" + Guid.NewGuid() + "_" + file.FileName;
+                    System.IO.File.WriteAllBytes(path, checkPointTourComment.File);
+                }
             }
-            var ext = "";
-            switch ((AttachmentType)checkPointTourComment.AttachmentType)
-            {
-                case AttachmentType.Image:
-                    ext = ".png";
-                    break;
-                case AttachmentType.Voice:
-                    ext = ".mp3";
-                    break;
-                case AttachmentType.Video:
-                    ext = ".mp4";
-                    break;
-            }
-            System.IO.File.WriteAllBytes(path + ext, checkPointTourComment.File );
-            return _TourCheckPointService.AddCheckPointTourComment(checkPointTourComment, path + ext);
+            checkPointTourComment.Text = Text;
+            checkPointTourComment.TourId = Convert.ToInt32(TourId);
+            checkPointTourComment.CheckPointId = Convert.ToInt32(CheckPointId);
+            checkPointTourComment.AttachmentType = Convert.ToInt32(AttachmentType);
+            return _TourCheckPointService.AddCheckPointTourComment(checkPointTourComment, path );
         }
     }
 }

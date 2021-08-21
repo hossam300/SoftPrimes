@@ -38,6 +38,7 @@ using System.Net.Http;
 using System.Net;
 using IHelperServices;
 using IHelperServices.Models;
+using Microsoft.AspNetCore.Http.Features;
 
 namespace SoftPrimes.UI
 {
@@ -219,7 +220,10 @@ namespace SoftPrimes.UI
                     o.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
                 });
             services.AddSignalR(options => options.EnableDetailedErrors = true);
-
+            services.AddSpaStaticFiles(configuration =>
+            {
+                configuration.RootPath = "wwwroot";
+            });
             // To use Username instead of ConnectionId in Communication 
             services.AddSingleton<IUserIdProvider, CustomUserIdProvider>();
             services.AddControllersWithViews();
@@ -227,6 +231,17 @@ namespace SoftPrimes.UI
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "ClientApp/dist";
+            });
+            services.Configure<FormOptions>(options =>
+
+            {
+
+                options.ValueLengthLimit = int.MaxValue;
+
+                options.MultipartBodyLengthLimit = int.MaxValue;
+
+                options.MultipartHeadersLengthLimit = int.MaxValue;
+
             });
         }
 
