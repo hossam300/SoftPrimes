@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { RoleDTO } from 'src/app/core/_services/swagger/SwaggerClient.service';
+import { concat, Observable, of, Subject, Subscription } from 'rxjs';
+import { catchError, debounceTime, distinctUntilChanged, switchMap, tap } from 'rxjs/operators';
+import { PermissionDTO, RoleDTO } from 'src/app/core/_services/swagger/SwaggerClient.service';
 import { SettingsCrudsService } from '../settings-cruds.service';
 
 @Component({
@@ -14,69 +15,10 @@ export class RolesComponent implements OnInit {
   routerSubscription: Subscription;
   createMode: boolean;
   controller = 'Roles';
-  permissionIds;
-  permissions = [
-    {
-      'id': 1,
-      'permissionNameAr': 'اضافة مهمة',
-      'permissionNameEn': 'Add task',
-      'permissionKey': 'addTask'
-    },
-    {
-      'id': 3,
-      'permissionNameAr': 'اضافة مستخدم',
-      'permissionNameEn': 'Add agent',
-      'permissionKey': 'addAgent'
-    },
-    {
-      'id': 4,
-      'permissionNameAr': 'الوصول للاعدادات',
-      'permissionNameEn': 'View settings',
-      'permissionKey': 'viewSettings'
-    },
-    {
-      'id': 5,
-      'permissionNameAr': 'الوصول لإدارة المهمات',
-      'permissionNameEn': 'View task management',
-      'permissionKey': 'viewTaskManagement'
-    },
-    {
-      'id': 6,
-      'permissionNameAr': 'الوصول للداشبورد',
-      'permissionNameEn': 'View dashboard',
-      'permissionKey': 'viewDashboard'
-    },
-    {
-      'id': 7,
-      'permissionNameAr': 'تعديل المهمات',
-      'permissionNameEn': 'Edit task',
-      'permissionKey': 'editTask'
-    },
-    {
-      'id': 8,
-      'permissionNameAr': 'اضافة مستخدم',
-      'permissionNameEn': 'Add agent',
-      'permissionKey': 'addAgent'
-    },
-    {
-      'id': 9,
-      'permissionNameAr': 'اضافة صلاحية',
-      'permissionNameEn': 'Add permission',
-      'permissionKey': 'addPermission'
-    },
-    {
-      'id': 10,
-      'permissionNameAr': 'اضافة دور',
-      'permissionNameEn': 'Add role',
-      'permissionKey': 'addRole'
-    },
-    {
-      'id': 11,
-      'permissionNameAr': 'اضافة تمبلت',
-      'permissionNameEn': 'add template',
-      'permissionKey': 'addTemplate'
-    }
-  ];
+  permissionIds = [];
+  permissions$: Observable<PermissionDTO[]>;
+  permissionsInput$ = new Subject<string>();
+  permissionsLoading = false;
 
   constructor(
     private settingsCrud: SettingsCrudsService,
@@ -98,6 +40,7 @@ export class RolesComponent implements OnInit {
         });
       }
     });
+    this.getPermissions();
   }
 
   updateRoles() {
@@ -116,12 +59,30 @@ export class RolesComponent implements OnInit {
     });
   }
 
-  getPermissionsLookup() {
-    this.settingsCrud.getAll('Permissions', 10, 0);
+  getPermissions() {
+    this.settingsCrud.getPermissionsLookup().subscribe(value => {
+      this.permissions$ = concat(
+        of(value), // default items
+        this.permissionsInput$.pipe(
+          debounceTime(200),
+          distinctUntilChanged(),
+          tap(() => this.permissionsLoading = true),
+          switchMap(term => this.settingsCrud.getPermissionsLookup(term).pipe(
+            catchError(() => of([])), // empty list on error
+            tap(() => this.permissionsLoading = false)
+          ))
+        )
+      );
+    });
   }
 
   selectPermission(event) {
     console.log(event, 'permissions changed');
+    const permissionArr = this.permissionIds.map(id => {
+      return {
+        permissionId: id
+      };
+    });
     console.log(this.permissionIds, 'permissions arr');
   }
 

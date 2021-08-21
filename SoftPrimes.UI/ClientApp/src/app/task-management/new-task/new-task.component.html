@@ -27,8 +27,8 @@
     <div class="row form-group">
       <label for="templates" class="col-2 col-form-label col-form-label-sm">Templates</label>
       <div class="col-7 d-flex">
-        <ng-select class="w-100" [items]="agentsLookup" bindLabel="agentNameEn" bindValue="id" [(ngModel)]="agentId"
-          placeholder="Choose template">
+        <ng-select class="w-100" [items]="templates$ | async" bindLabel="tourNameEn" bindValue="id"
+          [(ngModel)]="templateId" placeholder="Choose template">
         </ng-select>
       </div>
       <span class="ni ni-bullet-list-67 text-primary border border-primary" data-toggle="modal"
@@ -74,12 +74,9 @@
       <label for="tourAgent" class="required col-2 col-form-label col-form-label-sm">Tour agent</label>
       <div class="col-7 d-flex">
         <div class="input-group">
-          <ng-select class="w-100" [items]="agentsLookup" bindLabel="agentNameEn" bindValue="id" [(ngModel)]="agentId"
+          <ng-select class="w-100" [items]="agents$ | async" bindLabel="fullNameEn" bindValue="id" [(ngModel)]="agentId"
             placeholder="choose agent">
           </ng-select>
-          <!-- <div class="input-group-append">
-            <span class="input-group-text bg-transparent text-primary text-14"><em class="fa fa-search"></em></span>
-          </div> -->
         </div>
       </div>
     </div>
@@ -87,8 +84,14 @@
       <label for="captureLocation" class="col-2 col-form-label col-form-label-sm">Capture location</label>
       <div class="col-7 d-flex">
         <div class="input-group">
-          <ng-select class="w-100" id="captureLocation" [items]="agentsLookup" bindLabel="agentNameEn" bindValue="id"
+          <ng-select class="w-100" id="captureLocation" [items]="capturesLookup" bindLabel="agentNameEn" bindValue="id"
             [(ngModel)]="captureLocation" placeholder="choose timelapse">
+            <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
+              Every {{item}} mins
+            </ng-template>
+            <ng-template ng-label-tmp let-item="item">
+              Every {{item}} mins
+            </ng-template>
           </ng-select>
         </div>
       </div>
@@ -103,8 +106,11 @@
     </div>
 
     <div class="bg-transparent card-footer dashed-border-top px-0 pt-4 pb-1">
-      <button class="btn btn-primary shadow" (click)="assignTask()">
+      <button class="btn btn-primary shadow" *ngIf="createMode" (click)="assignTask()">
         Assign
+      </button>
+      <button class="btn btn-primary shadow" *ngIf="!createMode" (click)="updateTask()">
+        Update
       </button>
     </div>
   </div>
