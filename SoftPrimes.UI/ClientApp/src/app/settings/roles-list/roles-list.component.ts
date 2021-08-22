@@ -18,9 +18,9 @@ export class RolesListComponent implements OnInit {
     this.options = {
       controller: 'Roles',
       columns: [
-        { name: 'valueAr', field: 'valueAr', searchable: true, operator: 'contains' },
-        { name: 'valueEn', field: 'valueEn', searchable: true, operator: 'contains' },
-        { name: 'key', field: 'key', searchable: true, operator: 'contains' },
+        { name: 'roleNameAr', field: 'roleNameAr', searchable: true, operator: 'contains' },
+        { name: 'roleNameEn', field: 'roleNameEn', searchable: true, operator: 'contains' },
+        { name: 'permissions', field: 'permissions', type: 'arr', searchable: true, operator: 'contains' },
         { name: '', field: '' },
       ]
     };

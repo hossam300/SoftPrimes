@@ -13,7 +13,7 @@
         <label for="valueAr" class="col-2 col-form-label col-form-label-sm">roles name Ar</label>
         <div class="col-7 d-flex">
           <div class="input-group">
-            <input class="form-control" placeholder="roles name Ar" [(ngModel)]="roles.valueAr" type="text"
+            <input class="form-control" placeholder="roles name Ar" [(ngModel)]="roles.roleNameAr" type="text"
               name="valueAr">
           </div>
         </div>
@@ -22,7 +22,7 @@
         <label for="valueEn" class="col-2 col-form-label col-form-label-sm">roles name En</label>
         <div class="col-7 d-flex">
           <div class="input-group">
-            <input class="form-control" placeholder="roles name En" [(ngModel)]="roles.valueEn" type="text"
+            <input class="form-control" placeholder="roles name En" [(ngModel)]="roles.roleNameEn" type="text"
               name="valueEn">
           </div>
         </div>
@@ -32,7 +32,7 @@
         <div class="col-7 d-flex">
           <div class="input-group">
             <ng-select class="w-100" [items]="permissions$ | async" bindLabel="permissionNameEn"
-              bindValue="id" [multiple]="true" [(ngModel)]="permissionIds"
+              bindValue="id" [multiple]="true" [(ngModel)]="roles.permissions"
               [loading]="permissionsLoading" [typeahead]="permissionsInput$"
               (change)="selectPermission($event)" placeholder="choose permissions">
             </ng-select>
@@ -41,7 +41,7 @@
       </div>
 
     <div class="bg-transparent card-footer dashed-border-top px-0 pt-4 pb-1">
-      <button class="btn btn-primary shadow" [disabled]="!permissionIds.length"
+      <button class="btn btn-primary shadow" [disabled]="!roles.permissions.length"
         *ngIf="createMode" (click)="insertRoles()">
         Create
       </button>

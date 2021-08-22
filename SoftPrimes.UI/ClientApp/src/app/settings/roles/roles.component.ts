@@ -32,6 +32,7 @@ export class RolesComponent implements OnInit {
       if (!r.rolesId) {
         this.createMode = true;
         this.roles = new RoleDTO();
+        this.roles.permissions = [];
 
       } else {
         this.createMode = false;
@@ -46,7 +47,7 @@ export class RolesComponent implements OnInit {
   updateRoles() {
     this.settingsCrud.updateDTO(this.controller, [this.roles]).subscribe(result => {
       if (result) {
-        this.router.navigate(['/settings/Roles']);
+        this.router.navigate(['/settings/roles']);
       }
     });
   }
@@ -54,7 +55,7 @@ export class RolesComponent implements OnInit {
   insertRoles() {
     this.settingsCrud.insertDTO(this.controller, [this.roles]).subscribe(result => {
       if (result) {
-        this.router.navigate(['/settings/Roles']);
+        this.router.navigate(['/settings/roles']);
       }
     });
   }
@@ -84,6 +85,7 @@ export class RolesComponent implements OnInit {
       };
     });
     console.log(this.permissionIds, 'permissions arr');
+    console.log(this.roles, 'roles');
   }
 
 }

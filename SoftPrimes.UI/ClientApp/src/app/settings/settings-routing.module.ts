@@ -14,6 +14,8 @@ import { PermissionsListComponent } from './permissions-list/permissions-list.co
 import { PermissionsComponent } from './permissions/permissions.component';
 import { AgentsComponent } from './agents/agents.component';
 import { TemplatesListComponent } from './templates-list/templates-list.component';
+import { CheckpointsComponent } from './checkpoints/checkpoints.component';
+import { CheckpointsListComponent } from './checkpoints-list/checkpoints-list.component';
 
 const routes: Routes = [{
   path: '', component: SettingsWrapperComponent,
@@ -108,6 +110,29 @@ const routes: Routes = [{
           data: {
             'permissionCode': ['EditAgents'],
             'breadcrumb': ['settings', 'agents', 'edit']
+          }
+        },
+      ]
+    },
+    { path: 'checkpoints', component: SettingsWrapperComponent,
+      children: [
+        {
+          path: '',
+          component: CheckpointsListComponent,
+          data: {
+            permissionCode: ['ViewCheckpoints'],
+            'breadcrumb': ['settings', 'checkpoints']
+          }
+        },
+        { path: 'add', component: CheckpointsComponent,
+          data: {'breadcrumb': ['settings', 'checkpoints', 'add']}
+        },
+        {
+          path: 'edit/:checkPointId',
+          component: CheckpointsComponent,
+          data: {
+            'permissionCode': ['EditCheckpoints'],
+            'breadcrumb': ['settings', 'checkpoints', 'edit']
           }
         },
       ]

@@ -1,0 +1,44 @@
+<app-breadcrumb></app-breadcrumb>
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h1 class="h5">
+    Create new checkpoint
+  </h1>
+</div>
+<div class="card shadow">
+  <div class="card-body">
+    <p class="dashed-border-bottom mb-4 pb-4">
+      Please find the below information
+    </p>
+
+    <div class="row form-group">
+      <label for="valueAr" class="col-2 col-form-label col-form-label-sm">checkPoint name Ar</label>
+      <div class="col-7 d-flex">
+        <div class="input-group">
+          <input class="form-control" placeholder="checkPoint name Ar"
+            [(ngModel)]="checkPoint.checkPointNameAr" type="text" name="checkPointNameAr">
+        </div>
+      </div>
+    </div>
+
+    <div class="row form-group">
+      <label for="valueAr" class="col-2 col-form-label col-form-label-sm">checkPoint name En</label>
+      <div class="col-7 d-flex">
+        <div class="input-group">
+          <input class="form-control" placeholder="checkPoint name En"
+            [(ngModel)]="checkPoint.checkPointNameEn" type="text" name="checkPointNameEn">
+        </div>
+      </div>
+    </div>
+
+    <app-gmap (markerAdded)="getMarker($event)" [viewMode]="false"></app-gmap>
+
+    <div class="bg-transparent card-footer dashed-border-top px-0 pt-4 pb-1">
+      <button class="btn btn-primary shadow" [disabled]="!checkPoint.lat" *ngIf="createMode" (click)="insertCheckPoint()">
+        Create
+      </button>
+      <button class="btn btn-primary shadow" *ngIf="!createMode" (click)="updateCheckPoint()">
+        Update
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,3 +1,4 @@
+import { environment } from 'src/environments/environment';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BreadcrumbComponent } from './breadcrumb/breadcrumb.component';
@@ -9,6 +10,7 @@ import { AgmCoreModule } from '@agm/core';
 import { AvatarModule } from 'ngx-avatar';
 import { AgmOverlays } from 'agm-overlays';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { QrCodeModule } from 'ng-qrcode';
 
 
 @NgModule({
@@ -21,11 +23,12 @@ import { NgSelectModule } from '@ng-select/ng-select';
     AgmCoreModule.forRoot({
       // please get your own API key here:
       // https://developers.google.com/maps/documentation/javascript/get-api-key?hl=en
-      apiKey: 'AIzaSyBQ0sLTl03ZtdTMW5iUnP7kHXMCldTR2kM'
+      apiKey: environment['google-api-key'],
       // apiKey: 'AIzaSyAFRKYD119NSdHb39E4nkA3iXjoKtB0oks'
     }),
     AvatarModule,
-    NgSelectModule
+    NgSelectModule,
+    QrCodeModule
   ],
   exports: [
     BreadcrumbComponent,
@@ -35,7 +38,8 @@ import { NgSelectModule } from '@ng-select/ng-select';
     AgmCoreModule,
     AgmOverlays,
     AvatarModule,
-    NgSelectModule
+    NgSelectModule,
+    QrCodeModule
   ]
 })
 export class SharedModule { }
