@@ -38,7 +38,7 @@
 }
 
 .modal-body {
-  height: 370px;
-  max-height: 370px;
+  height: 450px;
+  max-height: 450px;
   overflow: auto;
 }

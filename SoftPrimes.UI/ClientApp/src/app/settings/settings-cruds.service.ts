@@ -46,6 +46,10 @@ export class SettingsCrudsService {
     return this.swagger.apiAccountGetAgentLookupsGet(searchTxt, take);
   }
 
+  getCheckPointsLookup(searchTxt?, take?) {
+    return this.swagger.apiCheckPointsGetCheckPointLookupsGet(searchTxt, take);
+  }
+
   printQr(sectionId) {
     const canvas = document.getElementById(sectionId).querySelector('canvas');
     const printContents = `

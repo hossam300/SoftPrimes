@@ -14,21 +14,24 @@ interface Marker {
   templateUrl: './gmap.component.html',
   styleUrls: ['./gmap.component.css']
 })
-export class GmapComponent {
+export class GmapComponent implements OnInit {
   // google maps zoom level
   zoom = 12;
 
   googleApiKey = environment['google-api-key'];
-  @Input() viewMode = true;
+  @Input() viewMode: boolean;
   @Output() markerAdded: EventEmitter<Marker> = new EventEmitter();
 
   // initial center position for the map
   lat = 24.701284088932535;
   lng = 46.680371285791246;
 
-  markers: Marker[] = [];
+  @Input() markers = [];
 
   constructor() {
+  }
+
+  ngOnInit() {
     if (this.viewMode) {
       this.markers.push(...[
         {

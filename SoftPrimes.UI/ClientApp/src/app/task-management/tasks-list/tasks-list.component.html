@@ -7,6 +7,6 @@
     Assign new task
   </a>
 </div>
-<app-gmap></app-gmap>
+<app-gmap [viewMode]="true"></app-gmap>
 <app-data-table [data]="toursList" [columns]="columns"[pageSize]="take"
 [count]="count" (skip)="getAll(take, $event || skip)"></app-data-table>

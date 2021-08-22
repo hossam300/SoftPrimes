@@ -21,4 +21,8 @@ export class TaskManagementService {
   deleteTourAgent(id: number) {
     return this.swagger.apiTourAgentsDeleteDelete(id);
   }
+
+  insertTour(tour) {
+    return this.swagger.apiToursInsertTourPost(tour);
+  }
 }
