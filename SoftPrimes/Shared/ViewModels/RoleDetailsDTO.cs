@@ -11,6 +11,6 @@ namespace SoftPrimes.Shared.ViewModels
         public int Id { get; set; }
         public string RoleNameAr { get; set; }
         public string RoleNameEn { get; set; }
-        public virtual List<RolePermissionDTO> Permissions { get; set; }
+        public virtual List<int> Permissions { get; set; }
     }
 }

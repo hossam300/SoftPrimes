@@ -115,7 +115,7 @@ namespace SoftPrimes.Service.Services
                             AgentId = x.AgentId,
                             Id = x.Id,
                             RoleId = x.RoleId,
-                            Role = new RoleDetailsDTO
+                            Role = new RoleDTO
                             {
                                 Id = x.Role.Id,
                                 RoleNameAr = x.Role.RoleNameAr,

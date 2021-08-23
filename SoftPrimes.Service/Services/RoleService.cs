@@ -35,7 +35,7 @@ namespace SoftPrimes.Service.Services
             var newrole = base.Update(Entities);
             return newrole;
         }
-        public override IEnumerable<RoleDTO> Insert(IEnumerable<RoleDTO> entities)
+        public IEnumerable<RoleDetailsDTO> InsertRole(IEnumerable<RoleDetailsDTO> entities)
         {
             foreach (var item in entities)
             {

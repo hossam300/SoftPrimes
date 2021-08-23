@@ -10,6 +10,7 @@ namespace SoftPrimes.Service.IServices
 {
     public interface IRoleService : IBusinessService<Role, RoleDTO>
     {
+        IEnumerable<RoleDetailsDTO> InsertRole(IEnumerable<RoleDetailsDTO> entities);
         List<RoleDTO> GetRoleLookups(string searchText,int take);
     }
 }

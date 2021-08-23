@@ -23,7 +23,7 @@ namespace SoftPrimes.UI.Controllers
         }
         [HttpGet("GetCheckPointLookups")]
         public List<CheckPointDTO> GetCheckPointLookups(string searchText, int take = 20)
-{
+        {
             return _CheckPointService.GetCheckPointLookups(searchText, take);
         }
     }

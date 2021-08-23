@@ -21,6 +21,11 @@ namespace SoftPrimes.UI.Controllers
         {
             this._RoleService = businessService;
         }
+        [HttpPost("InsertRole")]
+        public  IEnumerable<RoleDetailsDTO> InsertRole([FromBody] IEnumerable<RoleDetailsDTO> entities)
+        {
+            return _RoleService.InsertRole(entities);
+        }
         [HttpGet("GetRoleLookups")]
         public List<RoleDTO> GetRoleLookups(string searchText, int take = 20)
         {

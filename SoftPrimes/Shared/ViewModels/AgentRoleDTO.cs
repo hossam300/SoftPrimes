@@ -13,6 +13,6 @@ namespace SoftPrimes.Shared.ViewModels
         public string AgentId { get; set; }
         public virtual AgentDTO Agent { get; set; }
         public int RoleId { get; set; }
-        public virtual RoleDetailsDTO Role { get; set; }
+        public virtual RoleDTO Role { get; set; }
     }
 }
