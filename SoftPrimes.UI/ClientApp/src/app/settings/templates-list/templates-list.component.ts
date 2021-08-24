@@ -18,10 +18,10 @@ export class TemplatesListComponent implements OnInit {
     this.options = {
       controller: 'Templates',
       columns: [
-        { name: 'valueAr', field: 'valueAr', searchable: true, operator: 'contains' },
-        { name: 'valueEn', field: 'valueEn', searchable: true, operator: 'contains' },
-        { name: 'key', field: 'key', searchable: true, operator: 'contains' },
-        { name: '', field: '' },
+        { name: 'tourName', field: 'tourNameEn', searchable: true, operator: 'contains' },
+        // { name: 'checkPoints', field: 'checkPoints', searchable: true, operator: 'contains', type: 'length' },
+        { name: 'active', field: 'active', searchable: true, operator: 'contains' },
+        { name: '', field: '', type: 'templates' },
       ]
     };
     this.controller = this.options.controller;

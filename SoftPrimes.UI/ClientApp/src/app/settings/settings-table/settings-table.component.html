@@ -8,20 +8,26 @@
     <tr *ngFor="let row of data">
       <td *ngFor="let col of options.columns" [class.td-actions.text-right]="!col.field">
         <span *ngIf="col.field && !col.type">{{row[col.field]}}</span>
-        <span *ngIf="col.type" class="fa fa-external-link cursor-pointer text-20"
+        <span *ngIf="col.type === 'arr'" class="fa fa-external-link cursor-pointer text-20"
           (click)="open(detailsModal, row, col.field)"></span>
         <div class="dropdown" *ngIf="!col.field && !col.name">
           <button class="btn btn-primary btn-block btn-sm" type="button" id="multiDropdownMenu" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false">
             <span class="fa fa-ellipsis-v"></span>
           </button>
-          <div class="dropdown-menu" aria-labelledby="multiDropdownMenu">
+          <div class="dropdown-menu" aria-labelledby="multiDropdownMenu" *ngIf="col.type !== 'templates'">
             <a class="dropdown-item" (click)="editRecord(row?.id)">Edit</a>
             <a class="dropdown-item text-danger" (click)="deleteRecord(row?.id)">Delete</a>
           </div>
+          <div class="dropdown-menu" aria-labelledby="multiDropdownMenu" *ngIf="col.type === 'templates'">
+            <a class="dropdown-item text-danger" *ngIf="row?.active"
+              (click)="toggleTemplate(row.id, row.active)">Deactivate</a>
+            <a class="dropdown-item" *ngIf="!row?.active"
+              (click)="toggleTemplate(row.id, row.active)">Activate</a>
+          </div>
         </div>
         <span *ngIf="!col.field && col.name" class="fa fa-qrcode cursor-pointer text-20"
-        (click)="open(qrModal, row.id)"></span>
+          (click)="open(qrModal, row.id)"></span>
       </td>
     </tr>
   </tbody>
@@ -75,8 +81,10 @@
     </h5>
   </div>
   <div class="modal-body">
-    <div class="d-flex justify-content-center">
-      <span *ngFor="let item of activeRow[activeCol]" class="badge badge-info">{{item}}</span>
+    <div>
+      <span *ngFor="let item of activeRow[activeCol]" class="badge badge-info mx-2 text-14">
+        {{item.permission.permissionNameAr}}
+      </span>
     </div>
   </div>
   <div class="modal-footer">

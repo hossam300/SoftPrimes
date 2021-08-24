@@ -30,6 +30,18 @@ export class SettingsCrudsService {
     return this.swagger['api' + controller + 'DeleteDelete'](id);
   }
 
+  insertRoles(dto) {
+    return this.swagger.apiRolesInsertRolePost([dto]);
+  }
+
+  updateRoles(dto) {
+    return this.swagger.apiRolesUpdateRolePut([dto]);
+  }
+
+  toggleTemplate(templateId, active: boolean) {
+    return this.swagger.apiToursActiveDisActiveTemplateGet(templateId, active);
+  }
+
   getPermissionsLookup(searchTxt?, take?) {
     return this.swagger.apiPermissionsGetPermissionLookupsGet(searchTxt, take);
   }

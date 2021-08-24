@@ -39,6 +39,19 @@ export class SettingsTableComponent {
     });
   }
 
+  toggleTemplate(id, active) {
+    this.settingsCrud.toggleTemplate(id, !active).subscribe(result => {
+      if (result) {
+        this.data = this.data.map(x => {
+          if (x.id === id) {
+            x.active = !active;
+          }
+          return x;
+        });
+      }
+    });
+  }
+
   emitPagination() {
     const skipVal = (this.currentPage - 1) * this.pageSize;
     this.skip.emit(skipVal);

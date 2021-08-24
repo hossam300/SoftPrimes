@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { concat, Observable, of, Subject, Subscription } from 'rxjs';
 import { catchError, debounceTime, distinctUntilChanged, switchMap, tap } from 'rxjs/operators';
-import { PermissionDTO, RoleDTO } from 'src/app/core/_services/swagger/SwaggerClient.service';
+import { PermissionDTO, RoleDetailsDTO } from 'src/app/core/_services/swagger/SwaggerClient.service';
 import { SettingsCrudsService } from '../settings-cruds.service';
 
 @Component({
@@ -11,7 +11,7 @@ import { SettingsCrudsService } from '../settings-cruds.service';
   styleUrls: ['./roles.component.css']
 })
 export class RolesComponent implements OnInit {
-  roles: RoleDTO;
+  roles: RoleDetailsDTO;
   routerSubscription: Subscription;
   createMode: boolean;
   controller = 'Roles';
@@ -31,7 +31,7 @@ export class RolesComponent implements OnInit {
     this.routerSubscription = this.route.params.subscribe(r => {
       if (!r.rolesId) {
         this.createMode = true;
-        this.roles = new RoleDTO();
+        this.roles = new RoleDetailsDTO();
         this.roles.permissions = [];
 
       } else {
@@ -45,7 +45,8 @@ export class RolesComponent implements OnInit {
   }
 
   updateRoles() {
-    this.settingsCrud.updateDTO(this.controller, [this.roles]).subscribe(result => {
+    debugger;
+    this.settingsCrud.updateRoles([this.roles]).subscribe(result => {
       if (result) {
         this.router.navigate(['/settings/roles']);
       }
@@ -53,7 +54,7 @@ export class RolesComponent implements OnInit {
   }
 
   insertRoles() {
-    this.settingsCrud.insertDTO(this.controller, [this.roles]).subscribe(result => {
+    this.settingsCrud.insertRoles(this.roles).subscribe(result => {
       if (result) {
         this.router.navigate(['/settings/roles']);
       }
