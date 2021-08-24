@@ -12,5 +12,6 @@ namespace SoftPrimes.Service.IServices
     {
         IEnumerable<RoleDetailsDTO> InsertRole(IEnumerable<RoleDetailsDTO> entities);
         List<RoleDTO> GetRoleLookups(string searchText,int take);
-    }
+    IEnumerable<RoleDetailsDTO> UpdateRole(IEnumerable<RoleDetailsDTO> entities);
+  }
 }
