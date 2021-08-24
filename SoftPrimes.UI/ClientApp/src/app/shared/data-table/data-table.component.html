@@ -1,17 +1,28 @@
 <table class="table bg-white mb-5">
   <thead>
     <tr>
-      <th scope="col" *ngFor="let column of columns">{{column}}</th>
+      <th scope="col" *ngFor="let column of options.columns">{{column.name}}</th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let row of data">
-      <td>{{row?.agent.fullNameAr}}</td>
-      <td>{{row?.tour.tourType}}</td>
-      <td>{{row?.tourDate | date:'medium'}}</td>
-      <td>{{row?.tourState}}</td>
-      <td>None</td>
-      <td>No</td>
+      <td *ngFor="let col of options.columns">
+        <ng-container *ngIf="!col.type">
+          {{row[col.field]}}
+        </ng-container>
+        <ng-container *ngIf="col.type === 'date'">
+          {{row[col.field] | date:'medium'}}
+        </ng-container>
+        <ng-container *ngIf="col.type === 'agent'">
+          {{row.agent[col.field]}}
+        </ng-container>
+        <ng-container *ngIf="col.type === 'tourType'">
+          {{tourType[row[col.field]]}}
+        </ng-container>
+        <ng-container *ngIf="col.type === 'tourState'">
+          {{tourState[row[col.field]]}}
+        </ng-container>
+      </td>
       <td class="td-actions text-right">
         <div class="dropdown">
           <button class="btn btn-primary btn-block btn-sm" type="button" id="multiDropdownMenu" data-toggle="dropdown"
@@ -19,7 +30,7 @@
             <span class="fa fa-ellipsis-v"></span>
           </button>
           <div class="dropdown-menu" aria-labelledby="multiDropdownMenu">
-            <a class="dropdown-item" (click)="editTour(row?.id)">Edit</a>
+            <!-- <a class="dropdown-item" (click)="editTour(row?.id)">Edit</a> -->
             <a class="dropdown-item text-danger" (click)="deleteTour(row?.id)">Delete</a>
           </div>
         </div>

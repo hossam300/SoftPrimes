@@ -9,7 +9,7 @@ import { TourAgentDTO } from 'src/app/core/_services/swagger/SwaggerClient.servi
 })
 export class TasksListComponent implements OnInit {
   toursList: TourAgentDTO[];
-  columns: string[];
+  options: any;
   take = 10; // pageSize
   skip = 0;
   count: number;
@@ -24,15 +24,17 @@ export class TasksListComponent implements OnInit {
   }
 
   initTableColumns() {
-    this.columns = [
-      'agentName',
-      'type',
-      'scheduleStart',
-      'tours',
-      'scheduleEnd',
-      'scheduleCompleted',
-      ''
-    ];
+    this.options = {
+      controller: 'TourAgents',
+      columns: [
+        { name: 'agentName', field: 'fullNameAr', type: 'agent' },
+        { name: 'tourType', field: 'tourType', type: 'tourType' },
+        { name: 'scheduleStart', field: 'tourDate', type: 'date' },
+        { name: 'scheduleEnd', field: 'estimatedEndDate', type: 'date' },
+        { name: 'scheduleCompleted', field: 'tourState', type: 'tourState' },
+        { name: '', field: '' },
+      ]
+    };
   }
 
   getAll(take, skip) {

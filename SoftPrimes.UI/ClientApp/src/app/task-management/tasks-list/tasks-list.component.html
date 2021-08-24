@@ -8,5 +8,5 @@
   </a>
 </div>
 <app-gmap [viewMode]="true"></app-gmap>
-<app-data-table [data]="toursList" [columns]="columns"[pageSize]="take"
+<app-data-table [data]="toursList" [options]="options" [pageSize]="take"
 [count]="count" (skip)="getAll(take, $event || skip)"></app-data-table>
