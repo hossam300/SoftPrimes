@@ -12,7 +12,7 @@ namespace SoftPrimes.Shared.ViewModels
         public int Id { get; set; }
         public string TourNameAr { get; set; }
         public string TourNameEn { get; set; }
-        public TourType TourType { get; set; }
+     
         public string CreatedBy { get; set; }
         public DateTimeOffset? CreatedOn { get; set; }
     }
