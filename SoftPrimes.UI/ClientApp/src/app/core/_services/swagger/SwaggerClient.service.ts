@@ -11284,16 +11284,10 @@ export interface ICheckPointDTODataSourceResult {
     qrCodeType?: string;
 }
 
-export enum TourType {
-    _1 = 1, 
-    _2 = 2, 
-}
-
 export class TourDTO implements ITourDTO {
     id?: number;
     tourNameAr?: string;
     tourNameEn?: string;
-    tourType?: TourType;
     createdBy?: string;
     createdOn?: Date;
 
@@ -11311,7 +11305,6 @@ export class TourDTO implements ITourDTO {
             this.id = data["id"];
             this.tourNameAr = data["tourNameAr"];
             this.tourNameEn = data["tourNameEn"];
-            this.tourType = data["tourType"];
             this.createdBy = data["createdBy"];
             this.createdOn = data["createdOn"] ? new Date(data["createdOn"].toString()) : <any>undefined;
         }
@@ -11329,7 +11322,6 @@ export class TourDTO implements ITourDTO {
         data["id"] = this.id;
         data["tourNameAr"] = this.tourNameAr;
         data["tourNameEn"] = this.tourNameEn;
-        data["tourType"] = this.tourType;
         data["createdBy"] = this.createdBy;
         data["createdOn"] = this.createdOn ? this.createdOn.toISOString() : <any>undefined;
         return data; 
@@ -11340,9 +11332,13 @@ export interface ITourDTO {
     id?: number;
     tourNameAr?: string;
     tourNameEn?: string;
-    tourType?: TourType;
     createdBy?: string;
     createdOn?: Date;
+}
+
+export enum TourType {
+    _1 = 1, 
+    _2 = 2, 
 }
 
 export enum TourState {
@@ -11538,6 +11534,7 @@ export class TourAgentDTO implements ITourAgentDTO {
     tourId?: number;
     tour?: TourDTO;
     tourDate?: Date;
+    tourType?: TourType;
     checkPoints?: TourCheckPointDTO[];
     agentId?: string;
     agent?: AgentDTO;
@@ -11562,6 +11559,7 @@ export class TourAgentDTO implements ITourAgentDTO {
             this.tourId = data["tourId"];
             this.tour = data["tour"] ? TourDTO.fromJS(data["tour"]) : <any>undefined;
             this.tourDate = data["tourDate"] ? new Date(data["tourDate"].toString()) : <any>undefined;
+            this.tourType = data["tourType"];
             if (data["checkPoints"] && data["checkPoints"].constructor === Array) {
                 this.checkPoints = [];
                 for (let item of data["checkPoints"])
@@ -11598,6 +11596,7 @@ export class TourAgentDTO implements ITourAgentDTO {
         data["tourId"] = this.tourId;
         data["tour"] = this.tour ? this.tour.toJSON() : <any>undefined;
         data["tourDate"] = this.tourDate ? this.tourDate.toISOString() : <any>undefined;
+        data["tourType"] = this.tourType;
         if (this.checkPoints && this.checkPoints.constructor === Array) {
             data["checkPoints"] = [];
             for (let item of this.checkPoints)
@@ -11627,6 +11626,7 @@ export interface ITourAgentDTO {
     tourId?: number;
     tour?: TourDTO;
     tourDate?: Date;
+    tourType?: TourType;
     checkPoints?: TourCheckPointDTO[];
     agentId?: string;
     agent?: AgentDTO;

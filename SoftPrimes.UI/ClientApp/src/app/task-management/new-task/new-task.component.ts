@@ -14,63 +14,14 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class NewTaskComponent implements OnInit {
 
-  tour: TourCreateDTO;
+  tour: TourCreateDTO = new TourCreateDTO();
   tourDate: NgbDateStruct;
   checkPoints = [];
   pointLocations: PointLocationDTO[] = [];
   startTime: string;
   endTime: string;
   capturesLookup = [10, 20, 30, 40, 50, 60];
-  timeLookup = [
-    {
-      id: 1,
-      value: '01.00'
-    },
-    {
-      id: 2,
-      value: '02.00'
-    },
-    {
-      id: 3,
-      value: '03.00'
-    },
-    {
-      id: 4,
-      value: '04.00'
-    },
-    {
-      id: 5,
-      value: '05.00'
-    },
-    {
-      id: 6,
-      value: '06.00'
-    },
-    {
-      id: 7,
-      value: '07.00'
-    },
-    {
-      id: 8,
-      value: '08.00'
-    },
-    {
-      id: 9,
-      value: '09.00'
-    },
-    {
-      id: 10,
-      value: '10.00'
-    },
-    {
-      id: 11,
-      value: '11.00'
-    },
-    {
-      id: 12,
-      value: '12.00'
-    }
-  ];
+
   markers = [];
 
   createMode = true;
@@ -123,8 +74,8 @@ export class NewTaskComponent implements OnInit {
     this.checkPoints.forEach(x => {
       const location = new PointLocationDTO({
         checkPointId: x.id,
-        startDate: new Date(),
-        endDate: new Date()
+        startDate: x.startDate,
+        endDate: x.endDate
       });
       this.tour.pointLocations.push(location);
     });
@@ -210,6 +161,18 @@ export class NewTaskComponent implements OnInit {
     });
     console.log($event, 'location');
     console.log(this.markers, 'location');
+
+    setTimeout(() => {
+      const items =  document.querySelectorAll('.ngx-picker');
+      items.forEach(item => {
+        item.querySelector('input').classList.add(...['form-control', 'border-radius-left-none', 'border-left-0', 'border-right']);
+        item.querySelector('button').classList.add('d-none');
+      });
+    });
+  }
+
+  selectedDateTime($event) {
+    console.log($event, 'datetime changed');
   }
 
   getDate(date) {

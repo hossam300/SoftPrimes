@@ -153,3 +153,16 @@ label.required:after {
 .cursor-pointer {
   cursor: pointer !important;
 }
+
+.border-radius-left-none {
+  border-top-left-radius: 0px !important;
+  border-bottom-left-radius: 0px !important;
+}
+
+.input-border-left {
+  background-color: #0f0;
+  border-left: none !important;
+  border-left-width: 0 !important;
+  border-top-left-radius: 0px !important;
+  border-bottom-left-radius: 0px !important;
+}

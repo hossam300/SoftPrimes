@@ -11,6 +11,7 @@ import { AvatarModule } from 'ngx-avatar';
 import { AgmOverlays } from 'agm-overlays';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { QrCodeModule } from 'ng-qrcode';
+import { DateTimePickerModule} from 'ngx-datetime-picker';
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import { QrCodeModule } from 'ng-qrcode';
     }),
     AvatarModule,
     NgSelectModule,
-    QrCodeModule
+    QrCodeModule,
+    DateTimePickerModule
   ],
   exports: [
     BreadcrumbComponent,
@@ -39,7 +41,8 @@ import { QrCodeModule } from 'ng-qrcode';
     AgmOverlays,
     AvatarModule,
     NgSelectModule,
-    QrCodeModule
+    QrCodeModule,
+    DateTimePickerModule
   ]
 })
 export class SharedModule { }

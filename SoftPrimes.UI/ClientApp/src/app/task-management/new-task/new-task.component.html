@@ -13,13 +13,13 @@
       <label for="taskType" class="col-2 col-form-label col-form-label-sm">Task type</label>
       <div class="col-7 d-flex">
         <div class="form-check form-check-inline mr-5">
-          <input name="taskype" class="form-check-input" [(ngModel)]="tour.tourType" id="tour" required checked=""
-            type="radio" value="1">
+          <input name="taskype" class="form-check-input" [(ngModel)]="tour.tourType" id="tour"
+            required checked="" type="radio" value="1">
           <label class="form-check-label" for="tour">Tour</label>
         </div>
         <div class="form-check form-check-inline">
-          <input name="taskype" class="form-check-input" [(ngModel)]="tour.tourType" id="monitoring" required
-            type="radio" value="2">
+          <input name="taskype" class="form-check-input" [(ngModel)]="tour.tourType"
+            id="monitoring" required type="radio" value="2">
           <label class="form-check-label" for="monitoring">Monitoring</label>
         </div>
       </div>
@@ -63,9 +63,6 @@
           <ng-select class="w-100" [items]="checkPoints$ | async" bindLabel="checkPointNameEn"
             (change)="selectChanged($event)" [(ngModel)]="checkPoints" [multiple]="true" placeholder="location">
           </ng-select>
-          <!-- <div class="input-group-append">
-            <span class="input-group-text bg-transparent text-primary text-14"><em class="ni ni-send"></em></span>
-          </div> -->
         </div>
       </div>
       <span class="fa fa-location-arrow cursor-pointer text-primary align-self-center text-20" data-toggle="modal"
@@ -84,27 +81,29 @@
               <span class="text-danger fa fa-trash-o cursor-pointer text-16"
                 (click)="deleteCheckpoint(checkpoint.id)"></span>
             </div>
-            <div class="d-flex w-75">
+            <div class="d-flex">
               <div class="input-group mr-3">
-                <ng-select class="w-100" id="startTime" [items]="timeLookup" bindLabel="value" bindValue="id"
-                  [(ngModel)]="checkpoint.startTime" placeholder="choose start time">
-                  <ng-template ng-option-tmp ng-label-tmp let-item="item" let-index="index" let-search="searchTerm">
-                    <span class="bg-transparent text-14">
-                      <em class="fa fa-clock-o mr-1"></em> Start {{item.value}}
-                    </span>
-                  </ng-template>
-                </ng-select>
+                <div class="input-group-prepend">
+                  <span class="input-group-text bg-transparent text-14">
+                    <em class="fa fa-calendar-o"></em>
+                    <span class="ml-1">start</span>
+                  </span>
+                </div>
+                <ngx-datetime-picker [(selectedDateTime)]="checkpoint.startDate" name="startDate"
+                  (change)="dateTimeChanged($event)" placeholder="choose start time">
+                </ngx-datetime-picker>
               </div>
 
               <div class="input-group">
-                <ng-select class="w-100" id="endTime" [items]="timeLookup" bindLabel="value" bindValue="id"
-                  [(ngModel)]="checkpoint.endTime" placeholder="choose end time">
-                  <ng-template ng-option-tmp ng-label-tmp let-item="item" let-index="index" let-search="searchTerm">
-                    <span class="bg-transparent text-14">
-                      <em class="fa fa-clock-o mr-1"></em> End {{item.value}}
-                    </span>
-                  </ng-template>
-                </ng-select>
+                <div class="input-group-prepend">
+                  <span class="input-group-text bg-transparent text-14">
+                    <em class="fa fa-calendar-o"></em>
+                    <span class="ml-1">end</span>
+                  </span>
+                </div>
+                <ngx-datetime-picker [(selectedDateTime)]="checkpoint.endDate" name="endDate"
+                  (change)="dateTimeChanged($event)" placeholder="choose start time">
+                </ngx-datetime-picker>
               </div>
             </div>
           </div>
