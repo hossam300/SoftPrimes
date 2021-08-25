@@ -6,42 +6,142 @@
 </div>
 <div class="card shadow">
   <div class="card-body">
-    <form>
-      <p class="dashed-border-bottom mb-4 pb-4">
-        Please find the below information
-      </p>
-      <div class="row form-group">
-        <label for="valueAr" class="col-2 col-form-label col-form-label-sm">agent name Ar</label>
-        <div class="col-7 d-flex">
-          <div class="input-group">
-            <input class="form-control" placeholder="agent name Ar"
-              [(ngModel)]="agent.valueAr" type="text" name="valueAr">
-          </div>
+
+    <p class="dashed-border-bottom mb-4 pb-4">
+      Please find the below information
+    </p>
+    <div class="row form-group">
+      <label for="fullNameAr" class="col-2 col-form-label col-form-label-sm">agent name Ar</label>
+      <div class="col-7 d-flex">
+        <div class="input-group">
+          <input class="form-control" placeholder="agent name Ar"
+            [(ngModel)]="agent.fullNameAr" type="text" name="fullNameAr">
         </div>
       </div>
-      <div class="row form-group">
-        <label for="valueEn" class="col-2 col-form-label col-form-label-sm">agent name En</label>
-        <div class="col-7 d-flex">
-          <div class="input-group">
-            <input class="form-control" placeholder="agent name En"
-              [(ngModel)]="agent.valueEn" type="text" name="valueEn">
-          </div>
+    </div>
+    <div class="row form-group">
+      <label for="fullNameEn" class="col-2 col-form-label col-form-label-sm">agent name En</label>
+      <div class="col-7 d-flex">
+        <div class="input-group">
+          <input class="form-control" placeholder="agent name En"
+            [(ngModel)]="agent.fullNameEn" type="text" name="fullNameEn">
         </div>
       </div>
-      <div class="row form-group">
-        <label for="key" class="required col-2 col-form-label col-form-label-sm">agent key</label>
-        <div class="col-7 d-flex">
-          <div class="input-group">
-            <input class="form-control" placeholder="agent key"
-              [(ngModel)]="agent.key" type="text" name="key"
-              [disabled]="!createMode">
-          </div>
+    </div>
+    <div class="row form-group">
+      <label for="username" class="col-2 col-form-label col-form-label-sm">agent username</label>
+      <div class="col-7 d-flex">
+        <div class="input-group">
+          <input class="form-control" placeholder="agent username"
+            [(ngModel)]="agent.userName" type="text" name="username">
         </div>
       </div>
-    </form>
+    </div>
+    <div class="row form-group">
+      <label for="password" class="col-2 col-form-label col-form-label-sm">agent password</label>
+      <div class="col-7 d-flex">
+        <div class="input-group">
+          <input class="form-control" placeholder="agent password"
+            [(ngModel)]="agent.password" type="text" name="password">
+        </div>
+      </div>
+    </div>
+    <div class="row form-group">
+      <label for="jobTitle" class="col-2 col-form-label col-form-label-sm">agent jobTitle</label>
+      <div class="col-7 d-flex">
+        <div class="input-group">
+          <input class="form-control" placeholder="agent jobTitle"
+            [(ngModel)]="agent.jobTitle" type="text" name="jobTitle">
+        </div>
+      </div>
+    </div>
+    <div class="row form-group">
+      <label for="mobile" class="col-2 col-form-label col-form-label-sm">agent mobile</label>
+      <div class="col-7 d-flex">
+        <div class="input-group">
+          <input class="form-control" placeholder="agent mobile"
+            [(ngModel)]="agent.mobile" type="text" name="mobile">
+        </div>
+      </div>
+    </div>
+    <div class="row form-group">
+      <label for="email" class="required col-2 col-form-label col-form-label-sm">agent email</label>
+      <div class="col-7 d-flex">
+        <div class="input-group">
+          <input class="form-control" placeholder="agent email"
+            [(ngModel)]="agent.email" type="text" name="email"
+            [disabled]="!createMode">
+        </div>
+      </div>
+    </div>
+    <div class="row form-group">
+      <label for="roles" class="required col-2 col-form-label col-form-label-sm">agent roles</label>
+      <div class="col-7 d-flex">
+        <div class="input-group">
+          <ng-select class="w-100" [items]="roles$ | async" bindLabel="roleNameEn"
+            [(ngModel)]="agent.roleId" bindValue="id"
+            [loading]="rolesLoading" [typeahead]="rolesInput$"
+            placeholder="choose a role">
+          </ng-select>
+        </div>
+      </div>
+    </div>
+    <div class="row form-group">
+      <label for="agents" class="required col-2 col-form-label col-form-label-sm">Supervisor</label>
+      <div class="col-7 d-flex">
+        <div class="input-group">
+          <ng-select class="w-100" [items]="agents$ | async" bindLabel="fullNameEn"
+            [(ngModel)]="agent.supervisorId" bindValue="id"
+            [loading]="agentsLoading" [typeahead]="agentsInput$"
+            placeholder="choose a supervisor">
+          </ng-select>
+        </div>
+      </div>
+    </div>
+    <div class="row form-group">
+      <label for="company" class="required col-2 col-form-label col-form-label-sm">Company</label>
+      <div class="col-7 d-flex">
+        <div class="input-group">
+          <ng-select class="w-100" [items]="company$ | async" bindLabel="companyNameEn"
+            [(ngModel)]="agent.companyId" bindValue="id"
+            [loading]="companyLoading" [typeahead]="companyInput$"
+            placeholder="choose company">
+          </ng-select>
+        </div>
+      </div>
+    </div>
+    <div class="row form-group">
+      <label for="agentType" class="required col-2 col-form-label col-form-label-sm">agent agentType</label>
+      <div class="col-7 d-flex">
+        <div class="input-group">
+          <ng-select class="w-100" [items]="agentTypes"
+            [(ngModel)]="agent.agentType" placeholder="choose agent type">
+            <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
+              {{agentType[item]}}
+            </ng-template>
+            <ng-template ng-label-tmp let-item="item">
+              {{agentType[item]}}
+            </ng-template>
+          </ng-select>
+        </div>
+      </div>
+    </div>
+    <div class="row form-group">
+      <label for="birthdate" class="required col-2 col-form-label col-form-label-sm">Agent birthdate</label>
+      <div class="col-7 d-flex">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text bg-transparent text-14"><em class="fa fa-calendar-o"></em></span>
+          </div>
+          <input ngbDatepicker #d="ngbDatepicker" type="text" class="form-control" [(ngModel)]="birthdate"
+            [minDate]="{year: 1900, month: 1, day: 1}" name="birthdate" autocomplete="off"
+            (click)="d.toggle()" id="birthdate" placeholder="MM/DD/YYYY">
+        </div>
+      </div>
+    </div>
 
     <div class="bg-transparent card-footer dashed-border-top px-0 pt-4 pb-1">
-      <button class="btn btn-primary shadow" [disabled]="!agent.key" *ngIf="createMode" (click)="insertAgent()">
+      <button class="btn btn-primary shadow" [disabled]="!agent.userName" *ngIf="createMode" (click)="insertAgent()">
         Create
       </button>
       <button class="btn btn-primary shadow" *ngIf="!createMode" (click)="updateAgent()">

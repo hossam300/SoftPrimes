@@ -105,7 +105,7 @@ const routes: Routes = [{
           data: {'breadcrumb': ['settings', 'agents', 'add']}
         },
         {
-          path: 'edit/:agentsId',
+          path: 'edit/:agentId',
           component: AgentsComponent,
           data: {
             'permissionCode': ['EditAgents'],

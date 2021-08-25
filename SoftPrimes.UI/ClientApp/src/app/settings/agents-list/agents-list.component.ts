@@ -18,9 +18,10 @@ export class AgentsListComponent implements OnInit {
     this.options = {
       controller: 'Agents',
       columns: [
-        { name: 'valueAr', field: 'valueAr', searchable: true, operator: 'contains' },
-        { name: 'valueEn', field: 'valueEn', searchable: true, operator: 'contains' },
-        { name: 'key', field: 'key', searchable: true, operator: 'contains' },
+        { name: 'fullName', field: 'fullNameEn', searchable: true, operator: 'contains' },
+        { name: 'email', field: 'email', searchable: true, operator: 'contains' },
+        { name: 'jobTitle', field: 'jobTitle', searchable: true, operator: 'contains' },
+        { name: 'agentType', field: 'agentType', type: 'agentType', searchable: true, operator: 'contains' },
         { name: '', field: '' },
       ]
     };

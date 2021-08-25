@@ -62,6 +62,26 @@ export class SettingsCrudsService {
     return this.swagger.apiCheckPointsGetCheckPointLookupsGet(searchTxt, take);
   }
 
+  getCompaniesLookup(searchTxt?, take?) {
+    return this.swagger.apiCompaniesGetCompanyLookupsGet(searchTxt, take);
+  }
+
+  insertAgent(dto) {
+    return this.swagger.apiAccountInsertNewUsersPost(dto);
+  }
+
+  updateAgent(dto) {
+    return this.swagger.apiAccountUpdateUsersPut(dto);
+  }
+
+  getUserProfile(userId) {
+    return this.swagger.apiAccountGetUserProfileGet(userId);
+  }
+
+  addUserImage(userId) {
+    return this.swagger.apiAccountAddUserImagePost(userId);
+  }
+
   printQr(sectionId) {
     const canvas = document.getElementById(sectionId).querySelector('canvas');
     const printContents = `
