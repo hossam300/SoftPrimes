@@ -26,5 +26,10 @@ namespace SoftPrimes.UI.Controllers
         {
             return _RoleService.GetRoleLookups(searchText,take);
         }
+        [HttpGet("GetRoleDetailById")]
+        public RoleDetailsDTO GetRoleDetailById(int id)
+        {
+            return _RoleService.GetRoleDetailById(id);
+        }
     }
 }

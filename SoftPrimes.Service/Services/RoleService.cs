@@ -75,5 +75,16 @@ namespace SoftPrimes.Service.Services
                     }).Take(take).ToList();
             }
         }
+
+        //public RoleDetailsDTO GetRoleDetailById(int id)
+        //{
+        //    return _repository.GetAll().Select(x => new RoleDetailsDTO
+        //    {
+        //        Id = x.Id,
+        //        RoleNameAr = x.RoleNameAr,
+        //        RoleNameEn = x.RoleNameEn,
+        //        Permissions = x.Permissions.Select(y => y.PermissionId).ToList()
+        //    }).FirstOrDefault(c => c.Id == id);
+        //}
     }
 }
