@@ -21,9 +21,32 @@ namespace SoftPrimes.Service.Services
             _unitOfWork = unitOfWork;
             _repository = _unitOfWork.GetRepository<Company>();
         }
-        //private void CustomeMethod()
-        //{
-        //    var company=_repository.
-        //}
+
+    public List<CompanyDTO> GetCompanyLookups(string searchText, int take)
+    {
+      if (searchText == "" || string.IsNullOrEmpty(searchText) || searchText == null)
+      {
+        return _repository.GetAll().Select(x => new CompanyDTO
+        {
+          Id = x.Id,
+          CompanyNameAr = x.CompanyNameAr,
+          CompanyNameEn = x.CompanyNameEn
+        }).Take(take).ToList();
+      }
+      else
+      {
+        return _repository.GetAll().Where(x => x.CompanyNameAr.Contains(searchText) || x.CompanyNameEn.Contains(searchText))
+            .Select(x => new CompanyDTO
+            {
+              Id = x.Id,
+              CompanyNameAr = x.CompanyNameAr,
+              CompanyNameEn = x.CompanyNameEn
+            }).Take(take).ToList();
+      }
     }
+    //private void CustomeMethod()
+    //{
+    //    var company=_repository.
+    //}
+  }
 }

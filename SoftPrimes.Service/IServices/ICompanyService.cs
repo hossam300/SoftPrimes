@@ -8,7 +8,8 @@ using System.Threading.Tasks;
 
 namespace SoftPrimes.Service.IServices
 {
-   public interface ICompanyService : IBusinessService<Company, CompanyDTO>
-    {
-    }
+  public interface ICompanyService : IBusinessService<Company, CompanyDTO>
+  {
+    List<CompanyDTO> GetCompanyLookups(string searchText, int take);
+  }
 }
