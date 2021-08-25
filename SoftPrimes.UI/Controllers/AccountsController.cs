@@ -139,13 +139,13 @@ namespace SoftPrimes.UI.Controllers
             return _usersService.ResetPassword(Email);
         }
         [HttpPost, Route("InsertNewUsers")]
-        public IEnumerable<AgentDTO> InsertNewUsers([FromBody] IEnumerable<AgentDTO> entities)
+        public IEnumerable<AgentDTO> InsertNewUsers( AgentDetailsDTO entities)
         {
             return _usersService.InsertNewUsers(entities);
         }
 
         [HttpPut, Route("UpdateUsers")]
-        public AgentDTO UpdateUser([FromBody] AgentDetailsDTO entity)
+        public AgentDTO UpdateUser(AgentDetailsDTO entity)
         {
             return this._usersService.UpdateUser(entity);
         }
