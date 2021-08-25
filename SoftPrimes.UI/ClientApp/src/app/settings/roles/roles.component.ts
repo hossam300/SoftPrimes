@@ -36,8 +36,9 @@ export class RolesComponent implements OnInit {
 
       } else {
         this.createMode = false;
-        this.settingsCrud.getDTOById(this.controller, +r.rolesId).subscribe(Roles => {
-          this.roles = Roles;
+        this.settingsCrud.getDTOById(this.controller, +r.rolesId).subscribe(roles => {
+          roles.permissions = roles.permissions.map(y => y.permissionId);
+          this.roles = roles;
         });
       }
     });
@@ -45,7 +46,6 @@ export class RolesComponent implements OnInit {
   }
 
   updateRoles() {
-    debugger;
     this.settingsCrud.updateRoles([this.roles]).subscribe(result => {
       if (result) {
         this.router.navigate(['/settings/roles']);
