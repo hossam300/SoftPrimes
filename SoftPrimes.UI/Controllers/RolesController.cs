@@ -11,25 +11,31 @@ using System.Threading.Tasks;
 
 namespace SoftPrimes.UI.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class RolesController : _BaseController<Role, RoleDTO>
-    {
-        private readonly IRoleService _RoleService;
+  [Route("api/[controller]")]
+  [ApiController]
+  public class RolesController : _BaseController<Role, RoleDTO>
+  {
+    private readonly IRoleService _RoleService;
 
-        public RolesController(IRoleService businessService, IHelperServices.ISessionServices sessionSevices) : base(businessService, sessionSevices)
-        {
-            this._RoleService = businessService;
-        }
-        [HttpGet("GetRoleLookups")]
-        public List<RoleDTO> GetRoleLookups(string searchText, int take = 20)
-        {
-            return _RoleService.GetRoleLookups(searchText,take);
-        }
-        [HttpGet("GetRoleDetailById")]
-        public RoleDetailsDTO GetRoleDetailById(int id)
-        {
-            return _RoleService.GetRoleDetailById(id);
-        }
+    public RolesController(IRoleService businessService, IHelperServices.ISessionServices sessionSevices) : base(businessService, sessionSevices)
+    {
+      this._RoleService = businessService;
     }
+    [HttpPost("InsertRole")]
+    public IEnumerable<RoleDetailsDTO> InsertRole(IEnumerable<RoleDetailsDTO> entities)
+    {
+      return _RoleService.InsertRole(entities);
+    }
+    [HttpPut("UpdateRole")]
+    public IEnumerable<RoleDetailsDTO> UpdateRole(IEnumerable<RoleDetailsDTO> entities)
+    {
+      return _RoleService.UpdateRole(entities);
+    }
+
+    [HttpGet("GetRoleLookups")]
+    public List<RoleDTO> GetRoleLookups(string searchText, int take = 20)
+    {
+      return _RoleService.GetRoleLookups(searchText, take);
+    }
+  }
 }

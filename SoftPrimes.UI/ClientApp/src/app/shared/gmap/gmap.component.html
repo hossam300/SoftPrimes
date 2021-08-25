@@ -1,65 +1,81 @@
-<div class="card shadow border-0 mb-4">
-  <div class="card-body position-relative">
+<div class="card border-0 mb-4" [class.shadow]="viewMode">
+  <div class="card-body position-relative" [ngClass]="{'p-0': !viewMode}">
     <div #elm id="gmap">
 
-      <agm-map [latitude]="lat" [longitude]="lng" [zoom]="zoom" (mapClick)="mapClicked($event)"
-        [disableDefaultUI]="false" [zoomControl]="false">
+      <agm-map [latitude]="lat" [longitude]="lng" [zoom]="zoom"
+        [disableDefaultUI]="false" [zoomControl]="false" (mapClick)="addMark($event)">
 
-        <agm-overlay *ngFor="let m of markers; let i = index" (markerClick)="clickedMarker(m.label, i)"
-          [latitude]="m.lat" [longitude]="m.lng" (dragEnd)="markerDragEnd(m, $event)">
-          <div class="map-agent-avatar">
-            <ngx-avatar class="agent-avatar" name="m.label" size="38" [round]="true" [initialsSize]="2"
-              (click)="showDetails(details)" (mouseenter)="toggleLabel(details)" (mouseleave)="toggleLabel(details)">
-            </ngx-avatar>
-            <div class="map-agent-details bg-white" id="agent-details" #details>
-              <strong>
-                {{m.label}}
-              </strong>
-              <div class="d-flex flex-column mt-3">
-                <div class="steps" id="steps">
-                  <div class="state-wrapper">
-                    <p class="state current">Current Point</p>
-                  </div>
-                  <div class="step current">
-                    <div class="distance current">0km</div>
-                    <div class="info">
-                      <p class="text">
-                        <span class="fa fa-map-marker mr-1"></span>
-                        <span>65454 Street, New Cairo first point 34km. Change</span>
-                      </p>
-                      <div class="state-wrapper">
-                        <p class="state">Next</p>
+        <<ng-container *ngIf="viewMode">
+          <agm-overlay *ngFor="let m of markers; let i = index" (markerClick)="clickedMarker(m.label, i)"
+            [latitude]="m.lat" [longitude]="m.lng" (dragEnd)="markerDragEnd(m, $event)">
+            <div class="map-agent-avatar">
+              <ngx-avatar class="agent-avatar" name="m.label" size="38" [round]="true" [initialsSize]="2"
+                (click)="showDetails(details)" (mouseenter)="toggleLabel(details)" (mouseleave)="toggleLabel(details)">
+              </ngx-avatar>
+              <div class="map-agent-details bg-white" id="agent-details" #details>
+                <strong>
+                  {{m.label}}
+                </strong>
+                <div class="d-flex flex-column mt-3">
+                  <div class="steps" id="steps">
+                    <div class="state-wrapper">
+                      <p class="state current">Current Point</p>
+                    </div>
+                    <div class="step current">
+                      <div class="distance current">0km</div>
+                      <div class="info">
+                        <p class="text">
+                          <span class="fa fa-map-marker mr-1"></span>
+                          <span>65454 Street, New Cairo first point 34km. Change</span>
+                        </p>
+                        <div class="state-wrapper">
+                          <p class="state">Next</p>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <div class="step">
-                    <div class="distance">5km</div>
-                    <div class="info">
-                      <p class="text">
-                        <span class="fa fa-map-marker mr-1"></span>
-                        <span>65454 Street, New Cairo first point 34km. Change</span>
-                      </p>
+                    <div class="step">
+                      <div class="distance">5km</div>
+                      <div class="info">
+                        <p class="text">
+                          <span class="fa fa-map-marker mr-1"></span>
+                          <span>65454 Street, New Cairo first point 34km. Change</span>
+                        </p>
+                      </div>
                     </div>
-                  </div>
-                  <div class="step">
-                    <div class="distance">20km</div>
-                    <div class="info">
-                      <p class="text">
-                        <span class="fa fa-map-marker mr-1"></span>
-                        <span>65454 Street, New Cairo first point 34km. Change</span>
-                      </p>
+                    <div class="step">
+                      <div class="distance">20km</div>
+                      <div class="info">
+                        <p class="text">
+                          <span class="fa fa-map-marker mr-1"></span>
+                          <span>65454 Street, New Cairo first point 34km. Change</span>
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
 
-        </agm-overlay>
+          </agm-overlay>
+        </ng-container>
+
+        <<ng-container *ngIf="!viewMode">
+          <agm-marker
+              *ngFor="let m of markers; let i = index"
+              (markerClick)="clickedMarker(m.label, i)"
+              [latitude]="m.lat"
+              [longitude]="m.lng"
+              [markerDraggable]="m.draggable"
+              (dragEnd)="markerDragEnd(m, $event)">
+          </agm-marker>
+        </ng-container>
+
+
 
       </agm-map>
     </div>
-    <div class="overlay gmap-overlay rounded-bottom d-flex flex-row-reverse align-items-center">
+    <div class="overlay gmap-overlay rounded-bottom d-flex flex-row-reverse align-items-center"
+      [ngClass]="{'m-0': !viewMode}">
       <span (click)="openInFullscreen(elm)">
         View full map
       </span>

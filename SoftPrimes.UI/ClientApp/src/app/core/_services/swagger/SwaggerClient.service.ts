@@ -6728,6 +6728,126 @@ export class SwaggerClient {
     }
 
     /**
+     * @param body (optional) 
+     * @return Success
+     */
+    apiRolesInsertRolePost(body: RoleDetailsDTO[]): Observable<RoleDetailsDTO[]> {
+        let url_ = this.baseUrl + "/api/Roles/InsertRole";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processApiRolesInsertRolePost(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processApiRolesInsertRolePost(<any>response_);
+                } catch (e) {
+                    return <Observable<RoleDetailsDTO[]>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<RoleDetailsDTO[]>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processApiRolesInsertRolePost(response: HttpResponseBase): Observable<RoleDetailsDTO[]> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (resultData200 && resultData200.constructor === Array) {
+                result200 = [];
+                for (let item of resultData200)
+                    result200.push(RoleDetailsDTO.fromJS(item));
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<RoleDetailsDTO[]>(<any>null);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    apiRolesUpdateRolePut(body: RoleDetailsDTO[]): Observable<RoleDetailsDTO[]> {
+        let url_ = this.baseUrl + "/api/Roles/UpdateRole";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("put", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processApiRolesUpdateRolePut(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processApiRolesUpdateRolePut(<any>response_);
+                } catch (e) {
+                    return <Observable<RoleDetailsDTO[]>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<RoleDetailsDTO[]>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processApiRolesUpdateRolePut(response: HttpResponseBase): Observable<RoleDetailsDTO[]> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (resultData200 && resultData200.constructor === Array) {
+                result200 = [];
+                for (let item of resultData200)
+                    result200.push(RoleDetailsDTO.fromJS(item));
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<RoleDetailsDTO[]>(<any>null);
+    }
+
+    /**
      * @param searchText (optional) 
      * @param take (optional) 
      * @return Success
@@ -10062,62 +10182,6 @@ export interface IAgentDTO {
     agentRoles?: AgentRoleDTO[];
 }
 
-export class RoleDTO implements IRoleDTO {
-    id?: number;
-    roleNameAr?: string;
-    roleNameEn?: string;
-    permissions?: number[];
-
-    constructor(data?: IRoleDTO) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(data?: any) {
-        if (data) {
-            this.id = data["id"];
-            this.roleNameAr = data["roleNameAr"];
-            this.roleNameEn = data["roleNameEn"];
-            if (data["permissions"] && data["permissions"].constructor === Array) {
-                this.permissions = [];
-                for (let item of data["permissions"])
-                    this.permissions.push(item);
-            }
-        }
-    }
-
-    static fromJS(data: any): RoleDTO {
-        data = typeof data === 'object' ? data : {};
-        let result = new RoleDTO();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        data["roleNameAr"] = this.roleNameAr;
-        data["roleNameEn"] = this.roleNameEn;
-        if (this.permissions && this.permissions.constructor === Array) {
-            data["permissions"] = [];
-            for (let item of this.permissions)
-                data["permissions"].push(item);
-        }
-        return data; 
-    }
-}
-
-export interface IRoleDTO {
-    id?: number;
-    roleNameAr?: string;
-    roleNameEn?: string;
-    permissions?: number[];
-}
-
 export class PermissionDTO implements IPermissionDTO {
     id?: number;
     permissionNameAr?: string;
@@ -10218,13 +10282,13 @@ export interface IRolePermissionDTO {
     permission?: PermissionDTO;
 }
 
-export class RoleDetailsDTO implements IRoleDetailsDTO {
+export class RoleDTO implements IRoleDTO {
     id?: number;
     roleNameAr?: string;
     roleNameEn?: string;
     permissions?: RolePermissionDTO[];
 
-    constructor(data?: IRoleDetailsDTO) {
+    constructor(data?: IRoleDTO) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -10246,9 +10310,9 @@ export class RoleDetailsDTO implements IRoleDetailsDTO {
         }
     }
 
-    static fromJS(data: any): RoleDetailsDTO {
+    static fromJS(data: any): RoleDTO {
         data = typeof data === 'object' ? data : {};
-        let result = new RoleDetailsDTO();
+        let result = new RoleDTO();
         result.init(data);
         return result;
     }
@@ -10267,7 +10331,7 @@ export class RoleDetailsDTO implements IRoleDetailsDTO {
     }
 }
 
-export interface IRoleDetailsDTO {
+export interface IRoleDTO {
     id?: number;
     roleNameAr?: string;
     roleNameEn?: string;
@@ -10279,7 +10343,7 @@ export class AgentRoleDTO implements IAgentRoleDTO {
     agentId?: string;
     agent?: AgentDTO;
     roleId?: number;
-    role?: RoleDetailsDTO;
+    role?: RoleDTO;
 
     constructor(data?: IAgentRoleDTO) {
         if (data) {
@@ -10296,7 +10360,7 @@ export class AgentRoleDTO implements IAgentRoleDTO {
             this.agentId = data["agentId"];
             this.agent = data["agent"] ? AgentDTO.fromJS(data["agent"]) : <any>undefined;
             this.roleId = data["roleId"];
-            this.role = data["role"] ? RoleDetailsDTO.fromJS(data["role"]) : <any>undefined;
+            this.role = data["role"] ? RoleDTO.fromJS(data["role"]) : <any>undefined;
         }
     }
 
@@ -10323,7 +10387,7 @@ export interface IAgentRoleDTO {
     agentId?: string;
     agent?: AgentDTO;
     roleId?: number;
-    role?: RoleDetailsDTO;
+    role?: RoleDTO;
 }
 
 export class AuthTicketDTO implements IAuthTicketDTO {
@@ -11280,16 +11344,10 @@ export interface ICheckPointDTODataSourceResult {
     qrCodeType?: string;
 }
 
-export enum TourType {
-    _1 = 1, 
-    _2 = 2, 
-}
-
 export class TourDTO implements ITourDTO {
     id?: number;
     tourNameAr?: string;
     tourNameEn?: string;
-    tourType?: TourType;
     createdBy?: string;
     createdOn?: Date;
 
@@ -11307,7 +11365,6 @@ export class TourDTO implements ITourDTO {
             this.id = data["id"];
             this.tourNameAr = data["tourNameAr"];
             this.tourNameEn = data["tourNameEn"];
-            this.tourType = data["tourType"];
             this.createdBy = data["createdBy"];
             this.createdOn = data["createdOn"] ? new Date(data["createdOn"].toString()) : <any>undefined;
         }
@@ -11325,7 +11382,6 @@ export class TourDTO implements ITourDTO {
         data["id"] = this.id;
         data["tourNameAr"] = this.tourNameAr;
         data["tourNameEn"] = this.tourNameEn;
-        data["tourType"] = this.tourType;
         data["createdBy"] = this.createdBy;
         data["createdOn"] = this.createdOn ? this.createdOn.toISOString() : <any>undefined;
         return data; 
@@ -11336,9 +11392,13 @@ export interface ITourDTO {
     id?: number;
     tourNameAr?: string;
     tourNameEn?: string;
-    tourType?: TourType;
     createdBy?: string;
     createdOn?: Date;
+}
+
+export enum TourType {
+    _1 = 1, 
+    _2 = 2, 
 }
 
 export enum TourState {
@@ -11534,6 +11594,7 @@ export class TourAgentDTO implements ITourAgentDTO {
     tourId?: number;
     tour?: TourDTO;
     tourDate?: Date;
+    tourType?: TourType;
     checkPoints?: TourCheckPointDTO[];
     agentId?: string;
     agent?: AgentDTO;
@@ -11558,6 +11619,7 @@ export class TourAgentDTO implements ITourAgentDTO {
             this.tourId = data["tourId"];
             this.tour = data["tour"] ? TourDTO.fromJS(data["tour"]) : <any>undefined;
             this.tourDate = data["tourDate"] ? new Date(data["tourDate"].toString()) : <any>undefined;
+            this.tourType = data["tourType"];
             if (data["checkPoints"] && data["checkPoints"].constructor === Array) {
                 this.checkPoints = [];
                 for (let item of data["checkPoints"])
@@ -11594,6 +11656,7 @@ export class TourAgentDTO implements ITourAgentDTO {
         data["tourId"] = this.tourId;
         data["tour"] = this.tour ? this.tour.toJSON() : <any>undefined;
         data["tourDate"] = this.tourDate ? this.tourDate.toISOString() : <any>undefined;
+        data["tourType"] = this.tourType;
         if (this.checkPoints && this.checkPoints.constructor === Array) {
             data["checkPoints"] = [];
             for (let item of this.checkPoints)
@@ -11623,6 +11686,7 @@ export interface ITourAgentDTO {
     tourId?: number;
     tour?: TourDTO;
     tourDate?: Date;
+    tourType?: TourType;
     checkPoints?: TourCheckPointDTO[];
     agentId?: string;
     agent?: AgentDTO;
@@ -12231,6 +12295,62 @@ export interface IPermissionDTODataSourceResult {
     count?: number;
     countUnReaded?: number;
     qrCodeType?: string;
+}
+
+export class RoleDetailsDTO implements IRoleDetailsDTO {
+    id?: number;
+    roleNameAr?: string;
+    roleNameEn?: string;
+    permissions?: number[];
+
+    constructor(data?: IRoleDetailsDTO) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.id = data["id"];
+            this.roleNameAr = data["roleNameAr"];
+            this.roleNameEn = data["roleNameEn"];
+            if (data["permissions"] && data["permissions"].constructor === Array) {
+                this.permissions = [];
+                for (let item of data["permissions"])
+                    this.permissions.push(item);
+            }
+        }
+    }
+
+    static fromJS(data: any): RoleDetailsDTO {
+        data = typeof data === 'object' ? data : {};
+        let result = new RoleDetailsDTO();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["roleNameAr"] = this.roleNameAr;
+        data["roleNameEn"] = this.roleNameEn;
+        if (this.permissions && this.permissions.constructor === Array) {
+            data["permissions"] = [];
+            for (let item of this.permissions)
+                data["permissions"].push(item);
+        }
+        return data; 
+    }
+}
+
+export interface IRoleDetailsDTO {
+    id?: number;
+    roleNameAr?: string;
+    roleNameEn?: string;
+    permissions?: number[];
 }
 
 export class RoleDTODataSourceResult implements IRoleDTODataSourceResult {

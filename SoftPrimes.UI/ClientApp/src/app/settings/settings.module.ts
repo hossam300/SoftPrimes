@@ -17,10 +17,26 @@ import { RolesListComponent } from './roles-list/roles-list.component';
 import { AgentsComponent } from './agents/agents.component';
 import { AgentsListComponent } from './agents-list/agents-list.component';
 import { TemplatesListComponent } from './templates-list/templates-list.component';
+import { CheckpointsComponent } from './checkpoints/checkpoints.component';
+import { CheckpointsListComponent } from './checkpoints-list/checkpoints-list.component';
 
 
 @NgModule({
-  declarations: [SettingsComponent, PermissionsComponent, SettingsWrapperComponent, PermissionsListComponent, SettingsTableComponent, LocalizationComponent, LocalizationListComponent, RolesComponent, RolesListComponent, AgentsComponent, AgentsListComponent, TemplatesListComponent],
+  declarations: [
+    SettingsComponent,
+    PermissionsComponent,
+    SettingsWrapperComponent,
+    PermissionsListComponent,
+    SettingsTableComponent,
+    LocalizationComponent,
+    LocalizationListComponent,
+    RolesComponent,
+    RolesListComponent,
+    AgentsComponent,
+    AgentsListComponent,
+    TemplatesListComponent,
+    CheckpointsComponent,
+    CheckpointsListComponent],
   imports: [
     CommonModule,
     SettingsRoutingModule,

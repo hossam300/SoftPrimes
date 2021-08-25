@@ -12,10 +12,16 @@ const routes: Routes = [{
   path: '', component: TaskManagementWrapperComponent,
   canActivate: [AuthGuard], canActivateChild: [AuthGuard],
   children: [
-    { path: '', redirectTo: 'tasks-list', pathMatch: 'full', data: {'breadcrumb': ['task-management']} },
-    { path: 'tasks-list', component: TasksListComponent, data: {'breadcrumb': ['task-management']} },
-    { path: 'new-task', component: NewTaskComponent, data: {'breadcrumb': ['task-management', 'new-task']} },
-    { path: '**', redirectTo: 'tasks-list', pathMatch: 'full' },
+    { path: '', redirectTo: 'tasks', pathMatch: 'full', data: {'breadcrumb': ['task-management']} },
+    { path: 'tasks', component: TaskManagementWrapperComponent,
+      children: [
+        { path: '', component: TasksListComponent, data: {'breadcrumb': ['task-management']} },
+        { path: 'add', component: NewTaskComponent, data: {'breadcrumb': ['task-management', 'add']} },
+        { path: 'edit/:tourId', component: NewTaskComponent, data: {'breadcrumb': ['task-management', 'edit']} },
+      ],
+      data: {'breadcrumb': ['task-management']}
+    },
+    { path: '**', redirectTo: 'tasks', pathMatch: 'full' },
   ]
 }];
 

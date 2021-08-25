@@ -3,10 +3,10 @@
   <h1 class="h5">
     Task management
   </h1>
-  <a class="btn btn-primary" [routerLink]="['../new-task']">
+  <a class="btn btn-primary" [routerLink]="['add']">
     Assign new task
   </a>
 </div>
-<app-gmap></app-gmap>
-<app-data-table [data]="toursList" [columns]="columns"[pageSize]="take"
+<app-gmap [viewMode]="true"></app-gmap>
+<app-data-table [data]="toursList" [options]="options" [pageSize]="take"
 [count]="count" (skip)="getAll(take, $event || skip)"></app-data-table>

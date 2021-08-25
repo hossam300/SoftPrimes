@@ -25,6 +25,10 @@ export class SettingsComponent implements OnInit {
       url: 'agents'
     },
     {
+      name: 'Checkpoints',
+      url: 'checkpoints'
+    },
+    {
       name: 'Localization',
       url: 'localization'
     },

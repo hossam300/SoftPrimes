@@ -1,6 +1,18 @@
 import { TaskManagementService } from './../../core/_services/task-management.service';
-import { Observable } from 'rxjs';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+
+export enum TourTypes {
+  'TourPoints' = 1,
+  'Monitoring'
+}
+
+export enum TourState {
+  New = 1,
+  InProgress = 2,
+  Complete = 3,
+  NotCompleted = 4,
+  Cancled = 5
+}
 
 @Component({
   selector: 'app-data-table',
@@ -9,11 +21,13 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 })
 export class DataTableComponent implements OnInit {
   @Input() data: any[];
-  @Input() columns: string[];
+  @Input() options: any;
   @Input() pageSize = 5;
   @Input() count;
   @Output() skip = new EventEmitter<number>();
   currentPage = 1;
+  tourType = TourTypes;
+  tourState = TourState;
 
   constructor(
     private taskManagementService: TaskManagementService

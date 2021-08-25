@@ -25,6 +25,7 @@
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "node_modules/ngx-toastr/toastr.css",
               "node_modules/@ng-select/ng-select/themes/default.theme.css",
+              "node_modules/ngx-datetime-picker/ngx-datetime-picker.css",
               "src/styles.css"
             ],
             "scripts": []

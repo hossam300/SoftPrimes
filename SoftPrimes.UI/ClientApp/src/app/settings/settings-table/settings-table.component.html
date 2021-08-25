@@ -7,24 +7,87 @@
   <tbody>
     <tr *ngFor="let row of data">
       <td *ngFor="let col of options.columns" [class.td-actions.text-right]="!col.field">
-        <span *ngIf="col.field">{{row[col.field]}}</span>
-        <div class="dropdown" *ngIf="!col.field">
+        <span *ngIf="col.field && !col.type">{{row[col.field]}}</span>
+        <span *ngIf="col.type === 'arr'" class="fa fa-external-link cursor-pointer text-20"
+          (click)="open(detailsModal, row, col.field)"></span>
+        <div class="dropdown" *ngIf="!col.field && !col.name">
           <button class="btn btn-primary btn-block btn-sm" type="button" id="multiDropdownMenu" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false">
             <span class="fa fa-ellipsis-v"></span>
           </button>
-          <div class="dropdown-menu" aria-labelledby="multiDropdownMenu">
+          <div class="dropdown-menu" aria-labelledby="multiDropdownMenu" *ngIf="col.type !== 'templates'">
             <a class="dropdown-item" (click)="editRecord(row?.id)">Edit</a>
             <a class="dropdown-item text-danger" (click)="deleteRecord(row?.id)">Delete</a>
           </div>
+          <div class="dropdown-menu" aria-labelledby="multiDropdownMenu" *ngIf="col.type === 'templates'">
+            <a class="dropdown-item text-danger" *ngIf="row?.active"
+              (click)="toggleTemplate(row.id, row.active)">Deactivate</a>
+            <a class="dropdown-item" *ngIf="!row?.active"
+              (click)="toggleTemplate(row.id, row.active)">Activate</a>
+          </div>
         </div>
+        <span *ngIf="!col.field && col.name" class="fa fa-qrcode cursor-pointer text-20"
+          (click)="open(qrModal, row.id)"></span>
       </td>
     </tr>
   </tbody>
 </table>
 
 <div class="d-flex justify-content-center mb-5">
-  <ngb-pagination [collectionSize]="count" [(page)]="currentPage"
-  (pageChange)="emitPagination()" [maxSize]="5" [rotate]="true"
-  [pageSize]="pageSize" [boundaryLinks]="true"></ngb-pagination>
+  <ngb-pagination [collectionSize]="count" [(page)]="currentPage" (pageChange)="emitPagination()" [maxSize]="5"
+    [rotate]="true" [pageSize]="pageSize" [boundaryLinks]="true"></ngb-pagination>
 </div>
+
+<!-- Modals -->
+<ng-template #qrModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title h6 d-flex" id="templatesModalTitle">
+      <span class="modal-title-icon bg-primary">
+        <span class="fa fa-pencil-square-o"></span>
+      </span>
+      <span class="px-3 d-flex flex-column">
+        You can print the below qrCode
+        <span class="text-secondary">
+          The below qrCode can help you to save time.
+        </span>
+      </span>
+    </h5>
+  </div>
+  <div class="modal-body">
+    <div class="d-flex justify-content-center" id="qrCode">
+      <qr-code [value]="activeQrCode" size="300" errorCorrectionLevel="Q">
+      </qr-code>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="modal.close('close')">Cancel</button>
+    <button type="button" class="btn btn-primary" (click)="printDiv('qrCode')">Print</button>
+  </div>
+</ng-template>
+
+
+<ng-template #detailsModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title h6 d-flex" id="templatesModalTitle">
+      <span class="modal-title-icon bg-primary">
+        <span class="fa fa-pencil-square-o"></span>
+      </span>
+      <span class="px-3 d-flex flex-column">
+        You can view the below data
+        <span class="text-secondary">
+          The below data can help you to save time.
+        </span>
+      </span>
+    </h5>
+  </div>
+  <div class="modal-body">
+    <div>
+      <span *ngFor="let item of activeRow[activeCol]" class="badge badge-info mx-2 text-14">
+        {{item.permission.permissionNameAr}}
+      </span>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="modal.close('close')">Cancel</button>
+  </div>
+</ng-template>
