@@ -1,6 +1,6 @@
 import { TaskManagementService } from './../../core/_services/task-management.service';
 import { Component, OnInit } from '@angular/core';
-import { TourAgentDTO } from 'src/app/core/_services/swagger/SwaggerClient.service';
+import { Sort, TourAgentDTO } from 'src/app/core/_services/swagger/SwaggerClient.service';
 
 @Component({
   selector: 'app-tasks-list',
@@ -27,23 +27,30 @@ export class TasksListComponent implements OnInit {
     this.options = {
       controller: 'TourAgents',
       columns: [
-        { name: 'tourName', field: 'tourNameEn', type: 'tour' },
-        { name: 'agentName', field: 'fullNameAr', type: 'agent' },
-        { name: 'tourType', field: 'tourType', type: 'tourType' },
-        { name: 'scheduleStart', field: 'tourDate', type: 'date' },
-        { name: 'scheduleEnd', field: 'estimatedEndDate', type: 'date' },
-        { name: 'tourStatus', field: 'tourState', type: 'tourState' },
+        { name: 'tourName', field: 'tourNameEn', sortField: 'tour["tourNameEn"]',  type: 'tour', sort: 'asc' },
+        { name: 'agentName', field: 'fullNameEn', sortField: 'agent["fullNameEn"]', type: 'agent', sort: 'asc' },
+        { name: 'tourType', field: 'tourType', sortField: 'tourType', type: 'tourType', sort: 'asc' },
+        { name: 'scheduleStart', field: 'tourDate', sortField: 'tourDate', type: 'date', sort: 'asc' },
+        { name: 'scheduleEnd', field: 'estimatedEndDate', sortField: 'estimatedEndDate', type: 'date', sort: 'asc' },
+        { name: 'tourStatus', field: 'tourState', sortField: 'tourState', type: 'tourState', sort: 'asc' },
         { name: '', field: '' },
       ]
     };
   }
 
-  getAll(take, skip) {
-    this.taskManagementService.getAllTourAgents(take, skip).subscribe(result => {
+  getAll(take, skip, sort = [], filters = []) {
+    this.taskManagementService.getAllTourAgents(take, skip, sort, filters).subscribe(result => {
       console.log(result, 'tourAgents');
       this.toursList = result.data;
       this.count = result.count;
     });
+  }
+
+  sort(event) {
+    const direction = event.sort === 'desc' ? 'asc' : 'desc';
+    const sort = [new Sort({ field: event.sortField, dir: direction })];
+    console.log(event, sort, 'start sorting');
+    this.getAll(this.take, this.skip, sort);
   }
 
 }

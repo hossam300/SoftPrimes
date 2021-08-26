@@ -9,4 +9,5 @@
 </div>
 <app-gmap [viewMode]="true"></app-gmap>
 <app-data-table [data]="toursList" [options]="options" [pageSize]="take"
+(sort)="sort($event)"
 [count]="count" (skip)="getAll(take, $event || skip)"></app-data-table>

@@ -25,6 +25,8 @@ export class DataTableComponent implements OnInit {
   @Input() pageSize = 5;
   @Input() count;
   @Output() skip = new EventEmitter<number>();
+  @Output() sort = new EventEmitter<any>();
+  sortDirection = true;
   currentPage = 1;
   tourType = TourTypes;
   tourState = TourState;
@@ -77,8 +79,17 @@ export class DataTableComponent implements OnInit {
         badgeClass = 'badge-primary';
         break;
     }
-    console.log(val, badgeClass, 'handle class');
     return badgeClass;
+  }
+
+  sorting(val) {
+    this.options.columns = this.options.columns.map(x => {
+      if (x.field === val.field) {
+        x.sort = x.sort === 'asc' ? 'desc' : 'asc';
+      }
+      return x;
+    });
+    this.sort.emit(val);
   }
 
 }
