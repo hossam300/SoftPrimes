@@ -41,6 +41,8 @@ export class AgentsComponent implements OnInit {
   companyInput$ = new Subject<string>();
   companyLoading = false;
 
+  roleId: number;
+
   constructor(
     private settingsCrud: SettingsCrudsService,
     private route: ActivatedRoute,
@@ -61,7 +63,7 @@ export class AgentsComponent implements OnInit {
 
       } else {
         this.createMode = false;
-        this.settingsCrud.getDTOById(this.controller, +r.agentId).subscribe(agents => {
+        this.settingsCrud.getUserProfile(r.agentId).subscribe(agents => {
           this.agent = agents;
         });
       }
@@ -78,9 +80,10 @@ export class AgentsComponent implements OnInit {
 
   insertAgent() {
     this.agent.birthDate = this.getDate(this.birthdate);
+    this.agent.roleId = this.roleId;
     console.log(this.agent, 'fucken agent');
-    this.settingsCrud.insertAgent(this.agent).subscribe(result => {
-      if (result) {
+    this.settingsCrud.insertAgent(this.agent).subscribe(res => {
+      if (res) {
         this.router.navigate(['/settings/agents']);
       }
     });

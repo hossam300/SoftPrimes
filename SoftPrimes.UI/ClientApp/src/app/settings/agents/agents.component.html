@@ -11,52 +11,52 @@
       Please find the below information
     </p>
     <div class="row form-group">
-      <label for="fullNameAr" class="col-2 col-form-label col-form-label-sm">agent name Ar</label>
+      <label for="fullNameAr" class="col-2 col-form-label col-form-label-sm">Full name Ar</label>
       <div class="col-7 d-flex">
         <div class="input-group">
-          <input class="form-control" placeholder="agent name Ar"
+          <input class="form-control" placeholder="Full name Ar"
             [(ngModel)]="agent.fullNameAr" type="text" name="fullNameAr">
         </div>
       </div>
     </div>
     <div class="row form-group">
-      <label for="fullNameEn" class="col-2 col-form-label col-form-label-sm">agent name En</label>
+      <label for="fullNameEn" class="col-2 col-form-label col-form-label-sm">Full name En</label>
       <div class="col-7 d-flex">
         <div class="input-group">
-          <input class="form-control" placeholder="agent name En"
+          <input class="form-control" placeholder="Full name En"
             [(ngModel)]="agent.fullNameEn" type="text" name="fullNameEn">
         </div>
       </div>
     </div>
     <div class="row form-group">
-      <label for="username" class="col-2 col-form-label col-form-label-sm">agent username</label>
+      <label for="username" class="col-2 col-form-label col-form-label-sm">Username</label>
       <div class="col-7 d-flex">
         <div class="input-group">
-          <input class="form-control" placeholder="agent username"
+          <input class="form-control" placeholder="Username"
             [(ngModel)]="agent.userName" type="text" name="username">
         </div>
       </div>
     </div>
     <div class="row form-group">
-      <label for="password" class="col-2 col-form-label col-form-label-sm">agent password</label>
+      <label for="password" class="col-2 col-form-label col-form-label-sm">Password</label>
       <div class="col-7 d-flex">
         <div class="input-group">
-          <input class="form-control" placeholder="agent password"
+          <input class="form-control" placeholder="Password"
             [(ngModel)]="agent.password" type="text" name="password">
         </div>
       </div>
     </div>
     <div class="row form-group">
-      <label for="jobTitle" class="col-2 col-form-label col-form-label-sm">agent jobTitle</label>
+      <label for="jobTitle" class="col-2 col-form-label col-form-label-sm">JobTitle</label>
       <div class="col-7 d-flex">
         <div class="input-group">
-          <input class="form-control" placeholder="agent jobTitle"
+          <input class="form-control" placeholder="JobTitle"
             [(ngModel)]="agent.jobTitle" type="text" name="jobTitle">
         </div>
       </div>
     </div>
     <div class="row form-group">
-      <label for="mobile" class="col-2 col-form-label col-form-label-sm">agent mobile</label>
+      <label for="mobile" class="col-2 col-form-label col-form-label-sm">Mobile</label>
       <div class="col-7 d-flex">
         <div class="input-group">
           <input class="form-control" placeholder="agent mobile"
@@ -65,7 +65,7 @@
       </div>
     </div>
     <div class="row form-group">
-      <label for="email" class="required col-2 col-form-label col-form-label-sm">agent email</label>
+      <label for="email" class="required col-2 col-form-label col-form-label-sm">Email</label>
       <div class="col-7 d-flex">
         <div class="input-group">
           <input class="form-control" placeholder="agent email"
@@ -75,11 +75,11 @@
       </div>
     </div>
     <div class="row form-group">
-      <label for="roles" class="required col-2 col-form-label col-form-label-sm">agent roles</label>
+      <label for="roles" class="required col-2 col-form-label col-form-label-sm">Roles</label>
       <div class="col-7 d-flex">
         <div class="input-group">
           <ng-select class="w-100" [items]="roles$ | async" bindLabel="roleNameEn"
-            [(ngModel)]="agent.roleId" bindValue="id"
+            [(ngModel)]="roleId" bindValue="id"
             [loading]="rolesLoading" [typeahead]="rolesInput$"
             placeholder="choose a role">
           </ng-select>
