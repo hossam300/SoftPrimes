@@ -19,7 +19,7 @@ namespace SoftPrimes.Shared.ViewModels
     public string FullNameAr { get; set; }
     public string FullNameEn { get; set; }
     public string SupervisorId { get; set; }
-    public int RoleId { get; set; }
+    public int? RoleId { get; set; }
     public int CompanyId { get; set; }
     public AgentType AgentType { get; set; } = AgentType.NormalAgent;
     public bool IsTempPassword { get; set; } = false;

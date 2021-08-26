@@ -280,19 +280,19 @@ namespace SoftPrimes.Service.Services
         UserName = entity.UserName,
         Password = entity.Password,
         AgentType = entity.AgentType,
-        AgentRoles = new List<AgentRole>() { new AgentRole {
-        RoleId=entity.RoleId,
-        },
-        
+        AgentRoles = (entity.RoleId == null || entity.RoleId == 0) ? new List<AgentRole>() : new List<AgentRole>() { new AgentRole {
+        RoleId=(int)entity.RoleId,
         },
 
+        },
+        JobTitle=entity.JobTitle,
         BirthDate = entity.BirthDate,
-        CompanyId= entity.CompanyId,
-        Email= entity.Email,
-        FullNameAr=entity.FullNameAr,
-        FullNameEn=entity.FullNameEn,
-        SupervisorId= entity.SupervisorId,
-        Mobile=entity.Mobile,
+        CompanyId = entity.CompanyId,
+        Email = entity.Email,
+        FullNameAr = entity.FullNameAr,
+        FullNameEn = entity.FullNameEn,
+        SupervisorId = entity.SupervisorId,
+        Mobile = entity.Mobile,
         TempPassword = entity.IsTempPassword
       };
       Agent mm = _users.Insert(New_user);
