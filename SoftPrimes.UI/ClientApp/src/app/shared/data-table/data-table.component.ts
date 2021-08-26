@@ -55,4 +55,30 @@ export class DataTableComponent implements OnInit {
     this.skip.emit(skipVal);
   }
 
+  handleBadgeClass(val) {
+    let badgeClass = '';
+    switch (val) {
+      case 1:
+        badgeClass = 'badge-secondary';
+        break;
+      case 2:
+        badgeClass = 'badge-primary';
+        break;
+      case 3:
+        badgeClass = 'badge-success';
+        break;
+      case 4:
+        badgeClass = 'badge-warning';
+        break;
+      case 5:
+        badgeClass = 'badge-danger';
+        break;
+      default:
+        badgeClass = 'badge-primary';
+        break;
+    }
+    console.log(val, badgeClass, 'handle class');
+    return badgeClass;
+  }
+
 }

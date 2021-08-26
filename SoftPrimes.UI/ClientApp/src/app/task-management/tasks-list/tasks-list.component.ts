@@ -27,11 +27,12 @@ export class TasksListComponent implements OnInit {
     this.options = {
       controller: 'TourAgents',
       columns: [
+        { name: 'tourName', field: 'tourNameEn', type: 'tour' },
         { name: 'agentName', field: 'fullNameAr', type: 'agent' },
         { name: 'tourType', field: 'tourType', type: 'tourType' },
         { name: 'scheduleStart', field: 'tourDate', type: 'date' },
         { name: 'scheduleEnd', field: 'estimatedEndDate', type: 'date' },
-        { name: 'scheduleCompleted', field: 'tourState', type: 'tourState' },
+        { name: 'tourStatus', field: 'tourState', type: 'tourState' },
         { name: '', field: '' },
       ]
     };
