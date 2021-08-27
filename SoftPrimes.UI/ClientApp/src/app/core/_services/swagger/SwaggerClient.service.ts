@@ -357,11 +357,14 @@ export class SwaggerClient {
     }
 
     /**
+     * @param roleId (optional) 
      * @param body (optional) 
      * @return Success
      */
-    apiAccountInsertNewUsersPost(body: AgentDetailsDTO): Observable<AgentDTO[]> {
-        let url_ = this.baseUrl + "/api/Account/InsertNewUsers";
+    apiAccountInsertNewUsersPost(roleId: number, body: AgentDetailsDTO): Observable<AgentDTO[]> {
+        let url_ = this.baseUrl + "/api/Account/InsertNewUsers?";
+        if (roleId !== undefined)
+            url_ += "roleId=" + encodeURIComponent("" + roleId) + "&"; 
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(body);
