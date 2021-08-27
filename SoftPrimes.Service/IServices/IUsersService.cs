@@ -21,7 +21,7 @@ namespace SoftPrimes.Service.IServices
         AuthTicketDTO GetUserAuthTicket(string userName);
         bool ResetPassword(string email);
         AgentDTO AddUserImage(string decryptedUserId, byte[] profileImage);
-        IEnumerable<AgentDTO> InsertNewUsers(AgentDetailsDTO entities);
+        IEnumerable<AgentDTO> InsertNewUsers(int roleId,AgentDetailsDTO entities);
         AgentDTO UpdateUser(AgentDetailsDTO entitie);
         Task<bool> ChangeTempPassword(string userName, string newPassword);
         void InsertLoginLog(AgentLoginLog agentLoginLog);

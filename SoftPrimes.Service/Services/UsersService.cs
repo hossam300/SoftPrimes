@@ -262,7 +262,7 @@ namespace SoftPrimes.Service.Services
             }
         }
 
-        public IEnumerable<AgentDTO> InsertNewUsers(AgentDetailsDTO entity)
+        public IEnumerable<AgentDTO> InsertNewUsers(int roleId,AgentDetailsDTO entity)
         {
             string pass = "";
             pass = entity.Password;
@@ -280,13 +280,13 @@ namespace SoftPrimes.Service.Services
                 UserName = entity.UserName,
                 Password = entity.Password,
                 AgentType = entity.AgentType,
-                AgentRoles = (entity.RoleId == null || entity.RoleId == 0) ?
+                AgentRoles = (roleId == null || roleId == 0) ?
                 new List<AgentRole>() :
                 new List<AgentRole>()
                 {
                     new AgentRole
                     {
-                        RoleId=(int)entity.RoleId,
+                        RoleId=(int)roleId,
                     },
                 },
                 JobTitle = entity.JobTitle,

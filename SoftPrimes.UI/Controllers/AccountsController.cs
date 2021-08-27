@@ -141,7 +141,7 @@ namespace SoftPrimes.UI.Controllers
         [HttpPost, Route("InsertNewUsers")]
         public IEnumerable<AgentDTO> InsertNewUsers(int roleId,AgentDetailsDTO entities)
         {
-            return _usersService.InsertNewUsers(entities);
+            return _usersService.InsertNewUsers(roleId, entities);
         }
 
         [HttpPut, Route("UpdateUsers")]
