@@ -2,11 +2,11 @@ import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { environment } from 'src/environments/environment';
 
 
-interface Marker {
+export interface Marker {
   lat: number;
   lng: number;
   label?: string;
-  draggable: boolean;
+  draggable?: boolean;
 }
 
 @Component({

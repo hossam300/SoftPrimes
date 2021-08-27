@@ -83,13 +83,13 @@ export class DataTableComponent implements OnInit {
   }
 
   sorting(val) {
+    this.sort.emit(val);
     this.options.columns = this.options.columns.map(x => {
       if (x.field === val.field) {
-        x.sort = x.sort === 'asc' ? 'desc' : 'asc';
+        x.sort = val.sort === 'asc' ? 'desc' : 'asc';
       }
       return x;
     });
-    this.sort.emit(val);
   }
 
 }

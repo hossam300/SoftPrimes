@@ -1,6 +1,7 @@
 import { TaskManagementService } from './../../core/_services/task-management.service';
 import { Component, OnInit } from '@angular/core';
 import { Sort, TourAgentDTO } from 'src/app/core/_services/swagger/SwaggerClient.service';
+import { Marker } from './../../shared/gmap/gmap.component';
 
 @Component({
   selector: 'app-tasks-list',
@@ -13,6 +14,7 @@ export class TasksListComponent implements OnInit {
   take = 10; // pageSize
   skip = 0;
   count: number;
+  markers: Marker[] = [];
 
   constructor(
     private taskManagementService: TaskManagementService
@@ -52,5 +54,18 @@ export class TasksListComponent implements OnInit {
     console.log(event, sort, 'start sorting');
     this.getAll(this.take, this.skip, sort);
   }
+
+  // getCheckPoints() {
+  //   this.toursList.forEach(tour => {
+  //     tour.checkPoints.forEach(checkPoint => {
+  //       this.markers.push({
+  //         lat: checkPoint.lat,
+  //         lng:,
+  //         label:,
+  //         draggable: false
+  //       });
+  //     });
+  //   });
+  // }
 
 }
