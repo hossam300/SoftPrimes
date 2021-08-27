@@ -8,6 +8,9 @@
     <tr *ngFor="let row of data">
       <td *ngFor="let col of options.columns" [class.td-actions.text-right]="!col.field">
         <span *ngIf="col.field && !col.type">{{row[col.field]}}</span>
+        <span *ngIf="col.field && col.type === 'agentType'">
+          {{agentType[row[col.field]]}}
+        </span>
         <span *ngIf="col.type === 'arr'" class="fa fa-external-link cursor-pointer text-20"
           (click)="open(detailsModal, row, col.field)"></span>
         <div class="dropdown" *ngIf="!col.field && !col.name">
@@ -82,7 +85,7 @@
   </div>
   <div class="modal-body">
     <div>
-      <span *ngFor="let item of activeRow[activeCol]" class="badge badge-info mx-2 text-14">
+      <span *ngFor="let item of activeRow[activeCol]" class="badge badge-primary mx-2 text-14">
         {{item.permission.permissionNameAr}}
       </span>
     </div>

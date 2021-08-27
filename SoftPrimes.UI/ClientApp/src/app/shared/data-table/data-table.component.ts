@@ -25,6 +25,8 @@ export class DataTableComponent implements OnInit {
   @Input() pageSize = 5;
   @Input() count;
   @Output() skip = new EventEmitter<number>();
+  @Output() sort = new EventEmitter<any>();
+  sortDirection = true;
   currentPage = 1;
   tourType = TourTypes;
   tourState = TourState;
@@ -53,6 +55,41 @@ export class DataTableComponent implements OnInit {
   emitPagination() {
     const skipVal = (this.currentPage - 1) * this.pageSize;
     this.skip.emit(skipVal);
+  }
+
+  handleBadgeClass(val) {
+    let badgeClass = '';
+    switch (val) {
+      case 1:
+        badgeClass = 'badge-secondary';
+        break;
+      case 2:
+        badgeClass = 'badge-primary';
+        break;
+      case 3:
+        badgeClass = 'badge-success';
+        break;
+      case 4:
+        badgeClass = 'badge-warning';
+        break;
+      case 5:
+        badgeClass = 'badge-danger';
+        break;
+      default:
+        badgeClass = 'badge-primary';
+        break;
+    }
+    return badgeClass;
+  }
+
+  sorting(val) {
+    this.options.columns = this.options.columns.map(x => {
+      if (x.field === val.field) {
+        x.sort = x.sort === 'asc' ? 'desc' : 'asc';
+      }
+      return x;
+    });
+    this.sort.emit(val);
   }
 
 }

@@ -360,7 +360,7 @@ export class SwaggerClient {
      * @param body (optional) 
      * @return Success
      */
-    apiAccountInsertNewUsersPost(body: AgentDTO[]): Observable<AgentDTO[]> {
+    apiAccountInsertNewUsersPost(body: AgentDetailsDTO): Observable<AgentDTO[]> {
         let url_ = this.baseUrl + "/api/Account/InsertNewUsers";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -4716,6 +4716,68 @@ export class SwaggerClient {
             }));
         }
         return _observableOf<boolean>(<any>null);
+    }
+
+    /**
+     * @param searchText (optional) 
+     * @param take (optional) 
+     * @return Success
+     */
+    apiCompaniesGetCompanyLookupsGet(searchText: string, take: number): Observable<CompanyDTO[]> {
+        let url_ = this.baseUrl + "/api/Companies/GetCompanyLookups?";
+        if (searchText !== undefined)
+            url_ += "searchText=" + encodeURIComponent("" + searchText) + "&"; 
+        if (take !== undefined)
+            url_ += "take=" + encodeURIComponent("" + take) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processApiCompaniesGetCompanyLookupsGet(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processApiCompaniesGetCompanyLookupsGet(<any>response_);
+                } catch (e) {
+                    return <Observable<CompanyDTO[]>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<CompanyDTO[]>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processApiCompaniesGetCompanyLookupsGet(response: HttpResponseBase): Observable<CompanyDTO[]> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (resultData200 && resultData200.constructor === Array) {
+                result200 = [];
+                for (let item of resultData200)
+                    result200.push(CompanyDTO.fromJS(item));
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<CompanyDTO[]>(<any>null);
     }
 
     /**
@@ -10540,12 +10602,19 @@ export interface IMessageDTO {
 
 export class AgentDetailsDTO implements IAgentDetailsDTO {
     id?: string;
+    userName?: string;
+    password?: string;
     email?: string;
     jobTitle?: string;
     mobile?: string;
     birthDate?: Date;
     fullNameAr?: string;
     fullNameEn?: string;
+    supervisorId?: string;
+    roleId?: number;
+    companyId?: number;
+    agentType?: AgentType;
+    isTempPassword?: boolean;
 
     constructor(data?: IAgentDetailsDTO) {
         if (data) {
@@ -10559,12 +10628,19 @@ export class AgentDetailsDTO implements IAgentDetailsDTO {
     init(data?: any) {
         if (data) {
             this.id = data["id"];
+            this.userName = data["userName"];
+            this.password = data["password"];
             this.email = data["email"];
             this.jobTitle = data["jobTitle"];
             this.mobile = data["mobile"];
             this.birthDate = data["birthDate"] ? new Date(data["birthDate"].toString()) : <any>undefined;
             this.fullNameAr = data["fullNameAr"];
             this.fullNameEn = data["fullNameEn"];
+            this.supervisorId = data["supervisorId"];
+            this.roleId = data["roleId"];
+            this.companyId = data["companyId"];
+            this.agentType = data["agentType"];
+            this.isTempPassword = data["isTempPassword"];
         }
     }
 
@@ -10578,24 +10654,38 @@ export class AgentDetailsDTO implements IAgentDetailsDTO {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id;
+        data["userName"] = this.userName;
+        data["password"] = this.password;
         data["email"] = this.email;
         data["jobTitle"] = this.jobTitle;
         data["mobile"] = this.mobile;
         data["birthDate"] = this.birthDate ? this.birthDate.toISOString() : <any>undefined;
         data["fullNameAr"] = this.fullNameAr;
         data["fullNameEn"] = this.fullNameEn;
+        data["supervisorId"] = this.supervisorId;
+        data["roleId"] = this.roleId;
+        data["companyId"] = this.companyId;
+        data["agentType"] = this.agentType;
+        data["isTempPassword"] = this.isTempPassword;
         return data; 
     }
 }
 
 export interface IAgentDetailsDTO {
     id?: string;
+    userName?: string;
+    password?: string;
     email?: string;
     jobTitle?: string;
     mobile?: string;
     birthDate?: Date;
     fullNameAr?: string;
     fullNameEn?: string;
+    supervisorId?: string;
+    roleId?: number;
+    companyId?: number;
+    agentType?: AgentType;
+    isTempPassword?: boolean;
 }
 
 export class Sort implements ISort {

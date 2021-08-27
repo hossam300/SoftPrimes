@@ -262,39 +262,77 @@ namespace SoftPrimes.Service.Services
             }
         }
 
-        public IEnumerable<AgentDTO> InsertNewUsers(IEnumerable<AgentDTO> entities)
+        public IEnumerable<AgentDTO> InsertNewUsers(AgentDetailsDTO entity)
         {
             string pass = "";
-            foreach (AgentDTO entity in entities)
+            pass = entity.Password;
+            string PasswordHash = _securityService.GetSha256Hash(entity.Password);
+            if (string.IsNullOrEmpty(entity.Password))
             {
-                pass = entity.Password;
-                string PasswordHash = _securityService.GetSha256Hash(entity.Password);
-                if (string.IsNullOrEmpty(entity.Password))
-                {
-                    return null;
-                }
-                entity.Password = PasswordHash;
+                return null;
             }
-            List<Agent> users = new List<Agent>();
-            foreach (AgentDTO user in entities)
-            {
-                Agent New_user = _Mapper.Map(user, typeof(AgentDTO), typeof(Agent)) as Agent;
-                Agent mm = _users.Insert(New_user);
-                users.Add(mm);
+            entity.Password = PasswordHash;
 
-            }
+            List<Agent> users = new List<Agent>();
+
+            Agent New_user = new Agent
+            {
+                UserName = entity.UserName,
+                Password = entity.Password,
+                AgentType = entity.AgentType,
+                AgentRoles = (entity.RoleId == null || entity.RoleId == 0) ?
+                new List<AgentRole>() :
+                new List<AgentRole>()
+                {
+                    new AgentRole
+                    {
+                        RoleId=(int)entity.RoleId,
+                    },
+                },
+                JobTitle = entity.JobTitle,
+                BirthDate = entity.BirthDate,
+                CompanyId = entity.CompanyId,
+                Email = entity.Email,
+                FullNameAr = entity.FullNameAr,
+                FullNameEn = entity.FullNameEn,
+                SupervisorId = entity.SupervisorId,
+                Mobile = entity.Mobile,
+                TempPassword = entity.IsTempPassword
+            };
+            Agent mm = _users.Insert(New_user);
+            users.Add(mm);
             return users.Select(u => new AgentDTO { Id = u.Id.ToString(), UserName = u.UserName }).ToList();
         }
 
         public AgentDTO UpdateUser(AgentDetailsDTO oldAgent)
         {
             var OldEntity = this._UnitOfWork.GetRepository<Agent>().GetById(oldAgent.Id);
-            OldEntity.Email = oldAgent.Email;
-            OldEntity.BirthDate = oldAgent.BirthDate;
+            OldEntity.Email = oldAgent.Email != null ? oldAgent.Email : OldEntity.Email;
+            OldEntity.BirthDate = oldAgent.BirthDate != null || oldAgent.BirthDate != DateTime.MinValue ? oldAgent.BirthDate : OldEntity.BirthDate;
             OldEntity.FullNameAr = oldAgent.FullNameAr;
             OldEntity.FullNameEn = oldAgent.FullNameEn;
             OldEntity.JobTitle = oldAgent.JobTitle;
             OldEntity.Mobile = oldAgent.Mobile;
+            OldEntity.AgentType = oldAgent.AgentType;
+            OldEntity.UserName = oldAgent.UserName != null || oldAgent.UserName != "" ? oldAgent.UserName : OldEntity.UserName;
+            OldEntity.CompanyId = oldAgent.CompanyId != null || oldAgent.CompanyId != 0 ? oldAgent.CompanyId : OldEntity.CompanyId;
+            OldEntity.SupervisorId = oldAgent.SupervisorId != null || oldAgent.SupervisorId != "" ? oldAgent.SupervisorId : OldEntity.SupervisorId;
+            if (oldAgent.Password != "" && oldAgent.Password != null)
+            {
+                string pass = "";
+                pass = oldAgent.Password;
+                string PasswordHash = _securityService.GetSha256Hash(oldAgent.Password);
+                if (string.IsNullOrEmpty(oldAgent.Password))
+                {
+                    return null;
+                }
+                oldAgent.Password = PasswordHash;
+            }
+            if (oldAgent.RoleId != null || oldAgent.RoleId != 0)
+            {
+                this._UnitOfWork.GetRepository<AgentRole>().Delete(OldEntity.AgentRoles);
+                OldEntity.AgentRoles.Add(new AgentRole { RoleId = (int)oldAgent.RoleId, AgentId = oldAgent.Id });
+            }
             this._UnitOfWork.GetRepository<Agent>().Update(OldEntity);
             return _Mapper.Map(OldEntity, typeof(Agent), typeof(AgentDTO)) as AgentDTO;
         }
@@ -347,7 +385,7 @@ namespace SoftPrimes.Service.Services
         {
             _uow.GetRepository<AgentLoginLog>().Insert(agentLoginLog);
         }
-        public List<AgentDTO> GetAgentLookups(string searchText,int take)
+        public List<AgentDTO> GetAgentLookups(string searchText, int take)
         {
             if (searchText == "" || string.IsNullOrEmpty(searchText) || searchText == null)
             {

@@ -3,6 +3,12 @@ import { Component, EventEmitter, Input, OnInit, Output, OnChanges } from '@angu
 import { Router, ActivatedRoute } from '@angular/router';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 
+export enum AgentType {
+  NormalAgent = 1,
+  Supervisor = 2,
+  Admin = 3
+}
+
 @Component({
   selector: 'app-settings-table',
   templateUrl: './settings-table.component.html',
@@ -19,6 +25,7 @@ export class SettingsTableComponent {
   activeQrCode;
   activeRow;
   activeCol;
+  agentType = AgentType;
 
   constructor(
     private router: Router,

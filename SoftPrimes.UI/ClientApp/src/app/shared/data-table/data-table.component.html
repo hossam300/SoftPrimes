@@ -1,7 +1,9 @@
 <table class="table bg-white mb-5">
   <thead>
     <tr>
-      <th scope="col" *ngFor="let column of options.columns">{{column.name}}</th>
+      <th scope="col" (click)="sorting(column)"
+        class="cursor-pointer" [ngClass]="column.sort"
+        *ngFor="let column of options.columns">{{column.name}}</th>
     </tr>
   </thead>
   <tbody>
@@ -16,11 +18,17 @@
         <ng-container *ngIf="col.type === 'agent'">
           {{row.agent[col.field]}}
         </ng-container>
+        <ng-container *ngIf="col.type === 'tour'">
+          {{row.tour[col.field]}}
+        </ng-container>
         <ng-container *ngIf="col.type === 'tourType'">
           {{tourType[row[col.field]]}}
         </ng-container>
         <ng-container *ngIf="col.type === 'tourState'">
-          {{tourState[row[col.field]]}}
+          <span class="badge"
+            [ngClass]="handleBadgeClass(row[col.field])">
+            {{tourState[row[col.field]]}}
+          </span>
         </ng-container>
       </td>
       <td class="td-actions text-right">
