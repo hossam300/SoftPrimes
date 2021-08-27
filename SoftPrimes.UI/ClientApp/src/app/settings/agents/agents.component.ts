@@ -82,7 +82,7 @@ export class AgentsComponent implements OnInit {
     this.agent.birthDate = this.getDate(this.birthdate);
     this.agent.roleId = this.roleId;
     console.log(this.agent, 'fucken agent');
-    this.settingsCrud.insertAgent(this.roleId,this.agent).subscribe(res => {
+    this.settingsCrud.insertAgent(this.roleId, this.agent).subscribe(res => {
       if (res) {
         this.router.navigate(['/settings/agents']);
       }
