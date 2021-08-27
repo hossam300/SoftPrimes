@@ -1,7 +1,9 @@
+import { Filter } from './../../core/_services/swagger/SwaggerClient.service';
 import { TaskManagementService } from './../../core/_services/task-management.service';
 import { Component, OnInit } from '@angular/core';
 import { Sort, TourAgentDTO } from 'src/app/core/_services/swagger/SwaggerClient.service';
 import { Marker } from './../../shared/gmap/gmap.component';
+import { TourState, TourTypes } from 'src/app/core/_models/task-management';
 
 @Component({
   selector: 'app-tasks-list',
@@ -15,6 +17,16 @@ export class TasksListComponent implements OnInit {
   skip = 0;
   count: number;
   markers: Marker[] = [];
+  states = TourState;
+  types = TourTypes;
+  tourStates: Filter[] = this.convertEnumToFiltersArray(TourState, 'tourState', 'or');
+  tourTypes: Filter[] = this.convertEnumToFiltersArray(TourTypes, 'tourType', 'or');
+  filters = {
+    tourState: [],
+    tourType: [],
+    tourName: '',
+    agentName: ''
+  };
 
   constructor(
     private taskManagementService: TaskManagementService
@@ -23,6 +35,19 @@ export class TasksListComponent implements OnInit {
   ngOnInit() {
     this.getAll(this.take, this.skip);
     this.initTableColumns();
+  }
+
+  convertEnumToFiltersArray(enm, field, operator) {
+    const filters = [];
+
+    for (const [propertyKey, propertyValue] of Object.entries(enm)) {
+          if (!Number.isNaN(Number(propertyKey))) {
+            continue;
+        }
+        const filter = new Filter({ field: field, operator: 'eq', value: (<string>propertyValue) });
+        filters.push(filter);
+    }
+    return filters;
   }
 
   initTableColumns() {
@@ -53,6 +78,25 @@ export class TasksListComponent implements OnInit {
     const sort = [new Sort({ field: event.sortField, dir: direction })];
     console.log(event, sort, 'start sorting');
     this.getAll(this.take, this.skip, sort);
+  }
+
+  buildFilter(event, inputType) {
+    this.filters[inputType] = new Filter(
+      { field: inputType === 'agentName' ? 'agent["fullNameEn"]' : 'tour["tourNameEn"]',
+      operator: 'eq', value: (event.target.value) }
+    );
+  }
+
+  applyFilters() {
+    const filters = [...this.filters.tourState, ...this.filters.tourType];
+    if (this.filters.tourName) {
+      filters.push(this.filters.tourName);
+    }
+    if (this.filters.agentName) {
+      filters.push(this.filters.agentName);
+    }
+    console.log(filters, 'filters');
+    this.getAll(this.take, this.skip, [], filters);
   }
 
   // getCheckPoints() {

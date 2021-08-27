@@ -11,15 +11,11 @@
 <div class="filter-box mb-3">
   <div class="align-items-center d-flex justify-content-between mb-3">
     <div class="dropdown dropdown-filters-container d-inline">
-      <button class=" btn btn-outline-primary"
-        type="button" data-toggle="collapse"
-        data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+      <button class=" btn btn-outline-primary" type="button" data-toggle="collapse" data-target="#collapseExample"
+        aria-expanded="false" aria-controls="collapseExample">
         <span class="text-14 fa fa-filter text-primary-light"></span>
         <!-- <span class="badge badge-danger"><small>4</small></span> -->
       </button>
-    </div>
-    <div class="search-group search-custom-filter">
-      <input type="text" class="form-control" placeholder="search" />
     </div>
   </div>
 
@@ -28,9 +24,6 @@
       <div class="col-12">
         <div class="card col-12 filter p-0 shadow-lg-5">
           <div class="card-header text-center">
-            <button type="button" class="close" data-dismiss="dropdown" aria-label="Close">
-              <span class="icon-close"></span>
-            </button>
             <span class="text-primary d-block text-uppercase">
               <strong>Filters</strong>
               <strong class="text-secondary-blue d-block mt-1">Active Filters (0)</strong>
@@ -42,81 +35,49 @@
                 <div class="row">
                   <div class="col-12 col-md-4">
                     <div class="form-group">
-                      <label for="validationCustom01">Claim Number</label>
-                      <input type="text" class="form-control" placeholder="" dir="auto" value="25454-5523-521"
-                        id="validationCustom01" />
-                    </div>
-                  </div>
-                  <div class="col-12 col-md-4">
-                    <div class="form-group">
-                      <label for="validationCustom01">Claim Number</label>
-                      <input type="text" class="form-control" placeholder="" dir="auto" value="25454-5523-521"
-                        id="validationCustom01" />
+                      <label for="tourName">Tour name</label>
+                      <input type="text" class="form-control" placeholder="tour name"
+                        (change)="buildFilter($event, 'tourName')" id="tourName" />
                     </div>
                   </div>
 
                   <div class="col-12 col-md-4">
                     <div class="form-group">
-                      <label for="validationCustom06">Datepicker</label>
-                      <input id="validationCustom06" type="text"
-                        class="form-control calendar-control calendar-both-control" />
+                      <label for="agentName">Agent name</label>
+                      <input type="text" class="form-control" placeholder="agent name"
+                        (change)="buildFilter($event, 'agentName')" id="agentName" />
                     </div>
                   </div>
+
                   <div class="col-12 col-md-4">
                     <div class="form-group">
-                      <label for="validationCustom010">Contract Number</label>
-                      <input type="text" class="form-control" placeholder="" dir="auto" value="25454-5523-521"
-                        id="validationCustom010" />
+                      <label for="tourTypes">Tour types</label>
+                      <ng-select class="w-100" [items]="tourTypes" bindLabel="value"
+                        [(ngModel)]="filters.tourType" id="tourTypes"
+                        [multiple]="true" placeholder="choose tour type">
+                        <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
+                          {{types[item.value]}}
+                        </ng-template>
+                        <ng-template ng-label-tmp let-item="item">
+                          <span class="px-2">{{types[item.value]}}</span>
+                        </ng-template>
+                      </ng-select>
                     </div>
                   </div>
+
                   <div class="col-12 col-md-4">
                     <div class="form-group">
-                      <label for="validationCustom02">Invoice Number</label>
-                      <input type="text" class="form-control" placeholder="" dir="auto" value="25454-5523-521"
-                        id="validationCustom02" />
-                    </div>
-                  </div>
-                  <div class="col-12 col-md-4">
-                    <div class="form-group">
-                      <label for="validationCustom040">Stage</label>
-                      <select class="form-control" id="validationCustom040">
-                        <option selected disabled value="">
-                          Select
-                        </option>
-                        <option>...</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div class="col-12 col-md-4">
-                    <div class="form-group">
-                      <label for="validationCustom03">Claim Number</label>
-                      <input type="text" class="form-control" placeholder="" dir="auto" value="25454-5523-521"
-                        id="validationCustom03" />
-                    </div>
-                  </div>
-                  <div class="col-12 col-md-4">
-                    <div class="form-group">
-                      <label for="validationCustom041">Contract Number</label>
-                      <input type="text" class="form-control" placeholder="" dir="auto" value="25454-5523-521"
-                        id="validationCustom041" />
-                    </div>
-                  </div>
-                  <div class="col-12 col-md-4">
-                    <div class="form-group">
-                      <label for="validationCustom05">Invoice Number</label>
-                      <input type="text" class="form-control" placeholder="" dir="auto" value="25454-5523-521"
-                        id="validationCustom05" />
-                    </div>
-                  </div>
-                  <div class="col-12 col-md-4">
-                    <div class="form-group">
-                      <label for="validationCustom04">Stage</label>
-                      <select class="form-control" id="validationCustom04">
-                        <option selected disabled value="">
-                          Select
-                        </option>
-                        <option>...</option>
-                      </select>
+                      <label for="tourStates">Tour state</label>
+                      <ng-select class="w-100" [items]="tourStates" bindLabel="value"
+                        [(ngModel)]="filters.tourState" id="tourStates"
+                        [multiple]="true" placeholder="choose tour state">
+                        <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
+                          {{states[item.value]}}
+                        </ng-template>
+                        <ng-template ng-label-tmp let-item="item">
+                          <span class="px-2">{{types[item.value]}}</span>
+                        </ng-template>
+                      </ng-select>
                     </div>
                   </div>
                 </div>
@@ -128,7 +89,7 @@
               <button type="button" class="btn btn-md btn-outline-danger">
                 Reset
               </button>
-              <button type="button" class="btn btn-md btn-primary">
+              <button type="button" class="btn btn-md btn-primary" (click)="applyFilters()">
                 Apply
               </button>
             </div>
