@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Reflection;
 
@@ -36,7 +37,7 @@ namespace HelperServices.LinqHelpers
                         values[i] = null;
                 }
                 // Use the Where method of Dynamic Linq to filter the data
-                //queryable = queryable.Where(predicate, values);
+                queryable = queryable.Where(predicate, values);
             }
 
             return queryable;
