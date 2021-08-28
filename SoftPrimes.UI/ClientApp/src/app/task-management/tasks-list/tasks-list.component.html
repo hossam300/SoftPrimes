@@ -75,7 +75,7 @@
                           {{states[item.value]}}
                         </ng-template>
                         <ng-template ng-label-tmp let-item="item">
-                          <span class="px-2">{{types[item.value]}}</span>
+                          <span class="px-2">{{states[item.value]}}</span>
                         </ng-template>
                       </ng-select>
                     </div>
@@ -86,7 +86,7 @@
           </div>
           <div class="card-footer">
             <div class="row justify-content-end">
-              <button type="button" class="btn btn-md btn-outline-danger">
+              <button type="button" class="btn btn-md btn-outline-danger" (click)='resetFilters()'>
                 Reset
               </button>
               <button type="button" class="btn btn-md btn-primary" (click)="applyFilters()">

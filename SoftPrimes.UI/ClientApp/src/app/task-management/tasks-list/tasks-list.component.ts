@@ -54,8 +54,8 @@ export class TasksListComponent implements OnInit {
     this.options = {
       controller: 'TourAgents',
       columns: [
-        { name: 'tourName', field: 'tourNameEn', sortField: 'tour["tourNameEn"]',  type: 'tour', sort: 'asc' },
-        { name: 'agentName', field: 'fullNameEn', sortField: 'agent["fullNameEn"]', type: 'agent', sort: 'asc' },
+        { name: 'tourName', field: 'tourNameEn', sortField: 'tour.tourNameEn',  type: 'tour', sort: 'asc' },
+        { name: 'agentName', field: 'fullNameEn', sortField: 'agent.fullNameEn', type: 'agent', sort: 'asc' },
         { name: 'tourType', field: 'tourType', sortField: 'tourType', type: 'tourType', sort: 'asc' },
         { name: 'scheduleStart', field: 'tourDate', sortField: 'tourDate', type: 'date', sort: 'asc' },
         { name: 'scheduleEnd', field: 'estimatedEndDate', sortField: 'estimatedEndDate', type: 'date', sort: 'asc' },
@@ -81,8 +81,12 @@ export class TasksListComponent implements OnInit {
   }
 
   buildFilter(event, inputType) {
+    if (!event.target.value) {
+      this.filters[inputType] = '';
+      return;
+    }
     this.filters[inputType] = new Filter(
-      { field: inputType === 'agentName' ? 'agent["fullNameEn"]' : 'tour["tourNameEn"]',
+      { field: inputType === 'agentName' ? 'agent.fullNameEn' : 'tour.tourNameEn',
       operator: 'eq', value: (event.target.value) }
     );
   }
@@ -97,6 +101,16 @@ export class TasksListComponent implements OnInit {
     }
     console.log(filters, 'filters');
     this.getAll(this.take, this.skip, [], filters);
+  }
+
+  resetFilters() {
+    this.filters = {
+      tourState: [],
+      tourType: [],
+      tourName: '',
+      agentName: ''
+    };
+    this.getAll(this.take, this.skip);
   }
 
   // getCheckPoints() {
