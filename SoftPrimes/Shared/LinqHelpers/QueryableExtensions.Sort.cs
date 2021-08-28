@@ -17,7 +17,7 @@ namespace HelperServices.LinqHelpers
             {
                 // Create ordering expression e.g. Field1 asc, Field2 desc
                 var ordering = String.Join(",", sort.ToExpression());
-
+                queryable = queryable.OrderBy(x => ordering);
                 // Use the OrderBy method of Dynamic Linq to sort the data
                 foreach (var item in sort.Sorts)
                 {
@@ -26,8 +26,7 @@ namespace HelperServices.LinqHelpers
                     // Use the OrderBy method of Dynamic Linq to sort the data
                     queryable = queryable.OrderBy(x => ordering);
                 }
-                return queryable.OrderBy(x => ordering);
-
+                return queryable;
             }
 
             return queryable;
