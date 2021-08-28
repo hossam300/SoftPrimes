@@ -59,18 +59,22 @@ export class AgentsComponent implements OnInit {
     this.routerSubscription = this.route.params.subscribe(r => {
       if (!r.agentId) {
         this.createMode = true;
-        this.agent = new AgentDTO();
-
+        this.agent = new AgentDetailsDTO();
       } else {
         this.createMode = false;
-        this.settingsCrud.getUserProfile(r.agentId).subscribe(agents => {
-          this.agent = agents;
+        this.agent = new AgentDTO();
+        this.settingsCrud.getUserProfile(r.agentId).subscribe(agent => {
+          this.birthdate = this.setDate(agent.birthDate);
+          this.roleId = agent.agentRoles[0].roleId;
+          this.agent = agent;
         });
       }
     });
   }
 
   updateAgent() {
+    this.agent.birthDate = this.getDate(this.birthdate);
+    this.agent.roleId = this.roleId;
     this.settingsCrud.updateAgent(this.agent).subscribe(result => {
       if (result) {
         this.router.navigate(['/settings/agents']);
@@ -82,7 +86,7 @@ export class AgentsComponent implements OnInit {
     this.agent.birthDate = this.getDate(this.birthdate);
     this.agent.roleId = this.roleId;
     console.log(this.agent, 'fucken agent');
-    this.settingsCrud.insertAgent(this.roleId,this.agent).subscribe(res => {
+    this.settingsCrud.insertAgent(this.roleId, this.agent).subscribe(res => {
       if (res) {
         this.router.navigate(['/settings/agents']);
       }
@@ -140,8 +144,17 @@ export class AgentsComponent implements OnInit {
     });
   }
 
-  getDate(date) {
+  getDate(date: NgbDateStruct) {
     return new Date(date.year, date.month, date.day);
+  }
+
+  setDate(date: Date) {
+    const d = new Date(date);
+    return {
+      year: d.getFullYear(),
+      month: d.getMonth() + 1,
+      day: d.getDate()
+    };
   }
 
 }

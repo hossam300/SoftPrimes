@@ -1,18 +1,6 @@
 import { TaskManagementService } from './../../core/_services/task-management.service';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-
-export enum TourTypes {
-  'TourPoints' = 1,
-  'Monitoring'
-}
-
-export enum TourState {
-  New = 1,
-  InProgress = 2,
-  Complete = 3,
-  NotCompleted = 4,
-  Cancled = 5
-}
+import { TourState, TourTypes } from 'src/app/core/_models/task-management';
 
 @Component({
   selector: 'app-data-table',
@@ -83,13 +71,13 @@ export class DataTableComponent implements OnInit {
   }
 
   sorting(val) {
+    this.sort.emit(val);
     this.options.columns = this.options.columns.map(x => {
       if (x.field === val.field) {
-        x.sort = x.sort === 'asc' ? 'desc' : 'asc';
+        x.sort = val.sort === 'asc' ? 'desc' : 'asc';
       }
       return x;
     });
-    this.sort.emit(val);
   }
 
 }

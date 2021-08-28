@@ -75,6 +75,10 @@ label.required:after {
   background-color: #fff !important;
 }
 
+ngb-datepicker .btn-light {
+  box-shadow: none !important;
+}
+
 /* utilities */
 .overlay {
   position: absolute;

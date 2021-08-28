@@ -66,8 +66,8 @@ export class SettingsCrudsService {
     return this.swagger.apiCompaniesGetCompanyLookupsGet(searchTxt, take);
   }
 
-  insertAgent(roleId,dto) {
-    return this.swagger.apiAccountInsertNewUsersPost(roleId,dto);
+  insertAgent(roleId, dto) {
+    return this.swagger.apiAccountInsertNewUsersPost(roleId, dto);
   }
 
   updateAgent(dto) {

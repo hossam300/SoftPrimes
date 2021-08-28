@@ -11,7 +11,7 @@ export class TaskManagementService {
   ) { }
 
   getAllTourAgents(take = 10, skip = 0, sort = [], filters = []) {
-    return this.swagger.apiTourAgentsGetAllGet(take, skip, sort, undefined, undefined, undefined, undefined, undefined, false);
+    return this.swagger.apiTourAgentsGetAllGet(take, skip, sort, undefined, undefined, undefined, undefined, filters, false);
   }
 
   editTourAgent(id) {

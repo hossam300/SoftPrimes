@@ -4,7 +4,7 @@ import { SettingsCrudsService } from './../../settings/settings-cruds.service';
 import { Component, OnInit } from '@angular/core';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { concat, of, Subject, Subscription } from 'rxjs';
-import { catchError, debounceTime, distinctUntilChanged, switchMap, tap } from 'rxjs/operators';
+import { catchError, debounceTime, distinctUntilChanged, map, switchMap, tap } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
@@ -99,12 +99,13 @@ export class NewTaskComponent implements OnInit {
   getTemplates() {
     this.settingsCrud.getTemplatesLookup().subscribe(value => {
       this.templates$ = concat(
-        of(value), // default items
+        of(value.filter(x => x.active)), // default items
         this.templatesInput$.pipe(
           debounceTime(200),
           distinctUntilChanged(),
           tap(() => this.templatesLoading = true),
           switchMap(term => this.settingsCrud.getTemplatesLookup(term).pipe(
+            map(res => res.filter(x => x.active)),
             catchError(() => of([])), // empty list on error
             tap(() => this.templatesLoading = false)
           ))
