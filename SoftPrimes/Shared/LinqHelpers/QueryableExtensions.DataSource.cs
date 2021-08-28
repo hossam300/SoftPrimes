@@ -16,7 +16,7 @@ namespace HelperServices.LinqHelpers
         /// <param name="sort">Specifies the current sort order.</param>
         /// <param name="filter">Specifies the current filter.</param>
         /// <returns>A DataSourceResult object populated from the processed IQueryable.</returns>
-        public static DataSourceResult<T> ToDataSourceResult<T>(this IQueryable<T> queryable, int take, int skip, IEnumerable<Sort> sort, Filter filter, bool countless = true)
+        public static DataSourceResult<T> ToDataSourceResult<T>(this IQueryable<T> queryable, int take, int skip, Sort sort, Filter filter, bool countless = true)
         {
             // Filter the data first
             queryable = Filter(queryable, filter);

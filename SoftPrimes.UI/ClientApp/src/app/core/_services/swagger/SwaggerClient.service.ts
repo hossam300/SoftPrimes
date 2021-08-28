@@ -649,7 +649,9 @@ export class SwaggerClient {
     /**
      * @param take (optional) 
      * @param skip (optional) 
-     * @param sort (optional) 
+     * @param sort_Field (optional) 
+     * @param sort_Dir (optional) 
+     * @param sort_Sorts (optional) 
      * @param filter_Field (optional) 
      * @param filter_Operator (optional) 
      * @param filter_Value (optional) 
@@ -658,16 +660,20 @@ export class SwaggerClient {
      * @param countless (optional) 
      * @return Success
      */
-    apiAgentLocationLogsGetAllGet(take: number, skip: number, sort: Sort[], filter_Field: string, filter_Operator: string, filter_Value: string, filter_Logic: string, filter_Filters: Filter[], countless: boolean): Observable<AgentLocationLogDTODataSourceResult> {
+    apiAgentLocationLogsGetAllGet(take: number, skip: number, sort_Field: string, sort_Dir: string, sort_Sorts: Sort[], filter_Field: string, filter_Operator: string, filter_Value: string, filter_Logic: string, filter_Filters: Filter[], countless: boolean): Observable<AgentLocationLogDTODataSourceResult> {
         let url_ = this.baseUrl + "/api/AgentLocationLogs/GetAll?";
         if (take !== undefined)
             url_ += "Take=" + encodeURIComponent("" + take) + "&"; 
         if (skip !== undefined)
             url_ += "Skip=" + encodeURIComponent("" + skip) + "&"; 
-        if (sort !== undefined)
-            sort && sort.forEach((item, index) => { 
+        if (sort_Field !== undefined)
+            url_ += "Sort.Field=" + encodeURIComponent("" + sort_Field) + "&"; 
+        if (sort_Dir !== undefined)
+            url_ += "Sort.Dir=" + encodeURIComponent("" + sort_Dir) + "&"; 
+        if (sort_Sorts !== undefined)
+            sort_Sorts && sort_Sorts.forEach((item, index) => { 
                 for (let attr in item)
-                    url_ += "Sort[" + index + "]." + attr + "=" + encodeURIComponent("" + item[attr]) + "&";
+                    url_ += "Sort.Sorts[" + index + "]." + attr + "=" + encodeURIComponent("" + item[attr]) + "&";
             });
         if (filter_Field !== undefined)
             url_ += "Filter.Field=" + encodeURIComponent("" + filter_Field) + "&"; 
@@ -734,7 +740,9 @@ export class SwaggerClient {
     /**
      * @param take (optional) 
      * @param skip (optional) 
-     * @param sort (optional) 
+     * @param sort_Field (optional) 
+     * @param sort_Dir (optional) 
+     * @param sort_Sorts (optional) 
      * @param filter_Field (optional) 
      * @param filter_Operator (optional) 
      * @param filter_Value (optional) 
@@ -743,16 +751,20 @@ export class SwaggerClient {
      * @param countless (optional) 
      * @return Success
      */
-    apiAgentLocationLogsGetAllDetailsGet(take: number, skip: number, sort: Sort[], filter_Field: string, filter_Operator: string, filter_Value: string, filter_Logic: string, filter_Filters: Filter[], countless: boolean): Observable<AgentLocationLogDTODataSourceResult> {
+    apiAgentLocationLogsGetAllDetailsGet(take: number, skip: number, sort_Field: string, sort_Dir: string, sort_Sorts: Sort[], filter_Field: string, filter_Operator: string, filter_Value: string, filter_Logic: string, filter_Filters: Filter[], countless: boolean): Observable<AgentLocationLogDTODataSourceResult> {
         let url_ = this.baseUrl + "/api/AgentLocationLogs/GetAllDetails?";
         if (take !== undefined)
             url_ += "Take=" + encodeURIComponent("" + take) + "&"; 
         if (skip !== undefined)
             url_ += "Skip=" + encodeURIComponent("" + skip) + "&"; 
-        if (sort !== undefined)
-            sort && sort.forEach((item, index) => { 
+        if (sort_Field !== undefined)
+            url_ += "Sort.Field=" + encodeURIComponent("" + sort_Field) + "&"; 
+        if (sort_Dir !== undefined)
+            url_ += "Sort.Dir=" + encodeURIComponent("" + sort_Dir) + "&"; 
+        if (sort_Sorts !== undefined)
+            sort_Sorts && sort_Sorts.forEach((item, index) => { 
                 for (let attr in item)
-                    url_ += "Sort[" + index + "]." + attr + "=" + encodeURIComponent("" + item[attr]) + "&";
+                    url_ += "Sort.Sorts[" + index + "]." + attr + "=" + encodeURIComponent("" + item[attr]) + "&";
             });
         if (filter_Field !== undefined)
             url_ += "Filter.Field=" + encodeURIComponent("" + filter_Field) + "&"; 
@@ -1109,7 +1121,9 @@ export class SwaggerClient {
     /**
      * @param take (optional) 
      * @param skip (optional) 
-     * @param sort (optional) 
+     * @param sort_Field (optional) 
+     * @param sort_Dir (optional) 
+     * @param sort_Sorts (optional) 
      * @param filter_Field (optional) 
      * @param filter_Operator (optional) 
      * @param filter_Value (optional) 
@@ -1118,16 +1132,20 @@ export class SwaggerClient {
      * @param countless (optional) 
      * @return Success
      */
-    apiAgentLoginLogsGetAllGet(take: number, skip: number, sort: Sort[], filter_Field: string, filter_Operator: string, filter_Value: string, filter_Logic: string, filter_Filters: Filter[], countless: boolean): Observable<AgentLoginLogDTODataSourceResult> {
+    apiAgentLoginLogsGetAllGet(take: number, skip: number, sort_Field: string, sort_Dir: string, sort_Sorts: Sort[], filter_Field: string, filter_Operator: string, filter_Value: string, filter_Logic: string, filter_Filters: Filter[], countless: boolean): Observable<AgentLoginLogDTODataSourceResult> {
         let url_ = this.baseUrl + "/api/AgentLoginLogs/GetAll?";
         if (take !== undefined)
             url_ += "Take=" + encodeURIComponent("" + take) + "&"; 
         if (skip !== undefined)
             url_ += "Skip=" + encodeURIComponent("" + skip) + "&"; 
-        if (sort !== undefined)
-            sort && sort.forEach((item, index) => { 
+        if (sort_Field !== undefined)
+            url_ += "Sort.Field=" + encodeURIComponent("" + sort_Field) + "&"; 
+        if (sort_Dir !== undefined)
+            url_ += "Sort.Dir=" + encodeURIComponent("" + sort_Dir) + "&"; 
+        if (sort_Sorts !== undefined)
+            sort_Sorts && sort_Sorts.forEach((item, index) => { 
                 for (let attr in item)
-                    url_ += "Sort[" + index + "]." + attr + "=" + encodeURIComponent("" + item[attr]) + "&";
+                    url_ += "Sort.Sorts[" + index + "]." + attr + "=" + encodeURIComponent("" + item[attr]) + "&";
             });
         if (filter_Field !== undefined)
             url_ += "Filter.Field=" + encodeURIComponent("" + filter_Field) + "&"; 
@@ -1194,7 +1212,9 @@ export class SwaggerClient {
     /**
      * @param take (optional) 
      * @param skip (optional) 
-     * @param sort (optional) 
+     * @param sort_Field (optional) 
+     * @param sort_Dir (optional) 
+     * @param sort_Sorts (optional) 
      * @param filter_Field (optional) 
      * @param filter_Operator (optional) 
      * @param filter_Value (optional) 
@@ -1203,16 +1223,20 @@ export class SwaggerClient {
      * @param countless (optional) 
      * @return Success
      */
-    apiAgentLoginLogsGetAllDetailsGet(take: number, skip: number, sort: Sort[], filter_Field: string, filter_Operator: string, filter_Value: string, filter_Logic: string, filter_Filters: Filter[], countless: boolean): Observable<AgentLoginLogDTODataSourceResult> {
+    apiAgentLoginLogsGetAllDetailsGet(take: number, skip: number, sort_Field: string, sort_Dir: string, sort_Sorts: Sort[], filter_Field: string, filter_Operator: string, filter_Value: string, filter_Logic: string, filter_Filters: Filter[], countless: boolean): Observable<AgentLoginLogDTODataSourceResult> {
         let url_ = this.baseUrl + "/api/AgentLoginLogs/GetAllDetails?";
         if (take !== undefined)
             url_ += "Take=" + encodeURIComponent("" + take) + "&"; 
         if (skip !== undefined)
             url_ += "Skip=" + encodeURIComponent("" + skip) + "&"; 
-        if (sort !== undefined)
-            sort && sort.forEach((item, index) => { 
+        if (sort_Field !== undefined)
+            url_ += "Sort.Field=" + encodeURIComponent("" + sort_Field) + "&"; 
+        if (sort_Dir !== undefined)
+            url_ += "Sort.Dir=" + encodeURIComponent("" + sort_Dir) + "&"; 
+        if (sort_Sorts !== undefined)
+            sort_Sorts && sort_Sorts.forEach((item, index) => { 
                 for (let attr in item)
-                    url_ += "Sort[" + index + "]." + attr + "=" + encodeURIComponent("" + item[attr]) + "&";
+                    url_ += "Sort.Sorts[" + index + "]." + attr + "=" + encodeURIComponent("" + item[attr]) + "&";
             });
         if (filter_Field !== undefined)
             url_ += "Filter.Field=" + encodeURIComponent("" + filter_Field) + "&"; 
@@ -1569,7 +1593,9 @@ export class SwaggerClient {
     /**
      * @param take (optional) 
      * @param skip (optional) 
-     * @param sort (optional) 
+     * @param sort_Field (optional) 
+     * @param sort_Dir (optional) 
+     * @param sort_Sorts (optional) 
      * @param filter_Field (optional) 
      * @param filter_Operator (optional) 
      * @param filter_Value (optional) 
@@ -1578,16 +1604,20 @@ export class SwaggerClient {
      * @param countless (optional) 
      * @return Success
      */
-    apiAgentRolesGetAllGet(take: number, skip: number, sort: Sort[], filter_Field: string, filter_Operator: string, filter_Value: string, filter_Logic: string, filter_Filters: Filter[], countless: boolean): Observable<AgentRoleDTODataSourceResult> {
+    apiAgentRolesGetAllGet(take: number, skip: number, sort_Field: string, sort_Dir: string, sort_Sorts: Sort[], filter_Field: string, filter_Operator: string, filter_Value: string, filter_Logic: string, filter_Filters: Filter[], countless: boolean): Observable<AgentRoleDTODataSourceResult> {
         let url_ = this.baseUrl + "/api/AgentRoles/GetAll?";
         if (take !== undefined)
             url_ += "Take=" + encodeURIComponent("" + take) + "&"; 
         if (skip !== undefined)
             url_ += "Skip=" + encodeURIComponent("" + skip) + "&"; 
-        if (sort !== undefined)
-            sort && sort.forEach((item, index) => { 
+        if (sort_Field !== undefined)
+            url_ += "Sort.Field=" + encodeURIComponent("" + sort_Field) + "&"; 
+        if (sort_Dir !== undefined)
+            url_ += "Sort.Dir=" + encodeURIComponent("" + sort_Dir) + "&"; 
+        if (sort_Sorts !== undefined)
+            sort_Sorts && sort_Sorts.forEach((item, index) => { 
                 for (let attr in item)
-                    url_ += "Sort[" + index + "]." + attr + "=" + encodeURIComponent("" + item[attr]) + "&";
+                    url_ += "Sort.Sorts[" + index + "]." + attr + "=" + encodeURIComponent("" + item[attr]) + "&";
             });
         if (filter_Field !== undefined)
             url_ += "Filter.Field=" + encodeURIComponent("" + filter_Field) + "&"; 
@@ -1654,7 +1684,9 @@ export class SwaggerClient {
     /**
      * @param take (optional) 
      * @param skip (optional) 
-     * @param sort (optional) 
+     * @param sort_Field (optional) 
+     * @param sort_Dir (optional) 
+     * @param sort_Sorts (optional) 
      * @param filter_Field (optional) 
      * @param filter_Operator (optional) 
      * @param filter_Value (optional) 
@@ -1663,16 +1695,20 @@ export class SwaggerClient {
      * @param countless (optional) 
      * @return Success
      */
-    apiAgentRolesGetAllDetailsGet(take: number, skip: number, sort: Sort[], filter_Field: string, filter_Operator: string, filter_Value: string, filter_Logic: string, filter_Filters: Filter[], countless: boolean): Observable<AgentRoleDTODataSourceResult> {
+    apiAgentRolesGetAllDetailsGet(take: number, skip: number, sort_Field: string, sort_Dir: string, sort_Sorts: Sort[], filter_Field: string, filter_Operator: string, filter_Value: string, filter_Logic: string, filter_Filters: Filter[], countless: boolean): Observable<AgentRoleDTODataSourceResult> {
         let url_ = this.baseUrl + "/api/AgentRoles/GetAllDetails?";
         if (take !== undefined)
             url_ += "Take=" + encodeURIComponent("" + take) + "&"; 
         if (skip !== undefined)
             url_ += "Skip=" + encodeURIComponent("" + skip) + "&"; 
-        if (sort !== undefined)
-            sort && sort.forEach((item, index) => { 
+        if (sort_Field !== undefined)
+            url_ += "Sort.Field=" + encodeURIComponent("" + sort_Field) + "&"; 
+        if (sort_Dir !== undefined)
+            url_ += "Sort.Dir=" + encodeURIComponent("" + sort_Dir) + "&"; 
+        if (sort_Sorts !== undefined)
+            sort_Sorts && sort_Sorts.forEach((item, index) => { 
                 for (let attr in item)
-                    url_ += "Sort[" + index + "]." + attr + "=" + encodeURIComponent("" + item[attr]) + "&";
+                    url_ += "Sort.Sorts[" + index + "]." + attr + "=" + encodeURIComponent("" + item[attr]) + "&";
             });
         if (filter_Field !== undefined)
             url_ += "Filter.Field=" + encodeURIComponent("" + filter_Field) + "&"; 
@@ -2362,7 +2398,9 @@ export class SwaggerClient {
     /**
      * @param take (optional) 
      * @param skip (optional) 
-     * @param sort (optional) 
+     * @param sort_Field (optional) 
+     * @param sort_Dir (optional) 
+     * @param sort_Sorts (optional) 
      * @param filter_Field (optional) 
      * @param filter_Operator (optional) 
      * @param filter_Value (optional) 
@@ -2371,16 +2409,20 @@ export class SwaggerClient {
      * @param countless (optional) 
      * @return Success
      */
-    apiAgentsGetAllGet(take: number, skip: number, sort: Sort[], filter_Field: string, filter_Operator: string, filter_Value: string, filter_Logic: string, filter_Filters: Filter[], countless: boolean): Observable<AgentDTODataSourceResult> {
+    apiAgentsGetAllGet(take: number, skip: number, sort_Field: string, sort_Dir: string, sort_Sorts: Sort[], filter_Field: string, filter_Operator: string, filter_Value: string, filter_Logic: string, filter_Filters: Filter[], countless: boolean): Observable<AgentDTODataSourceResult> {
         let url_ = this.baseUrl + "/api/Agents/GetAll?";
         if (take !== undefined)
             url_ += "Take=" + encodeURIComponent("" + take) + "&"; 
         if (skip !== undefined)
             url_ += "Skip=" + encodeURIComponent("" + skip) + "&"; 
-        if (sort !== undefined)
-            sort && sort.forEach((item, index) => { 
+        if (sort_Field !== undefined)
+            url_ += "Sort.Field=" + encodeURIComponent("" + sort_Field) + "&"; 
+        if (sort_Dir !== undefined)
+            url_ += "Sort.Dir=" + encodeURIComponent("" + sort_Dir) + "&"; 
+        if (sort_Sorts !== undefined)
+            sort_Sorts && sort_Sorts.forEach((item, index) => { 
                 for (let attr in item)
-                    url_ += "Sort[" + index + "]." + attr + "=" + encodeURIComponent("" + item[attr]) + "&";
+                    url_ += "Sort.Sorts[" + index + "]." + attr + "=" + encodeURIComponent("" + item[attr]) + "&";
             });
         if (filter_Field !== undefined)
             url_ += "Filter.Field=" + encodeURIComponent("" + filter_Field) + "&"; 
@@ -2447,7 +2489,9 @@ export class SwaggerClient {
     /**
      * @param take (optional) 
      * @param skip (optional) 
-     * @param sort (optional) 
+     * @param sort_Field (optional) 
+     * @param sort_Dir (optional) 
+     * @param sort_Sorts (optional) 
      * @param filter_Field (optional) 
      * @param filter_Operator (optional) 
      * @param filter_Value (optional) 
@@ -2456,16 +2500,20 @@ export class SwaggerClient {
      * @param countless (optional) 
      * @return Success
      */
-    apiAgentsGetAllDetailsGet(take: number, skip: number, sort: Sort[], filter_Field: string, filter_Operator: string, filter_Value: string, filter_Logic: string, filter_Filters: Filter[], countless: boolean): Observable<AgentDTODataSourceResult> {
+    apiAgentsGetAllDetailsGet(take: number, skip: number, sort_Field: string, sort_Dir: string, sort_Sorts: Sort[], filter_Field: string, filter_Operator: string, filter_Value: string, filter_Logic: string, filter_Filters: Filter[], countless: boolean): Observable<AgentDTODataSourceResult> {
         let url_ = this.baseUrl + "/api/Agents/GetAllDetails?";
         if (take !== undefined)
             url_ += "Take=" + encodeURIComponent("" + take) + "&"; 
         if (skip !== undefined)
             url_ += "Skip=" + encodeURIComponent("" + skip) + "&"; 
-        if (sort !== undefined)
-            sort && sort.forEach((item, index) => { 
+        if (sort_Field !== undefined)
+            url_ += "Sort.Field=" + encodeURIComponent("" + sort_Field) + "&"; 
+        if (sort_Dir !== undefined)
+            url_ += "Sort.Dir=" + encodeURIComponent("" + sort_Dir) + "&"; 
+        if (sort_Sorts !== undefined)
+            sort_Sorts && sort_Sorts.forEach((item, index) => { 
                 for (let attr in item)
-                    url_ += "Sort[" + index + "]." + attr + "=" + encodeURIComponent("" + item[attr]) + "&";
+                    url_ += "Sort.Sorts[" + index + "]." + attr + "=" + encodeURIComponent("" + item[attr]) + "&";
             });
         if (filter_Field !== undefined)
             url_ += "Filter.Field=" + encodeURIComponent("" + filter_Field) + "&"; 
@@ -2822,7 +2870,9 @@ export class SwaggerClient {
     /**
      * @param take (optional) 
      * @param skip (optional) 
-     * @param sort (optional) 
+     * @param sort_Field (optional) 
+     * @param sort_Dir (optional) 
+     * @param sort_Sorts (optional) 
      * @param filter_Field (optional) 
      * @param filter_Operator (optional) 
      * @param filter_Value (optional) 
@@ -2831,16 +2881,20 @@ export class SwaggerClient {
      * @param countless (optional) 
      * @return Success
      */
-    apiAttachmentsGetAllGet(take: number, skip: number, sort: Sort[], filter_Field: string, filter_Operator: string, filter_Value: string, filter_Logic: string, filter_Filters: Filter[], countless: boolean): Observable<AttachmentDTODataSourceResult> {
+    apiAttachmentsGetAllGet(take: number, skip: number, sort_Field: string, sort_Dir: string, sort_Sorts: Sort[], filter_Field: string, filter_Operator: string, filter_Value: string, filter_Logic: string, filter_Filters: Filter[], countless: boolean): Observable<AttachmentDTODataSourceResult> {
         let url_ = this.baseUrl + "/api/Attachments/GetAll?";
         if (take !== undefined)
             url_ += "Take=" + encodeURIComponent("" + take) + "&"; 
         if (skip !== undefined)
             url_ += "Skip=" + encodeURIComponent("" + skip) + "&"; 
-        if (sort !== undefined)
-            sort && sort.forEach((item, index) => { 
+        if (sort_Field !== undefined)
+            url_ += "Sort.Field=" + encodeURIComponent("" + sort_Field) + "&"; 
+        if (sort_Dir !== undefined)
+            url_ += "Sort.Dir=" + encodeURIComponent("" + sort_Dir) + "&"; 
+        if (sort_Sorts !== undefined)
+            sort_Sorts && sort_Sorts.forEach((item, index) => { 
                 for (let attr in item)
-                    url_ += "Sort[" + index + "]." + attr + "=" + encodeURIComponent("" + item[attr]) + "&";
+                    url_ += "Sort.Sorts[" + index + "]." + attr + "=" + encodeURIComponent("" + item[attr]) + "&";
             });
         if (filter_Field !== undefined)
             url_ += "Filter.Field=" + encodeURIComponent("" + filter_Field) + "&"; 
@@ -2907,7 +2961,9 @@ export class SwaggerClient {
     /**
      * @param take (optional) 
      * @param skip (optional) 
-     * @param sort (optional) 
+     * @param sort_Field (optional) 
+     * @param sort_Dir (optional) 
+     * @param sort_Sorts (optional) 
      * @param filter_Field (optional) 
      * @param filter_Operator (optional) 
      * @param filter_Value (optional) 
@@ -2916,16 +2972,20 @@ export class SwaggerClient {
      * @param countless (optional) 
      * @return Success
      */
-    apiAttachmentsGetAllDetailsGet(take: number, skip: number, sort: Sort[], filter_Field: string, filter_Operator: string, filter_Value: string, filter_Logic: string, filter_Filters: Filter[], countless: boolean): Observable<AttachmentDTODataSourceResult> {
+    apiAttachmentsGetAllDetailsGet(take: number, skip: number, sort_Field: string, sort_Dir: string, sort_Sorts: Sort[], filter_Field: string, filter_Operator: string, filter_Value: string, filter_Logic: string, filter_Filters: Filter[], countless: boolean): Observable<AttachmentDTODataSourceResult> {
         let url_ = this.baseUrl + "/api/Attachments/GetAllDetails?";
         if (take !== undefined)
             url_ += "Take=" + encodeURIComponent("" + take) + "&"; 
         if (skip !== undefined)
             url_ += "Skip=" + encodeURIComponent("" + skip) + "&"; 
-        if (sort !== undefined)
-            sort && sort.forEach((item, index) => { 
+        if (sort_Field !== undefined)
+            url_ += "Sort.Field=" + encodeURIComponent("" + sort_Field) + "&"; 
+        if (sort_Dir !== undefined)
+            url_ += "Sort.Dir=" + encodeURIComponent("" + sort_Dir) + "&"; 
+        if (sort_Sorts !== undefined)
+            sort_Sorts && sort_Sorts.forEach((item, index) => { 
                 for (let attr in item)
-                    url_ += "Sort[" + index + "]." + attr + "=" + encodeURIComponent("" + item[attr]) + "&";
+                    url_ += "Sort.Sorts[" + index + "]." + attr + "=" + encodeURIComponent("" + item[attr]) + "&";
             });
         if (filter_Field !== undefined)
             url_ += "Filter.Field=" + encodeURIComponent("" + filter_Field) + "&"; 
@@ -3344,7 +3404,9 @@ export class SwaggerClient {
     /**
      * @param take (optional) 
      * @param skip (optional) 
-     * @param sort (optional) 
+     * @param sort_Field (optional) 
+     * @param sort_Dir (optional) 
+     * @param sort_Sorts (optional) 
      * @param filter_Field (optional) 
      * @param filter_Operator (optional) 
      * @param filter_Value (optional) 
@@ -3353,16 +3415,20 @@ export class SwaggerClient {
      * @param countless (optional) 
      * @return Success
      */
-    apiCheckPointsGetAllGet(take: number, skip: number, sort: Sort[], filter_Field: string, filter_Operator: string, filter_Value: string, filter_Logic: string, filter_Filters: Filter[], countless: boolean): Observable<CheckPointDTODataSourceResult> {
+    apiCheckPointsGetAllGet(take: number, skip: number, sort_Field: string, sort_Dir: string, sort_Sorts: Sort[], filter_Field: string, filter_Operator: string, filter_Value: string, filter_Logic: string, filter_Filters: Filter[], countless: boolean): Observable<CheckPointDTODataSourceResult> {
         let url_ = this.baseUrl + "/api/CheckPoints/GetAll?";
         if (take !== undefined)
             url_ += "Take=" + encodeURIComponent("" + take) + "&"; 
         if (skip !== undefined)
             url_ += "Skip=" + encodeURIComponent("" + skip) + "&"; 
-        if (sort !== undefined)
-            sort && sort.forEach((item, index) => { 
+        if (sort_Field !== undefined)
+            url_ += "Sort.Field=" + encodeURIComponent("" + sort_Field) + "&"; 
+        if (sort_Dir !== undefined)
+            url_ += "Sort.Dir=" + encodeURIComponent("" + sort_Dir) + "&"; 
+        if (sort_Sorts !== undefined)
+            sort_Sorts && sort_Sorts.forEach((item, index) => { 
                 for (let attr in item)
-                    url_ += "Sort[" + index + "]." + attr + "=" + encodeURIComponent("" + item[attr]) + "&";
+                    url_ += "Sort.Sorts[" + index + "]." + attr + "=" + encodeURIComponent("" + item[attr]) + "&";
             });
         if (filter_Field !== undefined)
             url_ += "Filter.Field=" + encodeURIComponent("" + filter_Field) + "&"; 
@@ -3429,7 +3495,9 @@ export class SwaggerClient {
     /**
      * @param take (optional) 
      * @param skip (optional) 
-     * @param sort (optional) 
+     * @param sort_Field (optional) 
+     * @param sort_Dir (optional) 
+     * @param sort_Sorts (optional) 
      * @param filter_Field (optional) 
      * @param filter_Operator (optional) 
      * @param filter_Value (optional) 
@@ -3438,16 +3506,20 @@ export class SwaggerClient {
      * @param countless (optional) 
      * @return Success
      */
-    apiCheckPointsGetAllDetailsGet(take: number, skip: number, sort: Sort[], filter_Field: string, filter_Operator: string, filter_Value: string, filter_Logic: string, filter_Filters: Filter[], countless: boolean): Observable<CheckPointDTODataSourceResult> {
+    apiCheckPointsGetAllDetailsGet(take: number, skip: number, sort_Field: string, sort_Dir: string, sort_Sorts: Sort[], filter_Field: string, filter_Operator: string, filter_Value: string, filter_Logic: string, filter_Filters: Filter[], countless: boolean): Observable<CheckPointDTODataSourceResult> {
         let url_ = this.baseUrl + "/api/CheckPoints/GetAllDetails?";
         if (take !== undefined)
             url_ += "Take=" + encodeURIComponent("" + take) + "&"; 
         if (skip !== undefined)
             url_ += "Skip=" + encodeURIComponent("" + skip) + "&"; 
-        if (sort !== undefined)
-            sort && sort.forEach((item, index) => { 
+        if (sort_Field !== undefined)
+            url_ += "Sort.Field=" + encodeURIComponent("" + sort_Field) + "&"; 
+        if (sort_Dir !== undefined)
+            url_ += "Sort.Dir=" + encodeURIComponent("" + sort_Dir) + "&"; 
+        if (sort_Sorts !== undefined)
+            sort_Sorts && sort_Sorts.forEach((item, index) => { 
                 for (let attr in item)
-                    url_ += "Sort[" + index + "]." + attr + "=" + encodeURIComponent("" + item[attr]) + "&";
+                    url_ += "Sort.Sorts[" + index + "]." + attr + "=" + encodeURIComponent("" + item[attr]) + "&";
             });
         if (filter_Field !== undefined)
             url_ += "Filter.Field=" + encodeURIComponent("" + filter_Field) + "&"; 
@@ -3804,7 +3876,9 @@ export class SwaggerClient {
     /**
      * @param take (optional) 
      * @param skip (optional) 
-     * @param sort (optional) 
+     * @param sort_Field (optional) 
+     * @param sort_Dir (optional) 
+     * @param sort_Sorts (optional) 
      * @param filter_Field (optional) 
      * @param filter_Operator (optional) 
      * @param filter_Value (optional) 
@@ -3813,16 +3887,20 @@ export class SwaggerClient {
      * @param countless (optional) 
      * @return Success
      */
-    apiCheckPointTourCommentsGetAllGet(take: number, skip: number, sort: Sort[], filter_Field: string, filter_Operator: string, filter_Value: string, filter_Logic: string, filter_Filters: Filter[], countless: boolean): Observable<CheckPointTourCommentDTODataSourceResult> {
+    apiCheckPointTourCommentsGetAllGet(take: number, skip: number, sort_Field: string, sort_Dir: string, sort_Sorts: Sort[], filter_Field: string, filter_Operator: string, filter_Value: string, filter_Logic: string, filter_Filters: Filter[], countless: boolean): Observable<CheckPointTourCommentDTODataSourceResult> {
         let url_ = this.baseUrl + "/api/CheckPointTourComments/GetAll?";
         if (take !== undefined)
             url_ += "Take=" + encodeURIComponent("" + take) + "&"; 
         if (skip !== undefined)
             url_ += "Skip=" + encodeURIComponent("" + skip) + "&"; 
-        if (sort !== undefined)
-            sort && sort.forEach((item, index) => { 
+        if (sort_Field !== undefined)
+            url_ += "Sort.Field=" + encodeURIComponent("" + sort_Field) + "&"; 
+        if (sort_Dir !== undefined)
+            url_ += "Sort.Dir=" + encodeURIComponent("" + sort_Dir) + "&"; 
+        if (sort_Sorts !== undefined)
+            sort_Sorts && sort_Sorts.forEach((item, index) => { 
                 for (let attr in item)
-                    url_ += "Sort[" + index + "]." + attr + "=" + encodeURIComponent("" + item[attr]) + "&";
+                    url_ += "Sort.Sorts[" + index + "]." + attr + "=" + encodeURIComponent("" + item[attr]) + "&";
             });
         if (filter_Field !== undefined)
             url_ += "Filter.Field=" + encodeURIComponent("" + filter_Field) + "&"; 
@@ -3889,7 +3967,9 @@ export class SwaggerClient {
     /**
      * @param take (optional) 
      * @param skip (optional) 
-     * @param sort (optional) 
+     * @param sort_Field (optional) 
+     * @param sort_Dir (optional) 
+     * @param sort_Sorts (optional) 
      * @param filter_Field (optional) 
      * @param filter_Operator (optional) 
      * @param filter_Value (optional) 
@@ -3898,16 +3978,20 @@ export class SwaggerClient {
      * @param countless (optional) 
      * @return Success
      */
-    apiCheckPointTourCommentsGetAllDetailsGet(take: number, skip: number, sort: Sort[], filter_Field: string, filter_Operator: string, filter_Value: string, filter_Logic: string, filter_Filters: Filter[], countless: boolean): Observable<CheckPointTourCommentDTODataSourceResult> {
+    apiCheckPointTourCommentsGetAllDetailsGet(take: number, skip: number, sort_Field: string, sort_Dir: string, sort_Sorts: Sort[], filter_Field: string, filter_Operator: string, filter_Value: string, filter_Logic: string, filter_Filters: Filter[], countless: boolean): Observable<CheckPointTourCommentDTODataSourceResult> {
         let url_ = this.baseUrl + "/api/CheckPointTourComments/GetAllDetails?";
         if (take !== undefined)
             url_ += "Take=" + encodeURIComponent("" + take) + "&"; 
         if (skip !== undefined)
             url_ += "Skip=" + encodeURIComponent("" + skip) + "&"; 
-        if (sort !== undefined)
-            sort && sort.forEach((item, index) => { 
+        if (sort_Field !== undefined)
+            url_ += "Sort.Field=" + encodeURIComponent("" + sort_Field) + "&"; 
+        if (sort_Dir !== undefined)
+            url_ += "Sort.Dir=" + encodeURIComponent("" + sort_Dir) + "&"; 
+        if (sort_Sorts !== undefined)
+            sort_Sorts && sort_Sorts.forEach((item, index) => { 
                 for (let attr in item)
-                    url_ += "Sort[" + index + "]." + attr + "=" + encodeURIComponent("" + item[attr]) + "&";
+                    url_ += "Sort.Sorts[" + index + "]." + attr + "=" + encodeURIComponent("" + item[attr]) + "&";
             });
         if (filter_Field !== undefined)
             url_ += "Filter.Field=" + encodeURIComponent("" + filter_Field) + "&"; 
@@ -4264,7 +4348,9 @@ export class SwaggerClient {
     /**
      * @param take (optional) 
      * @param skip (optional) 
-     * @param sort (optional) 
+     * @param sort_Field (optional) 
+     * @param sort_Dir (optional) 
+     * @param sort_Sorts (optional) 
      * @param filter_Field (optional) 
      * @param filter_Operator (optional) 
      * @param filter_Value (optional) 
@@ -4273,16 +4359,20 @@ export class SwaggerClient {
      * @param countless (optional) 
      * @return Success
      */
-    apiCommentsGetAllGet(take: number, skip: number, sort: Sort[], filter_Field: string, filter_Operator: string, filter_Value: string, filter_Logic: string, filter_Filters: Filter[], countless: boolean): Observable<CommentDTODataSourceResult> {
+    apiCommentsGetAllGet(take: number, skip: number, sort_Field: string, sort_Dir: string, sort_Sorts: Sort[], filter_Field: string, filter_Operator: string, filter_Value: string, filter_Logic: string, filter_Filters: Filter[], countless: boolean): Observable<CommentDTODataSourceResult> {
         let url_ = this.baseUrl + "/api/Comments/GetAll?";
         if (take !== undefined)
             url_ += "Take=" + encodeURIComponent("" + take) + "&"; 
         if (skip !== undefined)
             url_ += "Skip=" + encodeURIComponent("" + skip) + "&"; 
-        if (sort !== undefined)
-            sort && sort.forEach((item, index) => { 
+        if (sort_Field !== undefined)
+            url_ += "Sort.Field=" + encodeURIComponent("" + sort_Field) + "&"; 
+        if (sort_Dir !== undefined)
+            url_ += "Sort.Dir=" + encodeURIComponent("" + sort_Dir) + "&"; 
+        if (sort_Sorts !== undefined)
+            sort_Sorts && sort_Sorts.forEach((item, index) => { 
                 for (let attr in item)
-                    url_ += "Sort[" + index + "]." + attr + "=" + encodeURIComponent("" + item[attr]) + "&";
+                    url_ += "Sort.Sorts[" + index + "]." + attr + "=" + encodeURIComponent("" + item[attr]) + "&";
             });
         if (filter_Field !== undefined)
             url_ += "Filter.Field=" + encodeURIComponent("" + filter_Field) + "&"; 
@@ -4349,7 +4439,9 @@ export class SwaggerClient {
     /**
      * @param take (optional) 
      * @param skip (optional) 
-     * @param sort (optional) 
+     * @param sort_Field (optional) 
+     * @param sort_Dir (optional) 
+     * @param sort_Sorts (optional) 
      * @param filter_Field (optional) 
      * @param filter_Operator (optional) 
      * @param filter_Value (optional) 
@@ -4358,16 +4450,20 @@ export class SwaggerClient {
      * @param countless (optional) 
      * @return Success
      */
-    apiCommentsGetAllDetailsGet(take: number, skip: number, sort: Sort[], filter_Field: string, filter_Operator: string, filter_Value: string, filter_Logic: string, filter_Filters: Filter[], countless: boolean): Observable<CommentDTODataSourceResult> {
+    apiCommentsGetAllDetailsGet(take: number, skip: number, sort_Field: string, sort_Dir: string, sort_Sorts: Sort[], filter_Field: string, filter_Operator: string, filter_Value: string, filter_Logic: string, filter_Filters: Filter[], countless: boolean): Observable<CommentDTODataSourceResult> {
         let url_ = this.baseUrl + "/api/Comments/GetAllDetails?";
         if (take !== undefined)
             url_ += "Take=" + encodeURIComponent("" + take) + "&"; 
         if (skip !== undefined)
             url_ += "Skip=" + encodeURIComponent("" + skip) + "&"; 
-        if (sort !== undefined)
-            sort && sort.forEach((item, index) => { 
+        if (sort_Field !== undefined)
+            url_ += "Sort.Field=" + encodeURIComponent("" + sort_Field) + "&"; 
+        if (sort_Dir !== undefined)
+            url_ += "Sort.Dir=" + encodeURIComponent("" + sort_Dir) + "&"; 
+        if (sort_Sorts !== undefined)
+            sort_Sorts && sort_Sorts.forEach((item, index) => { 
                 for (let attr in item)
-                    url_ += "Sort[" + index + "]." + attr + "=" + encodeURIComponent("" + item[attr]) + "&";
+                    url_ += "Sort.Sorts[" + index + "]." + attr + "=" + encodeURIComponent("" + item[attr]) + "&";
             });
         if (filter_Field !== undefined)
             url_ += "Filter.Field=" + encodeURIComponent("" + filter_Field) + "&"; 
@@ -4786,7 +4882,9 @@ export class SwaggerClient {
     /**
      * @param take (optional) 
      * @param skip (optional) 
-     * @param sort (optional) 
+     * @param sort_Field (optional) 
+     * @param sort_Dir (optional) 
+     * @param sort_Sorts (optional) 
      * @param filter_Field (optional) 
      * @param filter_Operator (optional) 
      * @param filter_Value (optional) 
@@ -4795,16 +4893,20 @@ export class SwaggerClient {
      * @param countless (optional) 
      * @return Success
      */
-    apiCompaniesGetAllGet(take: number, skip: number, sort: Sort[], filter_Field: string, filter_Operator: string, filter_Value: string, filter_Logic: string, filter_Filters: Filter[], countless: boolean): Observable<CompanyDTODataSourceResult> {
+    apiCompaniesGetAllGet(take: number, skip: number, sort_Field: string, sort_Dir: string, sort_Sorts: Sort[], filter_Field: string, filter_Operator: string, filter_Value: string, filter_Logic: string, filter_Filters: Filter[], countless: boolean): Observable<CompanyDTODataSourceResult> {
         let url_ = this.baseUrl + "/api/Companies/GetAll?";
         if (take !== undefined)
             url_ += "Take=" + encodeURIComponent("" + take) + "&"; 
         if (skip !== undefined)
             url_ += "Skip=" + encodeURIComponent("" + skip) + "&"; 
-        if (sort !== undefined)
-            sort && sort.forEach((item, index) => { 
+        if (sort_Field !== undefined)
+            url_ += "Sort.Field=" + encodeURIComponent("" + sort_Field) + "&"; 
+        if (sort_Dir !== undefined)
+            url_ += "Sort.Dir=" + encodeURIComponent("" + sort_Dir) + "&"; 
+        if (sort_Sorts !== undefined)
+            sort_Sorts && sort_Sorts.forEach((item, index) => { 
                 for (let attr in item)
-                    url_ += "Sort[" + index + "]." + attr + "=" + encodeURIComponent("" + item[attr]) + "&";
+                    url_ += "Sort.Sorts[" + index + "]." + attr + "=" + encodeURIComponent("" + item[attr]) + "&";
             });
         if (filter_Field !== undefined)
             url_ += "Filter.Field=" + encodeURIComponent("" + filter_Field) + "&"; 
@@ -4871,7 +4973,9 @@ export class SwaggerClient {
     /**
      * @param take (optional) 
      * @param skip (optional) 
-     * @param sort (optional) 
+     * @param sort_Field (optional) 
+     * @param sort_Dir (optional) 
+     * @param sort_Sorts (optional) 
      * @param filter_Field (optional) 
      * @param filter_Operator (optional) 
      * @param filter_Value (optional) 
@@ -4880,16 +4984,20 @@ export class SwaggerClient {
      * @param countless (optional) 
      * @return Success
      */
-    apiCompaniesGetAllDetailsGet(take: number, skip: number, sort: Sort[], filter_Field: string, filter_Operator: string, filter_Value: string, filter_Logic: string, filter_Filters: Filter[], countless: boolean): Observable<CompanyDTODataSourceResult> {
+    apiCompaniesGetAllDetailsGet(take: number, skip: number, sort_Field: string, sort_Dir: string, sort_Sorts: Sort[], filter_Field: string, filter_Operator: string, filter_Value: string, filter_Logic: string, filter_Filters: Filter[], countless: boolean): Observable<CompanyDTODataSourceResult> {
         let url_ = this.baseUrl + "/api/Companies/GetAllDetails?";
         if (take !== undefined)
             url_ += "Take=" + encodeURIComponent("" + take) + "&"; 
         if (skip !== undefined)
             url_ += "Skip=" + encodeURIComponent("" + skip) + "&"; 
-        if (sort !== undefined)
-            sort && sort.forEach((item, index) => { 
+        if (sort_Field !== undefined)
+            url_ += "Sort.Field=" + encodeURIComponent("" + sort_Field) + "&"; 
+        if (sort_Dir !== undefined)
+            url_ += "Sort.Dir=" + encodeURIComponent("" + sort_Dir) + "&"; 
+        if (sort_Sorts !== undefined)
+            sort_Sorts && sort_Sorts.forEach((item, index) => { 
                 for (let attr in item)
-                    url_ += "Sort[" + index + "]." + attr + "=" + encodeURIComponent("" + item[attr]) + "&";
+                    url_ += "Sort.Sorts[" + index + "]." + attr + "=" + encodeURIComponent("" + item[attr]) + "&";
             });
         if (filter_Field !== undefined)
             url_ += "Filter.Field=" + encodeURIComponent("" + filter_Field) + "&"; 
@@ -5353,7 +5461,9 @@ export class SwaggerClient {
     /**
      * @param take (optional) 
      * @param skip (optional) 
-     * @param sort (optional) 
+     * @param sort_Field (optional) 
+     * @param sort_Dir (optional) 
+     * @param sort_Sorts (optional) 
      * @param filter_Field (optional) 
      * @param filter_Operator (optional) 
      * @param filter_Value (optional) 
@@ -5362,16 +5472,20 @@ export class SwaggerClient {
      * @param countless (optional) 
      * @return Success
      */
-    apiLocalizationsGetAllGet(take: number, skip: number, sort: Sort[], filter_Field: string, filter_Operator: string, filter_Value: string, filter_Logic: string, filter_Filters: Filter[], countless: boolean): Observable<LocalizationDTODataSourceResult> {
+    apiLocalizationsGetAllGet(take: number, skip: number, sort_Field: string, sort_Dir: string, sort_Sorts: Sort[], filter_Field: string, filter_Operator: string, filter_Value: string, filter_Logic: string, filter_Filters: Filter[], countless: boolean): Observable<LocalizationDTODataSourceResult> {
         let url_ = this.baseUrl + "/api/Localizations/GetAll?";
         if (take !== undefined)
             url_ += "Take=" + encodeURIComponent("" + take) + "&"; 
         if (skip !== undefined)
             url_ += "Skip=" + encodeURIComponent("" + skip) + "&"; 
-        if (sort !== undefined)
-            sort && sort.forEach((item, index) => { 
+        if (sort_Field !== undefined)
+            url_ += "Sort.Field=" + encodeURIComponent("" + sort_Field) + "&"; 
+        if (sort_Dir !== undefined)
+            url_ += "Sort.Dir=" + encodeURIComponent("" + sort_Dir) + "&"; 
+        if (sort_Sorts !== undefined)
+            sort_Sorts && sort_Sorts.forEach((item, index) => { 
                 for (let attr in item)
-                    url_ += "Sort[" + index + "]." + attr + "=" + encodeURIComponent("" + item[attr]) + "&";
+                    url_ += "Sort.Sorts[" + index + "]." + attr + "=" + encodeURIComponent("" + item[attr]) + "&";
             });
         if (filter_Field !== undefined)
             url_ += "Filter.Field=" + encodeURIComponent("" + filter_Field) + "&"; 
@@ -5438,7 +5552,9 @@ export class SwaggerClient {
     /**
      * @param take (optional) 
      * @param skip (optional) 
-     * @param sort (optional) 
+     * @param sort_Field (optional) 
+     * @param sort_Dir (optional) 
+     * @param sort_Sorts (optional) 
      * @param filter_Field (optional) 
      * @param filter_Operator (optional) 
      * @param filter_Value (optional) 
@@ -5447,16 +5563,20 @@ export class SwaggerClient {
      * @param countless (optional) 
      * @return Success
      */
-    apiLocalizationsGetAllDetailsGet(take: number, skip: number, sort: Sort[], filter_Field: string, filter_Operator: string, filter_Value: string, filter_Logic: string, filter_Filters: Filter[], countless: boolean): Observable<LocalizationDTODataSourceResult> {
+    apiLocalizationsGetAllDetailsGet(take: number, skip: number, sort_Field: string, sort_Dir: string, sort_Sorts: Sort[], filter_Field: string, filter_Operator: string, filter_Value: string, filter_Logic: string, filter_Filters: Filter[], countless: boolean): Observable<LocalizationDTODataSourceResult> {
         let url_ = this.baseUrl + "/api/Localizations/GetAllDetails?";
         if (take !== undefined)
             url_ += "Take=" + encodeURIComponent("" + take) + "&"; 
         if (skip !== undefined)
             url_ += "Skip=" + encodeURIComponent("" + skip) + "&"; 
-        if (sort !== undefined)
-            sort && sort.forEach((item, index) => { 
+        if (sort_Field !== undefined)
+            url_ += "Sort.Field=" + encodeURIComponent("" + sort_Field) + "&"; 
+        if (sort_Dir !== undefined)
+            url_ += "Sort.Dir=" + encodeURIComponent("" + sort_Dir) + "&"; 
+        if (sort_Sorts !== undefined)
+            sort_Sorts && sort_Sorts.forEach((item, index) => { 
                 for (let attr in item)
-                    url_ += "Sort[" + index + "]." + attr + "=" + encodeURIComponent("" + item[attr]) + "&";
+                    url_ += "Sort.Sorts[" + index + "]." + attr + "=" + encodeURIComponent("" + item[attr]) + "&";
             });
         if (filter_Field !== undefined)
             url_ += "Filter.Field=" + encodeURIComponent("" + filter_Field) + "&"; 
@@ -5813,7 +5933,9 @@ export class SwaggerClient {
     /**
      * @param take (optional) 
      * @param skip (optional) 
-     * @param sort (optional) 
+     * @param sort_Field (optional) 
+     * @param sort_Dir (optional) 
+     * @param sort_Sorts (optional) 
      * @param filter_Field (optional) 
      * @param filter_Operator (optional) 
      * @param filter_Value (optional) 
@@ -5822,16 +5944,20 @@ export class SwaggerClient {
      * @param countless (optional) 
      * @return Success
      */
-    apiNotificationsGetAllGet(take: number, skip: number, sort: Sort[], filter_Field: string, filter_Operator: string, filter_Value: string, filter_Logic: string, filter_Filters: Filter[], countless: boolean): Observable<NotificationDTODataSourceResult> {
+    apiNotificationsGetAllGet(take: number, skip: number, sort_Field: string, sort_Dir: string, sort_Sorts: Sort[], filter_Field: string, filter_Operator: string, filter_Value: string, filter_Logic: string, filter_Filters: Filter[], countless: boolean): Observable<NotificationDTODataSourceResult> {
         let url_ = this.baseUrl + "/api/Notifications/GetAll?";
         if (take !== undefined)
             url_ += "Take=" + encodeURIComponent("" + take) + "&"; 
         if (skip !== undefined)
             url_ += "Skip=" + encodeURIComponent("" + skip) + "&"; 
-        if (sort !== undefined)
-            sort && sort.forEach((item, index) => { 
+        if (sort_Field !== undefined)
+            url_ += "Sort.Field=" + encodeURIComponent("" + sort_Field) + "&"; 
+        if (sort_Dir !== undefined)
+            url_ += "Sort.Dir=" + encodeURIComponent("" + sort_Dir) + "&"; 
+        if (sort_Sorts !== undefined)
+            sort_Sorts && sort_Sorts.forEach((item, index) => { 
                 for (let attr in item)
-                    url_ += "Sort[" + index + "]." + attr + "=" + encodeURIComponent("" + item[attr]) + "&";
+                    url_ += "Sort.Sorts[" + index + "]." + attr + "=" + encodeURIComponent("" + item[attr]) + "&";
             });
         if (filter_Field !== undefined)
             url_ += "Filter.Field=" + encodeURIComponent("" + filter_Field) + "&"; 
@@ -5898,7 +6024,9 @@ export class SwaggerClient {
     /**
      * @param take (optional) 
      * @param skip (optional) 
-     * @param sort (optional) 
+     * @param sort_Field (optional) 
+     * @param sort_Dir (optional) 
+     * @param sort_Sorts (optional) 
      * @param filter_Field (optional) 
      * @param filter_Operator (optional) 
      * @param filter_Value (optional) 
@@ -5907,16 +6035,20 @@ export class SwaggerClient {
      * @param countless (optional) 
      * @return Success
      */
-    apiNotificationsGetAllDetailsGet(take: number, skip: number, sort: Sort[], filter_Field: string, filter_Operator: string, filter_Value: string, filter_Logic: string, filter_Filters: Filter[], countless: boolean): Observable<NotificationDTODataSourceResult> {
+    apiNotificationsGetAllDetailsGet(take: number, skip: number, sort_Field: string, sort_Dir: string, sort_Sorts: Sort[], filter_Field: string, filter_Operator: string, filter_Value: string, filter_Logic: string, filter_Filters: Filter[], countless: boolean): Observable<NotificationDTODataSourceResult> {
         let url_ = this.baseUrl + "/api/Notifications/GetAllDetails?";
         if (take !== undefined)
             url_ += "Take=" + encodeURIComponent("" + take) + "&"; 
         if (skip !== undefined)
             url_ += "Skip=" + encodeURIComponent("" + skip) + "&"; 
-        if (sort !== undefined)
-            sort && sort.forEach((item, index) => { 
+        if (sort_Field !== undefined)
+            url_ += "Sort.Field=" + encodeURIComponent("" + sort_Field) + "&"; 
+        if (sort_Dir !== undefined)
+            url_ += "Sort.Dir=" + encodeURIComponent("" + sort_Dir) + "&"; 
+        if (sort_Sorts !== undefined)
+            sort_Sorts && sort_Sorts.forEach((item, index) => { 
                 for (let attr in item)
-                    url_ += "Sort[" + index + "]." + attr + "=" + encodeURIComponent("" + item[attr]) + "&";
+                    url_ += "Sort.Sorts[" + index + "]." + attr + "=" + encodeURIComponent("" + item[attr]) + "&";
             });
         if (filter_Field !== undefined)
             url_ += "Filter.Field=" + encodeURIComponent("" + filter_Field) + "&"; 
@@ -6335,7 +6467,9 @@ export class SwaggerClient {
     /**
      * @param take (optional) 
      * @param skip (optional) 
-     * @param sort (optional) 
+     * @param sort_Field (optional) 
+     * @param sort_Dir (optional) 
+     * @param sort_Sorts (optional) 
      * @param filter_Field (optional) 
      * @param filter_Operator (optional) 
      * @param filter_Value (optional) 
@@ -6344,16 +6478,20 @@ export class SwaggerClient {
      * @param countless (optional) 
      * @return Success
      */
-    apiPermissionsGetAllGet(take: number, skip: number, sort: Sort[], filter_Field: string, filter_Operator: string, filter_Value: string, filter_Logic: string, filter_Filters: Filter[], countless: boolean): Observable<PermissionDTODataSourceResult> {
+    apiPermissionsGetAllGet(take: number, skip: number, sort_Field: string, sort_Dir: string, sort_Sorts: Sort[], filter_Field: string, filter_Operator: string, filter_Value: string, filter_Logic: string, filter_Filters: Filter[], countless: boolean): Observable<PermissionDTODataSourceResult> {
         let url_ = this.baseUrl + "/api/Permissions/GetAll?";
         if (take !== undefined)
             url_ += "Take=" + encodeURIComponent("" + take) + "&"; 
         if (skip !== undefined)
             url_ += "Skip=" + encodeURIComponent("" + skip) + "&"; 
-        if (sort !== undefined)
-            sort && sort.forEach((item, index) => { 
+        if (sort_Field !== undefined)
+            url_ += "Sort.Field=" + encodeURIComponent("" + sort_Field) + "&"; 
+        if (sort_Dir !== undefined)
+            url_ += "Sort.Dir=" + encodeURIComponent("" + sort_Dir) + "&"; 
+        if (sort_Sorts !== undefined)
+            sort_Sorts && sort_Sorts.forEach((item, index) => { 
                 for (let attr in item)
-                    url_ += "Sort[" + index + "]." + attr + "=" + encodeURIComponent("" + item[attr]) + "&";
+                    url_ += "Sort.Sorts[" + index + "]." + attr + "=" + encodeURIComponent("" + item[attr]) + "&";
             });
         if (filter_Field !== undefined)
             url_ += "Filter.Field=" + encodeURIComponent("" + filter_Field) + "&"; 
@@ -6420,7 +6558,9 @@ export class SwaggerClient {
     /**
      * @param take (optional) 
      * @param skip (optional) 
-     * @param sort (optional) 
+     * @param sort_Field (optional) 
+     * @param sort_Dir (optional) 
+     * @param sort_Sorts (optional) 
      * @param filter_Field (optional) 
      * @param filter_Operator (optional) 
      * @param filter_Value (optional) 
@@ -6429,16 +6569,20 @@ export class SwaggerClient {
      * @param countless (optional) 
      * @return Success
      */
-    apiPermissionsGetAllDetailsGet(take: number, skip: number, sort: Sort[], filter_Field: string, filter_Operator: string, filter_Value: string, filter_Logic: string, filter_Filters: Filter[], countless: boolean): Observable<PermissionDTODataSourceResult> {
+    apiPermissionsGetAllDetailsGet(take: number, skip: number, sort_Field: string, sort_Dir: string, sort_Sorts: Sort[], filter_Field: string, filter_Operator: string, filter_Value: string, filter_Logic: string, filter_Filters: Filter[], countless: boolean): Observable<PermissionDTODataSourceResult> {
         let url_ = this.baseUrl + "/api/Permissions/GetAllDetails?";
         if (take !== undefined)
             url_ += "Take=" + encodeURIComponent("" + take) + "&"; 
         if (skip !== undefined)
             url_ += "Skip=" + encodeURIComponent("" + skip) + "&"; 
-        if (sort !== undefined)
-            sort && sort.forEach((item, index) => { 
+        if (sort_Field !== undefined)
+            url_ += "Sort.Field=" + encodeURIComponent("" + sort_Field) + "&"; 
+        if (sort_Dir !== undefined)
+            url_ += "Sort.Dir=" + encodeURIComponent("" + sort_Dir) + "&"; 
+        if (sort_Sorts !== undefined)
+            sort_Sorts && sort_Sorts.forEach((item, index) => { 
                 for (let attr in item)
-                    url_ += "Sort[" + index + "]." + attr + "=" + encodeURIComponent("" + item[attr]) + "&";
+                    url_ += "Sort.Sorts[" + index + "]." + attr + "=" + encodeURIComponent("" + item[attr]) + "&";
             });
         if (filter_Field !== undefined)
             url_ += "Filter.Field=" + encodeURIComponent("" + filter_Field) + "&"; 
@@ -6977,7 +7121,9 @@ export class SwaggerClient {
     /**
      * @param take (optional) 
      * @param skip (optional) 
-     * @param sort (optional) 
+     * @param sort_Field (optional) 
+     * @param sort_Dir (optional) 
+     * @param sort_Sorts (optional) 
      * @param filter_Field (optional) 
      * @param filter_Operator (optional) 
      * @param filter_Value (optional) 
@@ -6986,16 +7132,20 @@ export class SwaggerClient {
      * @param countless (optional) 
      * @return Success
      */
-    apiRolesGetAllGet(take: number, skip: number, sort: Sort[], filter_Field: string, filter_Operator: string, filter_Value: string, filter_Logic: string, filter_Filters: Filter[], countless: boolean): Observable<RoleDTODataSourceResult> {
+    apiRolesGetAllGet(take: number, skip: number, sort_Field: string, sort_Dir: string, sort_Sorts: Sort[], filter_Field: string, filter_Operator: string, filter_Value: string, filter_Logic: string, filter_Filters: Filter[], countless: boolean): Observable<RoleDTODataSourceResult> {
         let url_ = this.baseUrl + "/api/Roles/GetAll?";
         if (take !== undefined)
             url_ += "Take=" + encodeURIComponent("" + take) + "&"; 
         if (skip !== undefined)
             url_ += "Skip=" + encodeURIComponent("" + skip) + "&"; 
-        if (sort !== undefined)
-            sort && sort.forEach((item, index) => { 
+        if (sort_Field !== undefined)
+            url_ += "Sort.Field=" + encodeURIComponent("" + sort_Field) + "&"; 
+        if (sort_Dir !== undefined)
+            url_ += "Sort.Dir=" + encodeURIComponent("" + sort_Dir) + "&"; 
+        if (sort_Sorts !== undefined)
+            sort_Sorts && sort_Sorts.forEach((item, index) => { 
                 for (let attr in item)
-                    url_ += "Sort[" + index + "]." + attr + "=" + encodeURIComponent("" + item[attr]) + "&";
+                    url_ += "Sort.Sorts[" + index + "]." + attr + "=" + encodeURIComponent("" + item[attr]) + "&";
             });
         if (filter_Field !== undefined)
             url_ += "Filter.Field=" + encodeURIComponent("" + filter_Field) + "&"; 
@@ -7062,7 +7212,9 @@ export class SwaggerClient {
     /**
      * @param take (optional) 
      * @param skip (optional) 
-     * @param sort (optional) 
+     * @param sort_Field (optional) 
+     * @param sort_Dir (optional) 
+     * @param sort_Sorts (optional) 
      * @param filter_Field (optional) 
      * @param filter_Operator (optional) 
      * @param filter_Value (optional) 
@@ -7071,16 +7223,20 @@ export class SwaggerClient {
      * @param countless (optional) 
      * @return Success
      */
-    apiRolesGetAllDetailsGet(take: number, skip: number, sort: Sort[], filter_Field: string, filter_Operator: string, filter_Value: string, filter_Logic: string, filter_Filters: Filter[], countless: boolean): Observable<RoleDTODataSourceResult> {
+    apiRolesGetAllDetailsGet(take: number, skip: number, sort_Field: string, sort_Dir: string, sort_Sorts: Sort[], filter_Field: string, filter_Operator: string, filter_Value: string, filter_Logic: string, filter_Filters: Filter[], countless: boolean): Observable<RoleDTODataSourceResult> {
         let url_ = this.baseUrl + "/api/Roles/GetAllDetails?";
         if (take !== undefined)
             url_ += "Take=" + encodeURIComponent("" + take) + "&"; 
         if (skip !== undefined)
             url_ += "Skip=" + encodeURIComponent("" + skip) + "&"; 
-        if (sort !== undefined)
-            sort && sort.forEach((item, index) => { 
+        if (sort_Field !== undefined)
+            url_ += "Sort.Field=" + encodeURIComponent("" + sort_Field) + "&"; 
+        if (sort_Dir !== undefined)
+            url_ += "Sort.Dir=" + encodeURIComponent("" + sort_Dir) + "&"; 
+        if (sort_Sorts !== undefined)
+            sort_Sorts && sort_Sorts.forEach((item, index) => { 
                 for (let attr in item)
-                    url_ += "Sort[" + index + "]." + attr + "=" + encodeURIComponent("" + item[attr]) + "&";
+                    url_ += "Sort.Sorts[" + index + "]." + attr + "=" + encodeURIComponent("" + item[attr]) + "&";
             });
         if (filter_Field !== undefined)
             url_ += "Filter.Field=" + encodeURIComponent("" + filter_Field) + "&"; 
@@ -7437,7 +7593,9 @@ export class SwaggerClient {
     /**
      * @param take (optional) 
      * @param skip (optional) 
-     * @param sort (optional) 
+     * @param sort_Field (optional) 
+     * @param sort_Dir (optional) 
+     * @param sort_Sorts (optional) 
      * @param filter_Field (optional) 
      * @param filter_Operator (optional) 
      * @param filter_Value (optional) 
@@ -7446,16 +7604,20 @@ export class SwaggerClient {
      * @param countless (optional) 
      * @return Success
      */
-    apiTourAgentsGetAllGet(take: number, skip: number, sort: Sort[], filter_Field: string, filter_Operator: string, filter_Value: string, filter_Logic: string, filter_Filters: Filter[], countless: boolean): Observable<TourAgentDTODataSourceResult> {
+    apiTourAgentsGetAllGet(take: number, skip: number, sort_Field: string, sort_Dir: string, sort_Sorts: Sort[], filter_Field: string, filter_Operator: string, filter_Value: string, filter_Logic: string, filter_Filters: Filter[], countless: boolean): Observable<TourAgentDTODataSourceResult> {
         let url_ = this.baseUrl + "/api/TourAgents/GetAll?";
         if (take !== undefined)
             url_ += "Take=" + encodeURIComponent("" + take) + "&"; 
         if (skip !== undefined)
             url_ += "Skip=" + encodeURIComponent("" + skip) + "&"; 
-        if (sort !== undefined)
-            sort && sort.forEach((item, index) => { 
+        if (sort_Field !== undefined)
+            url_ += "Sort.Field=" + encodeURIComponent("" + sort_Field) + "&"; 
+        if (sort_Dir !== undefined)
+            url_ += "Sort.Dir=" + encodeURIComponent("" + sort_Dir) + "&"; 
+        if (sort_Sorts !== undefined)
+            sort_Sorts && sort_Sorts.forEach((item, index) => { 
                 for (let attr in item)
-                    url_ += "Sort[" + index + "]." + attr + "=" + encodeURIComponent("" + item[attr]) + "&";
+                    url_ += "Sort.Sorts[" + index + "]." + attr + "=" + encodeURIComponent("" + item[attr]) + "&";
             });
         if (filter_Field !== undefined)
             url_ += "Filter.Field=" + encodeURIComponent("" + filter_Field) + "&"; 
@@ -7522,7 +7684,9 @@ export class SwaggerClient {
     /**
      * @param take (optional) 
      * @param skip (optional) 
-     * @param sort (optional) 
+     * @param sort_Field (optional) 
+     * @param sort_Dir (optional) 
+     * @param sort_Sorts (optional) 
      * @param filter_Field (optional) 
      * @param filter_Operator (optional) 
      * @param filter_Value (optional) 
@@ -7531,16 +7695,20 @@ export class SwaggerClient {
      * @param countless (optional) 
      * @return Success
      */
-    apiTourAgentsGetAllDetailsGet(take: number, skip: number, sort: Sort[], filter_Field: string, filter_Operator: string, filter_Value: string, filter_Logic: string, filter_Filters: Filter[], countless: boolean): Observable<TourAgentDTODataSourceResult> {
+    apiTourAgentsGetAllDetailsGet(take: number, skip: number, sort_Field: string, sort_Dir: string, sort_Sorts: Sort[], filter_Field: string, filter_Operator: string, filter_Value: string, filter_Logic: string, filter_Filters: Filter[], countless: boolean): Observable<TourAgentDTODataSourceResult> {
         let url_ = this.baseUrl + "/api/TourAgents/GetAllDetails?";
         if (take !== undefined)
             url_ += "Take=" + encodeURIComponent("" + take) + "&"; 
         if (skip !== undefined)
             url_ += "Skip=" + encodeURIComponent("" + skip) + "&"; 
-        if (sort !== undefined)
-            sort && sort.forEach((item, index) => { 
+        if (sort_Field !== undefined)
+            url_ += "Sort.Field=" + encodeURIComponent("" + sort_Field) + "&"; 
+        if (sort_Dir !== undefined)
+            url_ += "Sort.Dir=" + encodeURIComponent("" + sort_Dir) + "&"; 
+        if (sort_Sorts !== undefined)
+            sort_Sorts && sort_Sorts.forEach((item, index) => { 
                 for (let attr in item)
-                    url_ += "Sort[" + index + "]." + attr + "=" + encodeURIComponent("" + item[attr]) + "&";
+                    url_ += "Sort.Sorts[" + index + "]." + attr + "=" + encodeURIComponent("" + item[attr]) + "&";
             });
         if (filter_Field !== undefined)
             url_ += "Filter.Field=" + encodeURIComponent("" + filter_Field) + "&"; 
@@ -8063,7 +8231,9 @@ export class SwaggerClient {
     /**
      * @param take (optional) 
      * @param skip (optional) 
-     * @param sort (optional) 
+     * @param sort_Field (optional) 
+     * @param sort_Dir (optional) 
+     * @param sort_Sorts (optional) 
      * @param filter_Field (optional) 
      * @param filter_Operator (optional) 
      * @param filter_Value (optional) 
@@ -8072,16 +8242,20 @@ export class SwaggerClient {
      * @param countless (optional) 
      * @return Success
      */
-    apiTourCheckPointsGetAllGet(take: number, skip: number, sort: Sort[], filter_Field: string, filter_Operator: string, filter_Value: string, filter_Logic: string, filter_Filters: Filter[], countless: boolean): Observable<TourCheckPointDTODataSourceResult> {
+    apiTourCheckPointsGetAllGet(take: number, skip: number, sort_Field: string, sort_Dir: string, sort_Sorts: Sort[], filter_Field: string, filter_Operator: string, filter_Value: string, filter_Logic: string, filter_Filters: Filter[], countless: boolean): Observable<TourCheckPointDTODataSourceResult> {
         let url_ = this.baseUrl + "/api/TourCheckPoints/GetAll?";
         if (take !== undefined)
             url_ += "Take=" + encodeURIComponent("" + take) + "&"; 
         if (skip !== undefined)
             url_ += "Skip=" + encodeURIComponent("" + skip) + "&"; 
-        if (sort !== undefined)
-            sort && sort.forEach((item, index) => { 
+        if (sort_Field !== undefined)
+            url_ += "Sort.Field=" + encodeURIComponent("" + sort_Field) + "&"; 
+        if (sort_Dir !== undefined)
+            url_ += "Sort.Dir=" + encodeURIComponent("" + sort_Dir) + "&"; 
+        if (sort_Sorts !== undefined)
+            sort_Sorts && sort_Sorts.forEach((item, index) => { 
                 for (let attr in item)
-                    url_ += "Sort[" + index + "]." + attr + "=" + encodeURIComponent("" + item[attr]) + "&";
+                    url_ += "Sort.Sorts[" + index + "]." + attr + "=" + encodeURIComponent("" + item[attr]) + "&";
             });
         if (filter_Field !== undefined)
             url_ += "Filter.Field=" + encodeURIComponent("" + filter_Field) + "&"; 
@@ -8148,7 +8322,9 @@ export class SwaggerClient {
     /**
      * @param take (optional) 
      * @param skip (optional) 
-     * @param sort (optional) 
+     * @param sort_Field (optional) 
+     * @param sort_Dir (optional) 
+     * @param sort_Sorts (optional) 
      * @param filter_Field (optional) 
      * @param filter_Operator (optional) 
      * @param filter_Value (optional) 
@@ -8157,16 +8333,20 @@ export class SwaggerClient {
      * @param countless (optional) 
      * @return Success
      */
-    apiTourCheckPointsGetAllDetailsGet(take: number, skip: number, sort: Sort[], filter_Field: string, filter_Operator: string, filter_Value: string, filter_Logic: string, filter_Filters: Filter[], countless: boolean): Observable<TourCheckPointDTODataSourceResult> {
+    apiTourCheckPointsGetAllDetailsGet(take: number, skip: number, sort_Field: string, sort_Dir: string, sort_Sorts: Sort[], filter_Field: string, filter_Operator: string, filter_Value: string, filter_Logic: string, filter_Filters: Filter[], countless: boolean): Observable<TourCheckPointDTODataSourceResult> {
         let url_ = this.baseUrl + "/api/TourCheckPoints/GetAllDetails?";
         if (take !== undefined)
             url_ += "Take=" + encodeURIComponent("" + take) + "&"; 
         if (skip !== undefined)
             url_ += "Skip=" + encodeURIComponent("" + skip) + "&"; 
-        if (sort !== undefined)
-            sort && sort.forEach((item, index) => { 
+        if (sort_Field !== undefined)
+            url_ += "Sort.Field=" + encodeURIComponent("" + sort_Field) + "&"; 
+        if (sort_Dir !== undefined)
+            url_ += "Sort.Dir=" + encodeURIComponent("" + sort_Dir) + "&"; 
+        if (sort_Sorts !== undefined)
+            sort_Sorts && sort_Sorts.forEach((item, index) => { 
                 for (let attr in item)
-                    url_ += "Sort[" + index + "]." + attr + "=" + encodeURIComponent("" + item[attr]) + "&";
+                    url_ += "Sort.Sorts[" + index + "]." + attr + "=" + encodeURIComponent("" + item[attr]) + "&";
             });
         if (filter_Field !== undefined)
             url_ += "Filter.Field=" + encodeURIComponent("" + filter_Field) + "&"; 
@@ -8523,7 +8703,9 @@ export class SwaggerClient {
     /**
      * @param take (optional) 
      * @param skip (optional) 
-     * @param sort (optional) 
+     * @param sort_Field (optional) 
+     * @param sort_Dir (optional) 
+     * @param sort_Sorts (optional) 
      * @param filter_Field (optional) 
      * @param filter_Operator (optional) 
      * @param filter_Value (optional) 
@@ -8532,16 +8714,20 @@ export class SwaggerClient {
      * @param countless (optional) 
      * @return Success
      */
-    apiTourCommentsGetAllGet(take: number, skip: number, sort: Sort[], filter_Field: string, filter_Operator: string, filter_Value: string, filter_Logic: string, filter_Filters: Filter[], countless: boolean): Observable<TourCommentDTODataSourceResult> {
+    apiTourCommentsGetAllGet(take: number, skip: number, sort_Field: string, sort_Dir: string, sort_Sorts: Sort[], filter_Field: string, filter_Operator: string, filter_Value: string, filter_Logic: string, filter_Filters: Filter[], countless: boolean): Observable<TourCommentDTODataSourceResult> {
         let url_ = this.baseUrl + "/api/TourComments/GetAll?";
         if (take !== undefined)
             url_ += "Take=" + encodeURIComponent("" + take) + "&"; 
         if (skip !== undefined)
             url_ += "Skip=" + encodeURIComponent("" + skip) + "&"; 
-        if (sort !== undefined)
-            sort && sort.forEach((item, index) => { 
+        if (sort_Field !== undefined)
+            url_ += "Sort.Field=" + encodeURIComponent("" + sort_Field) + "&"; 
+        if (sort_Dir !== undefined)
+            url_ += "Sort.Dir=" + encodeURIComponent("" + sort_Dir) + "&"; 
+        if (sort_Sorts !== undefined)
+            sort_Sorts && sort_Sorts.forEach((item, index) => { 
                 for (let attr in item)
-                    url_ += "Sort[" + index + "]." + attr + "=" + encodeURIComponent("" + item[attr]) + "&";
+                    url_ += "Sort.Sorts[" + index + "]." + attr + "=" + encodeURIComponent("" + item[attr]) + "&";
             });
         if (filter_Field !== undefined)
             url_ += "Filter.Field=" + encodeURIComponent("" + filter_Field) + "&"; 
@@ -8608,7 +8794,9 @@ export class SwaggerClient {
     /**
      * @param take (optional) 
      * @param skip (optional) 
-     * @param sort (optional) 
+     * @param sort_Field (optional) 
+     * @param sort_Dir (optional) 
+     * @param sort_Sorts (optional) 
      * @param filter_Field (optional) 
      * @param filter_Operator (optional) 
      * @param filter_Value (optional) 
@@ -8617,16 +8805,20 @@ export class SwaggerClient {
      * @param countless (optional) 
      * @return Success
      */
-    apiTourCommentsGetAllDetailsGet(take: number, skip: number, sort: Sort[], filter_Field: string, filter_Operator: string, filter_Value: string, filter_Logic: string, filter_Filters: Filter[], countless: boolean): Observable<TourCommentDTODataSourceResult> {
+    apiTourCommentsGetAllDetailsGet(take: number, skip: number, sort_Field: string, sort_Dir: string, sort_Sorts: Sort[], filter_Field: string, filter_Operator: string, filter_Value: string, filter_Logic: string, filter_Filters: Filter[], countless: boolean): Observable<TourCommentDTODataSourceResult> {
         let url_ = this.baseUrl + "/api/TourComments/GetAllDetails?";
         if (take !== undefined)
             url_ += "Take=" + encodeURIComponent("" + take) + "&"; 
         if (skip !== undefined)
             url_ += "Skip=" + encodeURIComponent("" + skip) + "&"; 
-        if (sort !== undefined)
-            sort && sort.forEach((item, index) => { 
+        if (sort_Field !== undefined)
+            url_ += "Sort.Field=" + encodeURIComponent("" + sort_Field) + "&"; 
+        if (sort_Dir !== undefined)
+            url_ += "Sort.Dir=" + encodeURIComponent("" + sort_Dir) + "&"; 
+        if (sort_Sorts !== undefined)
+            sort_Sorts && sort_Sorts.forEach((item, index) => { 
                 for (let attr in item)
-                    url_ += "Sort[" + index + "]." + attr + "=" + encodeURIComponent("" + item[attr]) + "&";
+                    url_ += "Sort.Sorts[" + index + "]." + attr + "=" + encodeURIComponent("" + item[attr]) + "&";
             });
         if (filter_Field !== undefined)
             url_ += "Filter.Field=" + encodeURIComponent("" + filter_Field) + "&"; 
@@ -9455,7 +9647,9 @@ export class SwaggerClient {
     /**
      * @param take (optional) 
      * @param skip (optional) 
-     * @param sort (optional) 
+     * @param sort_Field (optional) 
+     * @param sort_Dir (optional) 
+     * @param sort_Sorts (optional) 
      * @param filter_Field (optional) 
      * @param filter_Operator (optional) 
      * @param filter_Value (optional) 
@@ -9464,16 +9658,20 @@ export class SwaggerClient {
      * @param countless (optional) 
      * @return Success
      */
-    apiToursGetAllGet(take: number, skip: number, sort: Sort[], filter_Field: string, filter_Operator: string, filter_Value: string, filter_Logic: string, filter_Filters: Filter[], countless: boolean): Observable<TourDTODataSourceResult> {
+    apiToursGetAllGet(take: number, skip: number, sort_Field: string, sort_Dir: string, sort_Sorts: Sort[], filter_Field: string, filter_Operator: string, filter_Value: string, filter_Logic: string, filter_Filters: Filter[], countless: boolean): Observable<TourDTODataSourceResult> {
         let url_ = this.baseUrl + "/api/Tours/GetAll?";
         if (take !== undefined)
             url_ += "Take=" + encodeURIComponent("" + take) + "&"; 
         if (skip !== undefined)
             url_ += "Skip=" + encodeURIComponent("" + skip) + "&"; 
-        if (sort !== undefined)
-            sort && sort.forEach((item, index) => { 
+        if (sort_Field !== undefined)
+            url_ += "Sort.Field=" + encodeURIComponent("" + sort_Field) + "&"; 
+        if (sort_Dir !== undefined)
+            url_ += "Sort.Dir=" + encodeURIComponent("" + sort_Dir) + "&"; 
+        if (sort_Sorts !== undefined)
+            sort_Sorts && sort_Sorts.forEach((item, index) => { 
                 for (let attr in item)
-                    url_ += "Sort[" + index + "]." + attr + "=" + encodeURIComponent("" + item[attr]) + "&";
+                    url_ += "Sort.Sorts[" + index + "]." + attr + "=" + encodeURIComponent("" + item[attr]) + "&";
             });
         if (filter_Field !== undefined)
             url_ += "Filter.Field=" + encodeURIComponent("" + filter_Field) + "&"; 
@@ -9540,7 +9738,9 @@ export class SwaggerClient {
     /**
      * @param take (optional) 
      * @param skip (optional) 
-     * @param sort (optional) 
+     * @param sort_Field (optional) 
+     * @param sort_Dir (optional) 
+     * @param sort_Sorts (optional) 
      * @param filter_Field (optional) 
      * @param filter_Operator (optional) 
      * @param filter_Value (optional) 
@@ -9549,16 +9749,20 @@ export class SwaggerClient {
      * @param countless (optional) 
      * @return Success
      */
-    apiToursGetAllDetailsGet(take: number, skip: number, sort: Sort[], filter_Field: string, filter_Operator: string, filter_Value: string, filter_Logic: string, filter_Filters: Filter[], countless: boolean): Observable<TourDTODataSourceResult> {
+    apiToursGetAllDetailsGet(take: number, skip: number, sort_Field: string, sort_Dir: string, sort_Sorts: Sort[], filter_Field: string, filter_Operator: string, filter_Value: string, filter_Logic: string, filter_Filters: Filter[], countless: boolean): Observable<TourDTODataSourceResult> {
         let url_ = this.baseUrl + "/api/Tours/GetAllDetails?";
         if (take !== undefined)
             url_ += "Take=" + encodeURIComponent("" + take) + "&"; 
         if (skip !== undefined)
             url_ += "Skip=" + encodeURIComponent("" + skip) + "&"; 
-        if (sort !== undefined)
-            sort && sort.forEach((item, index) => { 
+        if (sort_Field !== undefined)
+            url_ += "Sort.Field=" + encodeURIComponent("" + sort_Field) + "&"; 
+        if (sort_Dir !== undefined)
+            url_ += "Sort.Dir=" + encodeURIComponent("" + sort_Dir) + "&"; 
+        if (sort_Sorts !== undefined)
+            sort_Sorts && sort_Sorts.forEach((item, index) => { 
                 for (let attr in item)
-                    url_ += "Sort[" + index + "]." + attr + "=" + encodeURIComponent("" + item[attr]) + "&";
+                    url_ += "Sort.Sorts[" + index + "]." + attr + "=" + encodeURIComponent("" + item[attr]) + "&";
             });
         if (filter_Field !== undefined)
             url_ += "Filter.Field=" + encodeURIComponent("" + filter_Field) + "&"; 
@@ -10694,6 +10898,7 @@ export interface IAgentDetailsDTO {
 export class Sort implements ISort {
     field?: string;
     dir?: string;
+    sorts?: Sort[];
 
     constructor(data?: ISort) {
         if (data) {
@@ -10708,6 +10913,11 @@ export class Sort implements ISort {
         if (data) {
             this.field = data["field"];
             this.dir = data["dir"];
+            if (data["sorts"] && data["sorts"].constructor === Array) {
+                this.sorts = [];
+                for (let item of data["sorts"])
+                    this.sorts.push(Sort.fromJS(item));
+            }
         }
     }
 
@@ -10722,6 +10932,11 @@ export class Sort implements ISort {
         data = typeof data === 'object' ? data : {};
         data["field"] = this.field;
         data["dir"] = this.dir;
+        if (this.sorts && this.sorts.constructor === Array) {
+            data["sorts"] = [];
+            for (let item of this.sorts)
+                data["sorts"].push(item.toJSON());
+        }
         return data; 
     }
 }
@@ -10729,6 +10944,7 @@ export class Sort implements ISort {
 export interface ISort {
     field?: string;
     dir?: string;
+    sorts?: Sort[];
 }
 
 export class Filter implements IFilter {

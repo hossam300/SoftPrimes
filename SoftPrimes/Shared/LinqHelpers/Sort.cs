@@ -15,6 +15,7 @@ namespace HelperServices.LinqHelpers
         /// Gets or sets the sort direction. Should be either "asc" or "desc".
         /// </summary>
         public string Dir { get; set; }
+        public List<Sort> Sorts { get; set; }
 
         /// <summary>
         /// Converts to form required by Dynamic Linq e.g. "Field1 desc"
