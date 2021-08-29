@@ -28,7 +28,7 @@
       <label for="templates" class="col-2 col-form-label col-form-label-sm">Templates</label>
       <div class="col-7 d-flex">
         <ng-select class="w-100" [items]="templates$ | async" bindLabel="tourNameEn" bindValue="id"
-          [(ngModel)]="templateId" placeholder="Choose template" (change)="chooseTemplate($event)">
+          placeholder="Choose template" (change)="chooseTemplate($event)">
         </ng-select>
       </div>
       <!-- <span class="ni ni-bullet-list-67 text-primary border border-primary" data-toggle="modal"
