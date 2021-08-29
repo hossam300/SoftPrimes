@@ -48,7 +48,7 @@ export class TasksListComponent implements OnInit {
           if (!Number.isNaN(Number(propertyKey))) {
             continue;
         }
-        const filter = new Filter({ field: field, operator: 'eq', value: (<string>propertyValue) });
+        const filter = new Filter({ field: field, operator: 'eq', value: (<string>propertyValue), logic: 'and' });
         filters.push(filter);
     }
     return filters;
@@ -90,7 +90,7 @@ export class TasksListComponent implements OnInit {
       }
       this.filters[inputType] = new Filter(
         { field: inputType === 'agentName' ? 'agent.fullNameEn' : 'tour.tourNameEn',
-        operator: 'eq', value: (event.target.value) }
+        operator: 'eq', value: (event.target.value), logic: 'and' }
       );
     }
 
