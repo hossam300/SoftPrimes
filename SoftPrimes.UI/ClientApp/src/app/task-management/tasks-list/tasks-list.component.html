@@ -37,6 +37,7 @@
                     <div class="form-group">
                       <label for="tourName">Tour name</label>
                       <input type="text" class="form-control" placeholder="tour name"
+                      [(ngModel)]="tourName"
                         (change)="buildFilter($event, 'tourName')" id="tourName" />
                     </div>
                   </div>
@@ -45,6 +46,7 @@
                     <div class="form-group">
                       <label for="agentName">Agent name</label>
                       <input type="text" class="form-control" placeholder="agent name"
+                      [(ngModel)]="agentName"
                         (change)="buildFilter($event, 'agentName')" id="agentName" />
                     </div>
                   </div>

@@ -70,8 +70,8 @@ export class SettingsCrudsService {
     return this.swagger.apiAccountInsertNewUsersPost(roleId, dto);
   }
 
-  updateAgent(dto) {
-    return this.swagger.apiAccountUpdateUsersPut(dto);
+  updateAgent(roleId, dto) {
+    return this.swagger.apiAccountUpdateUsersPut(roleId, dto);
   }
 
   getUserProfile(userId) {
