@@ -65,7 +65,9 @@ export class AgentsComponent implements OnInit {
         this.agent = new AgentDTO();
         this.settingsCrud.getUserProfile(r.agentId).subscribe(agent => {
           this.birthdate = this.setDate(agent.birthDate);
-          this.roleId = agent.agentRoles[0].roleId;
+          if (agent.agentRoles[0]) {
+            this.roleId = agent.agentRoles[0].roleId;
+          }
           this.agent = agent;
         });
       }
@@ -75,7 +77,7 @@ export class AgentsComponent implements OnInit {
   updateAgent() {
     this.agent.birthDate = this.getDate(this.birthdate);
     this.agent.roleId = this.roleId;
-    this.settingsCrud.updateAgent(this.agent).subscribe(result => {
+    this.settingsCrud.updateAgent(this.roleId, this.agent).subscribe(result => {
       if (result) {
         this.router.navigate(['/settings/agents']);
       }
@@ -85,7 +87,6 @@ export class AgentsComponent implements OnInit {
   insertAgent() {
     this.agent.birthDate = this.getDate(this.birthdate);
     this.agent.roleId = this.roleId;
-    console.log(this.agent, 'fucken agent');
     this.settingsCrud.insertAgent(this.roleId, this.agent).subscribe(res => {
       if (res) {
         this.router.navigate(['/settings/agents']);
