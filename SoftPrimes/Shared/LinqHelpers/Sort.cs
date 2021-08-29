@@ -6,6 +6,10 @@ namespace HelperServices.LinqHelpers
 {
     public class Sort
     {
+        public Sort()
+        {
+            Sorts = new List<Sort>();
+        }
         /// <summary>
         /// Gets or sets the name of the sorted field (property).
         /// </summary>
