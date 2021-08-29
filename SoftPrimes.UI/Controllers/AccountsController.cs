@@ -145,9 +145,9 @@ namespace SoftPrimes.UI.Controllers
         }
 
         [HttpPut, Route("UpdateUsers")]
-        public AgentDTO UpdateUser(AgentDetailsDTO entity)
+        public AgentDTO UpdateUser(int roleId, AgentDetailsDTO entity)
         {
-            return this._usersService.UpdateUser(entity);
+            return this._usersService.UpdateUser(roleId,entity);
         }
         [HttpPost("AddUserImage")]
         public object AddUserImage(string userId)
