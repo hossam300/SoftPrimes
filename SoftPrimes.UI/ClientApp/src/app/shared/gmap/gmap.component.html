@@ -9,7 +9,7 @@
           <agm-overlay *ngFor="let m of markers; let i = index" (markerClick)="clickedMarker(m.label, i)"
             [latitude]="m.lat" [longitude]="m.lng" (dragEnd)="markerDragEnd(m, $event)">
             <div class="map-agent-avatar">
-              <ngx-avatar class="agent-avatar" name="m.label" size="38" [round]="true" [initialsSize]="2"
+              <ngx-avatar class="agent-avatar" [name]="m.label" size="38" [round]="true" [initialsSize]="2"
                 (click)="showDetails(details)" (mouseenter)="toggleLabel(details)" (mouseleave)="toggleLabel(details)">
               </ngx-avatar>
               <div class="map-agent-details bg-white" id="agent-details" #details>

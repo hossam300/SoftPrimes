@@ -2,8 +2,8 @@ import { Filter } from './../../core/_services/swagger/SwaggerClient.service';
 import { TaskManagementService } from './../../core/_services/task-management.service';
 import { Component, OnInit } from '@angular/core';
 import { Sort, TourAgentDTO } from 'src/app/core/_services/swagger/SwaggerClient.service';
-import { Marker } from './../../shared/gmap/gmap.component';
 import { TourState, TourTypes } from 'src/app/core/_models/task-management';
+import { Marker } from 'src/app/core/_models/gmap';
 
 @Component({
   selector: 'app-tasks-list',
@@ -73,6 +73,7 @@ export class TasksListComponent implements OnInit {
     this.taskManagementService.getAllTourAgents(take, skip, sort, filters, sortField, sortDir).subscribe(result => {
       this.toursList = result.data;
       this.count = result.count;
+      this.getCheckPoints();
     });
   }
 
@@ -121,17 +122,17 @@ export class TasksListComponent implements OnInit {
     this.getAll(this.take, this.skip);
   }
 
-  // getCheckPoints() {
-  //   this.toursList.forEach(tour => {
-  //     tour.checkPoints.forEach(checkPoint => {
-  //       this.markers.push({
-  //         lat: checkPoint.lat,
-  //         lng:,
-  //         label:,
-  //         draggable: false
-  //       });
-  //     });
-  //   });
-  // }
+  getCheckPoints() {
+    this.toursList.forEach(tour => {
+      tour.checkPoints.forEach(point => {
+        this.markers.push({
+          lat: point.checkPoint.lat,
+          lng: point.checkPoint.long,
+          label: tour.agent.fullNameEn,
+          draggable: false
+        });
+      });
+    });
+  }
 
 }
