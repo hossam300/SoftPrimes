@@ -10,5 +10,6 @@ namespace SoftPrimes.Service.IServices
 {
     public interface ITourAgentService : IBusinessService<TourAgent, TourAgentDTO>
     {
+        List<AgentCheckPointDTO> GetAgentCheckPoints();
     }
 }

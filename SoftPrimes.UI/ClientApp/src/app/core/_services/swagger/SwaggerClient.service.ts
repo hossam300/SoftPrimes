@@ -7591,6 +7591,62 @@ export class SwaggerClient {
     }
 
     /**
+     * @return Success
+     */
+    apiTourAgentsGetAgentCheckPointsGet(): Observable<AgentCheckPointDTO[]> {
+        let url_ = this.baseUrl + "/api/TourAgents/GetAgentCheckPoints";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processApiTourAgentsGetAgentCheckPointsGet(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processApiTourAgentsGetAgentCheckPointsGet(<any>response_);
+                } catch (e) {
+                    return <Observable<AgentCheckPointDTO[]>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<AgentCheckPointDTO[]>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processApiTourAgentsGetAgentCheckPointsGet(response: HttpResponseBase): Observable<AgentCheckPointDTO[]> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (resultData200 && resultData200.constructor === Array) {
+                result200 = [];
+                for (let item of resultData200)
+                    result200.push(AgentCheckPointDTO.fromJS(item));
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<AgentCheckPointDTO[]>(<any>null);
+    }
+
+    /**
      * @param take (optional) 
      * @param skip (optional) 
      * @param sort_Field (optional) 
@@ -12716,6 +12772,78 @@ export interface IRoleDTODataSourceResult {
     count?: number;
     countUnReaded?: number;
     qrCodeType?: string;
+}
+
+export class AgentCheckPointDTO implements IAgentCheckPointDTO {
+    id?: number;
+    checkPointNameAr?: string;
+    checkPointNameEn?: string;
+    lat?: number;
+    long?: number;
+    locationText?: string;
+    distanceToNextPoint?: number;
+    checkPointState?: TourCheckPointState;
+    agentId?: string;
+    agent?: AgentDetailsDTO;
+
+    constructor(data?: IAgentCheckPointDTO) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.id = data["id"];
+            this.checkPointNameAr = data["checkPointNameAr"];
+            this.checkPointNameEn = data["checkPointNameEn"];
+            this.lat = data["lat"];
+            this.long = data["long"];
+            this.locationText = data["locationText"];
+            this.distanceToNextPoint = data["distanceToNextPoint"];
+            this.checkPointState = data["checkPointState"];
+            this.agentId = data["agentId"];
+            this.agent = data["agent"] ? AgentDetailsDTO.fromJS(data["agent"]) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): AgentCheckPointDTO {
+        data = typeof data === 'object' ? data : {};
+        let result = new AgentCheckPointDTO();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["checkPointNameAr"] = this.checkPointNameAr;
+        data["checkPointNameEn"] = this.checkPointNameEn;
+        data["lat"] = this.lat;
+        data["long"] = this.long;
+        data["locationText"] = this.locationText;
+        data["distanceToNextPoint"] = this.distanceToNextPoint;
+        data["checkPointState"] = this.checkPointState;
+        data["agentId"] = this.agentId;
+        data["agent"] = this.agent ? this.agent.toJSON() : <any>undefined;
+        return data; 
+    }
+}
+
+export interface IAgentCheckPointDTO {
+    id?: number;
+    checkPointNameAr?: string;
+    checkPointNameEn?: string;
+    lat?: number;
+    long?: number;
+    locationText?: string;
+    distanceToNextPoint?: number;
+    checkPointState?: TourCheckPointState;
+    agentId?: string;
+    agent?: AgentDetailsDTO;
 }
 
 export class TourAgentDTODataSourceResult implements ITourAgentDTODataSourceResult {

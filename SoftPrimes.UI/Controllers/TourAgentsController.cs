@@ -20,6 +20,10 @@ namespace SoftPrimes.UI.Controllers
         {
             this._TourAgentService = businessService;
         }
-      
+        [HttpGet("GetAgentCheckPoints")]
+        public List<AgentCheckPointDTO> GetAgentCheckPoints()
+        {
+            return _TourAgentService.GetAgentCheckPoints();
+        }
     }
 }
