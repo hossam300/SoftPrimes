@@ -10,8 +10,9 @@ export class TaskManagementService {
     private swagger: SwaggerClient
   ) { }
 
-  getAllTourAgents(take = 10, skip = 0, sort = [], filters = []) {
-    return this.swagger.apiTourAgentsGetAllGet(take, skip, sort, undefined, undefined, undefined, undefined, filters, false);
+  getAllTourAgents(take = 10, skip = 0, sort = [], filters = [], sortField?, sortDir?) {
+    return this.swagger.apiTourAgentsGetAllGet
+    (take, skip, sortField, sortDir, sort, undefined, undefined, undefined, undefined, filters, false);
   }
 
   editTourAgent(id) {

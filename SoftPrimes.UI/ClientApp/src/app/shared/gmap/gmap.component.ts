@@ -1,13 +1,6 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { Marker } from 'src/app/core/_models/gmap';
 import { environment } from 'src/environments/environment';
-
-
-export interface Marker {
-  lat: number;
-  lng: number;
-  label?: string;
-  draggable?: boolean;
-}
 
 @Component({
   selector: 'app-gmap',
@@ -31,30 +24,7 @@ export class GmapComponent implements OnInit {
   constructor() {
   }
 
-  ngOnInit() {
-    if (this.viewMode) {
-      this.markers.push(...[
-        {
-          lat: 24.712200401496062,
-          lng: 46.81564045083031,
-          label: 'Kareem AbdelRahaman',
-          draggable: true
-        },
-        {
-          lat: 24.647936354282542,
-          lng: 46.705090524072496,
-          label: 'Ahmed Hussein',
-          draggable: false
-        },
-        {
-          lat: 24.71874972966019,
-          lng: 46.61582660805687,
-          label: 'Hossam Fathy',
-          draggable: true
-        }
-      ]);
-    }
-  }
+  ngOnInit() {}
 
   openInFullscreen(el) {
      // if already full screen; exit

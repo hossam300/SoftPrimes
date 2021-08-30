@@ -7,7 +7,7 @@
     Assign new task
   </a>
 </div>
-<app-gmap [viewMode]="true"></app-gmap>
+<app-gmap [viewMode]="true" [markers]="markers"></app-gmap>
 <div class="filter-box mb-3">
   <div class="align-items-center d-flex justify-content-between mb-3">
     <div class="dropdown dropdown-filters-container d-inline">
@@ -37,6 +37,7 @@
                     <div class="form-group">
                       <label for="tourName">Tour name</label>
                       <input type="text" class="form-control" placeholder="tour name"
+                      [(ngModel)]="tourName"
                         (change)="buildFilter($event, 'tourName')" id="tourName" />
                     </div>
                   </div>
@@ -45,6 +46,7 @@
                     <div class="form-group">
                       <label for="agentName">Agent name</label>
                       <input type="text" class="form-control" placeholder="agent name"
+                      [(ngModel)]="agentName"
                         (change)="buildFilter($event, 'agentName')" id="agentName" />
                     </div>
                   </div>

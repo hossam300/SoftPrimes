@@ -2,8 +2,8 @@ import { Filter } from './../../core/_services/swagger/SwaggerClient.service';
 import { TaskManagementService } from './../../core/_services/task-management.service';
 import { Component, OnInit } from '@angular/core';
 import { Sort, TourAgentDTO } from 'src/app/core/_services/swagger/SwaggerClient.service';
-import { Marker } from './../../shared/gmap/gmap.component';
 import { TourState, TourTypes } from 'src/app/core/_models/task-management';
+import { Marker } from 'src/app/core/_models/gmap';
 
 @Component({
   selector: 'app-tasks-list',
@@ -17,10 +17,14 @@ export class TasksListComponent implements OnInit {
   skip = 0;
   count: number;
   markers: Marker[] = [];
+  sortArr: Sort[] = [];
+  filtersArr: Filter[] = [];
   states = TourState;
   types = TourTypes;
   tourStates: Filter[] = this.convertEnumToFiltersArray(TourState, 'tourState', 'or');
   tourTypes: Filter[] = this.convertEnumToFiltersArray(TourTypes, 'tourType', 'or');
+  tourName = '';
+  agentName = '';
   filters = {
     tourState: [],
     tourType: [],
@@ -44,7 +48,7 @@ export class TasksListComponent implements OnInit {
           if (!Number.isNaN(Number(propertyKey))) {
             continue;
         }
-        const filter = new Filter({ field: field, operator: 'eq', value: (<string>propertyValue) });
+        const filter = new Filter({ field: field, operator: 'eq', value: (<string>propertyValue), logic: 'and' });
         filters.push(filter);
     }
     return filters;
@@ -65,33 +69,32 @@ export class TasksListComponent implements OnInit {
     };
   }
 
-  getAll(take, skip, sort = [], filters = []) {
-    this.taskManagementService.getAllTourAgents(take, skip, sort, filters).subscribe(result => {
-      console.log(result, 'tourAgents');
+  getAll(take, skip, sort = [], filters = [], sortField?, sortDir?) {
+    this.taskManagementService.getAllTourAgents(take, skip, sort, filters, sortField, sortDir).subscribe(result => {
       this.toursList = result.data;
       this.count = result.count;
+      this.getCheckPoints();
     });
   }
 
   sort(event) {
     const direction = event.sort === 'desc' ? 'asc' : 'desc';
-    const sort = [new Sort({ field: event.sortField, dir: direction })];
-    console.log(event, sort, 'start sorting');
-    this.getAll(this.take, this.skip, sort);
+    // this.sortArr = [new Sort({ field: event.sortField, dir: direction })];
+    this.getAll(this.take, this.skip, [], this.filtersArr, event.sortField, direction);
   }
 
-  buildFilter(event, inputType) {
-    if (!event.target.value) {
-      this.filters[inputType] = '';
-      return;
+  buildFilter(event?, inputType?) {
+    if (event) {
+      if (!event.target.value) {
+        this.filters[inputType] = '';
+        return;
+      }
+      this.filters[inputType] = new Filter(
+        { field: inputType === 'agentName' ? 'agent.fullNameEn' : 'tour.tourNameEn',
+        operator: 'eq', value: (event.target.value), logic: 'and' }
+      );
     }
-    this.filters[inputType] = new Filter(
-      { field: inputType === 'agentName' ? 'agent.fullNameEn' : 'tour.tourNameEn',
-      operator: 'eq', value: (event.target.value) }
-    );
-  }
 
-  applyFilters() {
     const filters = [...this.filters.tourState, ...this.filters.tourType];
     if (this.filters.tourName) {
       filters.push(this.filters.tourName);
@@ -99,8 +102,12 @@ export class TasksListComponent implements OnInit {
     if (this.filters.agentName) {
       filters.push(this.filters.agentName);
     }
-    console.log(filters, 'filters');
-    this.getAll(this.take, this.skip, [], filters);
+    this.filtersArr = filters;
+  }
+
+  applyFilters() {
+    this.buildFilter();
+    this.getAll(this.take, this.skip, [], this.filtersArr);
   }
 
   resetFilters() {
@@ -110,20 +117,22 @@ export class TasksListComponent implements OnInit {
       tourName: '',
       agentName: ''
     };
+    this.tourName = '';
+    this.agentName = '';
     this.getAll(this.take, this.skip);
   }
 
-  // getCheckPoints() {
-  //   this.toursList.forEach(tour => {
-  //     tour.checkPoints.forEach(checkPoint => {
-  //       this.markers.push({
-  //         lat: checkPoint.lat,
-  //         lng:,
-  //         label:,
-  //         draggable: false
-  //       });
-  //     });
-  //   });
-  // }
+  getCheckPoints() {
+    this.toursList.forEach(tour => {
+      tour.checkPoints.forEach(point => {
+        this.markers.push({
+          lat: point.checkPoint.lat,
+          lng: point.checkPoint.long,
+          label: tour.agent.fullNameEn,
+          draggable: false
+        });
+      });
+    });
+  }
 
 }

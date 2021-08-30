@@ -420,11 +420,14 @@ export class SwaggerClient {
     }
 
     /**
+     * @param roleId (optional) 
      * @param body (optional) 
      * @return Success
      */
-    apiAccountUpdateUsersPut(body: AgentDetailsDTO): Observable<AgentDTO> {
-        let url_ = this.baseUrl + "/api/Account/UpdateUsers";
+    apiAccountUpdateUsersPut(roleId: number, body: AgentDetailsDTO): Observable<AgentDTO> {
+        let url_ = this.baseUrl + "/api/Account/UpdateUsers?";
+        if (roleId !== undefined)
+            url_ += "roleId=" + encodeURIComponent("" + roleId) + "&"; 
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(body);

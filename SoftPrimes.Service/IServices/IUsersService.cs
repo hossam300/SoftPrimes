@@ -22,7 +22,7 @@ namespace SoftPrimes.Service.IServices
         bool ResetPassword(string email);
         AgentDTO AddUserImage(string decryptedUserId, byte[] profileImage);
         IEnumerable<AgentDTO> InsertNewUsers(int roleId,AgentDetailsDTO entities);
-        AgentDTO UpdateUser(AgentDetailsDTO entitie);
+        AgentDTO UpdateUser(int roleId, AgentDetailsDTO entitie);
         Task<bool> ChangeTempPassword(string userName, string newPassword);
         void InsertLoginLog(AgentLoginLog agentLoginLog);
         List<AgentDTO> GetAgentLookups(string searchText, int take);

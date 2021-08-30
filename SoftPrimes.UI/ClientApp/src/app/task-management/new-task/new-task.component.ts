@@ -1,10 +1,10 @@
 import { TaskManagementService } from './../../core/_services/task-management.service';
-import { TourCreateDTO, TourType, Filter, PointLocationDTO } from './../../core/_services/swagger/SwaggerClient.service';
+import { TourCreateDTO, TourType, PointLocationDTO, TourTemplateDTO } from './../../core/_services/swagger/SwaggerClient.service';
 import { SettingsCrudsService } from './../../settings/settings-cruds.service';
 import { Component, OnInit } from '@angular/core';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { concat, of, Subject, Subscription } from 'rxjs';
-import { catchError, debounceTime, distinctUntilChanged, map, switchMap, tap } from 'rxjs/operators';
+import { catchError, debounceTime, distinctUntilChanged, map, switchMap, tap, throwIfEmpty } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
@@ -152,7 +152,8 @@ export class NewTaskComponent implements OnInit {
     this.checkPoints = this.checkPoints.filter(x => x.id !== id);
   }
 
-  selectChanged($event) {
+  checkPointsChanged($event) {
+    this.fixDateTimePickers();
     this.markers = $event.map(x => {
       return {
         lat: x.lat,
@@ -160,9 +161,20 @@ export class NewTaskComponent implements OnInit {
         label: x.checkPointNameEn
       };
     });
-    console.log($event, 'location');
-    console.log(this.markers, 'location');
+    if (this.tour.pointLocations && this.tour.pointLocations.length) {
+      this.tour.pointLocations.forEach(point => {
+        $event = $event.map(val => {
+          if (point.checkPointId === val.id) {
+            val.startDate = point.startDate;
+            val.endDate = point.endDate;
+          }
+          return val;
+        });
+      });
+    }
+  }
 
+  fixDateTimePickers() {
     setTimeout(() => {
       const items =  document.querySelectorAll('.ngx-picker');
       items.forEach(item => {
@@ -172,12 +184,28 @@ export class NewTaskComponent implements OnInit {
     });
   }
 
-  selectedDateTime($event) {
-    console.log($event, 'datetime changed');
-  }
-
   getDate(date) {
     return new Date(date.year, date.month, date.day);
+  }
+
+  chooseTemplate(event: TourTemplateDTO) {
+    this.tour.tourName = event.tourNameEn;
+    if (event.checkPoints[0]) {
+      this.tour.tourId = event.checkPoints[0].tourId;
+      this.tour.pointLocations = event.checkPoints.map(point => {
+        const location = new PointLocationDTO();
+        location.startDate = point.startDate;
+        location.endDate = point.endDate;
+        location.checkPointId = point.checkPointId;
+        return location;
+      });
+      this.checkPoints = event.checkPoints.map((point: any) => {
+        point.checkPoint.startDate = point.startDate;
+        point.checkPoint.endDate = point.endDate;
+        return point.checkPoint;
+      });
+      this.checkPointsChanged(this.checkPoints);
+    }
   }
 
 }
