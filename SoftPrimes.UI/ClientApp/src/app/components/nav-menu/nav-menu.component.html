@@ -28,12 +28,12 @@
               <div class="media align-items-center">
                 <div class="media-body d-none d-lg-block">
                   <span class="mb-0 text-dark text-capitalize">
-                    {{(user | async).fullName}}
+                    {{(user | async).fullNameEn}}
                   </span>
                 </div>
                 <span class="mx-2 rounded-circle">
-                  <ngx-avatar class="border-0" [src]="(user | async).image && ('data:image/jpeg;base64,'+(user | async).image)"
-                    [name]="(user | async).fullName" size="32"
+                  <ngx-avatar class="border-0" [src]="(user | async).image && (user | async).image"
+                    [name]="(user | async).fullNameEn" size="32"
                     [round]="true" [initialsSize]="2">
                   </ngx-avatar>
                 </span>
@@ -43,14 +43,14 @@
             <div class="dropdown-menu dropdown-menu-right">
               <div class="dropdown-header noti-title">
                 <h6 class="text-overflow m-0 text-primary text-capitalize">
-                  {{(user | async).fullName}}
+                  {{(user | async).fullNameEn}}
                 </h6>
                 <span class="text-gray text-10 text-lowercase">
                   Last date login
                   <span>{{(user | async).lastLoginDate | date:'dd MMM'}}</span>
                 </span>
               </div>
-              <a [routerLink]="['/task-management']" class="dropdown-item">
+              <a [routerLink]="['/profile']" class="dropdown-item">
                 <em class="fa fa-user-o"></em>
                 <span class="px-2">My profile</span>
               </a>
