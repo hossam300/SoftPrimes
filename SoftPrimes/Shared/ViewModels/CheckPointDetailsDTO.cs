@@ -11,6 +11,8 @@ namespace SoftPrimes.Shared.ViewModels
         public string CheckPointNameEn { get; set; }
         public double EstimatedDistance { get; set; }
         public string LocationName { get; set; }
+        public double Lat{ get; set; }
+        public double Long { get; set; }
         public DateTimeOffset? EndDate { get; set; }
         public string QRCode { get; set; }
         public TourCheckPointState CheckPointState { get; set; }

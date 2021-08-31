@@ -262,7 +262,7 @@ namespace SoftPrimes.Service.Services
             }
         }
 
-        public IEnumerable<AgentDTO> InsertNewUsers(int roleId,AgentDetailsDTO entity)
+        public IEnumerable<AgentDTO> InsertNewUsers(int roleId, AgentDetailsDTO entity)
         {
             string pass = "";
             pass = entity.Password;
@@ -304,9 +304,9 @@ namespace SoftPrimes.Service.Services
             return users.Select(u => new AgentDTO { Id = u.Id.ToString(), UserName = u.UserName }).ToList();
         }
 
-        public AgentDTO UpdateUser(int roleId,AgentDetailsDTO oldAgent)
+        public AgentDTO UpdateUser(int roleId, AgentDetailsDTO oldAgent)
         {
-            var OldEntity = this._UnitOfWork.GetRepository<Agent>().GetById(oldAgent.Id);
+            var OldEntity = this._UnitOfWork.GetRepository<Agent>().GetAll().FirstOrDefault(c => c.Id == oldAgent.Id);
             OldEntity.Email = oldAgent.Email != null ? oldAgent.Email : OldEntity.Email;
             OldEntity.BirthDate = oldAgent.BirthDate != null || oldAgent.BirthDate != DateTime.MinValue ? oldAgent.BirthDate : OldEntity.BirthDate;
             OldEntity.FullNameAr = oldAgent.FullNameAr;
@@ -328,7 +328,7 @@ namespace SoftPrimes.Service.Services
                 }
                 oldAgent.Password = PasswordHash;
             }
-            if (roleId != null || roleId != 0)
+            if (roleId != null && roleId != 0)
             {
                 this._UnitOfWork.GetRepository<AgentRole>().Delete(OldEntity.AgentRoles);
                 OldEntity.AgentRoles.Add(new AgentRole { RoleId = (int)roleId, AgentId = oldAgent.Id });

@@ -29,7 +29,7 @@ namespace SoftPrimes.Service.Services
             byte[] ProfileImageThumbnail = ImageToByteArray(newImage);
             AgentDTO userDetailsDTO = new AgentDTO();
             Agent currentUser = _unitOfWork.GetRepository<Agent>().GetById(userId);
-          //  Agent previousUser = currentUser.ShallowCopy();
+            //  Agent previousUser = currentUser.ShallowCopy();
             currentUser.Id = userId;
             currentUser.Image = ProfileImageThumbnail;
             _UnitOfWork.GetRepository<Agent>().Update(currentUser);
@@ -118,10 +118,10 @@ namespace SoftPrimes.Service.Services
         }
         public IEnumerable<AgentDTO> UpdateUsers(IEnumerable<AgentDTO> entities)
         {
-        
+
             foreach (var Entity in entities)
             {
-                var OldEntity = this._UnitOfWork.GetRepository<Agent>().GetById(Entity.Id);
+                var OldEntity = this._UnitOfWork.GetRepository<Agent>().GetAll().FirstOrDefault(c => c.Id == Entity.Id);
                 byte[] profileImage = OldEntity.Image;
                 Agent MappedEntity = _Mapper.Map(Entity, OldEntity, typeof(AgentDTO), typeof(Agent)) as Agent;
                 MappedEntity.Image = profileImage;

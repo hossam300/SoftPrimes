@@ -13199,6 +13199,8 @@ export class CheckPointDetailsDTO implements ICheckPointDetailsDTO {
     checkPointNameEn?: string;
     estimatedDistance?: number;
     locationName?: string;
+    lat?: number;
+    long?: number;
     endDate?: Date;
     qrCode?: string;
     checkPointState?: TourCheckPointState;
@@ -13220,6 +13222,8 @@ export class CheckPointDetailsDTO implements ICheckPointDetailsDTO {
             this.checkPointNameEn = data["checkPointNameEn"];
             this.estimatedDistance = data["estimatedDistance"];
             this.locationName = data["locationName"];
+            this.lat = data["lat"];
+            this.long = data["long"];
             this.endDate = data["endDate"] ? new Date(data["endDate"].toString()) : <any>undefined;
             this.qrCode = data["qrCode"];
             this.checkPointState = data["checkPointState"];
@@ -13245,6 +13249,8 @@ export class CheckPointDetailsDTO implements ICheckPointDetailsDTO {
         data["checkPointNameEn"] = this.checkPointNameEn;
         data["estimatedDistance"] = this.estimatedDistance;
         data["locationName"] = this.locationName;
+        data["lat"] = this.lat;
+        data["long"] = this.long;
         data["endDate"] = this.endDate ? this.endDate.toISOString() : <any>undefined;
         data["qrCode"] = this.qrCode;
         data["checkPointState"] = this.checkPointState;
@@ -13263,6 +13269,8 @@ export interface ICheckPointDetailsDTO {
     checkPointNameEn?: string;
     estimatedDistance?: number;
     locationName?: string;
+    lat?: number;
+    long?: number;
     endDate?: Date;
     qrCode?: string;
     checkPointState?: TourCheckPointState;
