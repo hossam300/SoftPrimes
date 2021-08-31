@@ -1,0 +1,115 @@
+<app-breadcrumb></app-breadcrumb>
+<div class="d-flex justify-content-between align-items-center mb-4 pb-3">
+  <h1 class="h5">
+    Profile
+  </h1>
+  <a class="btn btn-primary text-white" *ngIf="viewMode" (click)="editMode()">
+    Edit profile
+  </a>
+</div>
+<div class="card shadow mb-5">
+  <div class="card-body" *ngIf="user">
+    <p class="dashed-border-bottom mb-4 pb-4" *ngIf="!viewMode">
+      Please find the below information
+    </p>
+    <div class="row">
+      <div class="col-9">
+        <div class="row form-group">
+          <label for="fullNameAr" class="col-2 col-form-label col-form-label-sm">Full name Ar</label>
+          <div class="col-9 d-flex">
+            <div class="input-group">
+              <input class="form-control" [placeholder]="!viewMode ? 'Full name ar' : ''"
+                [(ngModel)]="user.fullNameAr" type="text" [readonly]="viewMode"
+                name="fullNameAr">
+            </div>
+          </div>
+        </div>
+        <div class="row form-group">
+          <label for="fullNameEn" class="col-2 col-form-label col-form-label-sm">Full name En</label>
+          <div class="col-9 d-flex">
+            <div class="input-group">
+              <input class="form-control" [placeholder]="!viewMode ? 'Full name en' : ''"
+                [(ngModel)]="user.fullNameEn" type="text" [readonly]="viewMode"
+                name="fullNameEn">
+            </div>
+          </div>
+        </div>
+        <div class="row form-group">
+          <label for="username" class="col-2 col-form-label col-form-label-sm">Username</label>
+          <div class="col-9 d-flex">
+            <div class="input-group">
+              <input class="form-control" [placeholder]="!viewMode ? 'username' : ''" [readonly]="viewMode"
+                [(ngModel)]="user.userName" type="text"
+                name="username">
+            </div>
+          </div>
+        </div>
+        <div class="row form-group">
+          <label for="jobTitle" class="col-2 col-form-label col-form-label-sm">JobTitle</label>
+          <div class="col-9 d-flex">
+            <div class="input-group">
+              <input class="form-control" [placeholder]="!viewMode ? 'job title' : ''" [readonly]="viewMode"
+                [(ngModel)]="user.jobTitle" type="text"
+                name="jobTitle">
+            </div>
+          </div>
+        </div>
+        <div class="row form-group">
+          <label for="mobile" class="col-2 col-form-label col-form-label-sm">Mobile</label>
+          <div class="col-9 d-flex">
+            <div class="input-group">
+              <input class="form-control" [placeholder]="!viewMode ? 'user mobile' : ''" [readonly]="viewMode"
+                [(ngModel)]="user.mobile" type="text" name="mobile">
+            </div>
+          </div>
+        </div>
+        <div class="row form-group">
+          <label for="email" class="col-2 col-form-label col-form-label-sm">Email</label>
+          <div class="col-9 d-flex">
+            <div class="input-group">
+              <input class="form-control"  [placeholder]="!viewMode ? 'user email' : ''" [readonly]="viewMode"
+                [(ngModel)]="user.email" type="text" name="email">
+            </div>
+          </div>
+        </div>
+        <div class="row form-group">
+          <label for="birthdate" class="col-2 col-form-label col-form-label-sm">user birthdate</label>
+          <div class="col-9 d-flex">
+            <div [class.input-group]="!viewMode" [class.w-100]="viewMode">
+              <div class="input-group-prepend" [class.d-none]="viewMode">
+                <span class="input-group-text bg-transparent text-14"><em class="fa fa-calendar-o"></em></span>
+              </div>
+              <input ngbDatepicker #d="ngbDatepicker" type="text" class="form-control"
+                [(ngModel)]="birthdate" [minDate]="{year: 1900, month: 1, day: 1}" [disabled]="viewMode"
+                name="birthdate" autocomplete="off" (click)="!viewMode && d.toggle()" [readonly]="viewMode"
+                id="birthdate" [placeholder]="!viewMode ? 'MM/DD/YYYY' : ''">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-3">
+        <div class="avatar-upload">
+          <div class="avatar-edit" *ngIf="!viewMode">
+            <input type='file' id="imageUpload" accept=".png, .jpg, .jpeg" name="avatar"
+              (change)="readURL($event)" />
+            <label for="imageUpload"></label>
+          </div>
+          <div class="avatar-preview container2">
+            <div *ngIf="!viewMode" id="imagePreview" [ngStyle]="{'background-image': 'url('+user.image+')'}">
+            </div>
+            <ngx-avatar *ngIf="viewMode" class="agent-avatar"
+              [name]="user.fullNameEn" [src]="user.image"
+              size="192" [round]="true" [initialsSize]="2">
+            </ngx-avatar>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-transparent card-footer dashed-border-top px-0 pt-4 pb-1" *ngIf="!viewMode">
+      <button class="btn btn-primary shadow" (click)="updateProfile()">
+        Update profile
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,13 +1,23 @@
-import { Injectable } from '@angular/core';
-import { of } from 'rxjs';
-import { Filter, Sort, SwaggerClient } from '../core/_services/swagger/SwaggerClient.service';
+import { RequestHeaderService } from './../core/_services/request-header.service';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Inject, Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
+import { API_BASE_URL, SwaggerClient } from '../core/_services/swagger/SwaggerClient.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SettingsCrudsService {
-
-  constructor(private swagger: SwaggerClient) { }
+  baseUrl: string;
+  constructor(
+    private swagger: SwaggerClient,
+    @Inject(API_BASE_URL) baseUrl: string,
+    private http: HttpClient,
+    private requestHeaderSrv: RequestHeaderService
+  ) {
+    this.baseUrl = baseUrl;
+  }
 
   getAll(controller: string, take = 10, skip = 0, sort = [], filters = []) {
     return this.swagger['api' + controller + 'GetAllGet']
@@ -78,8 +88,13 @@ export class SettingsCrudsService {
     return this.swagger.apiAccountGetUserProfileGet(userId);
   }
 
-  addUserImage(userId) {
-    return this.swagger.apiAccountAddUserImagePost(userId);
+  addUserImage(userId, formData) {
+    const headers = this.requestHeaderSrv.getHeaders();
+    const options = {
+      headers: headers
+    };
+    console.log(this.baseUrl, 'this.baseUrl');
+    return this.http.post(`${this.baseUrl}/api/Account/AddUserImage?userId=${userId}`, formData, options);
   }
 
   printQr(sectionId) {

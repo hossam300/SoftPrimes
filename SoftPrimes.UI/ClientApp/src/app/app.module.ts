@@ -12,7 +12,7 @@ import { TaskManagementModule } from './task-management/task-management.module';
 
 import { AppComponent } from './app.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { NavMenuComponent } from './nav-menu/nav-menu.component';
+import { NavMenuComponent } from './components/nav-menu/nav-menu.component';
 import { LoginComponent } from './auth/login/login.component';
 
 import { API_BASE_URL, SwaggerClient } from './core/_services/swagger/SwaggerClient.service';
@@ -22,6 +22,7 @@ import { environment } from 'src/environments/environment';
 import { AuthGuard } from './core/_guards/auth.guard';
 import { AuthService } from './core/_services/auth.service';
 import { TaskManagementService } from './core/_services/task-management.service';
+import { ProfileComponent } from './components/profile/profile.component';
 export const DEV_MODE = new InjectionToken<boolean>('DEV_MODE');
 
 @NgModule({
@@ -29,6 +30,7 @@ export const DEV_MODE = new InjectionToken<boolean>('DEV_MODE');
     AppComponent,
     NavMenuComponent,
     DashboardComponent,
+    ProfileComponent,
     LoginComponent
   ],
   imports: [

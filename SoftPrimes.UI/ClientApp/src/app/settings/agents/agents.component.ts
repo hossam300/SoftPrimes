@@ -6,6 +6,7 @@ import { concat, Observable, of, Subject, Subscription } from 'rxjs';
 import { AgentDTO } from 'src/app/core/_services/swagger/SwaggerClient.service';
 import { SettingsCrudsService } from '../settings-cruds.service';
 import { catchError, debounceTime, distinctUntilChanged, switchMap, tap } from 'rxjs/operators';
+import { getDate, setDate } from 'src/app/core/_utils/date';
 
 export enum AgentType {
   NormalAgent = 1,
@@ -64,7 +65,7 @@ export class AgentsComponent implements OnInit {
         this.createMode = false;
         this.agent = new AgentDTO();
         this.settingsCrud.getUserProfile(r.agentId).subscribe(agent => {
-          this.birthdate = this.setDate(agent.birthDate);
+          this.birthdate = setDate(agent.birthDate);
           if (agent.agentRoles[0]) {
             this.roleId = agent.agentRoles[0].roleId;
           }
@@ -75,7 +76,7 @@ export class AgentsComponent implements OnInit {
   }
 
   updateAgent() {
-    this.agent.birthDate = this.getDate(this.birthdate);
+    this.agent.birthDate = getDate(this.birthdate);
     this.agent.roleId = this.roleId;
     this.settingsCrud.updateAgent(this.roleId, this.agent).subscribe(result => {
       if (result) {
@@ -85,7 +86,7 @@ export class AgentsComponent implements OnInit {
   }
 
   insertAgent() {
-    this.agent.birthDate = this.getDate(this.birthdate);
+    this.agent.birthDate = getDate(this.birthdate);
     this.agent.roleId = this.roleId;
     this.settingsCrud.insertAgent(this.roleId, this.agent).subscribe(res => {
       if (res) {
@@ -143,19 +144,6 @@ export class AgentsComponent implements OnInit {
         )
       );
     });
-  }
-
-  getDate(date: NgbDateStruct) {
-    return new Date(date.year, date.month, date.day);
-  }
-
-  setDate(date: Date) {
-    const d = new Date(date);
-    return {
-      year: d.getFullYear(),
-      month: d.getMonth() + 1,
-      day: d.getDate()
-    };
   }
 
 }

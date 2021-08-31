@@ -71,6 +71,12 @@ label.required:after {
   padding-left: 2px;
 }
 
+.form-control[readonly],
+.form-control[readonly].form-control[disabled] {
+  border: none;
+  background-color: transparent;
+}
+
 .avatar {
   background-color: #fff !important;
 }

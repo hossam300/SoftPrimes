@@ -6,6 +6,7 @@ import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { concat, of, Subject, Subscription } from 'rxjs';
 import { catchError, debounceTime, distinctUntilChanged, map, switchMap, tap, throwIfEmpty } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
+import { getDate } from 'src/app/core/_utils/date';
 
 @Component({
   selector: 'app-new-task',
@@ -69,7 +70,7 @@ export class NewTaskComponent implements OnInit {
   }
 
   assignTask() {
-    this.tour.tourDate = this.getDate(this.tourDate);
+    this.tour.tourDate = getDate(this.tourDate);
     this.tour.pointLocations = [];
     this.checkPoints.forEach(x => {
       const location = new PointLocationDTO({
@@ -182,10 +183,6 @@ export class NewTaskComponent implements OnInit {
         item.querySelector('button').classList.add('d-none');
       });
     });
-  }
-
-  getDate(date) {
-    return new Date(date.year, date.month, date.day);
   }
 
   chooseTemplate(event: TourTemplateDTO) {
