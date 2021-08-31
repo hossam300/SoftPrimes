@@ -73,6 +73,8 @@ export class AuthService {
       });
       localStorage.setItem('user', JSON.stringify(user));
       this.store.loggedUser$.next(user); // share user in all system - if changed the user or if changed the organization
+    } else {
+      localStorage.removeItem('user');
     }
   }
 
