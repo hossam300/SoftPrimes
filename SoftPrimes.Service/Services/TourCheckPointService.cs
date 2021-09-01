@@ -27,7 +27,7 @@ namespace SoftPrimes.Service.Services
         {
             Comment comment = new Comment
             {
-                Attachment = Url == "" ? new Attachment() : new Attachment
+                Attachment = Url == "" || checkPointTourComment.AttachmentType == 0 ? null : new Attachment
                 {
                     AttachmentName = checkPointTourComment.Text,
                     AttachmentType = (AttachmentType)checkPointTourComment.AttachmentType,

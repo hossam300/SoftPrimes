@@ -17,12 +17,12 @@ namespace SoftPrimes.UI.Controllers
     {
         private readonly ITourCheckPointService _TourCheckPointService;
         private readonly IHostingEnvironment _appEnvironment;
-
-        public TourCheckPointsController(ITourCheckPointService businessService, IHelperServices.ISessionServices sessionSevices, IHostingEnvironment appEnvironment) : base(businessService, sessionSevices)
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        public TourCheckPointsController(ITourCheckPointService businessService, IHelperServices.ISessionServices sessionSevices, IHostingEnvironment appEnvironment, IHttpContextAccessor httpContextAccessor) : base(businessService, sessionSevices)
         {
             this._TourCheckPointService = businessService;
             _appEnvironment = appEnvironment;
-
+            _httpContextAccessor = httpContextAccessor;
         }
         [HttpPost("ScanLocationQrCode")]
         public bool ScanLocationQrCode(LocationQrCodeDTO locationQrCode)
@@ -52,13 +52,17 @@ namespace SoftPrimes.UI.Controllers
                     checkPointTourComment.File = binaryReader.ReadBytes((int)file.Length);
                     path = _appEnvironment.WebRootPath + "\\Files\\" + Guid.NewGuid() + "_" + file.FileName;
                     System.IO.File.WriteAllBytes(path, checkPointTourComment.File);
+                    path = _httpContextAccessor.HttpContext.Request.Host.Value + "\\Files\\" + Guid.NewGuid() + "_" + file.FileName;
                 }
             }
             checkPointTourComment.Text = Text;
             checkPointTourComment.TourId = Convert.ToInt32(TourId);
             checkPointTourComment.CheckPointId = Convert.ToInt32(CheckPointId);
-            checkPointTourComment.AttachmentType = Convert.ToInt32(AttachmentType);
-            return _TourCheckPointService.AddCheckPointTourComment(checkPointTourComment, path );
+            if (AttachmentType == "0" || AttachmentType == null)
+                checkPointTourComment.AttachmentType = 0;
+            else
+                checkPointTourComment.AttachmentType = Convert.ToInt32(AttachmentType);
+            return _TourCheckPointService.AddCheckPointTourComment(checkPointTourComment, path);
         }
     }
 }

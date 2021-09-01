@@ -210,6 +210,7 @@ namespace SoftPrimes.UI
             services.AddScoped<ITokenStoreService, TokenStoreService>();
             services.AddScoped<IDataProtectService, DataProtectService>();
             services.AddScoped<IMailServices, MailServices>();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddControllers()
                 //if Swagger comment next line
                 .AddMvcOptions(options => options.Filters.Add(new AuthorizeFilter()))
