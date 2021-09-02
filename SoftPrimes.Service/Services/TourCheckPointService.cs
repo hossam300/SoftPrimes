@@ -36,6 +36,12 @@ namespace SoftPrimes.Service.Services
                 Text = checkPointTourComment.Text
             };
             var Newcomment = _unitOfWork.GetRepository<Comment>().Insert(comment);
+            CheckPointTourComment tourComment = new CheckPointTourComment
+            {
+                CommentId = comment.Id,
+                TourCheckPointId = checkPointTourComment.CheckPointId
+            };
+            _unitOfWork.GetRepository<CheckPointTourComment>().Insert(tourComment);
             return _mapper.Map(Newcomment, typeof(Comment), typeof(CommentDTO)) as CommentDTO;
         }
 

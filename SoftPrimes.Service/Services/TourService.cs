@@ -67,7 +67,7 @@ namespace SoftPrimes.Service.Services
         {
             return _unitOfWork.GetRepository<TourAgent>().GetAll()
                 .Include(x => x.Tour).Include(x => x.CheckPoints).ThenInclude(x => x.CheckPoint)
-               .Include(x => x.CheckPoints).ThenInclude(x => x.CheckPointTourComments).ThenInclude(x => x.Comment)
+                .Include(x => x.CheckPoints).ThenInclude(x => x.CheckPointTourComments).ThenInclude(x => x.Comment)
                 .ThenInclude(x => x.Attachment)
                 .Where(x => x.TourId == tourId).Select(x => new TourCheckpointDetailsDTO
                 {
@@ -78,14 +78,14 @@ namespace SoftPrimes.Service.Services
                     TourState = x.TourState,
                     AdminCommnets = x.Comments.Select(y =>
                     new CommentDetailsDTO
-                        {
+                    {
 
-                            CommentByNameAr = _unitOfWork.GetRepository<Agent>(false).Find(y.CreatedBy).FullNameAr,
-                            CommentByNameEn = _unitOfWork.GetRepository<Agent>(false).Find(y.CreatedBy).FullNameEn,
-                            Id = y.Id,
-                            ProfileImage = _unitOfWork.GetRepository<Agent>(false).Find(y.CreatedBy).Image,
-                            Text = y.Comment.Text
-                        }).ToList(),
+                        CommentByNameAr = _unitOfWork.GetRepository<Agent>(false).Find(y.CreatedBy).FullNameAr,
+                        CommentByNameEn = _unitOfWork.GetRepository<Agent>(false).Find(y.CreatedBy).FullNameEn,
+                        Id = y.Id,
+                        ProfileImage = _unitOfWork.GetRepository<Agent>(false).Find(y.CreatedBy).Image,
+                        Text = y.Comment.Text
+                    }).ToList(),
                     CheckPoints = x.CheckPoints.Select(y => new CheckPointDetailsDTO
                     {
                         CheckPointNameAr = y.CheckPoint.CheckPointNameAr,

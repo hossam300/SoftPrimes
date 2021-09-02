@@ -25,7 +25,7 @@ export class NavMenuComponent implements OnInit {
   }
 
   handleImage(url: string) {
-    if (!url.includes('base64')) {
+    if (url && !url.includes('base64')) {
       url = 'data:image/jpeg;base64,' + url;
     }
     return url;
