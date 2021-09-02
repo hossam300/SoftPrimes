@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using static System.Net.WebRequestMethods;
 
 namespace SoftPrimes.UI.Controllers
 {
@@ -50,9 +51,10 @@ namespace SoftPrimes.UI.Controllers
                 using (var binaryReader = new System.IO.BinaryReader(file.OpenReadStream()))
                 {
                     checkPointTourComment.File = binaryReader.ReadBytes((int)file.Length);
-                    path = _appEnvironment.WebRootPath + "\\Files\\" + Guid.NewGuid() + "_" + file.FileName;
+                    var newFileName = Guid.NewGuid() + "_" + file.FileName;
+                    path = _appEnvironment.WebRootPath + "\\Files\\" + newFileName;
                     System.IO.File.WriteAllBytes(path, checkPointTourComment.File);
-                    path = _httpContextAccessor.HttpContext.Request.Host.Value + "\\Files\\" + Guid.NewGuid() + "_" + file.FileName;
+                    path = "http://" + _httpContextAccessor.HttpContext.Request.Host.Value + "/Files/" + newFileName;
                 }
             }
             checkPointTourComment.Text = Text;
