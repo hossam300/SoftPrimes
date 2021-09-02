@@ -37,8 +37,9 @@ export class TasksListComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.getAll(this.take, this.skip);
     this.initTableColumns();
+    this.getAll(this.take, this.skip);
+    this.getAgentCheckPoints();
   }
 
   convertEnumToFiltersArray(enm, field, operator) {
@@ -48,7 +49,7 @@ export class TasksListComponent implements OnInit {
           if (!Number.isNaN(Number(propertyKey))) {
             continue;
         }
-        const filter = new Filter({ field: field, operator: 'eq', value: (<string>propertyValue), logic: 'and' });
+        const filter = new Filter({ field: field, operator: operator, value: (<string>propertyValue), logic: 'and' });
         filters.push(filter);
     }
     return filters;
@@ -73,7 +74,6 @@ export class TasksListComponent implements OnInit {
     this.taskManagementService.getAllTourAgents(take, skip, sort, filters, sortField, sortDir).subscribe(result => {
       this.toursList = result.data;
       this.count = result.count;
-      this.getCheckPoints();
     });
   }
 
@@ -122,17 +122,46 @@ export class TasksListComponent implements OnInit {
     this.getAll(this.take, this.skip);
   }
 
-  getCheckPoints() {
-    this.toursList.forEach(tour => {
-      tour.checkPoints.forEach(point => {
-        this.markers.push({
-          lat: point.checkPoint.lat,
-          lng: point.checkPoint.long,
-          label: tour.agent.fullNameEn,
-          draggable: false
+  getAgentCheckPoints() {
+    this.taskManagementService.getAgentCheckPoints().subscribe(res => {
+      const data = this.convertAOOToOOA(res);
+      const finalArr: Marker[] = [];
+      for (const [key, val] of Object.entries(data)) {
+        const nxt = [];
+        val.forEach((x, i) => {
+          if (i > 0) {
+            nxt.push({
+              locationText: x.locationText || x.checkPointNameEn,
+              distanceToNextPoint: x.distanceToNextPoint,
+            });
+          }
         });
-      });
+        const item: Marker = {
+          label: val[0].agent.fullNameEn,
+          lat: val[0].lat,
+          lng: val[0].long,
+          current: {
+            locationText: val[0].locationText || val[0].checkPointNameEn,
+            distanceToNextPoint: val[0].distanceToNextPoint,
+          },
+          next: nxt
+        };
+        finalArr.push(item);
+      }
+      this.markers = finalArr;
     });
+  }
+
+  convertAOOToOOA(arrOfObjects: any[]) {
+    const objOfArraies = new Object();
+    arrOfObjects.forEach(x => {
+        if (objOfArraies[x.id]) {
+            objOfArraies[x.id].push(x);
+        } else {
+            objOfArraies[x.id] = [x];
+        }
+    });
+    return objOfArraies;
   }
 
 }

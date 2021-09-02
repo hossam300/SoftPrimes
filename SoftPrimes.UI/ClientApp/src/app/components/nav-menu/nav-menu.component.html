@@ -32,7 +32,7 @@
                   </span>
                 </div>
                 <span class="mx-2 rounded-circle">
-                  <ngx-avatar class="border-0" [src]="(user | async).image && (user | async).image"
+                  <ngx-avatar class="border-0" [src]="handleImage((user | async).image)"
                     [name]="(user | async).fullNameEn" size="32"
                     [round]="true" [initialsSize]="2">
                   </ngx-avatar>

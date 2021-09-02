@@ -26,28 +26,19 @@
                       <div class="info">
                         <p class="text">
                           <span class="fa fa-map-marker mr-1"></span>
-                          <span>65454 Street, New Cairo first point 34km. Change</span>
+                          <span>{{m.current.locationText}}</span>
                         </p>
-                        <div class="state-wrapper">
+                        <div class="state-wrapper" *ngIf="(m.next)?.length">
                           <p class="state">Next</p>
                         </div>
                       </div>
                     </div>
-                    <div class="step">
-                      <div class="distance">5km</div>
+                    <div class="step" *ngFor="let step of m.next">
+                      <div class="distance">{{step.distanceToNextPoint | number:'1.0-0'}} km</div>
                       <div class="info">
                         <p class="text">
                           <span class="fa fa-map-marker mr-1"></span>
-                          <span>65454 Street, New Cairo first point 34km. Change</span>
-                        </p>
-                      </div>
-                    </div>
-                    <div class="step">
-                      <div class="distance">20km</div>
-                      <div class="info">
-                        <p class="text">
-                          <span class="fa fa-map-marker mr-1"></span>
-                          <span>65454 Street, New Cairo first point 34km. Change</span>
+                          <span>{{step.locationText}}</span>
                         </p>
                       </div>
                     </div>

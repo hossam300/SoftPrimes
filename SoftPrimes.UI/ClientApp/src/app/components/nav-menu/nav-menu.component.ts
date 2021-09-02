@@ -24,6 +24,13 @@ export class NavMenuComponent implements OnInit {
     });
   }
 
+  handleImage(url: string) {
+    if (url && !url.includes('base64')) {
+      url = 'data:image/jpeg;base64,' + url;
+    }
+    return url;
+  }
+
   collapse() {
     this.isExpanded = false;
   }

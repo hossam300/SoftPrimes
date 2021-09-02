@@ -330,15 +330,17 @@ namespace SoftPrimes.Service.Services
       }
       if (roleId != null && roleId != 0)
       {
-        if (OldEntity.AgentRoles.Count>0)
+          var oldRole = OldEntity.AgentRoles;
+        if (oldRole.Count > 0)
         {
-          foreach (var item in OldEntity.AgentRoles)
+          foreach (var item in oldRole)
           {
             this._UnitOfWork.GetRepository<AgentRole>().Delete(item);
-            this._UnitOfWork.SaveChanges();
-          }
-        }
      
+          }
+          this._UnitOfWork.SaveChanges();
+        }
+
 
         OldEntity.AgentRoles.Add(new AgentRole { RoleId = (int)roleId, AgentId = oldAgent.Id });
       }
