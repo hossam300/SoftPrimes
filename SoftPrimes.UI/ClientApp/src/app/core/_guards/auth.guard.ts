@@ -59,7 +59,7 @@ export class AuthGuard implements CanActivate, CanActivateChild {
         this.firstURL = false;
         allow = true;
       } else {
-        this.translate.get('ActionNotAllowed').subscribe(x => this.toastr.error(permissionCode,x))
+        this.translate.get('ActionNotAllowed').subscribe(x => this.toastr.error(permissionCode, x));
         // this.toastr.error(permissionCode, 'Action Not Allowed');
         // TODO: navigation history
         if (this.firstURL) {

@@ -28,6 +28,7 @@ export class AuthService {
   accountSwitched: string;
   isArabic = false;
   isAdmin = false;
+  isTemp = false;
 
   numberOfWrongRitriesToSendNotifcation = 0;
   numberOfWrongRitriesToLockAccount = 0;
@@ -121,6 +122,7 @@ export class AuthService {
             // update backend with local culture
             const currentLang = localStorage.getItem('culture');
             this.numberOfWrongLoginRitries = 0;
+            this.isTemp = response['isTemp'];
             return true;
           }
         }),
