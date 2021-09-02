@@ -30,6 +30,16 @@
       </div>
     </div>
 
+    <div class="row form-group">
+      <label for="valueAr" class="col-2 col-form-label col-form-label-sm">checkPoint location name</label>
+      <div class="col-7 d-flex">
+        <div class="input-group">
+          <input class="form-control" placeholder="checkPoint location name"
+            [(ngModel)]="checkPoint.locationText" type="text" name="locationText">
+        </div>
+      </div>
+    </div>
+
     <app-gmap (markerAdded)="getMarker($event)" [viewMode]="false"></app-gmap>
 
     <div class="bg-transparent card-footer dashed-border-top px-0 pt-4 pb-1">
