@@ -15,6 +15,10 @@ export class TaskManagementService {
     (take, skip, sortField, sortDir, sort, undefined, undefined, undefined, undefined, filters, false);
   }
 
+  getAgentCheckPoints() {
+    return this.swagger.apiTourAgentsGetAgentCheckPointsGet();
+  }
+
   editTourAgent(id) {
     return this.swagger.apiTourAgentsGetByIdGet(id);
   }

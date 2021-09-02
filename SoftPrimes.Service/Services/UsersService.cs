@@ -304,40 +304,42 @@ namespace SoftPrimes.Service.Services
             return users.Select(u => new AgentDTO { Id = u.Id.ToString(), UserName = u.UserName }).ToList();
         }
 
-        public AgentDTO UpdateUser(int roleId, AgentDetailsDTO oldAgent)
+    public AgentDTO UpdateUser(int roleId, AgentDetailsDTO oldAgent)
+    {
+      var OldEntity = this._UnitOfWork.GetRepository<Agent>().GetAll().FirstOrDefault(c => c.Id == oldAgent.Id);
+      OldEntity.Email = oldAgent.Email != null ? oldAgent.Email : OldEntity.Email;
+      OldEntity.BirthDate = oldAgent.BirthDate != null || oldAgent.BirthDate != DateTime.MinValue ? oldAgent.BirthDate : OldEntity.BirthDate;
+      OldEntity.FullNameAr = oldAgent.FullNameAr;
+      OldEntity.FullNameEn = oldAgent.FullNameEn;
+      OldEntity.JobTitle = oldAgent.JobTitle;
+      OldEntity.Mobile = oldAgent.Mobile;
+      OldEntity.AgentType = oldAgent.AgentType;
+      OldEntity.UserName = oldAgent.UserName != null || oldAgent.UserName != "" ? oldAgent.UserName : OldEntity.UserName;
+      OldEntity.CompanyId = oldAgent.CompanyId != null || oldAgent.CompanyId != 0 ? oldAgent.CompanyId : OldEntity.CompanyId;
+      OldEntity.SupervisorId = oldAgent.SupervisorId != null || oldAgent.SupervisorId != "" ? oldAgent.SupervisorId : OldEntity.SupervisorId;
+      if (oldAgent.Password != "" && oldAgent.Password != null)
+      {
+        string pass = "";
+        pass = oldAgent.Password;
+        string PasswordHash = _securityService.GetSha256Hash(oldAgent.Password);
+        if (string.IsNullOrEmpty(oldAgent.Password))
         {
-            var OldEntity = this._UnitOfWork.GetRepository<Agent>().GetAll().FirstOrDefault(c => c.Id == oldAgent.Id);
-            OldEntity.Email = oldAgent.Email != null ? oldAgent.Email : OldEntity.Email;
-            OldEntity.BirthDate = oldAgent.BirthDate != null || oldAgent.BirthDate != DateTime.MinValue ? oldAgent.BirthDate : OldEntity.BirthDate;
-            OldEntity.FullNameAr = oldAgent.FullNameAr;
-            OldEntity.FullNameEn = oldAgent.FullNameEn;
-            OldEntity.JobTitle = oldAgent.JobTitle;
-            OldEntity.Mobile = oldAgent.Mobile;
-            OldEntity.AgentType = oldAgent.AgentType;
-            OldEntity.UserName = oldAgent.UserName != null || oldAgent.UserName != "" ? oldAgent.UserName : OldEntity.UserName;
-            OldEntity.CompanyId = oldAgent.CompanyId != null || oldAgent.CompanyId != 0 ? oldAgent.CompanyId : OldEntity.CompanyId;
-            OldEntity.SupervisorId = oldAgent.SupervisorId != null || oldAgent.SupervisorId != "" ? oldAgent.SupervisorId : OldEntity.SupervisorId;
-            if (oldAgent.Password != "" && oldAgent.Password != null)
-            {
-                string pass = "";
-                pass = oldAgent.Password;
-                string PasswordHash = _securityService.GetSha256Hash(oldAgent.Password);
-                if (string.IsNullOrEmpty(oldAgent.Password))
-                {
-                    return null;
-                }
-                oldAgent.Password = PasswordHash;
-            }
-            if (roleId != null && roleId != 0)
-            {
-                if (OldEntity.AgentRoles.Count > 0)
-                {
-                    foreach (var item in OldEntity.AgentRoles)
-                    {
-                        this._UnitOfWork.GetRepository<AgentRole>().Delete(item);
-                        this._UnitOfWork.SaveChanges();
-                    }
-                }
+          return null;
+        }
+        oldAgent.Password = PasswordHash;
+      }
+      if (roleId != null && roleId != 0)
+      {
+          var oldRole = OldEntity.AgentRoles;
+        if (oldRole.Count > 0)
+        {
+          foreach (var item in oldRole)
+          {
+            this._UnitOfWork.GetRepository<AgentRole>().Delete(item);
+     
+          }
+          this._UnitOfWork.SaveChanges();
+        }
 
 
                 OldEntity.AgentRoles.Add(new AgentRole { RoleId = (int)roleId, AgentId = oldAgent.Id });
