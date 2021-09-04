@@ -13193,6 +13193,74 @@ export interface ICommentDetailsDTO {
     profileImage?: string;
 }
 
+export class AttachmentCommentDTO implements IAttachmentCommentDTO {
+    id?: number;
+    text?: string;
+    attachmentId?: number;
+    attachmentName?: string;
+    attachmentType?: AttachmentType;
+    attachmentUrl?: string;
+    replayToComment?: number;
+    createdBy?: string;
+    createdOn?: Date;
+
+    constructor(data?: IAttachmentCommentDTO) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.id = data["id"];
+            this.text = data["text"];
+            this.attachmentId = data["attachmentId"];
+            this.attachmentName = data["attachmentName"];
+            this.attachmentType = data["attachmentType"];
+            this.attachmentUrl = data["attachmentUrl"];
+            this.replayToComment = data["replayToComment"];
+            this.createdBy = data["createdBy"];
+            this.createdOn = data["createdOn"] ? new Date(data["createdOn"].toString()) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): AttachmentCommentDTO {
+        data = typeof data === 'object' ? data : {};
+        let result = new AttachmentCommentDTO();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["text"] = this.text;
+        data["attachmentId"] = this.attachmentId;
+        data["attachmentName"] = this.attachmentName;
+        data["attachmentType"] = this.attachmentType;
+        data["attachmentUrl"] = this.attachmentUrl;
+        data["replayToComment"] = this.replayToComment;
+        data["createdBy"] = this.createdBy;
+        data["createdOn"] = this.createdOn ? this.createdOn.toISOString() : <any>undefined;
+        return data; 
+    }
+}
+
+export interface IAttachmentCommentDTO {
+    id?: number;
+    text?: string;
+    attachmentId?: number;
+    attachmentName?: string;
+    attachmentType?: AttachmentType;
+    attachmentUrl?: string;
+    replayToComment?: number;
+    createdBy?: string;
+    createdOn?: Date;
+}
+
 export class CheckPointDetailsDTO implements ICheckPointDetailsDTO {
     id?: number;
     checkPointNameAr?: string;
@@ -13204,7 +13272,7 @@ export class CheckPointDetailsDTO implements ICheckPointDetailsDTO {
     endDate?: Date;
     qrCode?: string;
     checkPointState?: TourCheckPointState;
-    comments?: CommentDTO[];
+    comments?: AttachmentCommentDTO[];
 
     constructor(data?: ICheckPointDetailsDTO) {
         if (data) {
@@ -13230,7 +13298,7 @@ export class CheckPointDetailsDTO implements ICheckPointDetailsDTO {
             if (data["comments"] && data["comments"].constructor === Array) {
                 this.comments = [];
                 for (let item of data["comments"])
-                    this.comments.push(CommentDTO.fromJS(item));
+                    this.comments.push(AttachmentCommentDTO.fromJS(item));
             }
         }
     }
@@ -13274,7 +13342,7 @@ export interface ICheckPointDetailsDTO {
     endDate?: Date;
     qrCode?: string;
     checkPointState?: TourCheckPointState;
-    comments?: CommentDTO[];
+    comments?: AttachmentCommentDTO[];
 }
 
 export class TourCheckpointDetailsDTO implements ITourCheckpointDetailsDTO {

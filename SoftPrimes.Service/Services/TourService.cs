@@ -98,20 +98,24 @@ namespace SoftPrimes.Service.Services
                         Id = y.Id,
                         LocationName = y.CheckPoint.LocationText,
                         QRCode = y.CheckPoint.QRCode.ToString(),
-                        Comments = y.CheckPointTourComments.Count > 0 ? y.CheckPointTourComments.Select(z => new CommentDTO
-                        {
-                            Attachment = z.Comment != null ? (z.Comment.Attachment != null) ? new AttachmentDTO
-                            {
-                                AttachmentName = z.Comment.Attachment.AttachmentName,
-                                AttachmentType = z.Comment.Attachment.AttachmentType,
-                                AttachmentUrl = z.Comment.Attachment.AttachmentUrl,
-                                Id = (int)z.Comment.AttachmentId,
-                            } : null : null,
-                            AttachmentId = z.Comment != null ? z.Comment.AttachmentId : null,
-                            Id = z.CommentId,
-                            Text = z.Comment != null ? z.Comment.Text : null,
-                            ReplayToComment = z.Comment != null ? z.Comment.ReplayToComment : null
-                        }).ToList() : new List<CommentDTO>()
+                        Comments = y.CheckPointTourComments.Count > 0
+                                    ? y.CheckPointTourComments.Select(z => new AttachmentCommentDTO
+                                    {
+                                        AttachmentName = z.Comment != null ? (z.Comment.Attachment != null) ? z.Comment.Attachment.AttachmentName : null : null,
+                                        AttachmentType = z.Comment != null ? (z.Comment.Attachment != null) ? z.Comment.Attachment.AttachmentType : 0 : 0,
+                                        AttachmentUrl = z.Comment != null ? (z.Comment.Attachment != null) ? z.Comment.Attachment.AttachmentUrl : null : null,
+                                        //Attachment = z.Comment != null ? (z.Comment.Attachment != null) ? new AttachmentDTO
+                                        //{
+                                        //    AttachmentName = z.Comment.Attachment.AttachmentName,
+                                        //    AttachmentType = z.Comment.Attachment.AttachmentType,
+                                        //    AttachmentUrl = z.Comment.Attachment.AttachmentUrl,
+                                        //    Id = (int)z.Comment.AttachmentId,
+                                        //} : null : null,
+                                        AttachmentId = z.Comment != null ? z.Comment.AttachmentId : null,
+                                        Id = z.CommentId,
+                                        Text = z.Comment != null ? z.Comment.Text : null,
+                                        ReplayToComment = z.Comment != null ? z.Comment.ReplayToComment : null
+                                    }).ToList() : new List<AttachmentCommentDTO>()
 
                     }).ToList()
                 }).FirstOrDefault();

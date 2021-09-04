@@ -16,7 +16,7 @@ namespace SoftPrimes.Shared.ViewModels
         public DateTimeOffset? EndDate { get; set; }
         public string QRCode { get; set; }
         public TourCheckPointState CheckPointState { get; set; }
-        public List<CommentDTO> Comments { get; set; }
+        public List<AttachmentCommentDTO> Comments { get; set; }
     }
 
 }
