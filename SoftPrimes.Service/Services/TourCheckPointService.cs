@@ -78,11 +78,7 @@ namespace SoftPrimes.Service.Services
             else
             {
 
-                if (TourCheckPoint.TourCheckPointState == TourCheckPointState.InProgress)
-                {
-                    TourCheckPoint.TourCheckPointState = TourCheckPointState.Completed;
-                }
-                if (TourCheckPoint.Tour.TourType == TourType.Monitoring)
+                if (TourCheckPoint.Tour.TourType == TourType.Monitoring && TourCheckPoint.TourCheckPointState == TourCheckPointState.New)
                 {
                     TourCheckPoint.TourCheckPointState = TourCheckPointState.InProgress;
                 }
@@ -90,7 +86,6 @@ namespace SoftPrimes.Service.Services
                 {
                     TourCheckPoint.TourCheckPointState = TourCheckPointState.Completed;
                 }
-
                 _repository.Update(TourCheckPoint);
                 return true;
             }

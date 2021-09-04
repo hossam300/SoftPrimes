@@ -69,7 +69,7 @@ namespace SoftPrimes.Service.Services
                 .Include(x => x.Tour).Include(x => x.CheckPoints).ThenInclude(x => x.CheckPoint)
                 .Include(x => x.CheckPoints).ThenInclude(x => x.CheckPointTourComments).ThenInclude(x => x.Comment)
                 .ThenInclude(x => x.Attachment)
-                .Where(x => x.TourId == tourId).Select(x => new TourCheckpointDetailsDTO
+                .Where(x => x.Id == tourId).Select(x => new TourCheckpointDetailsDTO
                 {
                     Id = x.Id,
                     TourNameAr = x.Tour.TourNameAr,
