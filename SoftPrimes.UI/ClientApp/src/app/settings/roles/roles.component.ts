@@ -11,7 +11,7 @@ import { SettingsCrudsService } from '../settings-cruds.service';
   styleUrls: ['./roles.component.css']
 })
 export class RolesComponent implements OnInit {
-  roles: RoleDetailsDTO;
+  roles: RoleDetailsDTO = new RoleDetailsDTO();
   routerSubscription: Subscription;
   createMode: boolean;
   controller = 'Roles';

@@ -21,8 +21,8 @@ export class TasksListComponent implements OnInit {
   filtersArr: Filter[] = [];
   states = TourState;
   types = TourTypes;
-  tourStates: Filter[] = this.convertEnumToFiltersArray(TourState, 'tourState', 'or');
-  tourTypes: Filter[] = this.convertEnumToFiltersArray(TourTypes, 'tourType', 'or');
+  tourStates: Filter[] = this.convertEnumToFiltersArray(TourState, 'tourState', 'eq');
+  tourTypes: Filter[] = this.convertEnumToFiltersArray(TourTypes, 'tourType', 'eq');
   tourName = '';
   agentName = '';
   filters = {

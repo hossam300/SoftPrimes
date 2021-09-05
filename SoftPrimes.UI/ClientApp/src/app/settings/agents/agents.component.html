@@ -37,12 +37,12 @@
         </div>
       </div>
     </div>
-    <div class="row form-group">
+    <div class="row form-group" *ngIf="createMode">
       <label for="password" class="col-2 col-form-label col-form-label-sm">Password</label>
       <div class="col-7 d-flex">
         <div class="input-group">
           <input class="form-control" placeholder="Password"
-            [(ngModel)]="agent.password" type="text" name="password">
+            [(ngModel)]="agent.password" type="password" name="password">
         </div>
       </div>
     </div>
