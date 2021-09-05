@@ -20,7 +20,7 @@ export enum AgentType {
   styleUrls: ['./agents.component.css']
 })
 export class AgentsComponent implements OnInit {
-  agent: AgentDetailsDTO;
+  agent: AgentDetailsDTO = new AgentDetailsDTO();
   routerSubscription: Subscription;
   createMode: boolean;
   controller = 'Agents';
