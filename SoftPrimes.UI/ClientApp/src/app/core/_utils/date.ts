@@ -1,7 +1,7 @@
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 
 export const getDate = (date: NgbDateStruct) => {
-  return new Date(date.year, date.month, date.day);
+  return new Date(date.year, date.month - 1, date.day);
 };
 
 export const setDate = (date: Date) => {
@@ -11,4 +11,14 @@ export const setDate = (date: Date) => {
     month: d.getMonth() + 1,
     day: d.getDate()
   };
+};
+
+export const fixDateTimePickers = () => {
+  setTimeout(() => {
+    const items =  document.querySelectorAll('.ngx-picker');
+    items.forEach(item => {
+      item.querySelector('input').classList.add(...['form-control', 'border-radius-left-none', 'border-left-0', 'border-right']);
+      item.querySelector('button').classList.add('d-none');
+    });
+  });
 };

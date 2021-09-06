@@ -56,7 +56,7 @@
                       <label for="tourTypes">Tour types</label>
                       <ng-select class="w-100" [items]="tourTypes" bindLabel="value"
                         [(ngModel)]="filters.tourType" id="tourTypes"
-                        [multiple]="true" placeholder="choose tour type">
+                        [multiple]="false" placeholder="choose tour type">
                         <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
                           {{types[item.value]}}
                         </ng-template>

@@ -1,12 +1,12 @@
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { CompanyDTO, RoleDTO, AgentDetailsDTO } from './../../core/_services/swagger/SwaggerClient.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { concat, Observable, of, Subject, Subscription } from 'rxjs';
 import { AgentDTO } from 'src/app/core/_services/swagger/SwaggerClient.service';
 import { SettingsCrudsService } from '../settings-cruds.service';
 import { catchError, debounceTime, distinctUntilChanged, switchMap, tap } from 'rxjs/operators';
-import { getDate, setDate } from 'src/app/core/_utils/date';
+import { fixDateTimePickers } from 'src/app/core/_utils/date';
 
 export enum AgentType {
   NormalAgent = 1,
@@ -19,7 +19,7 @@ export enum AgentType {
   templateUrl: './agents.component.html',
   styleUrls: ['./agents.component.css']
 })
-export class AgentsComponent implements OnInit {
+export class AgentsComponent implements OnInit, AfterViewInit {
   agent: AgentDetailsDTO = new AgentDetailsDTO();
   routerSubscription: Subscription;
   createMode: boolean;
@@ -65,7 +65,6 @@ export class AgentsComponent implements OnInit {
         this.createMode = false;
         this.agent = new AgentDTO();
         this.settingsCrud.getUserProfile(r.agentId).subscribe(agent => {
-          this.birthdate = setDate(agent.birthDate);
           if (agent.agentRoles[0]) {
             this.roleId = agent.agentRoles[0].roleId;
           }
@@ -75,8 +74,11 @@ export class AgentsComponent implements OnInit {
     });
   }
 
+  ngAfterViewInit() {
+    fixDateTimePickers();
+  }
+
   updateAgent() {
-    this.agent.birthDate = getDate(this.birthdate);
     this.agent.roleId = this.roleId;
     this.settingsCrud.updateAgent(this.roleId, this.agent).subscribe(result => {
       if (result) {
@@ -86,7 +88,6 @@ export class AgentsComponent implements OnInit {
   }
 
   insertAgent() {
-    this.agent.birthDate = getDate(this.birthdate);
     this.agent.roleId = this.roleId;
     this.settingsCrud.insertAgent(this.roleId, this.agent).subscribe(res => {
       if (res) {

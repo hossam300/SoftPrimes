@@ -51,8 +51,8 @@
           <div class="input-group-prepend">
             <span class="input-group-text bg-transparent text-14"><em class="fa fa-calendar-o"></em></span>
           </div>
-          <input ngbDatepicker #d="ngbDatepicker" type="text" class="form-control" [(ngModel)]="tourDate"
-            name="tourDate" autocomplete="off" (click)="d.toggle()" id="tourDate" placeholder="MM/DD/YYYY">
+          <ngx-date-picker type="text" [(ngModel)]="tour.tourDate" style="width: calc(100% - 38px);"
+            name="tourDate" autocomplete="off" placeholder="MM/DD/YYYY"></ngx-date-picker>
         </div>
       </div>
     </div>
@@ -90,6 +90,7 @@
                   </span>
                 </div>
                 <ngx-datetime-picker [(selectedDateTime)]="checkpoint.startDate" name="startDate"
+                  [doNotCloseOnDateSet]="true"
                   (change)="dateTimeChanged($event)" placeholder="choose start time">
                 </ngx-datetime-picker>
               </div>
@@ -102,6 +103,7 @@
                   </span>
                 </div>
                 <ngx-datetime-picker [(selectedDateTime)]="checkpoint.endDate" name="endDate"
+                  [doNotCloseOnDateSet]="true"
                   (change)="dateTimeChanged($event)" placeholder="choose start time">
                 </ngx-datetime-picker>
               </div>

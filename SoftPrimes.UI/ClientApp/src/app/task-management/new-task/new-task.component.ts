@@ -1,19 +1,19 @@
 import { TaskManagementService } from './../../core/_services/task-management.service';
 import { TourCreateDTO, TourType, PointLocationDTO, TourTemplateDTO } from './../../core/_services/swagger/SwaggerClient.service';
 import { SettingsCrudsService } from './../../settings/settings-cruds.service';
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { concat, of, Subject, Subscription } from 'rxjs';
 import { catchError, debounceTime, distinctUntilChanged, map, switchMap, tap, throwIfEmpty } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
-import { getDate } from 'src/app/core/_utils/date';
+import { fixDateTimePickers } from 'src/app/core/_utils/date';
 
 @Component({
   selector: 'app-new-task',
   templateUrl: './new-task.component.html',
   styleUrls: ['./new-task.component.css']
 })
-export class NewTaskComponent implements OnInit {
+export class NewTaskComponent implements OnInit, AfterViewInit {
 
   tour: TourCreateDTO = new TourCreateDTO();
   tourDate: NgbDateStruct;
@@ -55,11 +55,12 @@ export class NewTaskComponent implements OnInit {
     this.getAgents();
     this.getCheckPoints();
 
+    this.tour = new TourCreateDTO();
+    const tourType: any = TourType._1.toString();
+    this.tour.tourType = tourType;
     this.routerSubscription = this.route.params.subscribe(r => {
       if (!r.tourId) {
         this.createMode = true;
-        this.tour = new TourCreateDTO();
-        this.tour.tourType = TourType._1;
       } else {
         this.createMode = false;
         this.settingsCrud.getDTOById(this.controller, +r.tourId).subscribe(tour => {
@@ -69,8 +70,12 @@ export class NewTaskComponent implements OnInit {
     });
   }
 
+  ngAfterViewInit() {
+    fixDateTimePickers();
+  }
+
   assignTask() {
-    this.tour.tourDate = getDate(this.tourDate);
+    // this.tour.tourDate = getDate(this.tourDate);
     this.tour.pointLocations = [];
     this.checkPoints.forEach(x => {
       const location = new PointLocationDTO({
@@ -132,6 +137,10 @@ export class NewTaskComponent implements OnInit {
     });
   }
 
+  dateTimeChanged(event) {
+    console.log(event);
+  }
+
   getCheckPoints() {
     this.settingsCrud.getCheckPointsLookup().subscribe(value => {
       this.checkPoints$ = concat(
@@ -154,7 +163,7 @@ export class NewTaskComponent implements OnInit {
   }
 
   checkPointsChanged($event) {
-    this.fixDateTimePickers();
+    fixDateTimePickers();
     this.markers = $event.map(x => {
       return {
         lat: x.lat,
@@ -173,16 +182,6 @@ export class NewTaskComponent implements OnInit {
         });
       });
     }
-  }
-
-  fixDateTimePickers() {
-    setTimeout(() => {
-      const items =  document.querySelectorAll('.ngx-picker');
-      items.forEach(item => {
-        item.querySelector('input').classList.add(...['form-control', 'border-radius-left-none', 'border-left-0', 'border-right']);
-        item.querySelector('button').classList.add('d-none');
-      });
-    });
   }
 
   chooseTemplate(event: TourTemplateDTO) {

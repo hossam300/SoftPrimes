@@ -79,10 +79,11 @@
               <div class="input-group-prepend" [class.d-none]="viewMode">
                 <span class="input-group-text bg-transparent text-14"><em class="fa fa-calendar-o"></em></span>
               </div>
-              <input ngbDatepicker #d="ngbDatepicker" type="text" class="form-control"
-                [(ngModel)]="birthdate" [minDate]="{year: 1900, month: 1, day: 1}" [disabled]="viewMode"
-                name="birthdate" autocomplete="off" (click)="!viewMode && d.toggle()" [readonly]="viewMode"
-                id="birthdate" [placeholder]="!viewMode ? 'MM/DD/YYYY' : ''">
+              <input *ngIf="viewMode" type="text" class="form-control" [disabled]="viewMode"
+                name="birthdate" autocomplete="off"  [value]="user.birthDate | date" [readonly]="viewMode">
+              <ngx-date-picker *ngIf="!viewMode" type="text" [(ngModel)]="user.birthDate"
+                style="width: calc(100% - 38px);"
+                name="birthdate" autocomplete="off" [placeholder]="!viewMode ? 'MM/DD/YYYY' : ''"></ngx-date-picker>
             </div>
           </div>
         </div>

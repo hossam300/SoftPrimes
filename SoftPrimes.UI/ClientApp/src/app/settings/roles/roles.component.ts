@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { concat, Observable, of, Subject, Subscription } from 'rxjs';
 import { catchError, debounceTime, distinctUntilChanged, switchMap, tap } from 'rxjs/operators';
-import { PermissionDTO, RoleDetailsDTO } from 'src/app/core/_services/swagger/SwaggerClient.service';
+import { PermissionDTO, RoleDetailsDTO, RoleDTO } from 'src/app/core/_services/swagger/SwaggerClient.service';
 import { SettingsCrudsService } from '../settings-cruds.service';
 
 @Component({
@@ -11,7 +11,7 @@ import { SettingsCrudsService } from '../settings-cruds.service';
   styleUrls: ['./roles.component.css']
 })
 export class RolesComponent implements OnInit {
-  roles: RoleDetailsDTO = new RoleDetailsDTO();
+  roles: RoleDetailsDTO;
   routerSubscription: Subscription;
   createMode: boolean;
   controller = 'Roles';
@@ -28,25 +28,31 @@ export class RolesComponent implements OnInit {
   }
 
   ngOnInit() {
+    // get lookups
+    this.getPermissions();
+
+    this.roles = new RoleDetailsDTO();
     this.routerSubscription = this.route.params.subscribe(r => {
       if (!r.rolesId) {
         this.createMode = true;
-        this.roles = new RoleDetailsDTO();
         this.roles.permissions = [];
-
       } else {
         this.createMode = false;
         this.settingsCrud.getDTOById(this.controller, +r.rolesId).subscribe(roles => {
-          roles.permissions = roles.permissions.map(y => y.permissionId);
-          this.roles = roles;
+          const permissions = roles.permissions.map(y => y.permissionId);
+          this.roles = new RoleDetailsDTO({
+            id: roles.id,
+            roleNameAr: roles.roleNameAr,
+            roleNameEn: roles.roleNameEn,
+            permissions: permissions
+          });
         });
       }
     });
-    this.getPermissions();
   }
 
   updateRoles() {
-    this.settingsCrud.updateRoles([this.roles]).subscribe(result => {
+    this.settingsCrud.updateRoles(this.roles).subscribe(result => {
       if (result) {
         this.router.navigate(['/settings/roles']);
       }
@@ -76,17 +82,6 @@ export class RolesComponent implements OnInit {
         )
       );
     });
-  }
-
-  selectPermission(event) {
-    console.log(event, 'permissions changed');
-    const permissionArr = this.permissionIds.map(id => {
-      return {
-        permissionId: id
-      };
-    });
-    console.log(this.permissionIds, 'permissions arr');
-    console.log(this.roles, 'roles');
   }
 
 }

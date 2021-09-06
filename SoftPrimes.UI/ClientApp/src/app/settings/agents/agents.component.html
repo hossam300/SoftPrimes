@@ -132,9 +132,8 @@
           <div class="input-group-prepend">
             <span class="input-group-text bg-transparent text-14"><em class="fa fa-calendar-o"></em></span>
           </div>
-          <input ngbDatepicker #d="ngbDatepicker" type="text" class="form-control" [(ngModel)]="birthdate"
-            [minDate]="{year: 1900, month: 1, day: 1}" name="birthdate" autocomplete="off"
-            (click)="d.toggle()" id="birthdate" placeholder="MM/DD/YYYY">
+          <ngx-date-picker type="text" [(ngModel)]="agent.birthDate" style="width: calc(100% - 38px);"
+            name="birthdate" autocomplete="off" placeholder="MM/DD/YYYY"></ngx-date-picker>
         </div>
       </div>
     </div>

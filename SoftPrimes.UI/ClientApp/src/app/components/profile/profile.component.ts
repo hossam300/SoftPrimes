@@ -1,10 +1,9 @@
 import { AuthService } from 'src/app/core/_services/auth.service';
 import { SettingsCrudsService } from './../../settings/settings-cruds.service';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Observable, Subject, Subscription } from 'rxjs';
-import { AgentDetailsDTO, AgentDTO, AuthTicketDTO, CompanyDTO, RoleDTO } from 'src/app/core/_services/swagger/SwaggerClient.service';
-import { setDate, getDate } from 'src/app/core/_utils/date';
+import { Subscription } from 'rxjs';
+import { AgentDetailsDTO, AuthTicketDTO } from 'src/app/core/_services/swagger/SwaggerClient.service';
+import { fixDateTimePickers } from 'src/app/core/_utils/date';
 
 @Component({
   selector: 'app-profile',
@@ -33,7 +32,6 @@ export class ProfileComponent implements OnInit {
     this.viewMode = true;
     this.settingsCrud.getUserProfile(this.user.userId).subscribe(user => {
       this.user = user;
-      this.birthdate = setDate(user.birthDate);
       if (user.image) {
         this.getBase64Url('image/jpeg', user.image);
       }
@@ -45,10 +43,10 @@ export class ProfileComponent implements OnInit {
 
   editMode() {
     this.viewMode = false;
+    fixDateTimePickers();
   }
 
   updateProfile() {
-    this.user.birthDate = getDate(this.birthdate);
     const user = new AgentDetailsDTO({
       id: this.user.id,
       userName: this.user.userName,
