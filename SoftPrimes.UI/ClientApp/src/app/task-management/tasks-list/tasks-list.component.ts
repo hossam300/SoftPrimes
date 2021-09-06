@@ -27,7 +27,7 @@ export class TasksListComponent implements OnInit {
   agentName = '';
   filters = {
     tourState: [],
-    tourType: [],
+    tourType: null,
     tourName: '',
     agentName: ''
   };
@@ -95,7 +95,7 @@ export class TasksListComponent implements OnInit {
       );
     }
 
-    const filters = [...this.filters.tourState, ...this.filters.tourType];
+    const filters = [...this.filters.tourState, this.filters.tourType];
     if (this.filters.tourName) {
       filters.push(this.filters.tourName);
     }
@@ -113,7 +113,7 @@ export class TasksListComponent implements OnInit {
   resetFilters() {
     this.filters = {
       tourState: [],
-      tourType: [],
+      tourType: null,
       tourName: '',
       agentName: ''
     };
