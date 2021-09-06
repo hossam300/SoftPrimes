@@ -40,7 +40,8 @@
       </div>
     </div>
 
-    <app-gmap (markerAdded)="getMarker($event)" [viewMode]="false"></app-gmap>
+    <app-gmap (markerAdded)="getMarker($event)" [markers]="marker"
+    [initialSettings]="mapSettings" [viewMode]="false" [editState]="true"></app-gmap>
 
     <div class="bg-transparent card-footer dashed-border-top px-0 pt-4 pb-1">
       <button class="btn btn-primary shadow" [disabled]="!checkPoint.lat" *ngIf="createMode" (click)="insertCheckPoint()">

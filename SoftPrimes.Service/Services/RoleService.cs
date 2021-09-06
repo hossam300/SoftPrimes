@@ -11,96 +11,99 @@ using System.Threading.Tasks;
 
 namespace SoftPrimes.Service.Services
 {
-  public class RoleService : BusinessService<Role, RoleDTO>, IRoleService
-  {
-    private readonly IUnitOfWork _unitOfWork;
-    private IRepository<Role> _repository;
-    public RoleService(IUnitOfWork unitOfWork, IMapper mapper) : base(unitOfWork, mapper)
+    public class RoleService : BusinessService<Role, RoleDTO>, IRoleService
     {
-      _unitOfWork = unitOfWork;
-      _repository = _unitOfWork.GetRepository<Role>();
-    }
-    public override IEnumerable<RoleDTO> Update(IEnumerable<RoleDTO> Entities)
-    {
-      foreach (var role in Entities)
-      {
-        var RolePermission = _unitOfWork.GetRepository<RolePermission>().GetAll().Where(x => x.RoleId == role.Id).ToList();
-        if (RolePermission.Count() != 0)
+        private readonly IUnitOfWork _unitOfWork;
+        private IRepository<Role> _repository;
+        public RoleService(IUnitOfWork unitOfWork, IMapper mapper) : base(unitOfWork, mapper)
         {
-          _unitOfWork.GetRepository<RolePermission>().Delete(RolePermission);
-          _unitOfWork.SaveChanges();
+            _unitOfWork = unitOfWork;
+            _repository = _unitOfWork.GetRepository<Role>();
         }
-
-      }
-      var newrole = base.Update(Entities);
-      return newrole;
-    }
-    public IEnumerable<RoleDetailsDTO> InsertRole(IEnumerable<RoleDetailsDTO> entities)
-    {
-      foreach (var item in entities)
-      {
-        var role = new Role
+        public override IEnumerable<RoleDTO> Update(IEnumerable<RoleDTO> Entities)
         {
-          RoleNameAr = item.RoleNameAr,
-          RoleNameEn = item.RoleNameEn,
-          Permissions = item.Permissions.Select(x => new RolePermission
-          {
-            PermissionId = x
-          }).ToList()
-        };
-        _unitOfWork.GetRepository<Role>().Insert(role);
-      }
-      return entities;
-    }
-
-    public List<RoleDTO> GetRoleLookups(string searchText, int take)
-    {
-      if (searchText == "" || string.IsNullOrEmpty(searchText) || searchText == null)
-      {
-        return _repository.GetAll().Select(x => new RoleDTO
-        {
-          Id = x.Id,
-          RoleNameAr = x.RoleNameAr,
-          RoleNameEn = x.RoleNameEn
-        }).Take(take).ToList();
-      }
-      else
-      {
-        return _repository.GetAll().Where(x => x.RoleNameAr.Contains(searchText) || x.RoleNameEn.Contains(searchText))
-            .Select(x => new RoleDTO
+            foreach (var role in Entities)
             {
-              Id = x.Id,
-              RoleNameAr = x.RoleNameAr,
-              RoleNameEn = x.RoleNameEn
-            }).Take(take).ToList();
-      }
-    }
+                var RolePermission = _unitOfWork.GetRepository<RolePermission>().GetAll().Where(x => x.RoleId == role.Id).ToList();
+                if (RolePermission.Count() != 0)
+                {
+                    _unitOfWork.GetRepository<RolePermission>().Delete(RolePermission);
+                    _unitOfWork.SaveChanges();
+                }
 
-    public IEnumerable<RoleDetailsDTO> UpdateRole(IEnumerable<RoleDetailsDTO> entities)
-    {
-      foreach (var role in entities)
-      {
-        var RolePermission = _unitOfWork.GetRepository<RolePermission>().GetAll().Where(x => x.RoleId == role.Id).ToList();
-        if (RolePermission.Count() != 0)
-        {
-          _unitOfWork.GetRepository<RolePermission>().Delete(RolePermission);
-          _unitOfWork.SaveChanges();
+            }
+            var newrole = base.Update(Entities);
+            return newrole;
         }
-        var oldrole = _unitOfWork.GetRepository<Role>().Find(role.Id);
-        oldrole.RoleNameAr = role.RoleNameAr;
-        oldrole.RoleNameEn = role.RoleNameEn;
-        foreach (var item in role.Permissions)
+        public IEnumerable<RoleDetailsDTO> InsertRole(IEnumerable<RoleDetailsDTO> entities)
         {
-          oldrole.Permissions.Add(new Shared.Domains.RolePermission
-          {
-            PermissionId = item
-          });
+            foreach (var item in entities)
+            {
+                var role = new Role
+                {
+                    RoleNameAr = item.RoleNameAr,
+                    RoleNameEn = item.RoleNameEn,
+                    Permissions = item.Permissions.Select(x => new RolePermission
+                    {
+                        PermissionId = x
+                    }).ToList()
+                };
+                _unitOfWork.GetRepository<Role>().Insert(role);
+            }
+            return entities;
         }
 
-        _unitOfWork.SaveChanges();
+        public List<RoleDTO> GetRoleLookups(string searchText, int take)
+        {
+            if (searchText == "" || string.IsNullOrEmpty(searchText) || searchText == null)
+            {
+                return _repository.GetAll().Select(x => new RoleDTO
+                {
+                    Id = x.Id,
+                    RoleNameAr = x.RoleNameAr,
+                    RoleNameEn = x.RoleNameEn
+                }).Take(take).ToList();
+            }
+            else
+            {
+                return _repository.GetAll().Where(x => x.RoleNameAr.Contains(searchText) || x.RoleNameEn.Contains(searchText))
+                    .Select(x => new RoleDTO
+                    {
+                        Id = x.Id,
+                        RoleNameAr = x.RoleNameAr,
+                        RoleNameEn = x.RoleNameEn
+                    }).Take(take).ToList();
+            }
+        }
 
-      }
-      return entities;
+        public IEnumerable<RoleDetailsDTO> UpdateRole(IEnumerable<RoleDetailsDTO> entities)
+        {
+            foreach (var role in entities)
+            {
+                var RolePermission = _unitOfWork.GetRepository<RolePermission>().GetAll().Where(x => x.RoleId == role.Id).ToList();
+                if (RolePermission.Count() != 0)
+                {
+                    foreach (var item in RolePermission)
+                    {
+                        _unitOfWork.GetRepository<RolePermission>().Delete(item.Id);
+                        _unitOfWork.SaveChanges();
+                    }
+                }
+                var oldrole = _unitOfWork.GetRepository<Role>().Find(role.Id);
+                oldrole.RoleNameAr = role.RoleNameAr;
+                oldrole.RoleNameEn = role.RoleNameEn;
+                foreach (var item in role.Permissions)
+                {
+                    oldrole.Permissions.Add(new Shared.Domains.RolePermission
+                    {
+                        PermissionId = item
+                    });
+                }
+
+                _unitOfWork.SaveChanges();
+
+            }
+            return entities;
+        }
     }
-  }
 }

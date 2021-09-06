@@ -34,7 +34,7 @@
             <ng-select class="w-100" [items]="permissions$ | async" bindLabel="permissionNameEn"
               bindValue="id" [multiple]="true" [(ngModel)]="roles.permissions"
               [loading]="permissionsLoading" [typeahead]="permissionsInput$"
-              (change)="selectPermission($event)" placeholder="choose permissions">
+              placeholder="choose permissions">
             </ng-select>
           </div>
         </div>

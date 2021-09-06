@@ -6,3 +6,10 @@ export interface Marker {
   next?: Object[];
   draggable?: boolean;
 }
+
+export interface MapSettings {
+  zoom?: number;
+  zoomControl?: boolean;
+  lat: number;
+  lng: number;
+}

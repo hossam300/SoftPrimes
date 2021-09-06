@@ -1,3 +1,4 @@
+import { MapSettings, Marker } from 'src/app/core/_models/gmap';
 import { CheckPointDTO } from './../../core/_services/swagger/SwaggerClient.service';
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
@@ -14,6 +15,8 @@ export class CheckpointsComponent implements OnInit {
   routerSubscription: Subscription;
   createMode: boolean;
   controller = 'CheckPoints';
+  marker: Marker[];
+  mapSettings: MapSettings;
 
   constructor(
     private settingsCrud: SettingsCrudsService,
@@ -23,15 +26,25 @@ export class CheckpointsComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.checkPoint = new CheckPointDTO();
     this.routerSubscription = this.route.params.subscribe(r => {
       if (!r.checkPointId) {
         this.createMode = true;
-        this.checkPoint = new CheckPointDTO();
 
       } else {
         this.createMode = false;
         this.settingsCrud.getDTOById(this.controller, +r.checkPointId).subscribe(checkPoint => {
           this.checkPoint = checkPoint;
+          this.marker = [{
+            lat: checkPoint.lat,
+            lng: checkPoint.long
+          }];
+          this.mapSettings = {
+            lat: checkPoint.lat,
+            lng: checkPoint.long,
+            zoom: 17,
+            zoomControl: false
+          };
         });
       }
     });
