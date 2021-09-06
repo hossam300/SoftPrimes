@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
-import { Marker } from 'src/app/core/_models/gmap';
+import { Marker, MapSettings } from 'src/app/core/_models/gmap';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -8,23 +8,30 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./gmap.component.css']
 })
 export class GmapComponent implements OnInit {
-  // google maps zoom level
-  zoom = 12;
-
   googleApiKey = environment['google-api-key'];
   @Input() viewMode: boolean;
+  @Input() editState = false;
   @Output() markerAdded: EventEmitter<Marker> = new EventEmitter();
 
   // initial center position for the map
-  lat = 24.701284088932535;
-  lng = 46.680371285791246;
+  @Input() initialSettings: MapSettings;
 
   @Input() markers = [];
 
   constructor() {
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    if (!this.initialSettings) {
+      this.initialSettings  = {
+        lat: 24.701284088932535,
+        lng: 46.680371285791246,
+        // google maps zoom level
+        zoom: 12,
+        zoomControl: false
+      };
+    }
+  }
 
   openInFullscreen(el) {
      // if already full screen; exit
