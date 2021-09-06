@@ -285,7 +285,7 @@ namespace SoftPrimes.Service.Services
                 template = _repository.GetAll().FirstOrDefault(c => c.Id == tour.TourId);
                 if (template.TourNameEn != tour.TourName)
                 {
-                    template = _repository.Insert(new Tour { TourNameEn = tour.TourName });
+                    template = _repository.Insert(new Tour { TourNameEn = tour.TourName, Active = true });
                 }
             }
             else
