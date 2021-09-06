@@ -42,7 +42,7 @@ export class CheckpointsComponent implements OnInit {
           this.mapSettings = {
             lat: checkPoint.lat,
             lng: checkPoint.long,
-            zoom: 12,
+            zoom: 17,
             zoomControl: false
           };
         });
