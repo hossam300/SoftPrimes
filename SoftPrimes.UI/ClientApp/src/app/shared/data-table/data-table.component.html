@@ -3,7 +3,7 @@
     <tr>
       <th scope="col" (click)="sorting(column)"
         class="cursor-pointer" [ngClass]="column.sort"
-        *ngFor="let column of options.columns">{{column.name}}</th>
+        *ngFor="let column of options.columns">{{column.name | translate}}</th>
     </tr>
   </thead>
   <tbody>
@@ -39,7 +39,7 @@
           </button>
           <div class="dropdown-menu" aria-labelledby="multiDropdownMenu">
             <!-- <a class="dropdown-item" (click)="editTour(row?.id)">Edit</a> -->
-            <a class="dropdown-item text-danger" (click)="deleteTour(row?.id)">Delete</a>
+            <a class="dropdown-item text-danger" (click)="deleteTour(row?.id)">{{ 'delete' | translate }}</a>
           </div>
         </div>
       </td>

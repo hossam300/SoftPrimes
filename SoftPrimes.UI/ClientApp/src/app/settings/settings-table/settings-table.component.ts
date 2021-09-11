@@ -26,13 +26,16 @@ export class SettingsTableComponent {
   activeRow;
   activeCol;
   agentType = AgentType;
+  isArabic = false;
 
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private settingsCrud: SettingsCrudsService,
     private modalService: NgbModal
-  ) { }
+  ) {
+    this.isArabic = localStorage.getItem('culture') === 'ar' ? true : false;
+  }
 
   editRecord(id) {
     this.router.navigate(['edit/' + id], {relativeTo: this.activatedRoute});

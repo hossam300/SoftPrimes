@@ -41,6 +41,7 @@ export class NewTaskComponent implements OnInit, AfterViewInit {
 
   routerSubscription: Subscription;
   controller = 'Tours';
+  isArabic = false;
 
   constructor(
     private taskManagement: TaskManagementService,
@@ -54,6 +55,7 @@ export class NewTaskComponent implements OnInit, AfterViewInit {
     this.getTemplates();
     this.getAgents();
     this.getCheckPoints();
+    this.isArabic = localStorage.getItem('culture') === 'ar' ? true : false;
 
     this.tour = new TourCreateDTO();
     const tourType: any = TourType._1.toString();

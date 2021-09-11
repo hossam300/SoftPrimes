@@ -1,38 +1,38 @@
 <app-breadcrumb></app-breadcrumb>
 <div class="d-flex justify-content-between align-items-center mb-4">
   <h1 class="h5">
-    Create new localization
+    {{ 'create' | translate }} {{ 'localization' | translate }}
   </h1>
 </div>
 <div class="card shadow">
   <div class="card-body">
     <form>
       <p class="dashed-border-bottom mb-4 pb-4">
-        Please find the below information
+        {{ 'findeBelowInfo' | translate }}
       </p>
       <div class="row form-group">
-        <label for="valueAr" class="col-2 col-form-label col-form-label-sm">localization name Ar</label>
+        <label for="valueAr" class="col-2 col-form-label col-form-label-sm">{{ 'nameAr' | translate }}</label>
         <div class="col-7 d-flex">
           <div class="input-group">
-            <input class="form-control" placeholder="localization name Ar"
+            <input class="form-control" placeholder="{{ 'nameAr' | translate }}"
               [(ngModel)]="localization.valueAr" type="text" name="valueAr">
           </div>
         </div>
       </div>
       <div class="row form-group">
-        <label for="valueEn" class="col-2 col-form-label col-form-label-sm">localization name En</label>
+        <label for="valueEn" class="col-2 col-form-label col-form-label-sm">{{ 'nameEn' | translate }}</label>
         <div class="col-7 d-flex">
           <div class="input-group">
-            <input class="form-control" placeholder="localization name En"
+            <input class="form-control" placeholder="{{ 'nameEn' | translate }}"
               [(ngModel)]="localization.valueEn" type="text" name="valueEn">
           </div>
         </div>
       </div>
       <div class="row form-group">
-        <label for="key" class="required col-2 col-form-label col-form-label-sm">localization key</label>
+        <label for="key" class="required col-2 col-form-label col-form-label-sm">{{ 'localizationKey' | translate }}</label>
         <div class="col-7 d-flex">
           <div class="input-group">
-            <input class="form-control" placeholder="localization key"
+            <input class="form-control" placeholder="{{ 'localizationKey' | translate }}"
               [(ngModel)]="localization.key" type="text" name="key"
               [disabled]="!createMode">
           </div>
@@ -42,10 +42,10 @@
 
     <div class="bg-transparent card-footer dashed-border-top px-0 pt-4 pb-1">
       <button class="btn btn-primary shadow" [disabled]="!localization.key" *ngIf="createMode" (click)="insertLocalization()">
-        Create
+        {{ 'create' | translate }}
       </button>
       <button class="btn btn-primary shadow" *ngIf="!createMode" (click)="updateLocalization()">
-        Update
+        {{ 'update' | translate }}
       </button>
     </div>
   </div>

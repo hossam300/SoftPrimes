@@ -28,9 +28,9 @@ export class LocalizationService {
 
   init() {
     this.translate.setDefaultLang('ar');
-    const localization_ar = localStorage.getItem('localization_ar');
-    const localization_en = localStorage.getItem('localization_en');
-    // const lastUpdateDate = localStorage.getItem('localization_lastUpdateDate');
+    let localization_ar = localStorage.getItem('localization_ar');
+    let localization_en = localStorage.getItem('localization_en');
+    const lastUpdateDate = localStorage.getItem('localization_lastUpdateDate');
 
     // if saved in localStorage use it
     if (localization_ar) {
@@ -40,31 +40,31 @@ export class LocalizationService {
       this.translate.setTranslation('en', JSON.parse(localization_en));
     }
 
-    // this.swagger.apiLocalizationGetLastUpDateTimeGet().subscribe(value => {
+    this.swagger.apiLocalizationsGetLastUpDateTimeGet().subscribe(value => {
 
-    //   // check if date changed
-    //   if (lastUpdateDate !== value.toString()) {
-    //     localization_ar = null;
-    //     localization_en = null;
-    //     localStorage.setItem('localization_lastUpdateDate', value.toString());
-    //   }
+      // check if date changed
+      if (lastUpdateDate !== value.toString()) {
+        localization_ar = null;
+        localization_en = null;
+        localStorage.setItem('localization_lastUpdateDate', value.toString());
+      }
 
-    //   // get Arabic localization
-    //   if (!localization_ar) {
-    //     this.swagger.apiLocalizationJsonGet('ar').subscribe(loc_ar => {
-    //       localStorage.setItem('localization_ar', loc_ar);
-    //       this.translate.setTranslation('ar', JSON.parse(loc_ar));
-    //     });
-    //   }
+      // get Arabic localization
+      if (!localization_ar) {
+        this.swagger.apiLocalizationsJsonGet('ar').subscribe(loc_ar => {
+          localStorage.setItem('localization_ar', loc_ar);
+          this.translate.setTranslation('ar', JSON.parse(loc_ar));
+        });
+      }
 
-    //   // get English localization
-    //   if (!localization_en) {
-    //     this.swagger.apiLocalizationJsonGet('en').subscribe(loc_en => {
-    //       localStorage.setItem('localization_en', loc_en);
-    //       this.translate.setTranslation('en', JSON.parse(loc_en));
-    //     });
-    //   }
-    // });
+      // get English localization
+      if (!localization_en) {
+        this.swagger.apiLocalizationsJsonGet('en').subscribe(loc_en => {
+          localStorage.setItem('localization_en', loc_en);
+          this.translate.setTranslation('en', JSON.parse(loc_en));
+        });
+      }
+    });
 
     const culture = localStorage.getItem('culture');
     if (culture) {
@@ -97,26 +97,22 @@ export class LocalizationService {
     const currentLang = localStorage.getItem('culture');
     if (currentLang === 'en') {
       this.translate.use('ar');
-      localStorage.setItem('appTitle', 'مسار 4');
       localStorage.setItem('culture', 'ar');
-      this.swagger['apiCultureUpdateCultureSessionPost']('ar').subscribe(_ => {
-        this.renderer.addClass(document.body, 'rtl');
-        this.isArabic.next(true);
-        // set application title
-        this.titleService.setTitle(this.translate.instant('MasarIV'));
-        if (!this.router.url.includes('login')) { this.reloadPage(); }
-      });  // to avoid hijri date in server
+      this.isArabic.next(true);
+      this.renderer.addClass(document.body, 'rtl');
+      // set application title
+      this.titleService.setTitle(this.translate.instant('softPrimes'));
+      // this.swagger['apiCultureUpdateCultureSessionPost']('ar').subscribe(_ => {
+      // });
     } else {
       this.translate.use('en');
-      localStorage.setItem('appTitle', 'Masar IV');
       localStorage.setItem('culture', 'en');
-      this.swagger['apiCultureUpdateCultureSessionPost']('en').subscribe(_ => {
-        this.renderer.removeClass(document.body, 'rtl');
-        this.isArabic.next(false);
-        // set application title
-        this.titleService.setTitle(this.translate.instant('MasarIV'));
-        if (!this.router.url.includes('login')) { this.reloadPage(); }
-      }); // to avoid hijri date in server
+      this.renderer.removeClass(document.body, 'rtl');
+      this.isArabic.next(false);
+      // set application title
+      this.titleService.setTitle(this.translate.instant('softPrimes'));
+      // this.swagger['apiCultureUpdateCultureSessionPost']('en').subscribe(_ => {
+      // });
     }
   }
 

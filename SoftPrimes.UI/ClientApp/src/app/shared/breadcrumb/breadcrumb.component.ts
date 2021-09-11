@@ -14,7 +14,7 @@ export interface BreadCrumb {
 export class BreadcrumbComponent implements OnInit {
   breadcrumbs: BreadCrumb[] = [
     {
-      label: 'Home',
+      label: 'home',
       url: '/'
     }
   ];

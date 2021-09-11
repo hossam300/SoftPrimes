@@ -51,7 +51,6 @@ export class AuthService {
       this.translate.get('AccountSwitched').subscribe(res => this.accountSwitched = res);
     });
     const _user = localStorage.getItem('user');
-    const _isEmployee = localStorage.getItem('isEmployee');
     if (_user) {
       this.setUser(JSON.parse(_user));
     }

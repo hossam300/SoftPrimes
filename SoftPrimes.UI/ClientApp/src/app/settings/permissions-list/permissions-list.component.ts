@@ -19,9 +19,9 @@ export class PermissionsListComponent implements OnInit {
     this.options = {
       controller: 'Permissions',
       columns: [
-        { name: 'PermissionNameAr', field: 'permissionNameAr', searchable: true, operator: 'contains' },
-        { name: 'PermissionNameEn', field: 'permissionNameEn', searchable: true, operator: 'contains' },
-        { name: 'PermissionNameKey', field: 'permissionKey', searchable: true, operator: 'contains' },
+        { name: 'nameAr', field: 'permissionNameAr', searchable: true, operator: 'contains' },
+        { name: 'nameEn', field: 'permissionNameEn', searchable: true, operator: 'contains' },
+        { name: 'permissionKey', field: 'permissionKey', searchable: true, operator: 'contains' },
         { name: '', field: '' },
       ]
     };

@@ -9,35 +9,31 @@ export class SettingsComponent implements OnInit {
 
   settings = [
     {
-      name: 'Roles',
+      name: 'roles',
       url: 'roles'
     },
     {
-      name: 'Permissions',
+      name: 'permissions',
       url: 'permissions'
     },
     {
-      name: 'Templates',
+      name: 'templates',
       url: 'templates'
     },
     {
-      name: 'Agents',
+      name: 'agents',
       url: 'agents'
     },
     {
-      name: 'Checkpoints',
+      name: 'checkPoints',
       url: 'checkpoints'
     },
     {
-      name: 'Localization',
+      name: 'localization',
       url: 'localization'
     },
     {
-      name: 'Change Language',
-      url: 'language'
-    },
-    {
-      name: 'Download App',
+      name: 'downloadApp',
       url: 'download'
     },
   ];

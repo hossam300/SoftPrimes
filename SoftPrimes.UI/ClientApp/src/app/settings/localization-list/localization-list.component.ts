@@ -18,9 +18,9 @@ export class LocalizationListComponent implements OnInit {
     this.options = {
       controller: 'Localizations',
       columns: [
-        { name: 'valueAr', field: 'valueAr', searchable: true, operator: 'contains' },
-        { name: 'valueEn', field: 'valueEn', searchable: true, operator: 'contains' },
-        { name: 'key', field: 'key', searchable: true, operator: 'contains' },
+        { name: 'nameAr', field: 'valueAr', searchable: true, operator: 'contains' },
+        { name: 'nameEn', field: 'valueEn', searchable: true, operator: 'contains' },
+        { name: 'localizationKey', field: 'key', searchable: true, operator: 'contains' },
         { name: '', field: '' },
       ]
     };

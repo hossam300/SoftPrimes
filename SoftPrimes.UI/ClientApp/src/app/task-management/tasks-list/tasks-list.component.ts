@@ -31,12 +31,14 @@ export class TasksListComponent implements OnInit {
     tourName: '',
     agentName: ''
   };
+  isArabic = false;
 
   constructor(
     private taskManagementService: TaskManagementService
   ) { }
 
   ngOnInit() {
+    this.isArabic = localStorage.getItem('culture') === 'ar' ? true : false;
     this.initTableColumns();
     this.getAll(this.take, this.skip);
     this.getAgentCheckPoints();
@@ -59,8 +61,8 @@ export class TasksListComponent implements OnInit {
     this.options = {
       controller: 'TourAgents',
       columns: [
-        { name: 'tourName', field: 'tourNameEn', sortField: 'tour.tourNameEn',  type: 'tour', sort: 'asc' },
-        { name: 'agentName', field: 'fullNameEn', sortField: 'agent.fullNameEn', type: 'agent', sort: 'asc' },
+        { name: 'tourName', field: this.isArabic ? 'tourNameAr' : 'tourNameEn', sortField: this.isArabic ? 'tour.tourNameAr' : 'tour.tourNameEn',  type: 'tour', sort: 'asc' },
+        { name: 'agentName', field: this.isArabic ? 'fullNameAr' : 'fullNameEn', sortField: this.isArabic ? 'agent.fullNameAr' : 'agent.fullNameEn', type: 'agent', sort: 'asc' },
         { name: 'tourType', field: 'tourType', sortField: 'tourType', type: 'tourType', sort: 'asc' },
         { name: 'scheduleStart', field: 'tourDate', sortField: 'tourDate', type: 'date', sort: 'asc' },
         { name: 'scheduleEnd', field: 'estimatedEndDate', sortField: 'estimatedEndDate', type: 'date', sort: 'asc' },

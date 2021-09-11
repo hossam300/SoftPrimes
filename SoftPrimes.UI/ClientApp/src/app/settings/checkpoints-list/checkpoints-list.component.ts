@@ -18,8 +18,8 @@ export class CheckpointsListComponent implements OnInit {
     this.options = {
       controller: 'CheckPoints',
       columns: [
-        { name: 'CheckPointNameAr', field: 'checkPointNameAr', searchable: true, operator: 'contains' },
-        { name: 'CheckPointNameEn', field: 'checkPointNameEn', searchable: true, operator: 'contains' },
+        { name: 'nameAr', field: 'checkPointNameAr', searchable: true, operator: 'contains' },
+        { name: 'nameEn', field: 'checkPointNameEn', searchable: true, operator: 'contains' },
         { name: 'CheckPointNamelat', field: 'lat', searchable: true, operator: 'contains' },
         { name: 'CheckPointNamelong', field: 'long', searchable: true, operator: 'contains' },
         { name: 'LocationText', field: 'locationText', searchable: true, operator: 'contains' },
