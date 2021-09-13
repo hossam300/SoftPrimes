@@ -1,18 +1,22 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Renderer2, RendererFactory2 } from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LoaderService {
-
-  constructor() { }
+  renderer: Renderer2;
+  constructor(
+    private rendererFactory: RendererFactory2
+  ) {
+    this.renderer = this.rendererFactory.createRenderer(null, null);
+  }
 
   addLoader() {
-    document.getElementsByTagName('body')[0].className = document.getElementsByTagName('body')[0].className.concat(" isLoading-blockUI");
+    this.renderer.addClass(document.getElementById('loader'), 'd-flex');
   }
 
   removeLoader() {
-    document.getElementsByTagName('body')[0].className = document.getElementsByTagName('body')[0].className.replace("isLoading-blockUI", '')
+    this.renderer.removeClass(document.getElementById('loader'), 'd-flex');
   }
 
 }

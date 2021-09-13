@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { concat, Observable, of, Subject, Subscription } from 'rxjs';
 import { catchError, debounceTime, distinctUntilChanged, switchMap, tap } from 'rxjs/operators';
+import { LoaderService } from 'src/app/core/_services/loader.service';
 import { PermissionDTO, RoleDetailsDTO, RoleDTO } from 'src/app/core/_services/swagger/SwaggerClient.service';
 import { SettingsCrudsService } from '../settings-cruds.service';
 
@@ -23,7 +24,8 @@ export class RolesComponent implements OnInit {
   constructor(
     private settingsCrud: SettingsCrudsService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private loader: LoaderService
   ) {
   }
 
@@ -52,7 +54,9 @@ export class RolesComponent implements OnInit {
   }
 
   updateRoles() {
+    this.loader.addLoader();
     this.settingsCrud.updateRoles(this.roles).subscribe(result => {
+      this.loader.removeLoader();
       if (result) {
         this.router.navigate(['/settings/roles']);
       }
@@ -60,7 +64,9 @@ export class RolesComponent implements OnInit {
   }
 
   insertRoles() {
+    this.loader.addLoader();
     this.settingsCrud.insertRoles(this.roles).subscribe(result => {
+      this.loader.removeLoader();
       if (result) {
         this.router.navigate(['/settings/roles']);
       }

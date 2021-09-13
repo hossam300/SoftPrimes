@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { LoaderService } from 'src/app/core/_services/loader.service';
 import { SettingsCrudsService } from '../settings-cruds.service';
 
 @Component({
@@ -14,7 +15,10 @@ export class CheckpointsListComponent implements OnInit {
   controller = '';
   count: number;
 
-  constructor(private settingsCrud: SettingsCrudsService) {
+  constructor(
+    private settingsCrud: SettingsCrudsService,
+    private loader: LoaderService
+  ) {
     this.options = {
       controller: 'CheckPoints',
       columns: [
@@ -35,7 +39,9 @@ export class CheckpointsListComponent implements OnInit {
   }
 
   getCheckpointsList(controller, take, skip) {
+    this.loader.addLoader();
     this.settingsCrud.getAll(controller, take, skip).subscribe(result => {
+      this.loader.removeLoader();
       this.checkpointsList = result.data;
       this.count = result.count;
     });

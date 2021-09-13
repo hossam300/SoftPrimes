@@ -4,6 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { Sort, TourAgentDTO } from 'src/app/core/_services/swagger/SwaggerClient.service';
 import { TourState, TourTypes } from 'src/app/core/_models/task-management';
 import { Marker } from 'src/app/core/_models/gmap';
+import { LoaderService } from 'src/app/core/_services/loader.service';
 
 @Component({
   selector: 'app-tasks-list',
@@ -34,7 +35,8 @@ export class TasksListComponent implements OnInit {
   isArabic = false;
 
   constructor(
-    private taskManagementService: TaskManagementService
+    private taskManagementService: TaskManagementService,
+    private loader: LoaderService
   ) { }
 
   ngOnInit() {
@@ -73,7 +75,10 @@ export class TasksListComponent implements OnInit {
   }
 
   getAll(take, skip, sort = [], filters = [], sortField?, sortDir?) {
-    this.taskManagementService.getAllTourAgents(take, skip, sort, filters, sortField, sortDir).subscribe(result => {
+    this.loader.addLoader();
+    this.taskManagementService.getAllTourAgents(take, skip, sort, filters, sortField, sortDir)
+    .subscribe(result => {
+      this.loader.removeLoader();
       this.toursList = result.data;
       this.count = result.count;
     });

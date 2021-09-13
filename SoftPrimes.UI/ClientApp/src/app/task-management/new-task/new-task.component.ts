@@ -7,6 +7,7 @@ import { concat, of, Subject, Subscription } from 'rxjs';
 import { catchError, debounceTime, distinctUntilChanged, map, switchMap, tap, throwIfEmpty } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
 import { fixDateTimePickers } from 'src/app/core/_utils/date';
+import { LoaderService } from 'src/app/core/_services/loader.service';
 
 @Component({
   selector: 'app-new-task',
@@ -47,7 +48,8 @@ export class NewTaskComponent implements OnInit, AfterViewInit {
     private taskManagement: TaskManagementService,
     private settingsCrud: SettingsCrudsService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private loader: LoaderService
   ) { }
 
   ngOnInit() {
@@ -78,6 +80,7 @@ export class NewTaskComponent implements OnInit, AfterViewInit {
 
   assignTask() {
     // this.tour.tourDate = getDate(this.tourDate);
+    this.loader.addLoader();
     this.tour.pointLocations = [];
     this.checkPoints.forEach(x => {
       const location = new PointLocationDTO({
@@ -91,6 +94,7 @@ export class NewTaskComponent implements OnInit, AfterViewInit {
     console.log(this.tour, 'task');
     this.taskManagement.insertTour(this.tour).subscribe( value => {
       if (value) {
+        this.loader.removeLoader();
         this.router.navigate(['/task-management/tasks-list']);
       }
     });

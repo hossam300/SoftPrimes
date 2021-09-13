@@ -1,6 +1,7 @@
 import { Subject } from 'rxjs/internal/Subject';
 import { Component, OnInit } from '@angular/core';
 import { SettingsCrudsService } from '../settings-cruds.service';
+import { LoaderService } from 'src/app/core/_services/loader.service';
 
 @Component({
   selector: 'app-permissions-list',
@@ -15,7 +16,10 @@ export class PermissionsListComponent implements OnInit {
   controller = '';
   count: number;
 
-  constructor(private settingsCrud: SettingsCrudsService) {
+  constructor(
+    private settingsCrud: SettingsCrudsService,
+    private loader: LoaderService
+  ) {
     this.options = {
       controller: 'Permissions',
       columns: [
@@ -33,7 +37,9 @@ export class PermissionsListComponent implements OnInit {
   }
 
   getPermissionsList(controller, take, skip) {
+    this.loader.addLoader();
     this.settingsCrud.getAll(controller, take, skip).subscribe(result => {
+      this.loader.removeLoader();
       this.permissionsList = result.data;
       this.count = result.count;
     });

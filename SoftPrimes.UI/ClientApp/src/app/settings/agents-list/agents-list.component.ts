@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { LoaderService } from 'src/app/core/_services/loader.service';
 import { SettingsCrudsService } from '../settings-cruds.service';
 
 @Component({
@@ -14,7 +15,10 @@ export class AgentsListComponent implements OnInit {
   controller = '';
   count: number;
 
-  constructor(private settingsCrud: SettingsCrudsService) {
+  constructor(
+    private settingsCrud: SettingsCrudsService,
+    private loader: LoaderService
+  ) {
     this.options = {
       controller: 'Agents',
       columns: [
@@ -34,7 +38,9 @@ export class AgentsListComponent implements OnInit {
   }
 
   getAgentsList(controller, take, skip) {
+    this.loader.addLoader();
     this.settingsCrud.getAll(controller, take, skip).subscribe(result => {
+      this.loader.removeLoader();
       this.agentsList = result.data;
       this.count = result.count;
     });

@@ -1,3 +1,4 @@
+import { LoaderService } from './../../core/_services/loader.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SwaggerClient, UserLoginModel } from 'src/app/core/_services/swagger/SwaggerClient.service';
@@ -29,6 +30,7 @@ export class LoginComponent implements OnInit {
     private formBuilder: FormBuilder,
     private auth: AuthService,
     private toastr: ToastrService,
+    private loader: LoaderService,
     private swagger: SwaggerClient) {}
 
   ngOnInit() {
@@ -104,8 +106,9 @@ export class LoginComponent implements OnInit {
         ? this.loginForm.controls.password.value
         : '',
     };
+    this.loader.addLoader();
     // login with diffrent states in any browser
-    this.auth.login(credentials, localStorage['culture'] || 'en').subscribe(
+    this.auth.login(credentials, localStorage['culture']).subscribe(
       (isLoggedIn) => {
         if (isLoggedIn) {
           this.isAdmin = this.auth.isAdmin;
@@ -118,6 +121,7 @@ export class LoginComponent implements OnInit {
         }
       },
       (error: HttpErrorResponse) => {
+        this.loader.removeLoader();
         this.request = false;
         this.dataError = true;
         if (error.status === 401) {
@@ -135,9 +139,11 @@ export class LoginComponent implements OnInit {
   }
 
   getUserAuthData() {
+    this.loader.addLoader();
     this.swagger
       .apiAccountGetUserAuthTicketGet()
       .subscribe((value) => {
+        this.loader.removeLoader();
         if (value) {
           // localStorage.setItem('existing-user', JSON.stringify({
           //   'username': this.loginForm.controls.username.value,
