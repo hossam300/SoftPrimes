@@ -19,6 +19,7 @@ import { AgentsListComponent } from './agents-list/agents-list.component';
 import { TemplatesListComponent } from './templates-list/templates-list.component';
 import { CheckpointsComponent } from './checkpoints/checkpoints.component';
 import { CheckpointsListComponent } from './checkpoints-list/checkpoints-list.component';
+import { DownloadAppComponent } from '../components/download-app/download-app.component';
 
 
 @NgModule({
@@ -36,6 +37,7 @@ import { CheckpointsListComponent } from './checkpoints-list/checkpoints-list.co
     AgentsListComponent,
     TemplatesListComponent,
     CheckpointsComponent,
+    DownloadAppComponent,
     CheckpointsListComponent],
   imports: [
     CommonModule,
