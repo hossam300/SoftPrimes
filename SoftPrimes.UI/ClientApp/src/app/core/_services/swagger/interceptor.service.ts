@@ -11,6 +11,7 @@ import {catchError, delay, finalize, map, mergeMap, retryWhen, take} from 'rxjs/
 import {TokenStoreService} from '../token-store.service';
 import {Router} from '@angular/router';
 import {AuthTokenType} from '../../_models/auth-token-type';
+import { LayoutService } from '../layout.service';
 
 @Injectable()
 export class InterceptorService implements HttpInterceptor {
@@ -18,15 +19,18 @@ export class InterceptorService implements HttpInterceptor {
   private numberOfRetries = 3;
   private authorizationHeader = 'Authorization';
   private requests: HttpRequest<any>[] = [];
+  private error = false;
 
   constructor(
     private tokenStoreService: TokenStoreService,
     private router: Router,
-    private loader: LoaderService
+    private loader: LoaderService,
+    private layout: LayoutService
   ) {
   }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    this.error = false;
     const accessToken = this.tokenStoreService.getRawAuthToken(AuthTokenType.AccessToken);
     this.loader.addLoader();
     request = request.clone({withCredentials: false});
@@ -39,6 +43,7 @@ export class InterceptorService implements HttpInterceptor {
       return next.handle(request).pipe(
         retryWhen(errors => errors.pipe(
           mergeMap((error: HttpErrorResponse, retryAttempt: number) => {
+            this.error = true;
             // if in Case UnAuthorize
             if (error.status === 401 || error.status === 403 ) {
               const newRequest = this.getNewAuthRequest(request);
@@ -84,10 +89,14 @@ export class InterceptorService implements HttpInterceptor {
             this.router.navigate(['/login']);
           }
           this.loader.removeLoader();
+          this.layout.handleFailMsg(this.requests[0]);
           return throwError(error);
           // return of(error);
         }),
         finalize(() => {
+          if (!this.error) {
+            this.layout.handleSuccessMsg(this.requests[0]);
+          }
           this.requests = this.requests.filter(x => x !== request);
           if (!this.requests.length) {
             this.loader.removeLoader();

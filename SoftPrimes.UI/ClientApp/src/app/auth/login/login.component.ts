@@ -120,7 +120,7 @@ export class LoginComponent implements OnInit {
         }
       },
       (error: HttpErrorResponse) => {
-        // this.loader.removeLoader();;
+        // this.loader.removeLoader();
         this.request = false;
         this.dataError = true;
         if (error.status === 401) {
@@ -129,7 +129,6 @@ export class LoginComponent implements OnInit {
           this.error = `${error.statusText}: ${error.message}`;
         }
         this.toastr.error(this.error, 'Login Failed');
-        // this.layoutService.toggleIsLoadingBlockUI(false);
       },
       () => {
         this.request = false;
@@ -142,7 +141,7 @@ export class LoginComponent implements OnInit {
     this.swagger
       .apiAccountGetUserAuthTicketGet()
       .subscribe((value) => {
-        // this.loader.removeLoader();;
+        // this.loader.removeLoader();
         if (value) {
           // localStorage.setItem('existing-user', JSON.stringify({
           //   'username': this.loginForm.controls.username.value,
@@ -155,8 +154,6 @@ export class LoginComponent implements OnInit {
           this.auth.setUser(value);
           this.router.navigate([this.returnUrl]);
         }
-        console.log(value, 'user get');
-        // this.layoutService.toggleIsLoadingBlockUI(false);
       });
   }
 }

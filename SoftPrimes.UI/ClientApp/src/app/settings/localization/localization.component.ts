@@ -11,7 +11,7 @@ import { LoaderService } from 'src/app/core/_services/loader.service';
   styleUrls: ['./localization.component.css']
 })
 export class LocalizationComponent implements OnInit {
-  localization: LocalizationDTO;
+  localization: LocalizationDTO = new LocalizationDTO();
   routerSubscription: Subscription;
   createMode: boolean;
   controller = 'Localizations';
