@@ -36,7 +36,6 @@ export class TasksListComponent implements OnInit {
 
   constructor(
     private taskManagementService: TaskManagementService,
-    private loader: LoaderService
   ) { }
 
   ngOnInit() {
@@ -75,10 +74,10 @@ export class TasksListComponent implements OnInit {
   }
 
   getAll(take, skip, sort = [], filters = [], sortField?, sortDir?) {
-    this.loader.addLoader();
+    // // this.loader.addLoader();
     this.taskManagementService.getAllTourAgents(take, skip, sort, filters, sortField, sortDir)
     .subscribe(result => {
-      this.loader.removeLoader();
+      // // this.loader.removeLoader();;
       this.toursList = result.data;
       this.count = result.count;
     });

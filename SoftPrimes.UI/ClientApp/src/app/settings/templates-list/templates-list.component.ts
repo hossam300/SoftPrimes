@@ -17,7 +17,6 @@ export class TemplatesListComponent implements OnInit {
 
   constructor(
     private settingsCrud: SettingsCrudsService,
-    private loader: LoaderService
   ) {
     this.options = {
       controller: 'Templates',
@@ -36,9 +35,9 @@ export class TemplatesListComponent implements OnInit {
   }
 
   getTemplatesList(searchTxt?, take?) {
-    this.loader.addLoader();
+    // this.loader.addLoader();
     this.settingsCrud.getTemplatesLookup(searchTxt, take).subscribe(result => {
-      this.loader.removeLoader();
+      // this.loader.removeLoader();;
       this.templatesList = result;
     });
   }

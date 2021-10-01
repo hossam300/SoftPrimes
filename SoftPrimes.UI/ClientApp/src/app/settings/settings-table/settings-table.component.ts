@@ -34,7 +34,6 @@ export class SettingsTableComponent {
     private activatedRoute: ActivatedRoute,
     private settingsCrud: SettingsCrudsService,
     private modalService: NgbModal,
-    private loader: LoaderService
   ) {
     this.isArabic = localStorage.getItem('culture') === 'ar' ? true : false;
   }
@@ -44,9 +43,9 @@ export class SettingsTableComponent {
   }
 
   deleteRecord(id) {
-    this.loader.addLoader();
+    // this.loader.addLoader();
     this.settingsCrud.deleteDTO(this.options.controller, id).subscribe(result => {
-      this.loader.removeLoader();
+      // this.loader.removeLoader();;
       if (result) {
         this.data = this.data.filter(record => record.id !== id);
       }
@@ -54,9 +53,9 @@ export class SettingsTableComponent {
   }
 
   toggleTemplate(id, active) {
-    this.loader.addLoader();
+    // this.loader.addLoader();
     this.settingsCrud.toggleTemplate(id, !active).subscribe(result => {
-      this.loader.removeLoader();
+      // this.loader.removeLoader();;
       if (result) {
         this.data = this.data.map(x => {
           if (x.id === id) {

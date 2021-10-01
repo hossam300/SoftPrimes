@@ -25,7 +25,6 @@ export class RolesComponent implements OnInit {
     private settingsCrud: SettingsCrudsService,
     private route: ActivatedRoute,
     private router: Router,
-    private loader: LoaderService
   ) {
   }
 
@@ -54,9 +53,9 @@ export class RolesComponent implements OnInit {
   }
 
   updateRoles() {
-    this.loader.addLoader();
+    // this.loader.addLoader();
     this.settingsCrud.updateRoles(this.roles).subscribe(result => {
-      this.loader.removeLoader();
+      // this.loader.removeLoader();;
       if (result) {
         this.router.navigate(['/settings/roles']);
       }
@@ -64,9 +63,9 @@ export class RolesComponent implements OnInit {
   }
 
   insertRoles() {
-    this.loader.addLoader();
+    // this.loader.addLoader();
     this.settingsCrud.insertRoles(this.roles).subscribe(result => {
-      this.loader.removeLoader();
+      // this.loader.removeLoader();;
       if (result) {
         this.router.navigate(['/settings/roles']);
       }

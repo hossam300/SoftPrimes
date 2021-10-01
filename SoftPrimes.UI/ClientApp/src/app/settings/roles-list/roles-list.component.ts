@@ -17,7 +17,6 @@ export class RolesListComponent implements OnInit {
 
   constructor(
     private settingsCrud: SettingsCrudsService,
-    private loader: LoaderService
   ) {
     this.options = {
       controller: 'Roles',
@@ -36,9 +35,9 @@ export class RolesListComponent implements OnInit {
   }
 
   getRolesList(controller, take, skip) {
-    this.loader.addLoader();
+    // this.loader.addLoader();
     this.settingsCrud.getAll(controller, take, skip).subscribe(result => {
-      this.loader.removeLoader();
+      // this.loader.removeLoader();;
       this.rolesList = result.data;
       this.count = result.count;
     });

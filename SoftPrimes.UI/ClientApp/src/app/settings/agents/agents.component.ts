@@ -49,7 +49,6 @@ export class AgentsComponent implements OnInit, AfterViewInit {
     private settingsCrud: SettingsCrudsService,
     private route: ActivatedRoute,
     private router: Router,
-    private loader: LoaderService
   ) {
   }
 
@@ -81,10 +80,10 @@ export class AgentsComponent implements OnInit, AfterViewInit {
   }
 
   updateAgent() {
-    this.loader.addLoader();
+    // this.loader.addLoader();
     this.agent.roleId = this.roleId;
     this.settingsCrud.updateAgent(this.roleId, this.agent).subscribe(result => {
-      this.loader.removeLoader();
+      // this.loader.removeLoader();;
       if (result) {
         this.router.navigate(['/settings/agents']);
       }
@@ -92,10 +91,10 @@ export class AgentsComponent implements OnInit, AfterViewInit {
   }
 
   insertAgent() {
-    this.loader.addLoader();
+    // this.loader.addLoader();
     this.agent.roleId = this.roleId;
     this.settingsCrud.insertAgent(this.roleId, this.agent).subscribe(res => {
-      this.loader.removeLoader();
+      // this.loader.removeLoader();;
       if (res) {
         this.router.navigate(['/settings/agents']);
       }

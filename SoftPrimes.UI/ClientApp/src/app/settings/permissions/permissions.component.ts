@@ -20,7 +20,6 @@ export class PermissionsComponent implements OnInit {
     private settingsCrud: SettingsCrudsService,
     private route: ActivatedRoute,
     private router: Router,
-    private loader: LoaderService
   ) {
   }
 
@@ -40,9 +39,9 @@ export class PermissionsComponent implements OnInit {
   }
 
   updatePermission() {
-    this.loader.addLoader();
+    // this.loader.addLoader();
     this.settingsCrud.updateDTO(this.controller, [this.permission]).subscribe(result => {
-      this.loader.removeLoader();
+      // this.loader.removeLoader();;
       if (result) {
         this.router.navigate(['/settings/permissions']);
       }
@@ -50,9 +49,9 @@ export class PermissionsComponent implements OnInit {
   }
 
   insertPermission() {
-    this.loader.addLoader();
+    // this.loader.addLoader();
     this.settingsCrud.insertDTO(this.controller, [this.permission]).subscribe(result => {
-      this.loader.removeLoader();
+      // this.loader.removeLoader();;
       if (result) {
         this.router.navigate(['/settings/permissions']);
       }

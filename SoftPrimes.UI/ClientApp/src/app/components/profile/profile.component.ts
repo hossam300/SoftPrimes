@@ -21,7 +21,6 @@ export class ProfileComponent implements OnInit {
   constructor(
     private settingsCrud: SettingsCrudsService,
     private auth: AuthService,
-    private loader: LoaderService
   ) {
     this.user = JSON.parse(localStorage.getItem('user'));
   }
@@ -64,9 +63,9 @@ export class ProfileComponent implements OnInit {
       companyId: this.user.companyId,
       isTempPassword: false,
     });
-    this.loader.addLoader();
+    // this.loader.addLoader();
     this.settingsCrud.updateAgent(this.roleId || 1, user).subscribe(res => {
-      this.loader.removeLoader();
+      // this.loader.removeLoader();;
       if (res) {
         this.viewMode = true;
         const currentUser = new AuthTicketDTO(this.user);

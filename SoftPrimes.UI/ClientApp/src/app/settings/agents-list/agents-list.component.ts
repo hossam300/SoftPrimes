@@ -17,7 +17,6 @@ export class AgentsListComponent implements OnInit {
 
   constructor(
     private settingsCrud: SettingsCrudsService,
-    private loader: LoaderService
   ) {
     this.options = {
       controller: 'Agents',
@@ -38,9 +37,9 @@ export class AgentsListComponent implements OnInit {
   }
 
   getAgentsList(controller, take, skip) {
-    this.loader.addLoader();
+    // this.loader.addLoader();
     this.settingsCrud.getAll(controller, take, skip).subscribe(result => {
-      this.loader.removeLoader();
+      // this.loader.removeLoader();;
       this.agentsList = result.data;
       this.count = result.count;
     });

@@ -23,7 +23,6 @@ export class CheckpointsComponent implements OnInit {
     private settingsCrud: SettingsCrudsService,
     private route: ActivatedRoute,
     private router: Router,
-    private loader: LoaderService
   ) {
   }
 
@@ -58,9 +57,9 @@ export class CheckpointsComponent implements OnInit {
   }
 
   updateCheckPoint() {
-    this.loader.addLoader();
+    // this.loader.addLoader();
     this.settingsCrud.updateDTO(this.controller, [this.checkPoint]).subscribe(result => {
-      this.loader.removeLoader();
+      // this.loader.removeLoader();;
       if (result) {
         this.router.navigate(['/settings/checkpoints']);
       }
@@ -68,9 +67,9 @@ export class CheckpointsComponent implements OnInit {
   }
 
   insertCheckPoint() {
-    this.loader.addLoader();
+    // this.loader.addLoader();
     this.settingsCrud.insertDTO(this.controller, [this.checkPoint]).subscribe(result => {
-      this.loader.removeLoader();
+      // this.loader.removeLoader();;
       if (result) {
         this.router.navigate(['/settings/checkpoints']);
       }

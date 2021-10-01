@@ -22,7 +22,6 @@ export class DataTableComponent implements OnInit {
 
   constructor(
     private taskManagementService: TaskManagementService,
-    private loader: LoaderService
   ) { }
 
   ngOnInit() {
@@ -33,11 +32,11 @@ export class DataTableComponent implements OnInit {
   }
 
   deleteTour(id: number) {
-    this.loader.addLoader();
+    // this.loader.addLoader();
     this.data = this.data.filter(x => x.id !== id);
     const tempRecord = this.data.some(x => x.id === id);
     this.taskManagementService.deleteTourAgent(id).subscribe(result => {
-      this.loader.removeLoader();
+      // this.loader.removeLoader();;
       this.data = this.data.filter(x => x.id !== id);
     }, err => {
       this.data.push(tempRecord);

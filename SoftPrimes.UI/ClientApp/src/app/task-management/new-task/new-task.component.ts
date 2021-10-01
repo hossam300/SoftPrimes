@@ -49,7 +49,6 @@ export class NewTaskComponent implements OnInit, AfterViewInit {
     private settingsCrud: SettingsCrudsService,
     private route: ActivatedRoute,
     private router: Router,
-    private loader: LoaderService
   ) { }
 
   ngOnInit() {
@@ -80,7 +79,7 @@ export class NewTaskComponent implements OnInit, AfterViewInit {
 
   assignTask() {
     // this.tour.tourDate = getDate(this.tourDate);
-    this.loader.addLoader();
+    // this.loader.addLoader();
     this.tour.pointLocations = [];
     this.checkPoints.forEach(x => {
       const location = new PointLocationDTO({
@@ -94,7 +93,7 @@ export class NewTaskComponent implements OnInit, AfterViewInit {
     console.log(this.tour, 'task');
     this.taskManagement.insertTour(this.tour).subscribe( value => {
       if (value) {
-        this.loader.removeLoader();
+        // this.loader.removeLoader();;
         this.router.navigate(['/task-management/tasks-list']);
       }
     });
