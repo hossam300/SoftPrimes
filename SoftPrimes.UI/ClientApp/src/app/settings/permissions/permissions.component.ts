@@ -3,6 +3,7 @@ import { PermissionDTO } from './../../core/_services/swagger/SwaggerClient.serv
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { LoaderService } from 'src/app/core/_services/loader.service';
 
 @Component({
   selector: 'app-permissions',
@@ -18,7 +19,7 @@ export class PermissionsComponent implements OnInit {
   constructor(
     private settingsCrud: SettingsCrudsService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
   ) {
   }
 
@@ -38,7 +39,9 @@ export class PermissionsComponent implements OnInit {
   }
 
   updatePermission() {
+    // this.loader.addLoader();
     this.settingsCrud.updateDTO(this.controller, [this.permission]).subscribe(result => {
+      // this.loader.removeLoader();;
       if (result) {
         this.router.navigate(['/settings/permissions']);
       }
@@ -46,7 +49,9 @@ export class PermissionsComponent implements OnInit {
   }
 
   insertPermission() {
+    // this.loader.addLoader();
     this.settingsCrud.insertDTO(this.controller, [this.permission]).subscribe(result => {
+      // this.loader.removeLoader();;
       if (result) {
         this.router.navigate(['/settings/permissions']);
       }

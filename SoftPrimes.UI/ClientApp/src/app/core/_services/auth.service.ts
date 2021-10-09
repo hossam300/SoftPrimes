@@ -51,7 +51,6 @@ export class AuthService {
       this.translate.get('AccountSwitched').subscribe(res => this.accountSwitched = res);
     });
     const _user = localStorage.getItem('user');
-    const _isEmployee = localStorage.getItem('isEmployee');
     if (_user) {
       this.setUser(JSON.parse(_user));
     }
@@ -112,12 +111,12 @@ export class AuthService {
               '_2_': response['userTP'],
               '_3_': true
             };
-            if (response['userTN']) { sessionStorage.setItem('utn_utp', JSON.stringify(Encryptedcredentials)); }
+
             this.tokenStoreService.storeLoginSession(response);
             this.refreshTokenService.scheduleRefreshToken(true);
             this.authStatusSource.next(true);
             // set cookies
-            // const cookies = JSON.parse(sessionStorage['utn_utp'])['_1_'];
+
             // this.cookie.set('&utn', cookies);
             // update backend with local culture
             const currentLang = localStorage.getItem('culture');

@@ -9,6 +9,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { AppRoutingModule } from './app-routing.module';
 import { SharedModule } from './shared/shared.module';
 import { TaskManagementModule } from './task-management/task-management.module';
+import { NgApexchartsModule } from "ng-apexcharts";
 
 import { AppComponent } from './app.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -23,6 +24,8 @@ import { AuthGuard } from './core/_guards/auth.guard';
 import { AuthService } from './core/_services/auth.service';
 import { TaskManagementService } from './core/_services/task-management.service';
 import { ProfileComponent } from './components/profile/profile.component';
+import { LineChartComponent } from './components/line-chart/line-chart.component';
+import { PieChartComponent } from './components/pie-chart/pie-chart.component';
 export const DEV_MODE = new InjectionToken<boolean>('DEV_MODE');
 
 @NgModule({
@@ -31,7 +34,9 @@ export const DEV_MODE = new InjectionToken<boolean>('DEV_MODE');
     NavMenuComponent,
     DashboardComponent,
     ProfileComponent,
-    LoginComponent
+    LoginComponent,
+    LineChartComponent,
+    PieChartComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -48,7 +53,8 @@ export const DEV_MODE = new InjectionToken<boolean>('DEV_MODE');
     }),
     FormsModule,
     ReactiveFormsModule,
-    SharedModule
+    SharedModule,
+    NgApexchartsModule
   ],
   providers: [
     SwaggerClient,

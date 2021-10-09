@@ -1,3 +1,4 @@
+import { DownloadAppComponent } from './../components/download-app/download-app.component';
 import { AgentsListComponent } from './agents-list/agents-list.component';
 import { RolesComponent } from './roles/roles.component';
 import { RolesListComponent } from './roles-list/roles-list.component';
@@ -145,6 +146,18 @@ const routes: Routes = [{
           data: {
             permissionCode: ['ViewTemplates'],
             'breadcrumb': ['settings', 'templates']
+          }
+        }
+      ]
+    },
+    { path: 'download', component: SettingsWrapperComponent,
+      children: [
+        {
+          path: '',
+          component: DownloadAppComponent,
+          data: {
+            permissionCode: ['ViewDownload'],
+            'breadcrumb': ['settings', 'download']
           }
         }
       ]

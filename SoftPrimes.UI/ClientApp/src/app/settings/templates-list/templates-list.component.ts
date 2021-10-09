@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { LoaderService } from 'src/app/core/_services/loader.service';
 import { SettingsCrudsService } from '../settings-cruds.service';
 
 @Component({
@@ -14,7 +15,9 @@ export class TemplatesListComponent implements OnInit {
   controller = '';
   count: number;
 
-  constructor(private settingsCrud: SettingsCrudsService) {
+  constructor(
+    private settingsCrud: SettingsCrudsService,
+  ) {
     this.options = {
       controller: 'Templates',
       columns: [
@@ -32,7 +35,9 @@ export class TemplatesListComponent implements OnInit {
   }
 
   getTemplatesList(searchTxt?, take?) {
+    // this.loader.addLoader();
     this.settingsCrud.getTemplatesLookup(searchTxt, take).subscribe(result => {
+      // this.loader.removeLoader();;
       this.templatesList = result;
     });
   }

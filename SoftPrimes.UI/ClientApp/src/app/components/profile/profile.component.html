@@ -1,79 +1,79 @@
 <app-breadcrumb></app-breadcrumb>
 <div class="d-flex justify-content-between align-items-center mb-4 pb-3">
   <h1 class="h5">
-    Profile
+    {{ 'profile' | translate }}
   </h1>
   <a class="btn btn-primary text-white" *ngIf="viewMode" (click)="editMode()">
-    Edit profile
+    {{ 'edit' | translate }} {{ 'profile' | translate }}
   </a>
 </div>
 <div class="card shadow mb-5">
   <div class="card-body" *ngIf="user">
     <p class="dashed-border-bottom mb-4 pb-4" *ngIf="!viewMode">
-      Please find the below information
+      {{ 'findeBelowInfo' | translate }}
     </p>
     <div class="row">
       <div class="col-9">
         <div class="row form-group">
-          <label for="fullNameAr" class="col-2 col-form-label col-form-label-sm">Full name Ar</label>
+          <label for="fullNameAr" class="col-2 col-form-label col-form-label-sm">{{ 'nameAr' | translate }}</label>
           <div class="col-9 d-flex">
             <div class="input-group">
-              <input class="form-control" [placeholder]="!viewMode ? 'Full name ar' : ''"
+              <input class="form-control" placeholder="{{ 'nameAr' | translate }}"
                 [(ngModel)]="user.fullNameAr" type="text" [readonly]="viewMode"
                 name="fullNameAr">
             </div>
           </div>
         </div>
         <div class="row form-group">
-          <label for="fullNameEn" class="col-2 col-form-label col-form-label-sm">Full name En</label>
+          <label for="fullNameEn" class="col-2 col-form-label col-form-label-sm">{{ 'nameEn' | translate }}</label>
           <div class="col-9 d-flex">
             <div class="input-group">
-              <input class="form-control" [placeholder]="!viewMode ? 'Full name en' : ''"
+              <input class="form-control" placeholder="{{ 'nameEn' | translate }}"
                 [(ngModel)]="user.fullNameEn" type="text" [readonly]="viewMode"
                 name="fullNameEn">
             </div>
           </div>
         </div>
         <div class="row form-group">
-          <label for="username" class="col-2 col-form-label col-form-label-sm">Username</label>
+          <label for="username" class="col-2 col-form-label col-form-label-sm">{{ 'username' | translate }}</label>
           <div class="col-9 d-flex">
             <div class="input-group">
-              <input class="form-control" [placeholder]="!viewMode ? 'username' : ''" [readonly]="viewMode"
+              <input class="form-control" placeholder="{{ 'username' | translate }}" [readonly]="viewMode"
                 [(ngModel)]="user.userName" type="text"
                 name="username">
             </div>
           </div>
         </div>
         <div class="row form-group">
-          <label for="jobTitle" class="col-2 col-form-label col-form-label-sm">JobTitle</label>
+          <label for="jobTitle" class="col-2 col-form-label col-form-label-sm">{{ 'jobTitle' | translate }}</label>
           <div class="col-9 d-flex">
             <div class="input-group">
-              <input class="form-control" [placeholder]="!viewMode ? 'job title' : ''" [readonly]="viewMode"
+              <input class="form-control" placeholder="{{ 'jobTitle' | translate }}" [readonly]="viewMode"
                 [(ngModel)]="user.jobTitle" type="text"
                 name="jobTitle">
             </div>
           </div>
         </div>
         <div class="row form-group">
-          <label for="mobile" class="col-2 col-form-label col-form-label-sm">Mobile</label>
+          <label for="mobile" class="col-2 col-form-label col-form-label-sm">{{ 'mobile' | translate }}</label>
           <div class="col-9 d-flex">
             <div class="input-group">
-              <input class="form-control" [placeholder]="!viewMode ? 'user mobile' : ''" [readonly]="viewMode"
+              <input class="form-control" placeholder="{{ 'mobile' | translate }}" [readonly]="viewMode"
                 [(ngModel)]="user.mobile" type="text" name="mobile">
             </div>
           </div>
         </div>
         <div class="row form-group">
-          <label for="email" class="col-2 col-form-label col-form-label-sm">Email</label>
+          <label for="email" class="col-2 col-form-label col-form-label-sm">{{ 'email' | translate }}</label>
           <div class="col-9 d-flex">
             <div class="input-group">
-              <input class="form-control"  [placeholder]="!viewMode ? 'user email' : ''" [readonly]="viewMode"
+              <input class="form-control"  placeholder="{{ 'email' | translate }}" [readonly]="viewMode"
                 [(ngModel)]="user.email" type="text" name="email">
             </div>
           </div>
         </div>
         <div class="row form-group">
-          <label for="birthdate" class="col-2 col-form-label col-form-label-sm">user birthdate</label>
+          <label for="birthdate" class="col-2 col-form-label col-form-label-sm">{{ 'birthdate' | translate }}</label>
           <div class="col-9 d-flex">
             <div [class.input-group]="!viewMode" [class.w-100]="viewMode">
               <div class="input-group-prepend" [class.d-none]="viewMode">
@@ -109,7 +109,7 @@
 
     <div class="bg-transparent card-footer dashed-border-top px-0 pt-4 pb-1" *ngIf="!viewMode">
       <button class="btn btn-primary shadow" (click)="updateProfile()">
-        Update profile
+        {{ 'update' | translate }}
       </button>
     </div>
   </div>

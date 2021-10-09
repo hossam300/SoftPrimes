@@ -1,3 +1,4 @@
+import { LoaderService } from './../loader.service';
 import {Injectable} from '@angular/core';
 import {
   HttpRequest,
@@ -18,17 +19,20 @@ export class InterceptorService implements HttpInterceptor {
   private numberOfRetries = 3;
   private authorizationHeader = 'Authorization';
   private requests: HttpRequest<any>[] = [];
+  private error = false;
 
   constructor(
     private tokenStoreService: TokenStoreService,
     private router: Router,
-    private layoutService: LayoutService
+    private loader: LoaderService,
+    private layout: LayoutService
   ) {
   }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    this.error = false;
     const accessToken = this.tokenStoreService.getRawAuthToken(AuthTokenType.AccessToken);
-    this.layoutService.toggleIsLoading(true);
+    this.loader.addLoader();
     request = request.clone({withCredentials: false});
     if (accessToken) {
       request = request.clone({
@@ -39,14 +43,14 @@ export class InterceptorService implements HttpInterceptor {
       return next.handle(request).pipe(
         retryWhen(errors => errors.pipe(
           mergeMap((error: HttpErrorResponse, retryAttempt: number) => {
+            this.error = true;
             // if in Case UnAuthorize
             if (error.status === 401 || error.status === 403 ) {
               const newRequest = this.getNewAuthRequest(request);
               if (newRequest === null) {
                 this.tokenStoreService.deleteAuthTokens();
                 // remove annotation cardentials
-                sessionStorage.removeItem('_ap');
-                this.layoutService.toggleIsLoading(false);
+                this.loader.removeLoader();
                 return this.router.navigate(['/login']);
               }
             }
@@ -55,7 +59,7 @@ export class InterceptorService implements HttpInterceptor {
               //  `%cHTTP call '${request.method}' ${request.url} failed after ${this.numberOfRetries} retries.`,
               //  `background: #a55656; color: #ffeded; font-weight: bold; padding: 2px 5px;`
               // );
-              this.layoutService.toggleIsLoading(false);
+              this.loader.removeLoader();
               return throwError(error); // no retry
             }
 
@@ -63,10 +67,10 @@ export class InterceptorService implements HttpInterceptor {
               case 400:
               case 404:
               case 500:
-                this.layoutService.toggleIsLoading(false);
+                this.loader.removeLoader();
                 return throwError(error); // no retry
             }
-            this.layoutService.toggleIsLoading(false);
+            this.loader.removeLoader();
             return of(error); // retry
           }),
           delay(this.delayBetweenRetriesMs),
@@ -77,30 +81,33 @@ export class InterceptorService implements HttpInterceptor {
           if (error.status === 401 || error.status === 403) {
             const newRequest = this.getNewAuthRequest(request);
             if (newRequest) {
-              this.layoutService.toggleIsLoading(false);
+              this.loader.removeLoader();
               return next.handle(newRequest);
             }
             // remove annotation cardentials
-            sessionStorage.removeItem('_ap');
-            this.layoutService.toggleIsLoading(false);
+            this.loader.removeLoader();
             this.router.navigate(['/login']);
           }
-          this.layoutService.toggleIsLoading(false);
+          this.loader.removeLoader();
+          this.layout.handleFailMsg(this.requests[0]);
           return throwError(error);
           // return of(error);
         }),
         finalize(() => {
+          if (!this.error) {
+            this.layout.handleSuccessMsg(this.requests[0]);
+          }
           this.requests = this.requests.filter(x => x !== request);
           if (!this.requests.length) {
-            this.layoutService.toggleIsLoading(false);
+            this.loader.removeLoader();
           }
         })
       );
     } else {
       // login page
-      this.layoutService.toggleIsLoading(false);
+      this.loader.removeLoader();
       return next.handle(request).pipe(finalize(() => {
-        this.layoutService.toggleIsLoading(false);
+        this.loader.removeLoader();
       }));
     }
   }

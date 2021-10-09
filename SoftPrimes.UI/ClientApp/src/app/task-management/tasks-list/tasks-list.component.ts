@@ -4,6 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { Sort, TourAgentDTO } from 'src/app/core/_services/swagger/SwaggerClient.service';
 import { TourState, TourTypes } from 'src/app/core/_models/task-management';
 import { Marker } from 'src/app/core/_models/gmap';
+import { LoaderService } from 'src/app/core/_services/loader.service';
 
 @Component({
   selector: 'app-tasks-list',
@@ -31,12 +32,14 @@ export class TasksListComponent implements OnInit {
     tourName: '',
     agentName: ''
   };
+  isArabic = false;
 
   constructor(
-    private taskManagementService: TaskManagementService
+    private taskManagementService: TaskManagementService,
   ) { }
 
   ngOnInit() {
+    this.isArabic = localStorage.getItem('culture') === 'ar' ? true : false;
     this.initTableColumns();
     this.getAll(this.take, this.skip);
     this.getAgentCheckPoints();
@@ -59,8 +62,8 @@ export class TasksListComponent implements OnInit {
     this.options = {
       controller: 'TourAgents',
       columns: [
-        { name: 'tourName', field: 'tourNameEn', sortField: 'tour.tourNameEn',  type: 'tour', sort: 'asc' },
-        { name: 'agentName', field: 'fullNameEn', sortField: 'agent.fullNameEn', type: 'agent', sort: 'asc' },
+        { name: 'tourName', field: this.isArabic ? 'tourNameAr' : 'tourNameEn', sortField: this.isArabic ? 'tour.tourNameAr' : 'tour.tourNameEn',  type: 'tour', sort: 'asc' },
+        { name: 'agentName', field: this.isArabic ? 'fullNameAr' : 'fullNameEn', sortField: this.isArabic ? 'agent.fullNameAr' : 'agent.fullNameEn', type: 'agent', sort: 'asc' },
         { name: 'tourType', field: 'tourType', sortField: 'tourType', type: 'tourType', sort: 'asc' },
         { name: 'scheduleStart', field: 'tourDate', sortField: 'tourDate', type: 'date', sort: 'asc' },
         { name: 'scheduleEnd', field: 'estimatedEndDate', sortField: 'estimatedEndDate', type: 'date', sort: 'asc' },
@@ -71,7 +74,10 @@ export class TasksListComponent implements OnInit {
   }
 
   getAll(take, skip, sort = [], filters = [], sortField?, sortDir?) {
-    this.taskManagementService.getAllTourAgents(take, skip, sort, filters, sortField, sortDir).subscribe(result => {
+    // // this.loader.addLoader();
+    this.taskManagementService.getAllTourAgents(take, skip, sort, filters, sortField, sortDir)
+    .subscribe(result => {
+      // // this.loader.removeLoader();;
       this.toursList = result.data;
       this.count = result.count;
     });

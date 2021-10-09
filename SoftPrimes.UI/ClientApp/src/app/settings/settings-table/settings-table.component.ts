@@ -2,6 +2,7 @@ import { SettingsCrudsService } from './../settings-cruds.service';
 import { Component, EventEmitter, Input, OnInit, Output, OnChanges } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import { LoaderService } from 'src/app/core/_services/loader.service';
 
 export enum AgentType {
   NormalAgent = 1,
@@ -26,20 +27,25 @@ export class SettingsTableComponent {
   activeRow;
   activeCol;
   agentType = AgentType;
+  isArabic = false;
 
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private settingsCrud: SettingsCrudsService,
-    private modalService: NgbModal
-  ) { }
+    private modalService: NgbModal,
+  ) {
+    this.isArabic = localStorage.getItem('culture') === 'ar' ? true : false;
+  }
 
   editRecord(id) {
     this.router.navigate(['edit/' + id], {relativeTo: this.activatedRoute});
   }
 
   deleteRecord(id) {
+    // this.loader.addLoader();
     this.settingsCrud.deleteDTO(this.options.controller, id).subscribe(result => {
+      // this.loader.removeLoader();;
       if (result) {
         this.data = this.data.filter(record => record.id !== id);
       }
@@ -47,7 +53,9 @@ export class SettingsTableComponent {
   }
 
   toggleTemplate(id, active) {
+    // this.loader.addLoader();
     this.settingsCrud.toggleTemplate(id, !active).subscribe(result => {
+      // this.loader.removeLoader();;
       if (result) {
         this.data = this.data.map(x => {
           if (x.id === id) {
@@ -68,7 +76,6 @@ export class SettingsTableComponent {
     this.activeQrCode = rowData.toString();
     this.activeRow = rowData;
     this.activeCol = colName;
-    console.log(this.activeQrCode, 'id is: ');
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {

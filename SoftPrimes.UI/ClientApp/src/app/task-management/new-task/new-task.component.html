@@ -1,55 +1,58 @@
 <app-breadcrumb></app-breadcrumb>
 <div class="d-flex justify-content-between align-items-center mb-4">
   <h1 class="h5">
-    Create new task
+    {{ 'create' | translate }} {{ 'tour' | translate }}
   </h1>
 </div>
 <div class="card shadow">
   <div class="card-body">
     <p class="dashed-border-bottom mb-4 pb-4">
-      Please find the below information
+      {{ 'findeBelowInfo' | translate }}
     </p>
     <div class="row form-group">
-      <label for="taskType" class="col-2 col-form-label col-form-label-sm">Task type</label>
+      <label for="taskType" class="col-2 col-form-label col-form-label-sm">{{ 'tourType' | translate }}</label>
       <div class="col-7 d-flex">
-        <div class="form-check form-check-inline mr-5">
+        <div class="form-check form-check-inline" [ngClass]="isArabic ? ml-5 : mr-5">
           <input name="taskype" class="form-check-input" [(ngModel)]="tour.tourType" id="tour"
             required checked="" type="radio" value="1">
-          <label class="form-check-label" for="tour">Tour</label>
+          <label class="form-check-label" for="tour">{{ 'tour' | translate }}</label>
         </div>
         <div class="form-check form-check-inline">
           <input name="taskype" class="form-check-input" [(ngModel)]="tour.tourType"
             id="monitoring" required type="radio" value="2">
-          <label class="form-check-label" for="monitoring">Monitoring</label>
+          <label class="form-check-label" for="monitoring">{{ 'monitoring' | translate }}</label>
         </div>
       </div>
     </div>
     <div class="row form-group">
-      <label for="templates" class="col-2 col-form-label col-form-label-sm">Templates</label>
+      <label for="templates" class="col-2 col-form-label col-form-label-sm">{{ 'templates' | translate }}</label>
       <div class="col-7 d-flex">
-        <ng-select class="w-100" [items]="templates$ | async" bindLabel="tourNameEn" bindValue="id"
-          placeholder="Choose template" (change)="chooseTemplate($event)">
+        <ng-select class="w-100" [items]="templates$ | async" [bindLabel]="isArabic ? 'tourNameAr' : 'tourNameEn'" bindValue="id"
+          placeholder="{{ 'templates' | translate }}" (change)="chooseTemplate($event)">
         </ng-select>
       </div>
       <!-- <span class="ni ni-bullet-list-67 text-primary border border-primary" data-toggle="modal"
         data-target="#templatesModal"></span> -->
     </div>
     <div class="row form-group">
-      <label for="tourName" class="required col-2 col-form-label col-form-label-sm">Tour name</label>
+      <label for="tourName" class="required col-2 col-form-label col-form-label-sm">{{ 'name' | translate }}</label>
       <div class="col-7 d-flex">
         <input type="text" class="form-control" name="tourName" [(ngModel)]="tour.tourName" id="tourName" maxlength="50"
-          placeholder="tour name">
+          placeholder="{{ 'name' | translate }}">
       </div>
       <span class="align-self-center text-14">
-        <span>{{50 - (tour.tourName)?.length}}</span> digit
+        <span>{{50 - (tour.tourName)?.length}}</span> {{ 'digit' | translate }}
       </span>
     </div>
     <div class="row form-group">
-      <label for="tourDate" class="required col-2 col-form-label col-form-label-sm">Tour date</label>
+      <label for="tourDate" class="required col-2 col-form-label col-form-label-sm">{{ 'date' | translate }}</label>
       <div class="col-7 d-flex">
         <div class="input-group">
           <div class="input-group-prepend">
-            <span class="input-group-text bg-transparent text-14"><em class="fa fa-calendar-o"></em></span>
+            <span class="input-group-text bg-transparent text-14"
+            [ngClass]="isArabic ? 'border-radius-left-none border-left-0 border-right border-radius-right' : ''">
+              <em class="fa fa-calendar-o"></em>
+            </span>
           </div>
           <ngx-date-picker type="text" [(ngModel)]="tour.tourDate" style="width: calc(100% - 38px);"
             name="tourDate" autocomplete="off" placeholder="MM/DD/YYYY"></ngx-date-picker>
@@ -57,11 +60,12 @@
       </div>
     </div>
     <div class="row form-group">
-      <label for="location" class="required col-2 col-form-label col-form-label-sm">Point location</label>
+      <label for="location" class="required col-2 col-form-label col-form-label-sm">{{ 'location' | translate }}</label>
       <div class="col-7 d-flex">
         <div class="input-group">
-          <ng-select class="w-100" [items]="checkPoints$ | async" bindLabel="checkPointNameEn"
-            (change)="checkPointsChanged($event)" [(ngModel)]="checkPoints" [multiple]="true" placeholder="location">
+          <ng-select class="w-100" [items]="checkPoints$ | async" [bindLabel]="isArabic ? 'checkPointNameAr' : 'checkPointNameEn'"
+            (change)="checkPointsChanged($event)" [(ngModel)]="checkPoints"
+            [multiple]="true" placeholder="{{ 'location' | translate }}">
           </ng-select>
         </div>
       </div>
@@ -76,7 +80,9 @@
             <div class="d-flex justify-content-between">
               <div class="d-flex mb-3">
                 <span class="fa fa-map-marker"></span>
-                <h3 class="h6 ml-2">{{checkpoint.checkPointNameEn}}</h3>
+                <h3 class="h6 ml-2">{{
+                  isArabic ? checkpoint.checkPointNameAr : checkpoint.checkPointNameEn
+                }}</h3>
               </div>
               <span class="text-danger fa fa-trash-o cursor-pointer text-16"
                 (click)="deleteCheckpoint(checkpoint.id)"></span>
@@ -84,27 +90,29 @@
             <div class="d-flex">
               <div class="input-group mr-3">
                 <div class="input-group-prepend">
-                  <span class="input-group-text bg-transparent text-14">
+                  <span class="input-group-text bg-transparent text-14"
+                    [ngClass]="isArabic ? 'border-radius-left-none border-left-0 border-right border-radius-right' : ''">
                     <em class="fa fa-calendar-o"></em>
-                    <span class="ml-1">start</span>
+                    <span class="mx-1">{{ 'start' | translate }}</span>
                   </span>
                 </div>
                 <ngx-datetime-picker [(selectedDateTime)]="checkpoint.startDate" name="startDate"
                   [doNotCloseOnDateSet]="true"
-                  (change)="dateTimeChanged($event)" placeholder="choose start time">
+                  (change)="dateTimeChanged($event)" placeholder="{{ 'startTime' | translate }}">
                 </ngx-datetime-picker>
               </div>
 
               <div class="input-group">
                 <div class="input-group-prepend">
-                  <span class="input-group-text bg-transparent text-14">
+                  <span class="input-group-text bg-transparent text-14"
+                    [ngClass]="isArabic ? 'border-radius-left-none border-left-0 border-right border-radius-right' : ''">
                     <em class="fa fa-calendar-o"></em>
-                    <span class="ml-1">end</span>
+                    <span class="mx-1">{{ 'end' | translate }}</span>
                   </span>
                 </div>
                 <ngx-datetime-picker [(selectedDateTime)]="checkpoint.endDate" name="endDate"
                   [doNotCloseOnDateSet]="true"
-                  (change)="dateTimeChanged($event)" placeholder="choose start time">
+                  (change)="dateTimeChanged($event)" placeholder="{{ 'endTime' | translate }}">
                 </ngx-datetime-picker>
               </div>
             </div>
@@ -113,21 +121,21 @@
       </div>
     </div>
     <div class="row form-group">
-      <label for="tourAgent" class="required col-2 col-form-label col-form-label-sm">Tour agent</label>
+      <label for="tourAgent" class="required col-2 col-form-label col-form-label-sm">{{ 'agent' | translate }}</label>
       <div class="col-7 d-flex">
         <div class="input-group">
-          <ng-select class="w-100" [items]="agents$ | async" bindLabel="fullNameEn" bindValue="id"
-            [(ngModel)]="tour.agentId" placeholder="choose agent">
+          <ng-select class="w-100" [items]="agents$ | async" [bindLabel]="isArabic ? 'fullNameAr' : 'fullNameEn'" bindValue="id"
+            [(ngModel)]="tour.agentId" placeholder="{{ 'agent' | translate }}">
           </ng-select>
         </div>
       </div>
     </div>
     <div class="row form-group">
-      <label for="captureLocation" class="col-2 col-form-label col-form-label-sm">Capture location</label>
+      <label for="captureLocation" class="col-2 col-form-label col-form-label-sm">{{ 'captureLocation' | translate }}</label>
       <div class="col-7 d-flex">
         <div class="input-group">
-          <ng-select class="w-100" id="captureLocation" [items]="capturesLookup" bindLabel="agentNameEn" bindValue="id"
-            [(ngModel)]="tour.captureLocation" placeholder="choose timelapse">
+          <ng-select class="w-100" id="captureLocation" [items]="capturesLookup" bindValue="id"
+            [(ngModel)]="tour.captureLocation" placeholder="{{ 'captureLocation' | translate }}">
             <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
               Every {{item}} mins
             </ng-template>
@@ -140,7 +148,7 @@
     </div>
 
     <div class="row form-group">
-      <label for="taskType" class="col-2 col-form-label col-form-label-sm">Save as template</label>
+      <label for="taskType" class="col-2 col-form-label col-form-label-sm">{{ 'saveAsTemplate' | translate }}</label>
       <div class="col-7 d-flex">
         <div class="custom-control custom-switch ml-2">
           <input type="checkbox" class="custom-control-input" [(ngModel)]="tour.isTemplate" id="saveTemplate">
@@ -150,21 +158,21 @@
     </div>
 
     <div class="row form-group">
-      <label for="taskType" class="col-2 col-form-label col-form-label-sm">Save as template</label>
+      <label for="taskType" class="col-2 col-form-label col-form-label-sm">{{ 'comment' | translate }}</label>
       <div class="col-7 d-flex">
         <div class="form-check form-check-inline flex-grow-1 mr-0">
           <textarea class="form-control" rows="3" [(ngModel)]="tour.adminComment"
-            placeholder="Write your comment"></textarea>
+            placeholder="{{ 'comment' | translate }}"></textarea>
         </div>
       </div>
     </div>
 
     <div class="bg-transparent card-footer dashed-border-top px-0 pt-4 pb-1">
       <button class="btn btn-primary shadow" *ngIf="createMode" (click)="assignTask()">
-        Assign
+        {{ 'assign' | translate }}
       </button>
       <button class="btn btn-primary shadow" *ngIf="!createMode" (click)="updateTask()">
-        Update
+        {{ 'update' | translate }}
       </button>
     </div>
   </div>
@@ -206,7 +214,7 @@
       <div class="modal-header">
         <h5 class="modal-title h6 d-flex" id="locationModalTitle">
           <span class="px-3 d-flex flex-column">
-            Please view the location points on the below map
+            {{ 'viewLocationsOnMap' | translate }}
           </span>
         </h5>
       </div>
@@ -215,34 +223,8 @@
       </div>
       <div class="modal-footer">
         <div class="d-flex justify-content-between w-100">
-          <!-- <div class="d-flex">
-            <div class="input-group mr-3">
-              <div class="input-group-prepend">
-                <span class="input-group-text bg-transparent text-14">
-                  <em class="fa fa-clock-o mr-1"></em> Start
-                </span>
-              </div>
-              <select class="border-left-0 custom-select shadow-none pl-0" name="startTime" id="startTime"
-                [(ngModel)]="startTime">
-                <option selected disabled value="">Choose start time</option>
-                <option>03.00 PM</option>
-              </select>
-            </div>
-            <div class="input-group">
-              <div class="input-group-prepend">
-                <span class="input-group-text bg-transparent text-14">
-                  <em class="fa fa-clock-o mr-1"></em> End
-                </span>
-              </div>
-              <select class="border-left-0 custom-select shadow-none pl-0" name="endTime" id="endTime"
-                [(ngModel)]="endTime">
-                <option selected disabled value="">Choose end time</option>
-                <option>03.30 PM</option>
-              </select>
-            </div>
-          </div> -->
           <div>
-            <button type="button" class="btn btn-light" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-light" data-dismiss="modal">{{ 'cancel' | translate }}</button>
           </div>
         </div>
       </div>

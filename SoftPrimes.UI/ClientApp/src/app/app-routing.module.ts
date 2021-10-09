@@ -9,7 +9,8 @@ import { LoginComponent } from './auth/login/login.component';
 
 
 const routes: Routes = [
-  { path: '', component: DashboardComponent, canActivate: [AuthGuard], pathMatch: 'full' },
+  { path: '', component: DashboardComponent, canActivate: [AuthGuard],
+    data: {'breadcrumb': []}, pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'profile', component: ProfileComponent,
     data: {'breadcrumb': ['profile']},

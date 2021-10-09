@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { LoaderService } from 'src/app/core/_services/loader.service';
 import { SettingsCrudsService } from '../settings-cruds.service';
 
 @Component({
@@ -14,12 +15,14 @@ export class RolesListComponent implements OnInit {
   controller = '';
   count: number;
 
-  constructor(private settingsCrud: SettingsCrudsService) {
+  constructor(
+    private settingsCrud: SettingsCrudsService,
+  ) {
     this.options = {
       controller: 'Roles',
       columns: [
-        { name: 'roleNameAr', field: 'roleNameAr', searchable: true, operator: 'contains' },
-        { name: 'roleNameEn', field: 'roleNameEn', searchable: true, operator: 'contains' },
+        { name: 'nameAr', field: 'roleNameAr', searchable: true, operator: 'contains' },
+        { name: 'nameEn', field: 'roleNameEn', searchable: true, operator: 'contains' },
         { name: 'permissions', field: 'permissions', type: 'arr', searchable: true, operator: 'contains' },
         { name: '', field: '' },
       ]
@@ -32,7 +35,9 @@ export class RolesListComponent implements OnInit {
   }
 
   getRolesList(controller, take, skip) {
+    // this.loader.addLoader();
     this.settingsCrud.getAll(controller, take, skip).subscribe(result => {
+      // this.loader.removeLoader();;
       this.rolesList = result.data;
       this.count = result.count;
     });

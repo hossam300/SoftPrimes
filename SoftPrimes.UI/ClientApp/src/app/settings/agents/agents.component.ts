@@ -7,6 +7,7 @@ import { AgentDTO } from 'src/app/core/_services/swagger/SwaggerClient.service';
 import { SettingsCrudsService } from '../settings-cruds.service';
 import { catchError, debounceTime, distinctUntilChanged, switchMap, tap } from 'rxjs/operators';
 import { fixDateTimePickers } from 'src/app/core/_utils/date';
+import { LoaderService } from 'src/app/core/_services/loader.service';
 
 export enum AgentType {
   NormalAgent = 1,
@@ -47,7 +48,7 @@ export class AgentsComponent implements OnInit, AfterViewInit {
   constructor(
     private settingsCrud: SettingsCrudsService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
   ) {
   }
 
@@ -79,8 +80,10 @@ export class AgentsComponent implements OnInit, AfterViewInit {
   }
 
   updateAgent() {
+    // this.loader.addLoader();
     this.agent.roleId = this.roleId;
     this.settingsCrud.updateAgent(this.roleId, this.agent).subscribe(result => {
+      // this.loader.removeLoader();;
       if (result) {
         this.router.navigate(['/settings/agents']);
       }
@@ -88,8 +91,10 @@ export class AgentsComponent implements OnInit, AfterViewInit {
   }
 
   insertAgent() {
+    // this.loader.addLoader();
     this.agent.roleId = this.roleId;
     this.settingsCrud.insertAgent(this.roleId, this.agent).subscribe(res => {
+      // this.loader.removeLoader();;
       if (res) {
         this.router.navigate(['/settings/agents']);
       }

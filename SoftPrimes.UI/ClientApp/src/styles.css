@@ -7,6 +7,10 @@ body {
   font-family: "Source Sans Pro", Verdana, Geneva, Tahoma, sans-serif;
 }
 
+ul {
+  padding-left: 0;
+}
+
 img {
   max-width: 100%;
 }
@@ -169,10 +173,93 @@ ngb-datepicker .btn-light {
   border-bottom-left-radius: 0px !important;
 }
 
+.border-radius-right-none {
+  border-top-right-radius: 0px !important;
+  border-bottom-right-radius: 0px !important;
+}
+
+.border-radius-right {
+  border-top-right-radius: .25rem !important;
+  border-bottom-right-radius: .25rem !important;
+}
+
+.border-radius-left {
+  border-top-left-radius: .25rem !important;
+  border-bottom-left-radius: .25rem !important;
+}
+
 .input-border-left {
   background-color: #0f0;
   border-left: none !important;
   border-left-width: 0 !important;
   border-top-left-radius: 0px !important;
   border-bottom-left-radius: 0px !important;
+}
+
+.loading-container {
+  top: 0;
+  height: 100%;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  z-index: 999999;
+  left: 0;
+  right: 0;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.8);
+}
+
+@keyframes rotate {
+  from {transform: rotate(0deg);}
+  to {transform: rotate(-360deg);}
+}
+
+.et-spinner {
+  transition-property: transform;
+  animation-name: rotate;
+  animation-duration: 1.2s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+
+
+/* RTL Styles */
+
+body.rtl {
+  direction: rtl;
+  text-align: right;
+}
+
+.rtl ul {
+  padding-right: 0;
+}
+
+.rtl .breadcrumb-item+.breadcrumb-item {
+  padding-right: 0.5em;
+}
+
+.rtl .fa-angle-right {
+  transform: rotate(180deg);
+}
+
+.rtl .dropdown-menu {
+  text-align: right;
+}
+
+.rtl .calendar--previous-and-next {
+  left: 0;
+}
+
+.rtl .ng-select .ng-value-container {
+  padding-right: 7px;
+}
+
+.rtl .ng-select .ng-placeholder {
+  padding-right: 3px;
+}
+
+.rtl .form-check-inline .form-check-input {
+  margin-left: .3125rem;
+  margin-right: 0px;
 }

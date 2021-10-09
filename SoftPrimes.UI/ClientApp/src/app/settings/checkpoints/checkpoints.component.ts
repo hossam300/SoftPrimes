@@ -4,6 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { SettingsCrudsService } from '../settings-cruds.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { LoaderService } from 'src/app/core/_services/loader.service';
 
 @Component({
   selector: 'app-checkpoints',
@@ -21,7 +22,7 @@ export class CheckpointsComponent implements OnInit {
   constructor(
     private settingsCrud: SettingsCrudsService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
   ) {
   }
 
@@ -56,10 +57,9 @@ export class CheckpointsComponent implements OnInit {
   }
 
   updateCheckPoint() {
-    if (!this.checkPoint.locationText) {
-      this.checkPoint.locationText = this.checkPoint.checkPointNameEn;
-    }
+    // this.loader.addLoader();
     this.settingsCrud.updateDTO(this.controller, [this.checkPoint]).subscribe(result => {
+      // this.loader.removeLoader();;
       if (result) {
         this.router.navigate(['/settings/checkpoints']);
       }
@@ -67,10 +67,9 @@ export class CheckpointsComponent implements OnInit {
   }
 
   insertCheckPoint() {
-    if (!this.checkPoint.locationText) {
-      this.checkPoint.locationText = this.checkPoint.checkPointNameEn;
-    }
+    // this.loader.addLoader();
     this.settingsCrud.insertDTO(this.controller, [this.checkPoint]).subscribe(result => {
+      // this.loader.removeLoader();;
       if (result) {
         this.router.navigate(['/settings/checkpoints']);
       }

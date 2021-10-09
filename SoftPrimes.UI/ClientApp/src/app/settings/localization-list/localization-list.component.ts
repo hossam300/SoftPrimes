@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { LoaderService } from 'src/app/core/_services/loader.service';
 import { SettingsCrudsService } from '../settings-cruds.service';
 
 @Component({
@@ -14,13 +15,15 @@ export class LocalizationListComponent implements OnInit {
   controller = '';
   count: number;
 
-  constructor(private settingsCrud: SettingsCrudsService) {
+  constructor(
+    private settingsCrud: SettingsCrudsService,
+  ) {
     this.options = {
       controller: 'Localizations',
       columns: [
-        { name: 'valueAr', field: 'valueAr', searchable: true, operator: 'contains' },
-        { name: 'valueEn', field: 'valueEn', searchable: true, operator: 'contains' },
-        { name: 'key', field: 'key', searchable: true, operator: 'contains' },
+        { name: 'nameAr', field: 'valueAr', searchable: true, operator: 'contains' },
+        { name: 'nameEn', field: 'valueEn', searchable: true, operator: 'contains' },
+        { name: 'localizationKey', field: 'key', searchable: true, operator: 'contains' },
         { name: '', field: '' },
       ]
     };
@@ -32,7 +35,9 @@ export class LocalizationListComponent implements OnInit {
   }
 
   getLocalizationList(controller, take, skip) {
+    // this.loader.addLoader();
     this.settingsCrud.getAll(controller, take, skip).subscribe(result => {
+      // this.loader.removeLoader();;
       this.localizationList = result.data;
       this.count = result.count;
     });

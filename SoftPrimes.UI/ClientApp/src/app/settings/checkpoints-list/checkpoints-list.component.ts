@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { LoaderService } from 'src/app/core/_services/loader.service';
 import { SettingsCrudsService } from '../settings-cruds.service';
 
 @Component({
@@ -14,12 +15,14 @@ export class CheckpointsListComponent implements OnInit {
   controller = '';
   count: number;
 
-  constructor(private settingsCrud: SettingsCrudsService) {
+  constructor(
+    private settingsCrud: SettingsCrudsService,
+  ) {
     this.options = {
       controller: 'CheckPoints',
       columns: [
-        { name: 'CheckPointNameAr', field: 'checkPointNameAr', searchable: true, operator: 'contains' },
-        { name: 'CheckPointNameEn', field: 'checkPointNameEn', searchable: true, operator: 'contains' },
+        { name: 'nameAr', field: 'checkPointNameAr', searchable: true, operator: 'contains' },
+        { name: 'nameEn', field: 'checkPointNameEn', searchable: true, operator: 'contains' },
         { name: 'CheckPointNamelat', field: 'lat', searchable: true, operator: 'contains' },
         { name: 'CheckPointNamelong', field: 'long', searchable: true, operator: 'contains' },
         { name: 'LocationText', field: 'locationText', searchable: true, operator: 'contains' },
@@ -35,7 +38,9 @@ export class CheckpointsListComponent implements OnInit {
   }
 
   getCheckpointsList(controller, take, skip) {
+    // this.loader.addLoader();
     this.settingsCrud.getAll(controller, take, skip).subscribe(result => {
+      // this.loader.removeLoader();;
       this.checkpointsList = result.data;
       this.count = result.count;
     });

@@ -12,6 +12,7 @@ import { AgmOverlays } from 'agm-overlays';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { QrCodeModule } from 'ng-qrcode';
 import { DateTimePickerModule} from 'ngx-datetime-picker';
+import { TranslateModule } from '@ngx-translate/core';
 
 
 @NgModule({
@@ -28,6 +29,7 @@ import { DateTimePickerModule} from 'ngx-datetime-picker';
       // apiKey: 'AIzaSyAFRKYD119NSdHb39E4nkA3iXjoKtB0oks'
     }),
     AvatarModule,
+    TranslateModule.forChild(),
     NgSelectModule,
     QrCodeModule,
     DateTimePickerModule
@@ -42,7 +44,8 @@ import { DateTimePickerModule} from 'ngx-datetime-picker';
     AvatarModule,
     NgSelectModule,
     QrCodeModule,
-    DateTimePickerModule
+    DateTimePickerModule,
+    TranslateModule
   ]
 })
 export class SharedModule { }

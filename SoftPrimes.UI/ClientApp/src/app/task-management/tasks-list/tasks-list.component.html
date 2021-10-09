@@ -1,10 +1,10 @@
 <app-breadcrumb></app-breadcrumb>
 <div class="d-flex justify-content-between align-items-center mb-4 pb-3">
   <h1 class="h5">
-    Task management
+    {{ 'taskManagement' | translate }}
   </h1>
   <a class="btn btn-primary" [routerLink]="['add']">
-    Assign new task
+    {{ 'create' | translate }} {{ 'tour' | translate }}
   </a>
 </div>
 <app-gmap [viewMode]="true" [markers]="markers"></app-gmap>
@@ -25,8 +25,8 @@
         <div class="card col-12 filter p-0 shadow-lg-5">
           <div class="card-header text-center">
             <span class="text-primary d-block text-uppercase">
-              <strong>Filters</strong>
-              <strong class="text-secondary-blue d-block mt-1">Active Filters (0)</strong>
+              <strong>{{ 'filters' | translate }}</strong>
+              <strong class="text-secondary-blue d-block mt-1">{{ 'activeFilters' | translate }} (0)</strong>
             </span>
           </div>
           <div class="filter-item">
@@ -35,8 +35,8 @@
                 <div class="row">
                   <div class="col-12 col-md-4">
                     <div class="form-group">
-                      <label for="tourName">Tour name</label>
-                      <input type="text" class="form-control" placeholder="tour name"
+                      <label for="tourName">{{ 'tourName' | translate }}</label>
+                      <input type="text" class="form-control" placeholder="{{ 'tourName' | translate }}"
                       [(ngModel)]="tourName"
                         (change)="buildFilter($event, 'tourName')" id="tourName" />
                     </div>
@@ -44,19 +44,19 @@
 
                   <div class="col-12 col-md-4">
                     <div class="form-group">
-                      <label for="agentName">Agent name</label>
-                      <input type="text" class="form-control" placeholder="agent name"
-                      [(ngModel)]="agentName"
+                      <label for="agentName">{{ 'agentName' | translate }}</label>
+                      <input type="text" class="form-control" placeholder="{{ 'agentName' | translate }}"
+                        [(ngModel)]="agentName"
                         (change)="buildFilter($event, 'agentName')" id="agentName" />
                     </div>
                   </div>
 
                   <div class="col-12 col-md-4">
                     <div class="form-group">
-                      <label for="tourTypes">Tour types</label>
+                      <label for="tourTypes">{{ 'tourTypes' | translate }}</label>
                       <ng-select class="w-100" [items]="tourTypes" bindLabel="value"
                         [(ngModel)]="filters.tourType" id="tourTypes"
-                        [multiple]="false" placeholder="choose tour type">
+                        [multiple]="false" placeholder="{{ 'tourTypes' | translate }}">
                         <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
                           {{types[item.value]}}
                         </ng-template>
@@ -69,10 +69,10 @@
 
                   <div class="col-12 col-md-4">
                     <div class="form-group">
-                      <label for="tourStates">Tour state</label>
+                      <label for="tourStates">{{ 'tourState' | translate }}</label>
                       <ng-select class="w-100" [items]="tourStates" bindLabel="value"
                         [(ngModel)]="filters.tourState" id="tourStates"
-                        [multiple]="true" placeholder="choose tour state">
+                        [multiple]="true" placeholder="{{ 'tourState' | translate }}">
                         <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
                           {{states[item.value]}}
                         </ng-template>
@@ -89,10 +89,10 @@
           <div class="card-footer">
             <div class="row justify-content-end">
               <button type="button" class="btn btn-md btn-outline-danger" (click)='resetFilters()'>
-                Reset
+                {{ 'reset' | translate }}
               </button>
               <button type="button" class="btn btn-md btn-primary" (click)="applyFilters()">
-                Apply
+                {{ 'apply' | translate }}
               </button>
             </div>
           </div>

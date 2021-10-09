@@ -1,7 +1,7 @@
 <table class="table bg-white mb-5">
   <thead>
     <tr>
-      <th scope="col" *ngFor="let column of options.columns">{{column.name}}</th>
+      <th scope="col" *ngFor="let column of options.columns">{{column.name | translate}}</th>
     </tr>
   </thead>
   <tbody>
@@ -19,14 +19,14 @@
             <span class="fa fa-ellipsis-v"></span>
           </button>
           <div class="dropdown-menu" aria-labelledby="multiDropdownMenu" *ngIf="col.type !== 'templates'">
-            <a class="dropdown-item" (click)="editRecord(row?.id)">Edit</a>
-            <a class="dropdown-item text-danger" (click)="deleteRecord(row?.id)">Delete</a>
+            <a class="dropdown-item" (click)="editRecord(row?.id)">{{ 'edit' | translate }}</a>
+            <a class="dropdown-item text-danger" (click)="deleteRecord(row?.id)">{{ 'delete' | translate }}</a>
           </div>
           <div class="dropdown-menu" aria-labelledby="multiDropdownMenu" *ngIf="col.type === 'templates'">
             <a class="dropdown-item text-danger" *ngIf="row?.active"
-              (click)="toggleTemplate(row.id, row.active)">Deactivate</a>
+              (click)="toggleTemplate(row.id, row.active)">{{ 'deactivate' | translate }}</a>
             <a class="dropdown-item" *ngIf="!row?.active"
-              (click)="toggleTemplate(row.id, row.active)">Activate</a>
+              (click)="toggleTemplate(row.id, row.active)">{{ 'activate' | translate }}</a>
           </div>
         </div>
         <span *ngIf="!col.field && col.name" class="fa fa-qrcode cursor-pointer text-20"
@@ -49,9 +49,9 @@
         <span class="fa fa-pencil-square-o"></span>
       </span>
       <span class="px-3 d-flex flex-column">
-        You can print the below qrCode
+        {{ 'printBelowBarcode' | translate }}
         <span class="text-secondary">
-          The below qrCode can help you to save time.
+          {{ 'belowBarcodeHelpYouSaveTime' | translate }}
         </span>
       </span>
     </h5>
@@ -63,8 +63,8 @@
     </div>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-light" (click)="modal.close('close')">Cancel</button>
-    <button type="button" class="btn btn-primary" (click)="printDiv('qrCode')">Print</button>
+    <button type="button" class="btn btn-light" (click)="modal.close('close')">{{ 'cancel' | translate }}</button>
+    <button type="button" class="btn btn-primary" (click)="printDiv('qrCode')">{{ 'print' | translate }}</button>
   </div>
 </ng-template>
 
@@ -76,9 +76,9 @@
         <span class="fa fa-pencil-square-o"></span>
       </span>
       <span class="px-3 d-flex flex-column">
-        You can view the below data
+        {{ 'viewBelowData' | translate }}
         <span class="text-secondary">
-          The below data can help you to save time.
+          {{ 'belowDataHelpYouSaveTime' | translate }}
         </span>
       </span>
     </h5>
@@ -86,11 +86,11 @@
   <div class="modal-body">
     <div>
       <span *ngFor="let item of activeRow[activeCol]" class="badge badge-primary mx-2 text-14">
-        {{item.permission.permissionNameAr}}
+        {{isArabic ? item.permission.permissionNameAr : item.permission.permissionNameEn}}
       </span>
     </div>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-light" (click)="modal.close('close')">Cancel</button>
+    <button type="button" class="btn btn-light" (click)="modal.close('close')">{{ 'cancel' | translate }}</button>
   </div>
 </ng-template>

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { LoaderService } from 'src/app/core/_services/loader.service';
 import { SettingsCrudsService } from '../settings-cruds.service';
 
 @Component({
@@ -14,12 +15,14 @@ export class AgentsListComponent implements OnInit {
   controller = '';
   count: number;
 
-  constructor(private settingsCrud: SettingsCrudsService) {
+  constructor(
+    private settingsCrud: SettingsCrudsService,
+  ) {
     this.options = {
       controller: 'Agents',
       columns: [
-        { name: 'fullNameEn', field: 'fullNameEn', searchable: true, operator: 'contains' },
-        { name: 'fullNameAr', field: 'fullNameAr', searchable: true, operator: 'contains' },
+        { name: 'nameEn', field: 'fullNameEn', searchable: true, operator: 'contains' },
+        { name: 'nameAr', field: 'fullNameAr', searchable: true, operator: 'contains' },
         { name: 'email', field: 'email', searchable: true, operator: 'contains' },
         { name: 'jobTitle', field: 'jobTitle', searchable: true, operator: 'contains' },
         { name: 'agentType', field: 'agentType', type: 'agentType', searchable: true, operator: 'contains' },
@@ -34,7 +37,9 @@ export class AgentsListComponent implements OnInit {
   }
 
   getAgentsList(controller, take, skip) {
+    // this.loader.addLoader();
     this.settingsCrud.getAll(controller, take, skip).subscribe(result => {
+      // this.loader.removeLoader();;
       this.agentsList = result.data;
       this.count = result.count;
     });

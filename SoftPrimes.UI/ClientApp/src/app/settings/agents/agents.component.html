@@ -1,120 +1,120 @@
 <app-breadcrumb></app-breadcrumb>
 <div class="d-flex justify-content-between align-items-center mb-4">
   <h1 class="h5">
-    Create new agent
+    {{ 'create' | translate }} {{ 'agent' | translate }}
   </h1>
 </div>
 <div class="card shadow">
   <div class="card-body" *ngIf="agent">
 
     <p class="dashed-border-bottom mb-4 pb-4">
-      Please find the below information
+      {{ 'findeBelowInfo' | translate }}
     </p>
     <div class="row form-group">
-      <label for="fullNameAr" class="col-2 col-form-label col-form-label-sm">Full name Ar</label>
+      <label for="fullNameAr" class="col-2 col-form-label col-form-label-sm">{{ 'nameAr' | translate }}</label>
       <div class="col-7 d-flex">
         <div class="input-group">
-          <input class="form-control" placeholder="Full name Ar"
+          <input class="form-control" placeholder="{{ 'nameAr' | translate }}"
             [(ngModel)]="agent.fullNameAr" type="text" name="fullNameAr">
         </div>
       </div>
     </div>
     <div class="row form-group">
-      <label for="fullNameEn" class="col-2 col-form-label col-form-label-sm">Full name En</label>
+      <label for="fullNameEn" class="col-2 col-form-label col-form-label-sm">{{ 'nameEn' | translate }}</label>
       <div class="col-7 d-flex">
         <div class="input-group">
-          <input class="form-control" placeholder="Full name En"
+          <input class="form-control" placeholder="{{ 'nameEn' | translate }}"
             [(ngModel)]="agent.fullNameEn" type="text" name="fullNameEn">
         </div>
       </div>
     </div>
     <div class="row form-group">
-      <label for="username" class="col-2 col-form-label col-form-label-sm">Username</label>
+      <label for="username" class="col-2 col-form-label col-form-label-sm">{{ 'username' | translate }}</label>
       <div class="col-7 d-flex">
         <div class="input-group">
-          <input class="form-control" placeholder="Username"
+          <input class="form-control" placeholder="{{ 'username' | translate }}"
             [(ngModel)]="agent.userName" type="text" name="username">
         </div>
       </div>
     </div>
     <div class="row form-group" *ngIf="createMode">
-      <label for="password" class="col-2 col-form-label col-form-label-sm">Password</label>
+      <label for="password" class="col-2 col-form-label col-form-label-sm">{{ 'password' | translate }}</label>
       <div class="col-7 d-flex">
         <div class="input-group">
-          <input class="form-control" placeholder="Password"
+          <input class="form-control" placeholder="{{ 'password' | translate }}"
             [(ngModel)]="agent.password" type="password" name="password">
         </div>
       </div>
     </div>
     <div class="row form-group">
-      <label for="jobTitle" class="col-2 col-form-label col-form-label-sm">JobTitle</label>
+      <label for="jobTitle" class="col-2 col-form-label col-form-label-sm">{{ 'jobTitle' | translate }}</label>
       <div class="col-7 d-flex">
         <div class="input-group">
-          <input class="form-control" placeholder="JobTitle"
+          <input class="form-control" placeholder="{{ 'jobTitle' | translate }}"
             [(ngModel)]="agent.jobTitle" type="text" name="jobTitle">
         </div>
       </div>
     </div>
     <div class="row form-group">
-      <label for="mobile" class="col-2 col-form-label col-form-label-sm">Mobile</label>
+      <label for="mobile" class="col-2 col-form-label col-form-label-sm">{{ 'mobile' | translate }}</label>
       <div class="col-7 d-flex">
         <div class="input-group">
-          <input class="form-control" placeholder="agent mobile"
+          <input class="form-control" placeholder="{{ 'mobile' | translate }}"
             [(ngModel)]="agent.mobile" type="text" name="mobile">
         </div>
       </div>
     </div>
     <div class="row form-group">
-      <label for="email" class="required col-2 col-form-label col-form-label-sm">Email</label>
+      <label for="email" class="required col-2 col-form-label col-form-label-sm">{{ 'email' | translate }}</label>
       <div class="col-7 d-flex">
         <div class="input-group">
-          <input class="form-control" placeholder="agent email"
+          <input class="form-control" placeholder="{{ 'email' | translate }}"
             [(ngModel)]="agent.email" type="text" name="email">
         </div>
       </div>
     </div>
     <div class="row form-group">
-      <label for="roles" class="required col-2 col-form-label col-form-label-sm">Roles</label>
+      <label for="roles" class="required col-2 col-form-label col-form-label-sm">{{ 'roles' | translate }}</label>
       <div class="col-7 d-flex">
         <div class="input-group">
           <ng-select class="w-100" [items]="roles$ | async" bindLabel="roleNameEn"
             [(ngModel)]="roleId" bindValue="id"
             [loading]="rolesLoading" [typeahead]="rolesInput$"
-            placeholder="choose a role">
+            placeholder="{{ 'roles' | translate }}">
           </ng-select>
         </div>
       </div>
     </div>
     <div class="row form-group">
-      <label for="agents" class="required col-2 col-form-label col-form-label-sm">Supervisor</label>
+      <label for="agents" class="required col-2 col-form-label col-form-label-sm">{{ 'supervisor' | translate }}</label>
       <div class="col-7 d-flex">
         <div class="input-group">
           <ng-select class="w-100" [items]="agents$ | async" bindLabel="fullNameEn"
             [(ngModel)]="agent.supervisorId" bindValue="id"
             [loading]="agentsLoading" [typeahead]="agentsInput$"
-            placeholder="choose a supervisor">
+            placeholder="{{ 'supervisor' | translate }}">
           </ng-select>
         </div>
       </div>
     </div>
     <div class="row form-group">
-      <label for="company" class="required col-2 col-form-label col-form-label-sm">Company</label>
+      <label for="company" class="required col-2 col-form-label col-form-label-sm">{{ 'company' | translate }}</label>
       <div class="col-7 d-flex">
         <div class="input-group">
           <ng-select class="w-100" [items]="company$ | async" bindLabel="companyNameEn"
             [(ngModel)]="agent.companyId" bindValue="id"
             [loading]="companyLoading" [typeahead]="companyInput$"
-            placeholder="choose company">
+            placeholder="{{ 'company' | translate }}">
           </ng-select>
         </div>
       </div>
     </div>
     <div class="row form-group">
-      <label for="agentType" class="required col-2 col-form-label col-form-label-sm">agent agentType</label>
+      <label for="agentType" class="required col-2 col-form-label col-form-label-sm">{{ 'agentType' | translate }}</label>
       <div class="col-7 d-flex">
         <div class="input-group">
           <ng-select class="w-100" [items]="agentTypes"
-            [(ngModel)]="agent.agentType" placeholder="choose agent type">
+            [(ngModel)]="agent.agentType" placeholder="{{ 'agentType' | translate }}">
             <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
               {{agentType[item]}}
             </ng-template>
@@ -126,7 +126,7 @@
       </div>
     </div>
     <div class="row form-group">
-      <label for="birthdate" class="required col-2 col-form-label col-form-label-sm">Agent birthdate</label>
+      <label for="birthdate" class="required col-2 col-form-label col-form-label-sm">{{ 'birthdate' | translate }}</label>
       <div class="col-7 d-flex">
         <div class="input-group">
           <div class="input-group-prepend">
@@ -140,10 +140,10 @@
 
     <div class="bg-transparent card-footer dashed-border-top px-0 pt-4 pb-1">
       <button class="btn btn-primary shadow" [disabled]="!agent.userName" *ngIf="createMode" (click)="insertAgent()">
-        Create
+        {{ 'create' | translate }}
       </button>
       <button class="btn btn-primary shadow" *ngIf="!createMode" (click)="updateAgent()">
-        Update
+        {{ 'update' | translate }}
       </button>
     </div>
   </div>

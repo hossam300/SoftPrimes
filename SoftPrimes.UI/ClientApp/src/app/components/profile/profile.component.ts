@@ -4,6 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { AgentDetailsDTO, AuthTicketDTO } from 'src/app/core/_services/swagger/SwaggerClient.service';
 import { fixDateTimePickers } from 'src/app/core/_utils/date';
+import { LoaderService } from 'src/app/core/_services/loader.service';
 
 @Component({
   selector: 'app-profile',
@@ -19,7 +20,7 @@ export class ProfileComponent implements OnInit {
 
   constructor(
     private settingsCrud: SettingsCrudsService,
-    private auth: AuthService
+    private auth: AuthService,
   ) {
     this.user = JSON.parse(localStorage.getItem('user'));
   }
@@ -62,8 +63,9 @@ export class ProfileComponent implements OnInit {
       companyId: this.user.companyId,
       isTempPassword: false,
     });
-    console.log(this.roleId, user, 'user and roleId');
+    // this.loader.addLoader();
     this.settingsCrud.updateAgent(this.roleId || 1, user).subscribe(res => {
+      // this.loader.removeLoader();;
       if (res) {
         this.viewMode = true;
         const currentUser = new AuthTicketDTO(this.user);
@@ -78,7 +80,6 @@ export class ProfileComponent implements OnInit {
   }
 
   readURL(event) {
-    console.log(event, 'read url from event');
     if (event.target.files && event.target.files[0]) {
         const reader = new FileReader();
         reader.onload = function(e) {
@@ -92,7 +93,6 @@ export class ProfileComponent implements OnInit {
     const formData = new FormData();
     formData.append('upload', event.target.files[0]);
     this.settingsCrud.addUserImage(this.user.id, formData).subscribe((res: any) => {
-      console.log(res, 'image uploaded');
       this.getBase64Url(fileType, res.profileImage);
     });
 }
