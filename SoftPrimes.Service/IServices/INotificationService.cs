@@ -10,5 +10,8 @@ namespace SoftPrimes.Service.IServices
 {
     public interface INotificationService : IBusinessService<Notification, NotificationDTO>
     {
+        int GetNotificationCount();
+        List<NotificationDTO> GetNotificationList();
+        List<NotificationDTO> ReadNotifications();
     }
 }

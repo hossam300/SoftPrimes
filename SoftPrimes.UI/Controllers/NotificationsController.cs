@@ -20,6 +20,21 @@ namespace SoftPrimes.UI.Controllers
         {
             this._NotificationService = businessService;
         }
-       
+        [HttpGet("GetNotificationCount")]
+        public int GetNotificationCount()
+        {
+            return _NotificationService.GetNotificationCount();
+        }
+
+        [HttpGet("GetNotificationList")]
+        public List<NotificationDTO> GetNotificationList()
+        {
+            return _NotificationService.GetNotificationList();
+        }
+        [HttpPost("ReadNotifications")]
+        public List<NotificationDTO> ReadNotifications()
+        {
+            return _NotificationService.ReadNotifications();
+        }
     }
 }

@@ -7,10 +7,11 @@ using System.Threading.Tasks;
 
 namespace SoftPrimes.Shared.ViewModels
 {
-  public  class NotificationDTO
+    public class NotificationDTO
     {
         public int Id { get; set; }
         public string Text { get; set; }
+        public bool IsReaded { get; set; } = false;
         public NotificationType NotificationType { get; set; }
         public string ToAgentId { get; set; }
         public AgentDTO ToAgent { get; set; }

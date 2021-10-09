@@ -45,7 +45,7 @@ namespace SoftPrimes.Service.Services
             return _mapper.Map(Newcomment, typeof(Comment), typeof(CommentDTO)) as CommentDTO;
         }
 
-        public bool ChangeTourCheckPointState(int tourCheckPointId, int State)
+        public bool ChangeTourCheckPointState(int tourCheckPointId, int State,double lat,double longs)
         {
             var tourChexkPoint = _repository.Find(tourCheckPointId);
             if (tourChexkPoint == null)
@@ -57,6 +57,9 @@ namespace SoftPrimes.Service.Services
                 try
                 {
                     tourChexkPoint.TourCheckPointState = (TourCheckPointState)State;
+                    tourChexkPoint.CheckoutLat = lat;
+                    tourChexkPoint.CheckoutLong = longs;
+                    tourChexkPoint.CheckoutDate = DateTime.Now;
                     _repository.Update(tourChexkPoint);
                     return true;
                 }
@@ -86,6 +89,9 @@ namespace SoftPrimes.Service.Services
                 {
                     TourCheckPoint.TourCheckPointState = TourCheckPointState.Completed;
                 }
+                TourCheckPoint.CheckoutLat = locationQrCode.Lat;
+                TourCheckPoint.CheckoutLong = locationQrCode.Long;
+                TourCheckPoint.CheckoutDate = DateTime.Now;
                 _repository.Update(TourCheckPoint);
                 return true;
             }

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SoftPrimes.BLL.Contexts;
 
 namespace SoftPrimes.BLL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210908215822_AlterNotificationAddIsReaded")]
+    partial class AlterNotificationAddIsReaded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -817,15 +819,6 @@ namespace SoftPrimes.BLL.Migrations
                     b.Property<string>("AgentId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<DateTime?>("CheckoutDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<double?>("CheckoutLat")
-                        .HasColumnType("float");
-
-                    b.Property<double?>("CheckoutLong")
-                        .HasColumnType("float");
-
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
 
@@ -883,15 +876,6 @@ namespace SoftPrimes.BLL.Migrations
 
                     b.Property<int>("CheckPointId")
                         .HasColumnType("int");
-
-                    b.Property<DateTime?>("CheckoutDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<double?>("CheckoutLat")
-                        .HasColumnType("float");
-
-                    b.Property<double?>("CheckoutLong")
-                        .HasColumnType("float");
 
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");

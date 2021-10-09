@@ -21,6 +21,9 @@ namespace SoftPrimes.Shared.Domains
         public DateTimeOffset? CreatedOn { get; set; }
         public string UpdatedBy { get; set; }
         public DateTimeOffset? UpdatedOn { get; set; }
+        public double? CheckoutLat { get; set; }
+        public double? CheckoutLong { get; set; }
+        public DateTime? CheckoutDate { get; set; }
     }
     public enum TourCheckPointState
     {

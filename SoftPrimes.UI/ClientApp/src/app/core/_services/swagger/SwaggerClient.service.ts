@@ -5934,6 +5934,174 @@ export class SwaggerClient {
     }
 
     /**
+     * @return Success
+     */
+    apiNotificationsGetNotificationCountGet(): Observable<number> {
+        let url_ = this.baseUrl + "/api/Notifications/GetNotificationCount";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processApiNotificationsGetNotificationCountGet(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processApiNotificationsGetNotificationCountGet(<any>response_);
+                } catch (e) {
+                    return <Observable<number>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<number>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processApiNotificationsGetNotificationCountGet(response: HttpResponseBase): Observable<number> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 !== undefined ? resultData200 : <any>null;
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<number>(<any>null);
+    }
+
+    /**
+     * @return Success
+     */
+    apiNotificationsGetNotificationListGet(): Observable<NotificationDTO[]> {
+        let url_ = this.baseUrl + "/api/Notifications/GetNotificationList";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processApiNotificationsGetNotificationListGet(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processApiNotificationsGetNotificationListGet(<any>response_);
+                } catch (e) {
+                    return <Observable<NotificationDTO[]>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<NotificationDTO[]>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processApiNotificationsGetNotificationListGet(response: HttpResponseBase): Observable<NotificationDTO[]> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (resultData200 && resultData200.constructor === Array) {
+                result200 = [];
+                for (let item of resultData200)
+                    result200.push(NotificationDTO.fromJS(item));
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<NotificationDTO[]>(<any>null);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    apiNotificationsReadNotificationsPost(body: number[]): Observable<NotificationDTO[]> {
+        let url_ = this.baseUrl + "/api/Notifications/ReadNotifications";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processApiNotificationsReadNotificationsPost(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processApiNotificationsReadNotificationsPost(<any>response_);
+                } catch (e) {
+                    return <Observable<NotificationDTO[]>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<NotificationDTO[]>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processApiNotificationsReadNotificationsPost(response: HttpResponseBase): Observable<NotificationDTO[]> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (resultData200 && resultData200.constructor === Array) {
+                result200 = [];
+                for (let item of resultData200)
+                    result200.push(NotificationDTO.fromJS(item));
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<NotificationDTO[]>(<any>null);
+    }
+
+    /**
      * @param take (optional) 
      * @param skip (optional) 
      * @param sort_Field (optional) 
@@ -8180,14 +8348,20 @@ export class SwaggerClient {
     /**
      * @param tourCheckPointId (optional) 
      * @param state (optional) 
+     * @param lat (optional) 
+     * @param longs (optional) 
      * @return Success
      */
-    apiTourCheckPointsCompleteTourCheckPointGet(tourCheckPointId: number, state: number): Observable<boolean> {
+    apiTourCheckPointsCompleteTourCheckPointGet(tourCheckPointId: number, state: number, lat: number, longs: number): Observable<boolean> {
         let url_ = this.baseUrl + "/api/TourCheckPoints/CompleteTourCheckPoint?";
         if (tourCheckPointId !== undefined)
             url_ += "TourCheckPointId=" + encodeURIComponent("" + tourCheckPointId) + "&"; 
         if (state !== undefined)
             url_ += "State=" + encodeURIComponent("" + state) + "&"; 
+        if (lat !== undefined)
+            url_ += "lat=" + encodeURIComponent("" + lat) + "&"; 
+        if (longs !== undefined)
+            url_ += "longs=" + encodeURIComponent("" + longs) + "&"; 
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {
@@ -9472,14 +9646,20 @@ export class SwaggerClient {
     /**
      * @param tourId (optional) 
      * @param state (optional) 
+     * @param lat (optional) 
+     * @param longs (optional) 
      * @return Success
      */
-    apiToursChangeTourStateGet(tourId: number, state: number): Observable<boolean> {
+    apiToursChangeTourStateGet(tourId: number, state: number, lat: number, longs: number): Observable<boolean> {
         let url_ = this.baseUrl + "/api/Tours/ChangeTourState?";
         if (tourId !== undefined)
             url_ += "TourId=" + encodeURIComponent("" + tourId) + "&"; 
         if (state !== undefined)
             url_ += "State=" + encodeURIComponent("" + state) + "&"; 
+        if (lat !== undefined)
+            url_ += "lat=" + encodeURIComponent("" + lat) + "&"; 
+        if (longs !== undefined)
+            url_ += "longs=" + encodeURIComponent("" + longs) + "&"; 
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {
@@ -12496,6 +12676,7 @@ export enum NotificationType {
 export class NotificationDTO implements INotificationDTO {
     id?: number;
     text?: string;
+    isReaded?: boolean;
     notificationType?: NotificationType;
     toAgentId?: string;
     toAgent?: AgentDTO;
@@ -12515,6 +12696,7 @@ export class NotificationDTO implements INotificationDTO {
         if (data) {
             this.id = data["id"];
             this.text = data["text"];
+            this.isReaded = data["isReaded"];
             this.notificationType = data["notificationType"];
             this.toAgentId = data["toAgentId"];
             this.toAgent = data["toAgent"] ? AgentDTO.fromJS(data["toAgent"]) : <any>undefined;
@@ -12534,6 +12716,7 @@ export class NotificationDTO implements INotificationDTO {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id;
         data["text"] = this.text;
+        data["isReaded"] = this.isReaded;
         data["notificationType"] = this.notificationType;
         data["toAgentId"] = this.toAgentId;
         data["toAgent"] = this.toAgent ? this.toAgent.toJSON() : <any>undefined;
@@ -12546,6 +12729,7 @@ export class NotificationDTO implements INotificationDTO {
 export interface INotificationDTO {
     id?: number;
     text?: string;
+    isReaded?: boolean;
     notificationType?: NotificationType;
     toAgentId?: string;
     toAgent?: AgentDTO;
@@ -12908,6 +13092,8 @@ export interface ITourAgentDTODataSourceResult {
 export class LocationQrCodeDTO implements ILocationQrCodeDTO {
     checkPointId?: number;
     qrCode?: string;
+    lat?: number;
+    long?: number;
 
     constructor(data?: ILocationQrCodeDTO) {
         if (data) {
@@ -12922,6 +13108,8 @@ export class LocationQrCodeDTO implements ILocationQrCodeDTO {
         if (data) {
             this.checkPointId = data["checkPointId"];
             this.qrCode = data["qrCode"];
+            this.lat = data["lat"];
+            this.long = data["long"];
         }
     }
 
@@ -12936,6 +13124,8 @@ export class LocationQrCodeDTO implements ILocationQrCodeDTO {
         data = typeof data === 'object' ? data : {};
         data["checkPointId"] = this.checkPointId;
         data["qrCode"] = this.qrCode;
+        data["lat"] = this.lat;
+        data["long"] = this.long;
         return data; 
     }
 }
@@ -12943,6 +13133,8 @@ export class LocationQrCodeDTO implements ILocationQrCodeDTO {
 export interface ILocationQrCodeDTO {
     checkPointId?: number;
     qrCode?: string;
+    lat?: number;
+    long?: number;
 }
 
 export class TourCheckPointDTODataSourceResult implements ITourCheckPointDTODataSourceResult {

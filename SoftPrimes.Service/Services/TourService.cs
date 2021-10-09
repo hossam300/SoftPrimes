@@ -156,7 +156,7 @@ namespace SoftPrimes.Service.Services
             }).ToList();
         }
 
-        public bool ChangeTourState(int tourId, int state)
+        public bool ChangeTourState(int tourId, int state, double lat, double longs)
         {
             var tour = _unitOfWork.GetRepository<TourAgent>().GetAll().FirstOrDefault(c => c.Id == tourId);
             if (tour == null)
@@ -168,6 +168,9 @@ namespace SoftPrimes.Service.Services
                 try
                 {
                     tour.TourState = (TourState)state;
+                    tour.CheckoutLong = longs;
+                    tour.CheckoutLat = lat;
+                    tour.CheckoutDate = DateTime.Now;
                     _unitOfWork.GetRepository<TourAgent>().Update(tour);
                     return true;
                 }

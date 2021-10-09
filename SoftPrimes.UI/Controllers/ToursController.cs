@@ -46,9 +46,9 @@ namespace SoftPrimes.UI.Controllers
             return _TourService.GetAdminComments(tourId);
         }
         [HttpGet("ChangeTourState")]
-        public bool ChangeTourState(int TourId, int State)
+        public bool ChangeTourState(int TourId, int State, double lat, double longs)
         {
-            return _TourService.ChangeTourState(TourId, State);
+            return _TourService.ChangeTourState(TourId, State, lat, longs);
         }
         [HttpGet("GetTemplates")]
         public List<TourTemplateDTO> GetTemplate(string searchText, int take = 20)
@@ -61,7 +61,7 @@ namespace SoftPrimes.UI.Controllers
             return _TourService.InsertTour(tour);
         }
         [HttpGet("ActiveDisActiveTemplate")]
-        public bool ActiveDisActiveTemplate(int tourId,bool state)
+        public bool ActiveDisActiveTemplate(int tourId, bool state)
         {
             return _TourService.ActiveDisActiveTemplate(tourId, state);
         }

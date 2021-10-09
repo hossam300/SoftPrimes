@@ -13,7 +13,7 @@ namespace SoftPrimes.Service.IServices
         List<HomeTourDTO> GetTodayTours(float lat, float longs, string AgentId);
         TourCheckpointDetailsDTO GetTourPoints(int tourId);
         List<TourCommentDTO> GetAdminComments(int tourId);
-        bool ChangeTourState(int tourId, int state);
+        bool ChangeTourState(int tourId, int state,double lat, double longs);
         List<HomeTourDTO> GetTourHistory(float lat, float longs, string id);
         List<TourTemplateDTO> GetTemplates(string searchText,int take);
         TourCreateDTO InsertTour(TourCreateDTO tour);

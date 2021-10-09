@@ -16,6 +16,7 @@ namespace SoftPrimes.Shared.Domains
         public virtual Agent ToAgent { get; set; }
         public string CreatedBy { get; set; }
         public DateTimeOffset? CreatedOn { get; set; }
+        public bool IsReaded { get; set; }
     }
     public enum NotificationType
     {

@@ -31,9 +31,9 @@ namespace SoftPrimes.UI.Controllers
             return _TourCheckPointService.ScanLocationQrCode(locationQrCode);
         }
         [HttpGet("CompleteTourCheckPoint")]
-        public bool CompleteTourCheckPoint(int TourCheckPointId, int State)
+        public bool CompleteTourCheckPoint(int TourCheckPointId, int State, double lat, double longs)
         {
-            return _TourCheckPointService.ChangeTourCheckPointState(TourCheckPointId, State);
+            return _TourCheckPointService.ChangeTourCheckPointState(TourCheckPointId, State, lat, longs);
         }
         [HttpPost("AddCheckPointTourComment")]
         public CommentDTO AddCheckPointTourComment()

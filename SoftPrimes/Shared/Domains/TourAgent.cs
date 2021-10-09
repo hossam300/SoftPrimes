@@ -21,6 +21,8 @@ namespace SoftPrimes.Shared.Domains
         public TourState TourState { get; set; }
         public double EstimatedDistance { get; set; }
         public DateTimeOffset? EstimatedEndDate { get; set; }
+        public double? CheckoutLat { get; set; }
+        public double? CheckoutLong { get; set; }
         public virtual List<TourStateLog> TourStateLogs { get; set; }
         public virtual List<TourComment> Comments { get; set; }
         public string DeletedBy { get; set; }
@@ -29,6 +31,7 @@ namespace SoftPrimes.Shared.Domains
         public DateTimeOffset? CreatedOn { get; set; }
         public string UpdatedBy { get; set; }
         public DateTimeOffset? UpdatedOn { get; set; }
+        public DateTime? CheckoutDate { get; set; }
     }
     public enum TourState
     {

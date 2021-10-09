@@ -12,6 +12,6 @@ namespace SoftPrimes.Service.IServices
     {
         bool ScanLocationQrCode(LocationQrCodeDTO locationQrCode);
         CommentDTO AddCheckPointTourComment(CheckPointTourCommentDetailDTO checkPointTourComment,string Url);
-        bool ChangeTourCheckPointState(int tourCheckPointId,int State);
+        bool ChangeTourCheckPointState(int tourCheckPointId,int State, double lat, double longs);
     }
 }
