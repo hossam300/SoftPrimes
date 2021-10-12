@@ -1,5 +1,7 @@
+import { DashboardService } from './../core/_services/dashboard.service';
 import { Component, OnInit } from '@angular/core';
 import { dataSeries } from '../core/_utils/data-series';
+import { PiChartDTO } from '../core/_services/swagger/SwaggerClient.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -10,20 +12,27 @@ export class DashboardComponent implements OnInit {
 
   chartData = [];
   toursMonitoringChartOptions = {};
+
   checkPointsChartData = [];
   checkPointsChartOptions = {};
+
   overDueChartData = [];
   overDueChartOptions = {};
+
   agentDistanceChartData = [];
   agentDistanceChartOptions = {};
 
-  constructor() { }
+  tourStatusChartData = [];
+  tourStatusChartOptions;
+
+  constructor(private dashboard: DashboardService) {}
 
   ngOnInit() {
     this.initToursMonitoringChart();
     this.initOverDueChart();
     this.initCheckPointsChart();
     this.initAgentDistaceChart();
+    this.initTourStatusChart();
   }
 
   initToursMonitoringChart() {
@@ -127,6 +136,21 @@ export class DashboardComponent implements OnInit {
       xaxisType: 'category',
       themePalette: 'palette4',
       categories: agentDistanceX
+    };
+  }
+
+  initTourStatusChart() {
+    let keys;
+    this.dashboard.getTourStatusData(null, null).subscribe(res => {
+      const values = res.map(item => item.value);
+      keys = res.map(item => item.text);
+      this.tourStatusChartData = values;
+      this.tourStatusChartOptions.labels = keys;
+    });
+    this.tourStatusChartOptions = {
+      type: 'donut',
+      size: '60%',
+      title: 'Tour status overview',
     };
   }
 
