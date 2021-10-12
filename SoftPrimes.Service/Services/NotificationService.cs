@@ -26,7 +26,7 @@ namespace SoftPrimes.Service.Services
 
         public int GetNotificationCount()
         {
-            return _repository.GetAll().Where(c => c.ToAgentId == _sessionServices.UserId).Count();
+            return _repository.GetAll().Where(c => c.ToAgentId == _sessionServices.UserId && !c.IsReaded).Count();
         }
 
         public List<NotificationDTO> GetNotificationList()
@@ -57,7 +57,7 @@ namespace SoftPrimes.Service.Services
             //List<NotificationDTO> notifications = new List<NotificationDTO>();
             //foreach (var item in notificationIds)
             //{
-            var notfications = _repository.GetAll().Where(x => x.ToAgentId == _sessionServices.UserId).ToList();
+            var notfications = _repository.GetAll().Where(x => x.ToAgentId == _sessionServices.UserId ).ToList();
             foreach (var notfication in notfications)
             {
                 notfication.IsReaded = true;
