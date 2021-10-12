@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SoftPrimes.Service.IServices;
+using SoftPrimes.Shared.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,20 @@ namespace SoftPrimes.UI.Controllers
         {
             _dashbordService = dashbordService;
         }
-        public List<>
+        [HttpGet("TourStatus")]
+        public List<PiChartDTO> TourStatus(DateTime? start,DateTime? end)
+        {
+            return _dashbordService.TourStatus(start, end);
+        }
+        [HttpGet("TourMontringVsDate")]
+        public TourVsMontringDate TourMontringVsDate(DateTime? start, DateTime? end)
+        {
+            return _dashbordService.TourMontringVsDate(start, end);
+        }
+        [HttpGet("CheckPointCount")]
+        public List<PiChartDTO> CheckPointCount(DateTime? start, DateTime? end)
+        {
+            return _dashbordService.CheckPointCount(start, end);
+        }
     }
 }

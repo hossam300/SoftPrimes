@@ -5355,6 +5355,188 @@ export class SwaggerClient {
     }
 
     /**
+     * @param start (optional) 
+     * @param end (optional) 
+     * @return Success
+     */
+    apiDashboardTourStatusGet(start: Date, end: Date): Observable<PiChartDTO[]> {
+        let url_ = this.baseUrl + "/api/Dashboard/TourStatus?";
+        if (start !== undefined)
+            url_ += "start=" + encodeURIComponent(start ? "" + start.toJSON() : "") + "&"; 
+        if (end !== undefined)
+            url_ += "end=" + encodeURIComponent(end ? "" + end.toJSON() : "") + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processApiDashboardTourStatusGet(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processApiDashboardTourStatusGet(<any>response_);
+                } catch (e) {
+                    return <Observable<PiChartDTO[]>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<PiChartDTO[]>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processApiDashboardTourStatusGet(response: HttpResponseBase): Observable<PiChartDTO[]> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (resultData200 && resultData200.constructor === Array) {
+                result200 = [];
+                for (let item of resultData200)
+                    result200.push(PiChartDTO.fromJS(item));
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<PiChartDTO[]>(<any>null);
+    }
+
+    /**
+     * @param start (optional) 
+     * @param end (optional) 
+     * @return Success
+     */
+    apiDashboardTourMontringVsDateGet(start: Date, end: Date): Observable<TourVsMontringDate> {
+        let url_ = this.baseUrl + "/api/Dashboard/TourMontringVsDate?";
+        if (start !== undefined)
+            url_ += "start=" + encodeURIComponent(start ? "" + start.toJSON() : "") + "&"; 
+        if (end !== undefined)
+            url_ += "end=" + encodeURIComponent(end ? "" + end.toJSON() : "") + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processApiDashboardTourMontringVsDateGet(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processApiDashboardTourMontringVsDateGet(<any>response_);
+                } catch (e) {
+                    return <Observable<TourVsMontringDate>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<TourVsMontringDate>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processApiDashboardTourMontringVsDateGet(response: HttpResponseBase): Observable<TourVsMontringDate> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? TourVsMontringDate.fromJS(resultData200) : new TourVsMontringDate();
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<TourVsMontringDate>(<any>null);
+    }
+
+    /**
+     * @param start (optional) 
+     * @param end (optional) 
+     * @return Success
+     */
+    apiDashboardCheckPointCountGet(start: Date, end: Date): Observable<PiChartDTO[]> {
+        let url_ = this.baseUrl + "/api/Dashboard/CheckPointCount?";
+        if (start !== undefined)
+            url_ += "start=" + encodeURIComponent(start ? "" + start.toJSON() : "") + "&"; 
+        if (end !== undefined)
+            url_ += "end=" + encodeURIComponent(end ? "" + end.toJSON() : "") + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processApiDashboardCheckPointCountGet(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processApiDashboardCheckPointCountGet(<any>response_);
+                } catch (e) {
+                    return <Observable<PiChartDTO[]>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<PiChartDTO[]>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processApiDashboardCheckPointCountGet(response: HttpResponseBase): Observable<PiChartDTO[]> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (resultData200 && resultData200.constructor === Array) {
+                result200 = [];
+                for (let item of resultData200)
+                    result200.push(PiChartDTO.fromJS(item));
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<PiChartDTO[]>(<any>null);
+    }
+
+    /**
      * @return Success
      */
     apiLocalizationsJsonGet(culture: string): Observable<string> {
@@ -6042,17 +6224,13 @@ export class SwaggerClient {
     }
 
     /**
-     * @param body (optional) 
      * @return Success
      */
-    apiNotificationsReadNotificationsPost(body: number[]): Observable<NotificationDTO[]> {
+    apiNotificationsReadNotificationsPost(): Observable<NotificationDTO[]> {
         let url_ = this.baseUrl + "/api/Notifications/ReadNotifications";
         url_ = url_.replace(/[?&]$/, "");
 
-        const content_ = JSON.stringify(body);
-
         let options_ : any = {
-            body: content_,
             observe: "response",
             responseType: "blob",
             headers: new HttpHeaders({
@@ -12554,6 +12732,142 @@ export interface ICompanyDTODataSourceResult {
     count?: number;
     countUnReaded?: number;
     qrCodeType?: string;
+}
+
+export class PiChartDTO implements IPiChartDTO {
+    value?: number;
+    text?: string;
+
+    constructor(data?: IPiChartDTO) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.value = data["value"];
+            this.text = data["text"];
+        }
+    }
+
+    static fromJS(data: any): PiChartDTO {
+        data = typeof data === 'object' ? data : {};
+        let result = new PiChartDTO();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["value"] = this.value;
+        data["text"] = this.text;
+        return data; 
+    }
+}
+
+export interface IPiChartDTO {
+    value?: number;
+    text?: string;
+}
+
+export class LineChartWithdate implements ILineChartWithdate {
+    date?: string;
+    value?: number;
+
+    constructor(data?: ILineChartWithdate) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.date = data["date"];
+            this.value = data["value"];
+        }
+    }
+
+    static fromJS(data: any): LineChartWithdate {
+        data = typeof data === 'object' ? data : {};
+        let result = new LineChartWithdate();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["date"] = this.date;
+        data["value"] = this.value;
+        return data; 
+    }
+}
+
+export interface ILineChartWithdate {
+    date?: string;
+    value?: number;
+}
+
+export class TourVsMontringDate implements ITourVsMontringDate {
+    montringVsDate?: LineChartWithdate[];
+    tourVsDate?: LineChartWithdate[];
+
+    constructor(data?: ITourVsMontringDate) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            if (data["montringVsDate"] && data["montringVsDate"].constructor === Array) {
+                this.montringVsDate = [];
+                for (let item of data["montringVsDate"])
+                    this.montringVsDate.push(LineChartWithdate.fromJS(item));
+            }
+            if (data["tourVsDate"] && data["tourVsDate"].constructor === Array) {
+                this.tourVsDate = [];
+                for (let item of data["tourVsDate"])
+                    this.tourVsDate.push(LineChartWithdate.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): TourVsMontringDate {
+        data = typeof data === 'object' ? data : {};
+        let result = new TourVsMontringDate();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (this.montringVsDate && this.montringVsDate.constructor === Array) {
+            data["montringVsDate"] = [];
+            for (let item of this.montringVsDate)
+                data["montringVsDate"].push(item.toJSON());
+        }
+        if (this.tourVsDate && this.tourVsDate.constructor === Array) {
+            data["tourVsDate"] = [];
+            for (let item of this.tourVsDate)
+                data["tourVsDate"].push(item.toJSON());
+        }
+        return data; 
+    }
+}
+
+export interface ITourVsMontringDate {
+    montringVsDate?: LineChartWithdate[];
+    tourVsDate?: LineChartWithdate[];
 }
 
 export class LocalizationDTO implements ILocalizationDTO {
