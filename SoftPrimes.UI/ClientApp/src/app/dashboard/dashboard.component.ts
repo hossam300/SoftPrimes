@@ -2,6 +2,7 @@ import { DashboardService } from './../core/_services/dashboard.service';
 import { Component, OnInit } from '@angular/core';
 import { dataSeries } from '../core/_utils/data-series';
 import { PiChartDTO } from '../core/_services/swagger/SwaggerClient.service';
+import { formatDateCorrectly } from '../core/_utils/date';
 
 @Component({
   selector: 'app-dashboard',
@@ -11,16 +12,16 @@ import { PiChartDTO } from '../core/_services/swagger/SwaggerClient.service';
 export class DashboardComponent implements OnInit {
 
   chartData = [];
-  toursMonitoringChartOptions = {};
+  toursMonitoringChartOptions;
 
   checkPointsChartData = [];
-  checkPointsChartOptions = {};
+  checkPointsChartOptions;
 
   overDueChartData = [];
-  overDueChartOptions = {};
+  overDueChartOptions;
 
   agentDistanceChartData = [];
-  agentDistanceChartOptions = {};
+  agentDistanceChartOptions;
 
   tourStatusChartData = [];
   tourStatusChartOptions;
@@ -36,33 +37,39 @@ export class DashboardComponent implements OnInit {
   }
 
   initToursMonitoringChart() {
+    const tours = [];
+    const monitoring = [];
+    this.dashboard.getTourMontringVsDate(null, null).subscribe(res => {
+      this.toursMonitoringChartOptions.categories = [];
+      res.montringVsDate.forEach(element => {
+        monitoring.push(element.value);
+        this.toursMonitoringChartOptions.categories.push(formatDateCorrectly(element.date));
+      });
+      res.tourVsDate.forEach(element => {
+        tours.push(element.value);
+      });
+      const data = [
+        {
+          name: 'Tours',
+          data: tours
+        },
+        {
+          name: 'Monitoring',
+          data: monitoring
+        }
+      ];
+      this.chartData = data;
+    });
     this.toursMonitoringChartOptions = {
       title: 'Tours and Monitoring overview',
       chartType: 'line',
       xaxisType: 'datetime',
-      themePalette: 'palette2'
-    };
-    let ts1 = 1484418600000;
-    let ts2 = 1484418600000;
-    const tours = [];
-    const monitoring = [];
-    for (let i = 0; i < 23; i++) {
-      ts1 = ts1 + 7640000;
-      ts2 = ts2 + 8640000;
-      tours.push([ts2, dataSeries[1][i].value]);
-      monitoring.push([ts1, dataSeries[2][i].value]);
-    }
-
-    this.chartData = [
-      {
-        name: 'Tours',
-        data: tours
-      },
-      {
-        name: 'Monitoring',
-        data: monitoring
+      themePalette: 'palette2',
+      labelXFormatter: function(val , timestamp) {
+        const d = `${(new Date(val).getMonth() + 1)}/${new Date(val).getFullYear()}`;
+        return d;
       }
-    ];
+    };
   }
 
   initOverDueChart() {
@@ -88,28 +95,33 @@ export class DashboardComponent implements OnInit {
   }
 
   initCheckPointsChart() {
-    let ts2 = 1484418600000;
     const checkPointsX = [];
     const checkPointsY = [];
-    for (let i = 0; i < 23; i++) {
-      ts2 = ts2 + 8640000;
-      checkPointsY.push(dataSeries[3][i].value);
-      checkPointsX.push(dataSeries[3][i]['name']);
-    }
+    this.dashboard.getCheckPointCount(null, null).subscribe(res => {
+      console.log(res, 'checkpoint count');
+      res.forEach(el => {
+        checkPointsY.push(el.value);
+        checkPointsX.push(el['text']);
+      });
 
-    this.checkPointsChartData = [
-      {
-        name: 'CheckPoints',
-        data: checkPointsY
-      }
-    ];
+      this.checkPointsChartOptions.categories = checkPointsX;
+
+      const data = [
+        {
+          name: 'CheckPoints',
+          data: checkPointsY
+        }
+      ];
+
+      this.checkPointsChartData = data;
+    });
 
     this.checkPointsChartOptions = {
       title: 'CheckPoints overview',
       chartType: 'line',
       xaxisType: 'category',
       themePalette: 'palette6',
-      categories: checkPointsX
+      labelXFormatter: undefined
     };
   }
 

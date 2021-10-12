@@ -28,3 +28,9 @@ export const fixDateTimePickers = () => {
     });
   });
 };
+
+export const formatDateCorrectly = (date: string) => {
+  const d = date.split('-');
+  d.splice(1, 0 , '01');
+  return d.join('-');
+};
