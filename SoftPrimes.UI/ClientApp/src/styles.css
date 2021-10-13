@@ -148,6 +148,10 @@ ngb-datepicker .btn-light {
   font-size: 20px !important;
 }
 
+.text-64 {
+  font-size: 64px !important;
+}
+
 .dashed-border-bottom {
   border-bottom: 1px dashed #CCCCCC;
 }
