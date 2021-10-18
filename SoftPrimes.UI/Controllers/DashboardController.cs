@@ -33,5 +33,16 @@ namespace SoftPrimes.UI.Controllers
         {
             return _dashbordService.CheckPointCount(start, end);
         }
+        [HttpGet("AgentDistance")]
+        public List<PiChartDTO> AgentDistance(DateTime? start, DateTime? end)
+        {
+            return _dashbordService.AgentDistance(start, end);
+        }
+
+        [HttpGet("OverDue")]
+        public List<LineChartWithdate> OverDue(DateTime? start, DateTime? end)
+        {
+            return _dashbordService.OverDue(start, end);
+        }
     }
 }

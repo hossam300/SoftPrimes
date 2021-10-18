@@ -5537,6 +5537,130 @@ export class SwaggerClient {
     }
 
     /**
+     * @param start (optional) 
+     * @param end (optional) 
+     * @return Success
+     */
+    apiDashboardAgentDistanceGet(start: Date, end: Date): Observable<PiChartDTO[]> {
+        let url_ = this.baseUrl + "/api/Dashboard/AgentDistance?";
+        if (start !== undefined)
+            url_ += "start=" + encodeURIComponent(start ? "" + start.toJSON() : "") + "&"; 
+        if (end !== undefined)
+            url_ += "end=" + encodeURIComponent(end ? "" + end.toJSON() : "") + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processApiDashboardAgentDistanceGet(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processApiDashboardAgentDistanceGet(<any>response_);
+                } catch (e) {
+                    return <Observable<PiChartDTO[]>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<PiChartDTO[]>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processApiDashboardAgentDistanceGet(response: HttpResponseBase): Observable<PiChartDTO[]> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (resultData200 && resultData200.constructor === Array) {
+                result200 = [];
+                for (let item of resultData200)
+                    result200.push(PiChartDTO.fromJS(item));
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<PiChartDTO[]>(<any>null);
+    }
+
+    /**
+     * @param start (optional) 
+     * @param end (optional) 
+     * @return Success
+     */
+    apiDashboardOverDueGet(start: Date, end: Date): Observable<LineChartWithdate[]> {
+        let url_ = this.baseUrl + "/api/Dashboard/OverDue?";
+        if (start !== undefined)
+            url_ += "start=" + encodeURIComponent(start ? "" + start.toJSON() : "") + "&"; 
+        if (end !== undefined)
+            url_ += "end=" + encodeURIComponent(end ? "" + end.toJSON() : "") + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processApiDashboardOverDueGet(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processApiDashboardOverDueGet(<any>response_);
+                } catch (e) {
+                    return <Observable<LineChartWithdate[]>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<LineChartWithdate[]>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processApiDashboardOverDueGet(response: HttpResponseBase): Observable<LineChartWithdate[]> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (resultData200 && resultData200.constructor === Array) {
+                result200 = [];
+                for (let item of resultData200)
+                    result200.push(LineChartWithdate.fromJS(item));
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<LineChartWithdate[]>(<any>null);
+    }
+
+    /**
      * @return Success
      */
     apiLocalizationsJsonGet(culture: string): Observable<string> {
@@ -13775,6 +13899,7 @@ export class CheckPointDetailsDTO implements ICheckPointDetailsDTO {
     locationName?: string;
     lat?: number;
     long?: number;
+    startDate?: Date;
     endDate?: Date;
     qrCode?: string;
     checkPointState?: TourCheckPointState;
@@ -13798,6 +13923,7 @@ export class CheckPointDetailsDTO implements ICheckPointDetailsDTO {
             this.locationName = data["locationName"];
             this.lat = data["lat"];
             this.long = data["long"];
+            this.startDate = data["startDate"] ? new Date(data["startDate"].toString()) : <any>undefined;
             this.endDate = data["endDate"] ? new Date(data["endDate"].toString()) : <any>undefined;
             this.qrCode = data["qrCode"];
             this.checkPointState = data["checkPointState"];
@@ -13825,6 +13951,7 @@ export class CheckPointDetailsDTO implements ICheckPointDetailsDTO {
         data["locationName"] = this.locationName;
         data["lat"] = this.lat;
         data["long"] = this.long;
+        data["startDate"] = this.startDate ? this.startDate.toISOString() : <any>undefined;
         data["endDate"] = this.endDate ? this.endDate.toISOString() : <any>undefined;
         data["qrCode"] = this.qrCode;
         data["checkPointState"] = this.checkPointState;
@@ -13845,6 +13972,7 @@ export interface ICheckPointDetailsDTO {
     locationName?: string;
     lat?: number;
     long?: number;
+    startDate?: Date;
     endDate?: Date;
     qrCode?: string;
     checkPointState?: TourCheckPointState;

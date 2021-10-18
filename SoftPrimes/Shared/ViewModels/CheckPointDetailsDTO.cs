@@ -13,6 +13,7 @@ namespace SoftPrimes.Shared.ViewModels
         public string LocationName { get; set; }
         public double Lat{ get; set; }
         public double Long { get; set; }
+        public DateTimeOffset? StartDate { get; set; }
         public DateTimeOffset? EndDate { get; set; }
         public string QRCode { get; set; }
         public TourCheckPointState CheckPointState { get; set; }

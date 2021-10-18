@@ -12,5 +12,7 @@ namespace SoftPrimes.Service.IServices
         List<PiChartDTO> TourStatus(DateTime? start, DateTime? end);
         TourVsMontringDate TourMontringVsDate(DateTime? start, DateTime? end);
         List<PiChartDTO> CheckPointCount(DateTime? start, DateTime? end);
+        List<PiChartDTO> AgentDistance(DateTime? start, DateTime? end);
+        List<LineChartWithdate> OverDue(DateTime? start, DateTime? end);
     }
 }

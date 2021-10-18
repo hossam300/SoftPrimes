@@ -13,6 +13,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Geolocation;
+using System.Drawing;
 
 namespace SoftPrimes.Service.Services
 {
@@ -25,6 +27,15 @@ namespace SoftPrimes.Service.Services
             _uow = unitOfWork;
         }
 
+        public List<PiChartDTO> AgentDistance(DateTime? start, DateTime? end)
+        {
+            return _uow.GetRepository<TourAgent>().GetAll().GroupBy(x => x.AgentId).Select(x => new PiChartDTO
+            {
+                Text = x.Key,
+                Value = x.Sum(z => z.EstimatedDistance)
+            }).ToList();
+        }
+
         public List<PiChartDTO> CheckPointCount(DateTime? start, DateTime? end)
         {
             return _uow.GetRepository<TourCheckPoint>().GetAll().GroupBy(x => x.CheckPoint.CheckPointNameEn).Select(x => new PiChartDTO
@@ -35,18 +46,30 @@ namespace SoftPrimes.Service.Services
 
         }
 
+        public List<LineChartWithdate> OverDue(DateTime? start, DateTime? end)
+        {
+            return _uow.GetRepository<TourAgent>().GetAll()
+                .Where(x => x.TourState == TourState.Complete && x.CheckoutDate > x.TourDate)
+                .GroupBy(x => new { Year = x.TourDate.Year, Month = x.TourDate.Month, Day = x.TourDate.Day })
+                .Select(z => new LineChartWithdate
+                {
+                    Date = z.Key.Year + "-" + z.Key.Month + "-" + z.Key.Day,
+                    Value = z.Count()
+                }).ToList();
+        }
+
         public TourVsMontringDate TourMontringVsDate(DateTime? start, DateTime? end)
         {
             var MontringDate = _uow.GetRepository<TourAgent>().GetAll()
-                 .GroupBy(x => new { Month = x.TourDate.Month, Year = x.TourDate.Year }).Select(x => new LineChartWithdate
+                 .GroupBy(x => new { Month = x.TourDate.Month, Year = x.TourDate.Year, day = x.TourDate.Day }).Select(x => new LineChartWithdate
                  {
                      Date = x.Key.Month + "-" + x.Key.Year,
                      Value = x.Where(c => c.TourType == TourType.Monitoring).Count()
                  }).ToList();
             var TourVsDate = _uow.GetRepository<TourAgent>().GetAll()
-                 .GroupBy(x => new { Month = x.TourDate.Month, Year = x.TourDate.Year }).Select(x => new LineChartWithdate
+                 .GroupBy(x => new { Month = x.TourDate.Month, Year = x.TourDate.Year, day = x.TourDate.Day }).Select(x => new LineChartWithdate
                  {
-                     Date = x.Key.Month + "-" + x.Key.Year,
+                     Date = x.Key.Year + "-" + x.Key.Month + "-" + x.Key.day,
                      Value = x.Where(c => c.TourType == TourType.TourPoints).Count()
                  }).ToList();
             return new TourVsMontringDate()

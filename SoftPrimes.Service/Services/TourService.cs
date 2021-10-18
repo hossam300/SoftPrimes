@@ -91,6 +91,7 @@ namespace SoftPrimes.Service.Services
                         CheckPointNameAr = y.CheckPoint.CheckPointNameAr,
                         CheckPointNameEn = y.CheckPoint.CheckPointNameEn,
                         CheckPointState = y.TourCheckPointState,
+                        StartDate=y.StartDate,
                         EndDate = x.EstimatedEndDate,
                         Lat = y.CheckPoint.Lat,
                         Long = y.CheckPoint.Long,
