@@ -1,11 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild, OnChanges } from '@angular/core';
 
 import {
   ApexChart,
+  ApexNoData,
   ApexNonAxisChartSeries,
   ApexPlotOptions,
   ApexResponsive,
-  ApexTitleSubtitle
+  ApexTitleSubtitle,
+  ChartComponent
 } from 'ng-apexcharts';
 
 export interface ChartOptions {
@@ -15,6 +17,7 @@ export interface ChartOptions {
   plotOptions: ApexPlotOptions;
   responsive: ApexResponsive[];
   labels: any;
+  noData: ApexNoData;
 }
 
 @Component({
@@ -22,28 +25,40 @@ export interface ChartOptions {
   templateUrl: './pie-chart.component.html',
   styleUrls: ['./pie-chart.component.css']
 })
-export class PieChartComponent implements OnInit {
+export class PieChartComponent implements OnInit, OnChanges {
   public chartOptions: Partial<ChartOptions>;
+  @Input() dataSeries = [];
+  @Input() options;
+
+  @ViewChild('chart', {read: false, static: false}) chart: ChartComponent;
 
   constructor() { }
 
+  ngOnChanges() {
+    if (this.chart && this.options.labels) {
+      this.chartOptions.labels = this.options.labels;
+      this.chartOptions.series = this.dataSeries;
+      this.chart.updateOptions(this.chartOptions, true, true, true);
+    }
+  }
+
   ngOnInit() {
     this.chartOptions = {
-      series: [44, 55, 13, 43, 22],
+      series: this.dataSeries,
       chart: {
-        type: 'donut'
+        type: this.options.type
       },
       plotOptions: {
         pie: {
           donut: {
-            size: '60%'
+            size: this.options.size
           }
         }
       },
       title: {
-        text: 'Tour status overview'
+        text: this.options.title
       },
-      labels: ['InProgress', 'Completed', 'New', 'Not completed', 'Canceled'],
+      labels: this.options.labels,
       responsive: [
         {
           breakpoint: 760,
@@ -67,7 +82,10 @@ export class PieChartComponent implements OnInit {
             }
           }
         }
-      ]
+      ],
+      noData: {
+        text: 'Loading...'
+      }
     };
   }
 

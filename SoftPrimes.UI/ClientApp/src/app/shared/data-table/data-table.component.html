@@ -39,7 +39,7 @@
           </button>
           <div class="dropdown-menu" aria-labelledby="multiDropdownMenu">
             <!-- <a class="dropdown-item" (click)="editTour(row?.id)">Edit</a> -->
-            <a class="dropdown-item text-danger" (click)="deleteTour(row?.id)">{{ 'delete' | translate }}</a>
+            <a class="dropdown-item text-danger" (click)="confirmDelete(row?.id, deleteConfirmationModal)">{{ 'delete' | translate }}</a>
           </div>
         </div>
       </td>
@@ -52,3 +52,22 @@
   (pageChange)="emitPagination()" [maxSize]="5" [rotate]="true"
   [pageSize]="pageSize" [boundaryLinks]="true"></ngb-pagination>
 </div>
+
+<ng-template #deleteConfirmationModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title h6 d-flex">
+      {{ 'confirmDelete' | translate }}
+    </h5>
+  </div>
+  <div class="modal-body h-25">
+    <div class="d-flex flex-column text-center">
+      <span class="fa fa-exclamation-triangle text-64 mb-4 mt-3 text-danger"></span>
+      <h3 class="text-capitalize">{{ 'deleteConfirmationMsg' | translate }}</h3>
+      <p class="text-20">{{ 'recoverAbility' | translate }}</p>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="modal.close('close')">{{ 'cancel' | translate }}</button>
+    <button type="button" class="btn btn-danger" (click)="deleteTour(recordToDeleteId);modal.close('close')">{{ 'delete' | translate }}</button>
+  </div>
+</ng-template>

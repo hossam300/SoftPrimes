@@ -28,6 +28,7 @@ export class SettingsTableComponent {
   activeCol;
   agentType = AgentType;
   isArabic = false;
+  recordToDeleteId;
 
   constructor(
     private router: Router,
@@ -40,6 +41,15 @@ export class SettingsTableComponent {
 
   editRecord(id) {
     this.router.navigate(['edit/' + id], {relativeTo: this.activatedRoute});
+  }
+
+  confirmDelete(id, content) {
+    this.recordToDeleteId = id;
+    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title', centered: true}).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
   }
 
   deleteRecord(id) {

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild, OnChanges } from '@angular/core';
 
 import {
   ApexAxisChartSeries,
@@ -13,128 +13,150 @@ import {
   ApexLegend,
   ApexTheme,
   ApexStroke,
-  ApexPlotOptions
+  ApexPlotOptions,
+  ChartComponent,
+  ApexNoData
 } from 'ng-apexcharts';
+
+export interface ChartOptions {
+  series: ApexAxisChartSeries;
+  chart: ApexChart;
+  dataLabels: ApexDataLabels;
+  markers: ApexMarkers;
+  title: ApexTitleSubtitle;
+  fill: ApexFill;
+  yaxis: ApexYAxis;
+  xaxis: ApexXAxis;
+  tooltip: ApexTooltip;
+  legend: ApexLegend;
+  theme: ApexTheme;
+  stroke: ApexStroke;
+  plotOptions: ApexPlotOptions;
+  noData: ApexNoData;
+}
 
 @Component({
   selector: 'app-line-chart',
   templateUrl: './line-chart.component.html',
   styleUrls: ['./line-chart.component.css']
 })
-export class LineChartComponent implements OnInit {
-  public series: ApexAxisChartSeries;
-  public chart: ApexChart;
-  public dataLabels: ApexDataLabels;
-  public markers: ApexMarkers;
-  public title: ApexTitleSubtitle;
-  public fill: ApexFill;
-  public yaxis: ApexYAxis;
-  public xaxis: ApexXAxis;
-  public tooltip: ApexTooltip;
-  public legend: ApexLegend;
-  public theme: ApexTheme;
-  public stroke: ApexStroke;
-  public plotOptions: ApexPlotOptions;
-
+export class LineChartComponent implements OnInit, OnChanges {
+  public options: Partial<ChartOptions>;
   @Input() dataSeries = [];
   @Input() chartOptions;
+  @ViewChild('lineChart', {read: false, static: false}) lineChart: ChartComponent;
 
   constructor() { }
+
+  ngOnChanges() {
+    console.log(this.dataSeries, this.chartOptions);
+    if (this.lineChart && this.chartOptions.categories) {
+      this.options.xaxis.categories = this.chartOptions.categories;
+      this.options.series = this.dataSeries;
+      this.lineChart.updateOptions(this.options, true, true, true);
+    }
+  }
 
   ngOnInit() {
     this.initChartData();
   }
 
   public initChartData(): void {
-    this.series = this.dataSeries;
-    this.chart = {
-      type: this.chartOptions.chartType,
-      stacked: false,
-      height: 350,
-      zoom: {
-        type: 'x',
-        enabled: true,
-        autoScaleYaxis: true
-      },
-      toolbar: {
-        autoSelected: 'zoom'
-      }
-    };
-    this.plotOptions = {
-      bar: {
-        horizontal: false
-      }
-    };
-    this.dataLabels = {
-      enabled: false
-    };
-    this.legend = {
-      show: true,
-      position: 'top',
-      horizontalAlign: 'center'
-    };
-    this.theme = {
-      palette: this.chartOptions.themePalette || ('palette' + Math.floor(Math.random() * 10)),
-      monochrome: {
-        enabled: false,
-        color: '#255aee',
-        shadeTo: 'light',
-        shadeIntensity: 0.65
-      },
-    };
-    this.stroke = {
-      show: true,
-      lineCap: 'round',
-      curve: 'smooth',
-      width: 1
-    };
-    this.markers = {
-      size: 5
-    };
-    this.title = {
-      text: this.chartOptions.title,
-      align: 'left',
-      style: {
-        fontWeight: 'normal',
-        fontSize: '20px'
-      }
-    };
-    this.fill = {
-      type: 'solid',
-      gradient: {
-        shadeIntensity: 1,
-        inverseColors: true,
-        opacityFrom: 1,
-        opacityTo: 0,
-        stops: [0, 90, 100]
-      }
-    };
-    this.yaxis = {
-      labels: {
-        formatter: function (val) {
-          if (val > 1000) {
-            return (val / 1000000).toFixed(0);
-          } else {
-            return val.toFixed(0);
-          }
+    this.options = {
+
+      series: this.dataSeries,
+      chart: {
+        type: this.chartOptions.chartType,
+        stacked: false,
+        height: 350,
+        zoom: {
+          type: 'x',
+          enabled: true,
+          autoScaleYaxis: true
+        },
+        toolbar: {
+          autoSelected: 'zoom'
         }
-      }
-    };
-    this.xaxis = {
-      type: this.chartOptions.xaxisType,
-      categories: this.chartOptions.categories || []
-    };
-    this.tooltip = {
-      shared: false,
-      y: {
-        formatter: function (val) {
-          if (val > 1000) {
-            return (val / 1000000).toFixed(0);
-          } else {
-            return val.toFixed(0);
-          }
+      },
+      plotOptions: {
+        bar: {
+          horizontal: false
         }
-      }
+      },
+      dataLabels: {
+        enabled: false
+      },
+      legend: {
+        show: true,
+        position: 'top',
+        horizontalAlign: 'center'
+      },
+      theme: {
+        palette: this.chartOptions.themePalette || ('palette' + Math.floor(Math.random() * 10)),
+        monochrome: {
+          enabled: false,
+          color: '#255aee',
+          shadeTo: 'light',
+          shadeIntensity: 0.65
+        },
+      },
+      stroke: {
+        show: true,
+        lineCap: 'round',
+        curve: 'smooth',
+        width: 1
+      },
+      markers: {
+        size: 5
+      },
+      title: {
+        text: this.chartOptions.title,
+        align: 'left',
+        style: {
+          fontWeight: 'normal',
+          fontSize: '20px'
+        }
+      },
+      fill: {
+        type: 'solid',
+        gradient: {
+          shadeIntensity: 1,
+            inverseColors: true,
+            opacityFrom: 1,
+            opacityTo: 0,
+            stops: [0, 90, 100]
+          }
+        },
+        yaxis: {
+          labels: {
+            formatter: function (val) {
+              if (val > 1000) {
+                return (val / 1000000).toFixed(0);
+              } else {
+                return val.toFixed(0);
+              }
+            }
+          }
+      },
+      xaxis: {
+        type: this.chartOptions.xaxisType,
+        categories: this.chartOptions.categories || []
+      },
+      tooltip: {
+        shared: false,
+        y: {
+          formatter: function (val) {
+            if (val > 1000) {
+              return (val / 1000000).toFixed(0);
+            } else {
+              return val.toFixed(0);
+            }
+          }
+        },
+        x: {
+          formatter: this.chartOptions.labelXFormatter
+        }
+      },
     };
   }
 

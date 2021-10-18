@@ -1680,5 +1680,12 @@ export const dataSeries = [
       'date': '3/1/2021',
       'value': 49
     }
-  ]
+  ],
+  {
+    'InProgress': 44,
+    'Completed': 55,
+    'New': 13,
+    'Not completed': 43,
+    'Canceled': 22,
+  }
 ];

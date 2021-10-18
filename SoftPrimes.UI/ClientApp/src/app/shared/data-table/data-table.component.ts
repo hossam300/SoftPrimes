@@ -2,6 +2,7 @@ import { LoaderService } from './../../core/_services/loader.service';
 import { TaskManagementService } from './../../core/_services/task-management.service';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { TourState, TourTypes } from 'src/app/core/_models/task-management';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-data-table',
@@ -19,12 +20,19 @@ export class DataTableComponent implements OnInit {
   currentPage = 1;
   tourType = TourTypes;
   tourState = TourState;
+  recordToDeleteId;
 
   constructor(
     private taskManagementService: TaskManagementService,
+    private modalService: NgbModal,
   ) { }
 
   ngOnInit() {
+  }
+
+  confirmDelete(id, content) {
+    this.recordToDeleteId = id;
+    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title', centered: true});
   }
 
   editTour(id: number) {
