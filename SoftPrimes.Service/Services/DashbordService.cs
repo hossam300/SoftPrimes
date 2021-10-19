@@ -21,17 +21,19 @@ namespace SoftPrimes.Service.Services
     public class DashbordService : BusinessService<TourAgent, TourAgentDTO>, IDashbordService
     {
         private readonly IUnitOfWork _uow;
+        private readonly ISessionServices _sessionServices;
         public DashbordService(IUnitOfWork unitOfWork, IMapper mapper, ISecurityService securityService, IHttpContextAccessor contextAccessor, IHelperServices.ISessionServices sessionServices, IOptions<AppSettings> appSettings, IDataProtectService dataProtectService, IOptionsSnapshot<BearerTokensOptions> configuration, IMailServices mailServices)
            : base(unitOfWork, mapper, securityService, sessionServices, appSettings)
         {
             _uow = unitOfWork;
+            _sessionServices = sessionServices;
         }
 
         public List<PiChartDTO> AgentDistance(DateTime? start, DateTime? end)
         {
             return _uow.GetRepository<TourAgent>().GetAll().GroupBy(x => x.AgentId).Select(x => new PiChartDTO
             {
-                Text = x.Key,
+                Text = _sessionServices.Culture == "ar" ? _uow.GetRepository<Agent>(false).Find(x.Key).FullNameAr : _uow.GetRepository<Agent>(false).Find(x.Key).FullNameEn,
                 Value = x.Sum(z => z.EstimatedDistance)
             }).ToList();
         }
