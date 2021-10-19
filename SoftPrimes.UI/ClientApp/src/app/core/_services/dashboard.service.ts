@@ -19,4 +19,12 @@ export class DashboardService {
   getTourMontringVsDate(startDate, endDate) {
     return this.swagger.apiDashboardTourMontringVsDateGet(startDate, endDate);
   }
+
+  getToursOverDueData(startDate, endDate) {
+    return this.swagger.apiDashboardOverDueGet(startDate, endDate);
+  }
+
+  getAgentDistanceData(startDate, endDate) {
+    return this.swagger.apiDashboardAgentDistanceGet(startDate, endDate);
+  }
 }

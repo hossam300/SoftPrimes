@@ -43,7 +43,7 @@ export class DashboardComponent implements OnInit {
       this.toursMonitoringChartOptions.categories = [];
       res.montringVsDate.forEach(element => {
         monitoring.push(element.value);
-        this.toursMonitoringChartOptions.categories.push(formatDateCorrectly(element.date));
+        this.toursMonitoringChartOptions.categories.push(element.date);
       });
       res.tourVsDate.forEach(element => {
         tours.push(element.value);
@@ -66,39 +66,43 @@ export class DashboardComponent implements OnInit {
       xaxisType: 'datetime',
       themePalette: 'palette2',
       labelXFormatter: function(val , timestamp) {
-        const d = `${(new Date(val).getMonth() + 1)}/${new Date(val).getFullYear()}`;
+        const d = `${(new Date(val).getDate())}/${(new Date(val).getMonth() + 1)}/${new Date(val).getFullYear()}`;
         return d;
       }
     };
   }
 
   initOverDueChart() {
+    this.dashboard.getToursOverDueData(null, null).subscribe(res => {
+      if (res) {
+        const overDue = res.map(x => x.value);
+        const dates = res.map(x => x.date);
+        this.overDueChartData = [
+          {
+            name: 'over due tours',
+            data: overDue
+          }
+        ];
+
+        this.overDueChartOptions.categories = dates;
+      }
+    });
     this.overDueChartOptions = {
       title: 'over due overview',
       chartType: 'line',
       xaxisType: 'datetime',
-      themePalette: 'palette2'
-    };
-    let ts2 = 1484418600000;
-    const overDue = [];
-    for (let i = 0; i < 23; i++) {
-      ts2 = ts2 + 8640000;
-      overDue.push([ts2, dataSeries[1][i].value]);
-    }
-
-    this.overDueChartData = [
-      {
-        name: 'over due',
-        data: overDue
+      themePalette: 'palette2',
+      labelXFormatter: function(val , timestamp) {
+        const d = `${(new Date(val).getDate())}/${(new Date(val).getMonth() + 1)}/${new Date(val).getFullYear()}`;
+        return d;
       }
-    ];
+    };
   }
 
   initCheckPointsChart() {
     const checkPointsX = [];
     const checkPointsY = [];
     this.dashboard.getCheckPointCount(null, null).subscribe(res => {
-      console.log(res, 'checkpoint count');
       res.forEach(el => {
         checkPointsY.push(el.value);
         checkPointsX.push(el['text']);
@@ -126,28 +130,27 @@ export class DashboardComponent implements OnInit {
   }
 
   initAgentDistaceChart() {
-    let ts2 = 1484418600000;
-    const agentDistanceX = [];
-    const agentDistanceY = [];
-    for (let i = 0; i < 23; i++) {
-      ts2 = ts2 + 8640000;
-      agentDistanceY.push(dataSeries[3][i].value);
-      agentDistanceX.push(dataSeries[3][i]['name']);
-    }
-
-    this.agentDistanceChartData = [
-      {
-        name: 'Distance',
-        data: agentDistanceY
+    let agentDistanceY, agentDistanceX;
+    this.dashboard.getAgentDistanceData(null, null).subscribe(res => {
+      this.agentDistanceChartOptions.categories = [];
+      if (res) {
+        agentDistanceY = res.map(x => x.value);
+        agentDistanceX = res.map(x => x.text);
       }
-    ];
+      this.agentDistanceChartData = [
+        {
+          name: 'Distance',
+          data: agentDistanceY
+        }
+      ];
 
+      this.agentDistanceChartOptions.categories = agentDistanceX;
+    });
     this.agentDistanceChartOptions = {
       title: 'Agent distance overview',
       chartType: 'bar',
       xaxisType: 'category',
-      themePalette: 'palette4',
-      categories: agentDistanceX
+      themePalette: 'palette4'
     };
   }
 
