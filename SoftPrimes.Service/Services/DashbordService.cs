@@ -65,7 +65,7 @@ namespace SoftPrimes.Service.Services
             var MontringDate = _uow.GetRepository<TourAgent>().GetAll()
                  .GroupBy(x => new { Month = x.TourDate.Month, Year = x.TourDate.Year, day = x.TourDate.Day }).Select(x => new LineChartWithdate
                  {
-                     Date = x.Key.Month + "-" + x.Key.Year,
+                     Date = x.Key.Year + "-" + x.Key.Month + "-" + x.Key.day,
                      Value = x.Where(c => c.TourType == TourType.Monitoring).Count()
                  }).ToList();
             var TourVsDate = _uow.GetRepository<TourAgent>().GetAll()

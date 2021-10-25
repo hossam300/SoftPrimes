@@ -49,12 +49,13 @@ namespace SoftPrimes.Service.Services
                         LocationEn = x.CheckPoints.FirstOrDefault().CheckPoint.CheckPointNameAr,
                         TimeDuration = x.CreatedOn.Value.ToString("t") + ":" + x.EstimatedEndDate.Value.ToString("t"),
                         TourDate = x.TourDate.DateTime,
-                        TourId = x.TourId,
+                        TourId = x.Id,
                         TourNameAr = x.Tour.TourNameAr,
                         TourNameEn = x.Tour.TourNameEn,
                         TourType = x.TourType.ToString(),
                         TourTypeId = (int)x.TourType,
-                        CountOfLocations = x.CheckPoints.Count()
+                        CountOfLocations = x.CheckPoints.Count(),
+                        TourState = x.TourState
                     }).ToList();
         }
 
@@ -91,7 +92,7 @@ namespace SoftPrimes.Service.Services
                         CheckPointNameAr = y.CheckPoint.CheckPointNameAr,
                         CheckPointNameEn = y.CheckPoint.CheckPointNameEn,
                         CheckPointState = y.TourCheckPointState,
-                        StartDate=y.StartDate,
+                        StartDate = y.StartDate,
                         EndDate = x.EstimatedEndDate,
                         Lat = y.CheckPoint.Lat,
                         Long = y.CheckPoint.Long,
@@ -214,7 +215,8 @@ namespace SoftPrimes.Service.Services
                         TourNameEn = x.Tour.TourNameEn,
                         TourType = x.TourType.ToString(),
                         TourTypeId = (int)x.TourType,
-                        CountOfLocations = x.CheckPoints.Count()
+                        CountOfLocations = x.CheckPoints.Count(),
+                        TourState = x.TourState
                     }).ToList();
         }
 
@@ -244,7 +246,7 @@ namespace SoftPrimes.Service.Services
                         EndDate = y.EndDate,
                         StartDate = y.StartDate,
                         Id = y.Id,
-                        TourId = y.TourId
+                        TourId = y.Id
                     }).ToList()
 
                 }).Take(take).ToList();
@@ -316,6 +318,8 @@ namespace SoftPrimes.Service.Services
                 TourDate = tour.TourDate,
                 TourState = TourState.New,
                 TourType = tour.TourType,
+                EstimatedEndDate= tour.PointLocations.OrderBy(x=>x.EndDate).LastOrDefault().EndDate,
+                EstimatedDistance=tour.EstimatedDistance,
                 CheckPoints = tour.PointLocations.Select(x => new TourCheckPoint
                 {
                     CheckPointId = x.CheckPointId,

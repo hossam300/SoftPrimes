@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SoftPrimes.Shared.Domains;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,5 +22,6 @@ namespace SoftPrimes.Shared.ViewModels
         public int CountOfLocations { get; set; }
         public string AgentId { get; set; }
         public AgentDTO Agent { get; set; }
+        public TourState TourState { get; set; }
     }
 }

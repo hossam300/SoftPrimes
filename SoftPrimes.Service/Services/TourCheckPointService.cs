@@ -45,7 +45,7 @@ namespace SoftPrimes.Service.Services
             return _mapper.Map(Newcomment, typeof(Comment), typeof(CommentDTO)) as CommentDTO;
         }
 
-        public bool ChangeTourCheckPointState(int tourCheckPointId, int State,double lat,double longs)
+        public bool ChangeTourCheckPointState(int tourCheckPointId, int State, double lat, double longs)
         {
             var tourChexkPoint = _repository.Find(tourCheckPointId);
             if (tourChexkPoint == null)
@@ -80,7 +80,6 @@ namespace SoftPrimes.Service.Services
             }
             else
             {
-
                 if (TourCheckPoint.Tour.TourType == TourType.Monitoring && TourCheckPoint.TourCheckPointState == TourCheckPointState.New)
                 {
                     TourCheckPoint.TourCheckPointState = TourCheckPointState.InProgress;
@@ -96,9 +95,5 @@ namespace SoftPrimes.Service.Services
                 return true;
             }
         }
-        //private void CustomeMethod()
-        //{
-        //    var TourCheckPoint=_repository.
-        //}
     }
 }

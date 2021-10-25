@@ -14,6 +14,7 @@ namespace SoftPrimes.Shared.ViewModels
         public int? TourId { get; set; }
         public string TourName { get; set; }
         public DateTime TourDate { get; set; }
+        public double EstimatedDistance { get; set; }
         public List<PointLocationDTO> PointLocations { get; set; }
         public string AgentId { get; set; }
         public int CaptureLocation { get; set; }
