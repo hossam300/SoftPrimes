@@ -13701,6 +13701,7 @@ export class HomeTourDTO implements IHomeTourDTO {
     countOfLocations?: number;
     agentId?: string;
     agent?: AgentDTO;
+    tourState?: TourState;
 
     constructor(data?: IHomeTourDTO) {
         if (data) {
@@ -13726,6 +13727,7 @@ export class HomeTourDTO implements IHomeTourDTO {
             this.countOfLocations = data["countOfLocations"];
             this.agentId = data["agentId"];
             this.agent = data["agent"] ? AgentDTO.fromJS(data["agent"]) : <any>undefined;
+            this.tourState = data["tourState"];
         }
     }
 
@@ -13751,6 +13753,7 @@ export class HomeTourDTO implements IHomeTourDTO {
         data["countOfLocations"] = this.countOfLocations;
         data["agentId"] = this.agentId;
         data["agent"] = this.agent ? this.agent.toJSON() : <any>undefined;
+        data["tourState"] = this.tourState;
         return data; 
     }
 }
@@ -13769,6 +13772,7 @@ export interface IHomeTourDTO {
     countOfLocations?: number;
     agentId?: string;
     agent?: AgentDTO;
+    tourState?: TourState;
 }
 
 export class CommentDetailsDTO implements ICommentDetailsDTO {
@@ -14169,6 +14173,7 @@ export class TourCreateDTO implements ITourCreateDTO {
     tourId?: number;
     tourName?: string;
     tourDate?: Date;
+    estimatedDistance?: number;
     pointLocations?: PointLocationDTO[];
     agentId?: string;
     captureLocation?: number;
@@ -14191,6 +14196,7 @@ export class TourCreateDTO implements ITourCreateDTO {
             this.tourId = data["tourId"];
             this.tourName = data["tourName"];
             this.tourDate = data["tourDate"] ? new Date(data["tourDate"].toString()) : <any>undefined;
+            this.estimatedDistance = data["estimatedDistance"];
             if (data["pointLocations"] && data["pointLocations"].constructor === Array) {
                 this.pointLocations = [];
                 for (let item of data["pointLocations"])
@@ -14217,6 +14223,7 @@ export class TourCreateDTO implements ITourCreateDTO {
         data["tourId"] = this.tourId;
         data["tourName"] = this.tourName;
         data["tourDate"] = this.tourDate ? this.tourDate.toISOString() : <any>undefined;
+        data["estimatedDistance"] = this.estimatedDistance;
         if (this.pointLocations && this.pointLocations.constructor === Array) {
             data["pointLocations"] = [];
             for (let item of this.pointLocations)
@@ -14236,6 +14243,7 @@ export interface ITourCreateDTO {
     tourId?: number;
     tourName?: string;
     tourDate?: Date;
+    estimatedDistance?: number;
     pointLocations?: PointLocationDTO[];
     agentId?: string;
     captureLocation?: number;
