@@ -9,7 +9,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { AppRoutingModule } from './app-routing.module';
 import { SharedModule } from './shared/shared.module';
 import { TaskManagementModule } from './task-management/task-management.module';
-import { NgApexchartsModule } from "ng-apexcharts";
+import { NgApexchartsModule } from 'ng-apexcharts';
 
 import { AppComponent } from './app.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -18,7 +18,7 @@ import { LoginComponent } from './auth/login/login.component';
 
 import { API_BASE_URL, SwaggerClient } from './core/_services/swagger/SwaggerClient.service';
 import { InterceptorService } from './core/_services/swagger/interceptor.service';
-import { EnvServiceFactory } from './core/_services/env.service.provider';
+import { EnvServiceFactory, EnvServiceProvider } from './core/_services/env.service.provider';
 import { environment } from 'src/environments/environment';
 import { AuthGuard } from './core/_guards/auth.guard';
 import { AuthService } from './core/_services/auth.service';
@@ -58,11 +58,13 @@ export const DEV_MODE = new InjectionToken<boolean>('DEV_MODE');
   ],
   providers: [
     SwaggerClient,
+    EnvServiceProvider,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: InterceptorService,
       multi: true
-    }, {
+    },
+    {
       provide: API_BASE_URL,
       useValue: EnvServiceFactory().apiUrl
     },

@@ -6,31 +6,31 @@
 </div>
 <div class="card shadow mb-5">
   <div class="card-body">
-    <div class="row">
-      <div class="col-12 col-md-5">
+    <div class="d-flex" style="justify-content: space-evenly;">
+      <div>
         <div class="align-items-center d-flex flex-column">
-          <qr-code value="https://www.apple.com/app-store/" size="200" errorCorrectionLevel="Q">
+          <qr-code [value]="iosUrl" size="200" errorCorrectionLevel="Q">
           </qr-code>
           <h5>Scan to download via app store</h5>
-          <a class="app-btn blu d-flex justify-content-center align-items-center"
-            target="_blank" href="https://www.apple.com/app-store/">
+          <a class="app-btn blu d-flex justify-content-center align-items-center w-75"
+            target="_blank" [href]="iosUrl">
             <span class="fa fa-apple"></span>
             <p>Available on the <br/> <span class="big-txt">App Store</span></p>
           </a>
         </div>
       </div>
 
-      <div class="align-items-center col-2 d-md-flex d-none justify-content-center">
+      <div class="align-items-center d-md-flex d-none justify-content-center">
         <div class="h-50 bg-secondary" style="width: 0.5px;"></div>
       </div>
 
-      <div class="col-12 col-md-5">
+      <div>
         <div class="align-items-center d-flex flex-column">
-          <qr-code value="https://play.google.com/store" size="200" errorCorrectionLevel="Q">
+          <qr-code [value]="androidUrl" size="200" errorCorrectionLevel="Q">
           </qr-code>
           <h5>Scan to download via google play</h5>
-          <a class="app-btn blu d-flex justify-content-center align-items-center"
-            target="_blank" href="https://play.google.com/store">
+          <a class="app-btn blu d-flex justify-content-center align-items-center w-75"
+            target="_blank" [href]="androidUrl">
             <span>
               <svg aria-hidden="true" focusable="false" data-prefix="fab" data-icon="google-play"
                 role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"

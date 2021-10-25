@@ -6,6 +6,10 @@ export class EnvService {
     // API url
     public apiUrl = '';
 
+    // Apps Url
+    iosUrl = '';
+    androidUrl = '';
+
     // Whether or not to enable debug mode
     public enableDebug = true;
 
