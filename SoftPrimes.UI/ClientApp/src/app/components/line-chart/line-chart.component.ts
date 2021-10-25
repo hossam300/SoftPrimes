@@ -49,7 +49,6 @@ export class LineChartComponent implements OnInit, OnChanges {
   constructor() { }
 
   ngOnChanges() {
-    console.log(this.dataSeries, this.chartOptions);
     if (this.lineChart && this.chartOptions.categories) {
       this.options.xaxis.categories = this.chartOptions.categories;
       this.options.series = this.dataSeries;
@@ -104,7 +103,7 @@ export class LineChartComponent implements OnInit, OnChanges {
         show: true,
         lineCap: 'round',
         curve: 'smooth',
-        width: 1
+        width: 2
       },
       markers: {
         size: 5

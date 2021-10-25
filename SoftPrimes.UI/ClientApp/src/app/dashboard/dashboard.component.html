@@ -5,33 +5,122 @@
   </h1>
 </div>
 
-
-<div class="mb-5 w-100">
-  <app-pie-chart [dataSeries]="tourStatusChartData"
-  [options]="tourStatusChartOptions"></app-pie-chart>
+<div class="row mb-5">
+  <div class="col-12 col-md-6">
+    <div class="card border-0 shadow">
+      <div class="card-body">
+        <div class="d-flex justify-content-between w-100 mb-3">
+          <h4>{{ 'TourStatusOverview' | translate}}</h4>
+          <ng-select [items]="timePeriod" (change)="getData($event, 'tourStatusChart')" class="w-35"
+            placeholder="{{ 'PreviousDays' | translate }}">
+            <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
+              Last {{item}} days
+            </ng-template>
+            <ng-template ng-label-tmp let-item="item">
+              Last {{item}} days
+            </ng-template>
+          </ng-select>
+        </div>
+        <div class="w-100" style="height: 358px;">
+          <app-pie-chart [dataSeries]="tourStatusChartData"
+          [options]="tourStatusChartOptions"></app-pie-chart>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 col-md-6">
+    <div class="card border-0 shadow">
+      <div class="card-body">
+        <div class="d-flex justify-content-between w-100 mb-3">
+          <h4>{{ 'overDueTours' | translate}}</h4>
+          <ng-select [items]="timePeriod" (change)="getData($event, 'overDueChart')" class="w-35"
+            placeholder="{{ 'PreviousDays' | translate }}">
+            <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
+              Last {{item}} days
+            </ng-template>
+            <ng-template ng-label-tmp let-item="item">
+              Last {{item}} days
+            </ng-template>
+          </ng-select>
+        </div>
+        <app-line-chart
+        [dataSeries]="overDueChartData"
+        [chartOptions]="overDueChartOptions"
+        class="mb-5"></app-line-chart>
+      </div>
+    </div>
+  </div>
 </div>
 
-<div class="mb-5">
-  <app-line-chart
-    [dataSeries]="chartData"
-    [chartOptions]="toursMonitoringChartOptions"
-    class="mb-5"></app-line-chart>
+<div class="row mb-5">
+  <div class="col-12">
+    <div class="card border-0 shadow">
+      <div class="card-body">
+        <div class="d-flex justify-content-between w-100 mb-3">
+          <h4>{{ 'ToursMonitoringOverview' | translate}}</h4>
+          <ng-select [items]="timePeriod" (change)="getData($event, 'toursMonitoringChart')" class="w-15"
+            placeholder="{{ 'PreviousDays' | translate }}">
+            <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
+              Last {{item}} days
+            </ng-template>
+            <ng-template ng-label-tmp let-item="item">
+              Last {{item}} days
+            </ng-template>
+          </ng-select>
+        </div>
+        <app-line-chart
+          [dataSeries]="chartData"
+          [chartOptions]="toursMonitoringChartOptions"
+          class="mb-5"></app-line-chart>
+      </div>
+    </div>
+  </div>
 </div>
-<div class="mb-5">
-  <app-line-chart
-    [dataSeries]="overDueChartData"
-    [chartOptions]="overDueChartOptions"
-    class="mb-5"></app-line-chart>
+<div class="row mb-5">
+  <div class="col-12">
+    <div class="card border-0 shadow">
+      <div class="card-body">
+        <div class="d-flex justify-content-between w-100 mb-3">
+          <h4>{{ 'CheckPointsOverview' | translate}}</h4>
+          <ng-select [items]="timePeriod" (change)="getData($event, 'checkPointsChart')" class="w-15"
+            placeholder="{{ 'PreviousDays' | translate }}">
+            <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
+              Last {{item}} days
+            </ng-template>
+            <ng-template ng-label-tmp let-item="item">
+              Last {{item}} days
+            </ng-template>
+          </ng-select>
+        </div>
+        <app-line-chart
+          [dataSeries]="checkPointsChartData"
+          [chartOptions]="checkPointsChartOptions"
+          class="mb-5"></app-line-chart>
+      </div>
+    </div>
+  </div>
 </div>
-<div class="mb-5">
-  <app-line-chart
-    [dataSeries]="checkPointsChartData"
-    [chartOptions]="checkPointsChartOptions"
-    class="mb-5"></app-line-chart>
-</div>
-<div class="mb-5">
-  <app-line-chart
-    [dataSeries]="agentDistanceChartData"
-    [chartOptions]="agentDistanceChartOptions"
-    class="mb-5"></app-line-chart>
+<div class="row mb-5">
+  <div class="col-12">
+    <div class="card border-0 shadow">
+      <div class="card-body">
+        <div class="d-flex justify-content-between w-100 mb-3">
+          <h4>{{ 'AgentDistanceOverview' | translate}}</h4>
+          <ng-select [items]="timePeriod" (change)="getData($event, 'agentDistanceChart')" class="w-15"
+            placeholder="{{ 'PreviousDays' | translate }}">
+            <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
+              Last {{item}} days
+            </ng-template>
+            <ng-template ng-label-tmp let-item="item">
+              Last {{item}} days
+            </ng-template>
+          </ng-select>
+        </div>
+        <app-line-chart
+          [dataSeries]="agentDistanceChartData"
+          [chartOptions]="agentDistanceChartOptions"
+          class="mb-5"></app-line-chart>
+      </div>
+    </div>
+  </div>
 </div>
