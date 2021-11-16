@@ -18,7 +18,10 @@ namespace SoftPrimes.Shared.ViewModels
         public float EstimateDistance { get; set; }
         public string LocationAr { get; set; }
         public string LocationEn { get; set; }
-        public string TimeDuration { get; set; }
+        //public string TimeDuration { get; set; }
+        public DateTimeOffset StartDate { get; set; }
+        public DateTimeOffset EndDate { get; set; }
+
         public int CountOfLocations { get; set; }
         public string AgentId { get; set; }
         public AgentDTO Agent { get; set; }

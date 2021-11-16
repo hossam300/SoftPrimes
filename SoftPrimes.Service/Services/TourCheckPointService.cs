@@ -60,7 +60,8 @@ namespace SoftPrimes.Service.Services
                     tourChexkPoint.CheckoutLat = lat;
                     tourChexkPoint.CheckoutLong = longs;
                     tourChexkPoint.CheckoutDate = DateTime.Now;
-                    _repository.Update(tourChexkPoint);
+                    _unitOfWork.GetRepository<TourCheckPoint>().Update(tourChexkPoint);
+                    _unitOfWork.SaveChanges();
                     return true;
                 }
                 catch (Exception ex)
@@ -73,7 +74,7 @@ namespace SoftPrimes.Service.Services
 
         public bool ScanLocationQrCode(LocationQrCodeDTO locationQrCode)
         {
-            var TourCheckPoint = _repository.GetAll().Where(x => x.Id == locationQrCode.CheckPointId || x.CheckPoint.QRCode == locationQrCode.QRCode).FirstOrDefault();
+            var TourCheckPoint = _repository.GetAll().Where(x => (x.Id == locationQrCode.TourCheckPointId &&x.CheckPointId== locationQrCode .CheckPointId)|| x.CheckPoint.QRCode == locationQrCode.QRCode).FirstOrDefault();
             if (TourCheckPoint == null)
             {
                 return false;
@@ -91,7 +92,8 @@ namespace SoftPrimes.Service.Services
                 TourCheckPoint.CheckoutLat = locationQrCode.Lat;
                 TourCheckPoint.CheckoutLong = locationQrCode.Long;
                 TourCheckPoint.CheckoutDate = DateTime.Now;
-                _repository.Update(TourCheckPoint);
+                _unitOfWork.GetRepository<TourCheckPoint>().Update(TourCheckPoint);
+                _unitOfWork.SaveChanges();
                 return true;
             }
         }

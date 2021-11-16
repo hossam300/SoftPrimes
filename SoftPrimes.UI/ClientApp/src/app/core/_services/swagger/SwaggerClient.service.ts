@@ -13529,6 +13529,7 @@ export interface ITourAgentDTODataSourceResult {
 
 export class LocationQrCodeDTO implements ILocationQrCodeDTO {
     checkPointId?: number;
+    tourCheckPointId?: number;
     qrCode?: string;
     lat?: number;
     long?: number;
@@ -13545,6 +13546,7 @@ export class LocationQrCodeDTO implements ILocationQrCodeDTO {
     init(data?: any) {
         if (data) {
             this.checkPointId = data["checkPointId"];
+            this.tourCheckPointId = data["tourCheckPointId"];
             this.qrCode = data["qrCode"];
             this.lat = data["lat"];
             this.long = data["long"];
@@ -13561,6 +13563,7 @@ export class LocationQrCodeDTO implements ILocationQrCodeDTO {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["checkPointId"] = this.checkPointId;
+        data["tourCheckPointId"] = this.tourCheckPointId;
         data["qrCode"] = this.qrCode;
         data["lat"] = this.lat;
         data["long"] = this.long;
@@ -13570,6 +13573,7 @@ export class LocationQrCodeDTO implements ILocationQrCodeDTO {
 
 export interface ILocationQrCodeDTO {
     checkPointId?: number;
+    tourCheckPointId?: number;
     qrCode?: string;
     lat?: number;
     long?: number;
@@ -13697,7 +13701,8 @@ export class HomeTourDTO implements IHomeTourDTO {
     estimateDistance?: number;
     locationAr?: string;
     locationEn?: string;
-    timeDuration?: string;
+    startDate?: Date;
+    endDate?: Date;
     countOfLocations?: number;
     agentId?: string;
     agent?: AgentDTO;
@@ -13723,7 +13728,8 @@ export class HomeTourDTO implements IHomeTourDTO {
             this.estimateDistance = data["estimateDistance"];
             this.locationAr = data["locationAr"];
             this.locationEn = data["locationEn"];
-            this.timeDuration = data["timeDuration"];
+            this.startDate = data["startDate"] ? new Date(data["startDate"].toString()) : <any>undefined;
+            this.endDate = data["endDate"] ? new Date(data["endDate"].toString()) : <any>undefined;
             this.countOfLocations = data["countOfLocations"];
             this.agentId = data["agentId"];
             this.agent = data["agent"] ? AgentDTO.fromJS(data["agent"]) : <any>undefined;
@@ -13749,7 +13755,8 @@ export class HomeTourDTO implements IHomeTourDTO {
         data["estimateDistance"] = this.estimateDistance;
         data["locationAr"] = this.locationAr;
         data["locationEn"] = this.locationEn;
-        data["timeDuration"] = this.timeDuration;
+        data["startDate"] = this.startDate ? this.startDate.toISOString() : <any>undefined;
+        data["endDate"] = this.endDate ? this.endDate.toISOString() : <any>undefined;
         data["countOfLocations"] = this.countOfLocations;
         data["agentId"] = this.agentId;
         data["agent"] = this.agent ? this.agent.toJSON() : <any>undefined;
@@ -13768,7 +13775,8 @@ export interface IHomeTourDTO {
     estimateDistance?: number;
     locationAr?: string;
     locationEn?: string;
-    timeDuration?: string;
+    startDate?: Date;
+    endDate?: Date;
     countOfLocations?: number;
     agentId?: string;
     agent?: AgentDTO;

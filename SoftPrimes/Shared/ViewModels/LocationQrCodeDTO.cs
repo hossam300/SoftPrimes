@@ -9,6 +9,7 @@ namespace SoftPrimes.Shared.ViewModels
     public class LocationQrCodeDTO
     {
         public int CheckPointId { get; set; }
+        public int TourCheckPointId{ get; set; }
         public byte[] QRCode { get; set; }
         public double Lat { get; set; }
         public double Long { get; set; }

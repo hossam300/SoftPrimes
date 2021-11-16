@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Geolocation;
 using SoftPrimes.BLL.BaseObjects.RepositoriesInterfaces;
+using IHelperServices;
 
 namespace SoftPrimes.Service.Services
 {
@@ -17,7 +18,8 @@ namespace SoftPrimes.Service.Services
     {
         private readonly IUnitOfWork _unitOfWork;
         private IRepository<Tour> _repository;
-        public TourService(IUnitOfWork unitOfWork, IMapper mapper) : base(unitOfWork, mapper)
+        ISessionServices _sessionServices;
+        public TourService(IUnitOfWork unitOfWork, IMapper mapper, ISessionServices sessionServices) : base(unitOfWork, mapper)
         {
             _unitOfWork = unitOfWork;
             _repository = _unitOfWork.GetRepository<Tour>();
@@ -44,10 +46,12 @@ namespace SoftPrimes.Service.Services
                     {
                         Agent = agent,
                         AgentId = x.AgentId,
-                        EstimateDistance = (float)GetEstimateDistance(lat, longs, (float)x.CheckPoints.First().CheckPoint.Lat, (float)x.CheckPoints.First().CheckPoint.Long),
+                        EstimateDistance = (float)x.EstimatedDistance,
                         LocationAr = x.CheckPoints.FirstOrDefault().CheckPoint.CheckPointNameAr,
                         LocationEn = x.CheckPoints.FirstOrDefault().CheckPoint.CheckPointNameAr,
-                        TimeDuration = x.CreatedOn.Value.ToString("t") + ":" + x.EstimatedEndDate.Value.ToString("t"),
+                        StartDate = x.CheckPoints.FirstOrDefault().StartDate,
+                        EndDate = x.CheckPoints.FirstOrDefault().EndDate,
+                        //  TimeDuration = x.CheckPoints.FirstOrDefault().StartDate.ToString("t") + ":" + x.CheckPoints.OrderBy(x=>x.EndDate).LastOrDefault().EndDate.ToString("t"),
                         TourDate = x.TourDate.DateTime,
                         TourId = x.Id,
                         TourNameAr = x.Tour.TourNameAr,
@@ -81,10 +85,10 @@ namespace SoftPrimes.Service.Services
                     new CommentDetailsDTO
                     {
 
-                        CommentByNameAr = _unitOfWork.GetRepository<Agent>(false).Find(y.CreatedBy).FullNameAr,
-                        CommentByNameEn = _unitOfWork.GetRepository<Agent>(false).Find(y.CreatedBy).FullNameEn,
+                        CommentByNameAr = _unitOfWork.GetRepository<Agent>(false).Find(x.CreatedBy).FullNameAr,
+                        CommentByNameEn = _unitOfWork.GetRepository<Agent>(false).Find(x.CreatedBy).FullNameEn,
                         Id = y.Id,
-                        ProfileImage = _unitOfWork.GetRepository<Agent>(false).Find(y.CreatedBy).Image,
+                        ProfileImage = _unitOfWork.GetRepository<Agent>(false).Find(x.CreatedBy).Image,
                         Text = y.Comment.Text
                     }).ToList(),
                     CheckPoints = x.CheckPoints.Select(y => new CheckPointDetailsDTO
@@ -208,7 +212,8 @@ namespace SoftPrimes.Service.Services
                         EstimateDistance = (float)GetEstimateDistance(lat, longs, (float)x.CheckPoints.First().CheckPoint.Lat, (float)x.CheckPoints.First().CheckPoint.Long),
                         LocationAr = x.CheckPoints.FirstOrDefault().CheckPoint.CheckPointNameAr,
                         LocationEn = x.CheckPoints.FirstOrDefault().CheckPoint.CheckPointNameAr,
-                        TimeDuration = x.CreatedOn.Value.ToString("t") + ":" + x.EstimatedEndDate.Value.ToString("t"),
+                        StartDate = x.CheckPoints.FirstOrDefault().StartDate,
+                        EndDate = x.CheckPoints.FirstOrDefault().EndDate,
                         TourDate = x.TourDate.DateTime,
                         TourId = x.TourId,
                         TourNameAr = x.Tour.TourNameAr,
@@ -296,7 +301,7 @@ namespace SoftPrimes.Service.Services
             }
             else
             {
-                template = _repository.Insert(new Tour { TourNameEn = tour.TourName });
+                template = _repository.Insert(new Tour { TourNameEn = tour.TourName, Active = true });
             }
             List<TourComment> tourComments = new List<TourComment>();
             if (tour.AdminComment != "" || tour.AdminComment != null)
@@ -315,11 +320,11 @@ namespace SoftPrimes.Service.Services
                 AgentId = tour.AgentId,
                 IsTemplate = tour.IsTemplate,
                 TourId = template.Id,
-                TourDate = tour.TourDate,
+                TourDate = new DateTimeOffset(tour.TourDate.Year, tour.TourDate.Month, tour.TourDate.AddDays(1).Day, 0, 0, 0, TimeSpan.Zero),
                 TourState = TourState.New,
                 TourType = tour.TourType,
-                EstimatedEndDate= tour.PointLocations.OrderBy(x=>x.EndDate).LastOrDefault().EndDate,
-                EstimatedDistance=tour.EstimatedDistance,
+                EstimatedEndDate = tour.PointLocations.OrderBy(x => x.EndDate).LastOrDefault().EndDate,
+                EstimatedDistance = tour.EstimatedDistance,
                 CheckPoints = tour.PointLocations.Select(x => new TourCheckPoint
                 {
                     CheckPointId = x.CheckPointId,
@@ -328,6 +333,17 @@ namespace SoftPrimes.Service.Services
                 }).ToList(),
                 Comments = tourComments
             });
+            NotificationDTO notification = new NotificationDTO
+            {
+
+                CreatedBy = _sessionServices.UserId,
+                CreatedOn = DateTime.Now,
+                IsReaded = false,
+                NotificationType = NotificationType.NewTour,
+                Text = "Tour " + tourAgent.Tour.TourNameEn + " has been Created",
+                ToAgentId = tourAgent.AgentId
+            };
+            _unitOfWork.GetRepository<NotificationDTO>().Insert(notification);
             tour.Id = tourAgent.Id;
             return tour;
         }

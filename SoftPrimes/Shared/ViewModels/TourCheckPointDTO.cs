@@ -13,8 +13,8 @@ namespace SoftPrimes.Shared.ViewModels
         public CheckPointDTO CheckPoint { get; set; }
         public List<CheckPointTourCommentDTO> CheckPointTourComments { get; set; }
         public TourCheckPointState TourCheckPointState { get; set; }
-        public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
+        public DateTimeOffset StartDate { get; set; }
+        public DateTimeOffset EndDate { get; set; }
 
     }
 }
